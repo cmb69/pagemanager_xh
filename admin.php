@@ -372,7 +372,6 @@ function pagemanager_save($xml) {
 	$pd_router->model->refresh($pagemanager_pd);
     } else
 	e('cntwriteto', 'content', $pth['file']['content']);
-    rfc(); // is neccessary, if relocation fails!
 }
 
 
