@@ -35,6 +35,7 @@
 	$plugin_tx['pagemanager']['error_phpversion']="Pagemanager_XH kræver mindst PHP version %s!";
 	$plugin_tx['pagemanager']['error_extension']="Pagemanager_XH kræver PHP's %s udvigelse!";
 	$plugin_tx['pagemanager']['error_jquery']="Pagemanager_XH kræver jQuery4CMSimple plugin! Vær venlig at <a href='http://www.cmsimple-xh.com/wiki/doku.php/plugins:jquery4cmsimple'>download</a> og installere før du går videre.";
+	$plugin_tx['pagemanager']['error_utf8']="Pagemanager_XH kræver Utf8_XH plugin! Vær venlig at <a href='http://3-magi.net/?CMSimple_XH/Utf8_XH'>download</a> og installere før du går videre.";
 	$plugin_tx['pagemanager']['error_encoding']="Pagemanager_XH requires UTF-8 encoding!";
 	$plugin_tx['pagemanager']['error_structure_confirmation']="Jeg ved <em>PRÆSIS</em> hvad jeg laver! Jeg vil fortsætte.";
 	$plugin_tx['pagemanager']['error_structure_warning']="<strong>Uregelmæssig sidestruktur fundet.</strong> For nærmere oplysninger se plugin hjælp og kontakt din webmaster!";

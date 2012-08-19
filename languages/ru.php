@@ -35,6 +35,7 @@ $plugin_tx['pagemanager']['message_delete_last']="Вы не должны уда�
 $plugin_tx['pagemanager']['error_phpversion']="Pagemanager_XH требует, по крайней мере, версия PHP %s!";
 $plugin_tx['pagemanager']['error_extension']="Pagemanager_XH требует расширение PHP %s !";
 $plugin_tx['pagemanager']['error_jquery']="Pagemanager_XH требует jQuery4CMSimple плагин! Пожалуйста, <a href='http://www.cmsimple-xh.com/wiki/doku.php/plugins:jquery4cmsimple'>скачайте</a> и установите его, прежде чем продолжить.";
+$plugin_tx['pagemanager']['error_utf8']="Pagemanager_XH требует Utf8_XH плагин! Пожалуйста, <a href='http://3-magi.net/?CMSimple_XH/Utf8_XH'>скачайте</a> и установите его, прежде чем продолжить.";
 $plugin_tx['pagemanager']['error_encoding']="Pagemanager_XH требует кодировку UTF-8!";
 $plugin_tx['pagemanager']['error_structure_confirmation']="Я знаю, что и <em>как</em> и то что я делаю! Я хочу, продолжить.";
 $plugin_tx['pagemanager']['error_structure_warning']="<strong>Нерегулярная структура страницы.</strong> подробнее см. плагин справка и обратитесь к веб-мастеру!";
