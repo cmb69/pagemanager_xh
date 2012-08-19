@@ -298,7 +298,7 @@ function pagemanager_start_element_handler($parser, $name, $attribs) {
 	$pagemanager_state['level']++;
 	$pagemanager_state['id'] = $attribs['ID'] == ''
 		? '' : preg_replace('/(copy_)?pagemanager-([0-9]*)/', '$2', $attribs['ID']);
-	$pagemanager_state['title'] = htmlspecialchars($attribs['TITLE']);
+	$pagemanager_state['title'] = htmlspecialchars($attribs['TITLE'], ENT_NOQUOTES, 'UTF-8');
 	$pagemanager_state['pdattr'] = $attribs['PDATTR'];
 	$pagemanager_state['num']++;
     }
@@ -325,7 +325,7 @@ function pagemanager_end_element_handler($parser, $name) {
 function pagemanager_cdata_handler($parser, $data) {
     global $c, $h, $cf, $pagemanager_fp, $pagemanager_state, $pagemanager_pd,
 	    $pd_router, $plugin_cf;
-    $data = htmlspecialchars($data);
+    $data = htmlspecialchars($data, ENT_NOQUOTES, 'UTF-8');
     if (isset($c[$pagemanager_state['id']])) {
 	$cnt = $c[$pagemanager_state['id']];
 	$cnt = preg_replace('/<h[1-'.$cf['menu']['levels'].']([^>]*)>'
