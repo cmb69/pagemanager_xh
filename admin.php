@@ -16,7 +16,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 
-define('PAGEMANAGER_VERSION', '1pl7');
+define('PAGEMANAGER_VERSION', '1pl8');
 
 
 /**
