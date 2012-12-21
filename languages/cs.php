@@ -34,7 +34,7 @@ $plugin_tx['pagemanager']['message_no_selection']="Dřív než použijete tento 
 $plugin_tx['pagemanager']['message_delete_last']="Nemůžeš smazat poslední stranu 1. úrovně!";
 $plugin_tx['pagemanager']['error_phpversion']="Pagemanager_XH vyžaduje poslední verzi PHP %s!";
 $plugin_tx['pagemanager']['error_extension']="Pagemanager_XH vyžaduje PHP's %s rozšíření!";
-$plugin_tx['pagemanager']['error_jquery']="<p><strong>Pagemanager_XH vyžaduje jQuery4CMSimple plugin!</strong></p><p>Prosím <a href='http://www.cmsimple-xh.com/wiki/doku.php/plugins:jquery4cmsimple'>stáhněte</a> nainstalujte před prvním použitím.</p>";
+$plugin_tx['pagemanager']['error_jquery']="<p><strong>Pagemanager_XH vyžaduje jQuery4CMSimple plugin!</strong></p><p>Prosím <a href='http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple'>stáhněte</a> nainstalujte před prvním použitím.</p>";
 $plugin_tx['pagemanager']['error_utf8']="<p><strong>Pagemanager_XH vyžaduje Utf8_XH plugin!</strong></p><p>Prosím <a href='http://3-magi.net/?CMSimple_XH/Utf8_XH'>stáhněte</a> nainstalujte před prvním použitím.</p>";
 $plugin_tx['pagemanager']['error_encoding']="Pagemanager_XH Vyžaduje kódování UTF-8!";
 $plugin_tx['pagemanager']['error_structure_confirmation']="Vím <em>přesně</em>, co nyní dělám! Chci pokračovat.";

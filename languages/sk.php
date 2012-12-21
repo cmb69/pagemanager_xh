@@ -34,7 +34,7 @@
 	$plugin_tx['pagemanager']['message_delete_last']="Nemôžete vymazať poslednú stránku 1. úrovne!";
 	$plugin_tx['pagemanager']['error_phpversion']="Pagemanager_XH requires at least PHP version %s!";
 	$plugin_tx['pagemanager']['error_extension']="Pagemanager_XH requires PHP's %s extension!";
-	$plugin_tx['pagemanager']['error_jquery']="<p><strong>Pagemanager_XH vyžaduje jQuery4CMSimple plugin!</strong></p><p>Prosím <a href='http://www.cmsimple-xh.com/wiki/doku.php/plugins:jquery4cmsimple'>stiahnuť</a> nainštalovať prv, než budete pokračovať.</p>";
+	$plugin_tx['pagemanager']['error_jquery']="<p><strong>Pagemanager_XH vyžaduje jQuery4CMSimple plugin!</strong></p><p>Prosím <a href='http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple'>stiahnuť</a> nainštalovať prv, než budete pokračovať.</p>";
 	$plugin_tx['pagemanager']['error_utf8']="<p><strong>Pagemanager_XH vyžaduje Utf8_XH plugin!</strong></p><p>Prosím <a href='http://3-magi.net/?CMSimple_XH/Utf8_XH'>stiahnuť</a> nainštalovať prv, než budete pokračovať.</p>";
 	$plugin_tx['pagemanager']['error_encoding']="Pagemanager_XH requires UTF-8 encoding!";
 	$plugin_tx['pagemanager']['error_structure_confirmation']="Viem <em>presne</em>, čo chcem urobiť! Chcem pokračovať.";

@@ -41,7 +41,7 @@ $plugin_tx['pagemanager']['message_no_selection']="Musisz zaznaczyć stronę prz
 $plugin_tx['pagemanager']['message_delete_last']="Nie możesz usunąć pierwszej strony.";
 $plugin_tx['pagemanager']['error_phpversion']="Pagemanager_XH wymaga wersji PHP przynajmniej %s!";
 $plugin_tx['pagemanager']['error_extension']="Pagemanager_XH wymaga następującego rozszerzenia PHP: %s!";
-$plugin_tx['pagemanager']['error_jquery']="Pagemanager_XH wymaga wtyczki jQuery4CMSimple! Proszę <a href='http://www.cmsimple-xh.com/wiki/doku.php/plugins:jquery4cmsimple'>pobrać</a> i zainstalować przed kontynuacją.";
+$plugin_tx['pagemanager']['error_jquery']="Pagemanager_XH wymaga wtyczki jQuery4CMSimple! Proszę <a href='http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple'>pobrać</a> i zainstalować przed kontynuacją.";
 $plugin_tx['pagemanager']['error_utf8']="Pagemanager_XH wymaga wtyczki Utf8_XH! Proszę <a href='http://3-magi.net/?CMSimple_XH/Utf8_XH'>pobrać</a> i zainstalować przed kontynuacją.";
 $plugin_tx['pagemanager']['error_encoding']="Pagemanager_XH wymaga kodowanie znaków UTF-8!";
 $plugin_tx['pagemanager']['error_structure_confirmation']="Wiem <em>DOKŁADNIE</em> co robię i chcę kontynuować!";
