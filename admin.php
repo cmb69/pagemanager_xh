@@ -196,7 +196,7 @@ function pagemanager_edit() {
     include_jQuery();
     include_jQueryUI();
     include_jQueryPlugin('jsTree', $pth['folder']['plugins']
-	    .'pagemanager/jstree/jquery.jstree.js');
+	    .'pagemanager/jstree/jquery.jstree.min.js');
 
     $image_ext = (file_exists($pth['folder']['plugins'].'pagemanager/images/help.png'))
 	    ? '.png' : '.gif';
