@@ -3,7 +3,7 @@
 /**
  * Back-End of Pagemanager_XH.
  *
- * Copyright (c) 2011-2012 Christoph M. Becker (see license.txt)
+ * Copyright (c) 2011-2013 Christoph M. Becker (see license.txt)
  */
 
 
@@ -16,7 +16,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 
-define('PAGEMANAGER_VERSION', '1pl10');
+define('PAGEMANAGER_VERSION', '1pl11');
 
 
 define('PAGEMANAGER_URL', 'http'
