@@ -86,31 +86,32 @@ function pagemanager_rfc() {
 
 
 /**
- * Returns the plugin version information.
+ * Returns a view.
  *
- * @return string  The (X)HTML
+ * @global array  Paths of system files and folders.
+ * @param string $template  The name of the view.
+ * @param array $bag  The data for the view.
+ * @return string
  */
-function pagemanager_version()
+function Pagemanager_view($template, $bag)
 {
-    return tag('br') . tag('hr') . '<p><strong>Pagemanager_XH</strong></p>' . tag('hr')
-	. '<p>Version: '.PAGEMANAGER_VERSION.'</p>'
-	. '<p>Copyright &copy; 2011-2012 <a href="http://3-magi.net">Christoph M. Becker</a></p>'
-	. '<p><a href="http://3-magi.net/?CMSimple_XH/Pagemanager_XH">'
-	. 'Pagemanager_XH</a> is powered by '
-	. '<a href="http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple">'
-	. 'jQuery4CMSimple</a>'
-	. ' and <a href="http://www.jstree.com/">jsTree</a>.</p>'
-	. '<p style="text-align: justify">This program is free software: you can redistribute it and/or modify'
-	. ' it under the terms of the GNU General Public License as published by'
-	. ' the Free Software Foundation, either version 3 of the License, or'
-	. ' (at your option) any later version.</p>'
-	. '<p style="text-align: justify">This program is distributed in the hope that it will be useful,'
-	. ' but WITHOUT ANY WARRANTY; without even the implied warranty of'
-	. ' MERCHAN&shy;TABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the'
-	. ' GNU General Public License for more details.</p>'
-	. '<p style="text-align: justify">You should have received a copy of the GNU General Public License'
-	. ' along with this program.  If not, see'
-	. ' <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>';
+    global $pth;
+
+    ob_start();
+    extract($bag);
+    include "{$pth['folder']['plugins']}pagemanager/views/$template.htm";
+    return ob_get_clean();
+}
+
+
+/**
+ * Returns the plugin's "About" view.
+ *
+ * @return string  The (X)HTML.
+ */
+function Pagemanager_aboutView()
+{
+    return Pagemanager_view('about', array('version' => PAGEMANAGER_VERSION));
 }
 
 
@@ -517,7 +518,7 @@ if (isset($pagemanager) && $pagemanager == 'true') {
 	if ($action == 'plugin_save') {
 	    Pagemanager_save(stsl($_POST['xml']));
 	} else {
-	    $o .= pagemanager_version();
+	    $o .= Pagemanager_aboutView();
 	}
 	break;
     case 'plugin_main':
