@@ -168,7 +168,7 @@ function pagemanager_instanciateJS($image_ext) {
     foreach ($plugin_tx['pagemanager'] as $key => $val) {
 	$texts[$key] = $val;
     }
-    $texts['menu_levels'] = $cf['menu']['levels'];
+    $texts['menu_levels'] = intval($cf['menu']['levels']);
     $texts['toc_dupl'] = $tx['toc']['dupl'];
     $texts['image_ext'] = $image_ext;
     $texts['image_dir'] = $pth['folder']['plugins'] . 'pagemanager/images/';
