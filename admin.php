@@ -157,29 +157,25 @@ function pagemanager_toolbar($image_ext, $save_js) {
 function pagemanager_instanciateJS($image_ext) {
     global $pth, $plugin_cf, $plugin_tx, $cf, $tx;
 
-    $js = rf($pth['folder']['plugins'].'pagemanager/pagemanager.js');
-
-    preg_match_all('/<<<PC_(.*)>>>/', $js, $options);
-    foreach ($options[1] as $opt) {
-	$pagemanager_cf[$opt] = addcslashes($plugin_cf['pagemanager'][$opt],
-		"\0'\"\\\f\n\r\t\v");
+    $pcf = $plugin_cf['pagemanager'];
+    $texts = array();
+    foreach ($pcf as $key => $val) {
+	$texts[$key] = $val;
     }
-    preg_match_all('/<<<PT_(.*)>>>/', $js, $options);
-    foreach ($options[1] as $opt)
-	$pagemanager_tx[$opt] = addcslashes($plugin_tx['pagemanager'][$opt],
-		"\0'\"\\\f\n\r\t\v");
+    foreach ($plugin_tx['pagemanager'] as $key => $val) {
+	$texts[$key] = $val;
+    }
+    $texts['menu_levels'] = $cf['menu']['levels'];
+    $texts['toc_dupl'] = $tx['toc']['dupl'];
+    $texts['image_ext'] = $image_ext;
+    $texts['image_dir'] = $pth['folder']['plugins'] . 'pagemanager/images/';
 
-    $js = preg_replace('/<<<PC_(.*)>>>/e', '$pagemanager_cf["$1"]', $js);
-    $js = preg_replace('/<<<PT_(.*)>>>/e', '$pagemanager_tx["$1"]', $js);
-    $js = str_replace('<<<MENU_LEVELS>>>', $cf['menu']['levels'], $js);
-    $js = str_replace('<<<TOC_DUPL>>>', $tx['toc']['dupl'], $js);
-    $js = str_replace('<<<IMAGE_EXT>>>', $image_ext, $js);
-    $js = str_replace('<<<IMAGE_DIR>>>', $pth['folder']['plugins'].'pagemanager/images/', $js);
+    $json = json_encode($texts);
 
-    return '<!-- initialize jstree -->'."\n"
-	    .'<script type="text/javascript">'."\n"
-	    .'/* <![CDATA[ */'.$js.'/* ]]> */'."\n"
-	    .'</script>'."\n";
+    return '<script type="text/javascript">/* <![CDATA[ */var PAGEMANAGER = '
+	. $json . ';/* ]]> */</script>'
+	. '<script type="text/javascript" src="'
+	. $pth['folder']['plugins'] . 'pagemanager/pagemanager.js"></script>';
 }
 
 
