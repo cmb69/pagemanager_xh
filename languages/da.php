@@ -18,7 +18,7 @@
 	$plugin_tx['pagemanager']['op_copy']="Kopier";
 	$plugin_tx['pagemanager']['op_paste']="Sæt ind (<em>som underside</em>)";
 	$plugin_tx['pagemanager']['op_paste_after']="Sæt ind (<em>på samme niveau - efter underside</em>)";
-	$plugin_tx['pagemanager']['op_help']="<p>Du kan ændre menu rækkefølgen med <em>træk og slip</em>. <em>Ved højreklip på en side</em> åbner du context menu. Flere detalje kan findes i plugin help.</p>";
+	$plugin_tx['pagemanager']['op_help']="Du kan ændre menu rækkefølgen med <em>træk og slip</em>. <em>Ved højreklip på en side</em> åbner du context menu. Flere detalje kan findes i plugin help.";
 	$plugin_tx['pagemanager']['treeview_loading']="Loading...";
 	$plugin_tx['pagemanager']['treeview_new']="Ny side";
 	$plugin_tx['pagemanager']['button_delete']="Slet";

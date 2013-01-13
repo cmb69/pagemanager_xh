@@ -18,7 +18,7 @@
 	$plugin_tx['pagemanager']['op_copy']="Kopírovať";
 	$plugin_tx['pagemanager']['op_paste']="Vložiť (<em>ako podstránku</em>)";
 	$plugin_tx['pagemanager']['op_paste_after']="Vložiť (<em>na rovnakej úrovni - za poslednou podstránkou</em>)";
-	$plugin_tx['pagemanager']['op_help']="<p>Stránky môžete premiestňovať pomocou <em>drag&amp;drop</em>. <em>Kliknutím pravou na stránku</em> otvoríte kontextové menu. Podrobnejšie pokyny nájdete v help.htm.</p>";
+	$plugin_tx['pagemanager']['op_help']="Stránky môžete premiestňovať pomocou <em>drag&amp;drop</em>. <em>Kliknutím pravou na stránku</em> otvoríte kontextové menu. Podrobnejšie pokyny nájdete v help.htm.";
 	$plugin_tx['pagemanager']['treeview_loading']="Načítavam...";
 	$plugin_tx['pagemanager']['treeview_new']="Nová stránka";
 	$plugin_tx['pagemanager']['button_delete']="Vymazať";
