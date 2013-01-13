@@ -113,11 +113,6 @@ var pagemanager_modified = false;
 	    }
 	});
 
-	$('#pagemanager-confirmation').dialog({
-	    'autoOpen': false,
-	    'modal': true
-	});
-
 	var pagemanagerButtons = {};
 	pagemanagerButtons[PAGEMANAGER["button_ok"]] = function () {$(this).dialog('close');}
 	$('#pagemanager-alert').dialog({
@@ -184,17 +179,9 @@ var pagemanager_modified = false;
 		    }
 		    if (data.args[1] != 'confirmed') {
 			if ((PAGEMANAGER["verbose"]).toLowerCase() == 'true') {
-			    $('#pagemanager-confirmation').html(PAGEMANAGER["message_confirm_deletion"]);
-			    var pagemanagerButtons = {};
-			    pagemanagerButtons[PAGEMANAGER["button_delete"]] = function () {
+			    if (window.confirm(PAGEMANAGER["message_confirm_deletion"])) {
 				    pagemanager.remove(data.args[0], 'confirmed');
-				    $(this).dialog('close');
-				    }
-			    pagemanagerButtons[PAGEMANAGER["button_cancel"]] = function () {
-				    $(this).dialog('close');
-				}
-			    $('#pagemanager-confirmation').dialog('option', 'buttons', pagemanagerButtons);
-			    $('#pagemanager-confirmation').dialog('open');
+			    }
 			    e.stopImmediatePropagation();
 			    return false;
 			}
