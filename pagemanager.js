@@ -25,7 +25,7 @@ function pagemanager_do(op) {
 		break;
 	    case 'save':
 		$('#pagemanager-xml')[0].value = $('#pagemanager').jstree(
-			'get_xml', 'nest', -1, new Array('id', 'title', 'class'));
+			'get_xml', "nest", -1, new Array('id', 'title', 'class'));
 		$('#pagemanager-form').submit();
 		break;
 	    default:
@@ -255,7 +255,7 @@ var pagemanager_modified = false;
 	 */
 
 	$('#pagemanager').jstree({
-	    'plugins': ['themes', 'html_data', 'xml_data', 'dnd', 'ui',
+	    'plugins': ['themes', 'html_data', 'xml_data', "json_data", 'dnd', 'ui',
 		    'crrm', 'contextmenu', 'checkbox', 'types'],
 	    'core': {
 		'animation': PAGEMANAGER["treeview_animation"],

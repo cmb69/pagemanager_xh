@@ -294,91 +294,119 @@ function pagemanager_edit() {
 }
 
 
-/**
- * Handles start elements of jsTree's xml result.
- *
- * @return void
- */
-function pagemanager_start_element_handler($parser, $name, $attribs) {
-    global $o, $pagemanager_state;
-    if ($name == 'ITEM') {
-	$pagemanager_state['level']++;
-	$pagemanager_state['id'] = $attribs['ID'] == ''
-		? '' : preg_replace('/(copy_)?pagemanager-([0-9]*)/', '$2', $attribs['ID']);
-	$pagemanager_state['title'] = htmlspecialchars($attribs['TITLE'], ENT_NOQUOTES, 'UTF-8');
-	$pagemanager_state['pdattr'] = strpos($attribs['CLASS'], 'pagemanager_pdattr') !== false ? '1' : '0';
-	$pagemanager_state['num']++;
+class Pagemanager_Parser
+{
+    var $level;
+    var $id;
+    var $title;
+    var $pdattr;
+    var $num;
+    var $c = array();
+    var $pd = array();
+
+    /**
+     * Handles start elements of jsTree's xml result.
+     *
+     * @return void
+     */
+    function handleStartElement($parser, $name, $attribs)
+    {
+	if ($name == 'ITEM') {
+	    $this->level++;
+	    $this->id = $attribs['ID'] == ''
+		? ''
+		: preg_replace('/(copy_)?pagemanager-([0-9]*)/', '$2', $attribs['ID']);
+	    $this->title = htmlspecialchars($attribs['TITLE'], ENT_NOQUOTES, 'UTF-8');
+	    $this->pdattr = strpos($attribs['CLASS'], 'pagemanager_pdattr') !== false ? '1' : '0';
+	    $this->num++;
+	}
+    }
+
+
+    /**
+     * Handles end elements of jsTree's xml result.
+     *
+     * @return void
+     */
+    function handleEndElement($parser, $name)
+    {
+	if ($name == 'ITEM') {
+	    $this->level--;
+	}
+    }
+
+
+    /**
+     * Handles character data of jsTree's xml result.
+     *
+     * @return void
+     */
+    function handleCData($parser, $data)
+    {
+	global $c, $cf, $pd_router, $plugin_cf;
+
+	//$data = htmlspecialchars($data, ENT_NOQUOTES, 'UTF-8');
+	if (isset($c[$this->id])) {
+	    $cnt = $c[$this->id];
+	    $cnt = preg_replace('/<h[1-' . $cf['menu']['levels'] . ']([^>]*)>'
+				. '((<[^>]*>)*)[^<]*((<[^>]*>)*)'
+				. '<\/h[1-' . $cf['menu']['levels'] . ']([^>]*)>/i',
+				'<h' . $this->level . '$1>${2}' . $this->title . '$4'
+				. '</h' . $this->level . '$6>', $cnt, 1);
+	} else {
+	    $cnt = '<h' . $this->level . '>' . $this->title
+		. '</h' . $this->level . '>';
+	}
+	$this->c[] = $cnt;
+
+	if ($this->id == '') {
+	    $pd = $pd_router->new_page(array());
+	} else {
+	    $pd = $pd_router->find_page($this->id);
+	}
+	$pd['url'] = uenc($this->title); // TODO: htmlspecialchars???
+	$pd[$plugin_cf['pagemanager']['pagedata_attribute']] = $this->pdattr;
+	$this->pd[] = $pd;
+    }
+
+
+    function parse($xml)
+    {
+	$this->c = array();
+	$this->pd = array();
+	$parser = xml_parser_create('UTF-8');
+	xml_set_element_handler($parser, array($this, 'handleStartElement'),
+				array($this, 'handleEndElement'));
+	xml_set_character_data_handler($parser, array($this, 'handleCData'));
+	$this->level = 0;
+	$this->num = -1;
+	$this->c[] = '<html><head><title>Content</title></head><body>';
+	xml_parse($parser, $xml, true);
+	$this->c[] = '</body></html>';
+
+	return array($this->c, $this->pd);
     }
 }
 
 
 /**
- * Handles end elements of jsTree's xml result.
+ * Saves content and pagedata.
  *
- * @return void
+ * @return void.
  */
-function pagemanager_end_element_handler($parser, $name) {
-    global $pagemanager_state;
-    if ($name == 'ITEM')
-	$pagemanager_state['level']--;
-}
+function Pagemanager_save($xml)
+{
+    global $pth, $pd_router;
 
-
-/**
- * Handles character data of jsTree's xml result.
- *
- * @return void
- */
-function pagemanager_cdata_handler($parser, $data) {
-    global $c, $h, $cf, $pagemanager_fp, $pagemanager_state, $pagemanager_pd,
-	    $pd_router, $plugin_cf;
-    $data = htmlspecialchars($data, ENT_NOQUOTES, 'UTF-8');
-    if (isset($c[$pagemanager_state['id']])) {
-	$cnt = $c[$pagemanager_state['id']];
-	$cnt = preg_replace('/<h[1-'.$cf['menu']['levels'].']([^>]*)>'
-		.'((<[^>]*>)*)[^<]*((<[^>]*>)*)<\/h[1-'.$cf['menu']['levels'].']([^>]*)>/i',
-		'<h'.$pagemanager_state['level'].'$1>${2}'.$pagemanager_state['title'].'$4'
-		.'</h'.$pagemanager_state['level'].'$6>', $cnt, 1);
-	fwrite($pagemanager_fp, rmnl($cnt."\n"));
+    $parser = new Pagemanager_Parser();
+    list($c, $pd) = $parser->parse($xml);
+    if (($fh = fopen($pth['file']['content'], 'w')) !== false &&
+	fwrite($fh, implode("\n", $c)) !== false)
+    {
+	$pd_router->model->refresh($pd);
     } else {
-	fwrite($pagemanager_fp, '<h'.$pagemanager_state['level'].'>'.$pagemanager_state['title']
-		.'</h'.$pagemanager_state['level'].'>'."\n");
+	e('cntsave', 'content', $pth['file']['content']);
     }
-
-    if ($pagemanager_state['id'] == '') {
-	$pd = $pd_router->new_page(array());
-    } else {
-	$pd = $pd_router->find_page($pagemanager_state['id']);
-    }
-    $pd['url'] = uenc($pagemanager_state['title']);
-    $pd[$plugin_cf['pagemanager']['pagedata_attribute']] = $pagemanager_state['pdattr'];
-    $pagemanager_pd[] = $pd;
-}
-
-
-/**
- * Saves content.htm manually and
- * pagedata.php via $pd_router->model->refresh().
- *
- * @return void
- */
-function pagemanager_save($xml) {
-    global $pth, $tx, $pd_router, $pagemanager_state, $pagemanager_fp, $pagemanager_pd;
-    $pagemanager_pd = array();
-    $parser = xml_parser_create('UTF-8');
-    xml_set_element_handler($parser, 'pagemanager_start_element_handler',
-	    'pagemanager_end_element_handler');
-    xml_set_character_data_handler($parser, 'pagemanager_cdata_handler');
-    $pagemanager_state['level'] = 0;
-    $pagemanager_state['num'] = -1;
-    if ($pagemanager_fp = fopen($pth['file']['content'], 'w')) {
-	fputs($pagemanager_fp, '<html><head><title>Content</title></head><body>'."\n");
-	xml_parse($parser, $xml, TRUE);
-	fputs($pagemanager_fp, '</body></html>');
-	fclose($pagemanager_fp);
-	$pd_router->model->refresh($pagemanager_pd);
-    } else
-	e('cntwriteto', 'content', $pth['file']['content']);
 }
 
 
@@ -425,7 +453,7 @@ if (isset($pagemanager)) {
     switch ($admin) {
 	case '':
 	    if ($action == 'plugin_save') {
-		pagemanager_save(stsl($_POST['xml']));
+		Pagemanager_save(stsl($_POST['xml']));
 		if (!headers_sent()) {
 		    header('Location: ' . PAGEMANAGER_URL
 			    .(isset($_GET['pagemanager-xhpages'])
