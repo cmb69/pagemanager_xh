@@ -25,7 +25,7 @@ function pagemanager_do(op) {
 		break;
 	    case 'save':
 		$('#pagemanager-xml')[0].value = $('#pagemanager').jstree(
-			'get_xml', 'nest', -1, new Array('id', 'title', 'pdattr'));
+			'get_xml', 'nest', -1, new Array('id', 'title', 'class'));
 		$('#pagemanager-form').submit();
 		break;
 	    default:
@@ -125,7 +125,7 @@ var pagemanager_modified = false;
 		var nodes = pagemanager._get_children(parent);
 		for (var i = 0; i < nodes.length; ++i) {
 		    var node = pagemanager._get_node(nodes[i]);
-		    if (node.attr('pdattr') == '1') {
+		    if (node.hasClass('pagemanager_pdattr')) {
 			pagemanager.check_node(node);
 		    }
 		    checkNodes(node);
@@ -182,7 +182,12 @@ var pagemanager_modified = false;
 	});
 
 	$('#pagemanager').bind('change_state.jstree', function (e, data) {
-	    data.rslt.attr('pdattr', data.args[1] ? '0' : '1');
+	    // TODO: do not bind during initialization
+	    if (data.args[1]) {
+		data.rslt.removeClass("pagemanager_pdattr");
+	    } else {
+		data.rslt.addClass("pagemanager_pdattr");
+	    }
 	});
 
 	$('#pagemanager').bind('create_node.jstree', function (e, data) {
@@ -238,7 +243,7 @@ var pagemanager_modified = false;
 		if (pagemanager_modified && $('#pagemanager-xml')[0].value == '') {
 		    if (confirm(PAGEMANAGER["message_confirm_leave"])) {
 			$('#pagemanager-xml')[0].value = pagemanager.get_xml(
-				'nest', -1, new Array('id', 'title', 'pdattr'));
+				'nest', -1, new Array('id', 'title', 'class'));
 			$('#pagemanager-form').submit();
 		    }
 		}

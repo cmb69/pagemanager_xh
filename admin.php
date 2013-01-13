@@ -223,12 +223,17 @@ function pagemanager_edit() {
     $irregular = FALSE;
     $pd = $pd_router->find_page(0);
 
+    $classes = array();
+    if ($pagemanager_no_rename[0]) {
+	$classes[] = 'pagemanager-no-rename';
+    }
+    if ($pd[$plugin_cf['pagemanager']['pagedata_attribute']] != '0') {
+	$classes[] = 'pagemanager_pdattr';
+    }
     $bo .= '<!-- page structure -->'."\n"
 	    .'<div id="pagemanager" ondblclick="jQuery(\'#pagemanager\').jstree(\'toggle_node\');">'."\n"
     	    .'<ul>'."\n".'<li id="pagemanager-0" title="'.$pagemanager_h[0].'"'
-	    .' pdattr="'.($pd[$plugin_cf['pagemanager']['pagedata_attribute']] == ''
-		? '1' : $pd[$plugin_cf['pagemanager']['pagedata_attribute']]).'"'
-	    .($pagemanager_no_rename[0] ? ' class="pagemanager-no-rename"' : '')
+	    .' class="' . implode(' ', $classes) . '"'
 	    .'><a href="#">'.$pagemanager_h[0].'</a>';
     $stack = array();
     for ($i = 1; $i < count($h); $i++) {
@@ -254,11 +259,16 @@ function pagemanager_edit() {
 	    $bo .= "\n".'<ul>'."\n";
 	}
 	$pd = $pd_router->find_page($i);
+	$classes = array();
+	if ($pagemanager_no_rename[$i]) {
+	    $classes[] = 'pagemanager-no-rename';
+	}
+	if ($pd[$plugin_cf['pagemanager']['pagedata_attribute']] != '0') {
+	    $classes[] = 'pagemanager_pdattr';
+	}
 	$bo .= '<li id="pagemanager-'.$i.'"'
 		.' title="'.$pagemanager_h[$i].'"'
-		.' pdattr="'.($pd[$plugin_cf['pagemanager']['pagedata_attribute']] == ''
-		    ? '1' : $pd[$plugin_cf['pagemanager']['pagedata_attribute']]).'"'
-		.($pagemanager_no_rename[$i] ? ' class="pagemanager-no-rename"' : '')
+		.' class="' . implode(' ', $classes) . '"'
 		.'><a href="#">'.$pagemanager_h[$i].'</a>';
     }
     $bo .= '</ul></div>'."\n";
@@ -296,7 +306,7 @@ function pagemanager_start_element_handler($parser, $name, $attribs) {
 	$pagemanager_state['id'] = $attribs['ID'] == ''
 		? '' : preg_replace('/(copy_)?pagemanager-([0-9]*)/', '$2', $attribs['ID']);
 	$pagemanager_state['title'] = htmlspecialchars($attribs['TITLE'], ENT_NOQUOTES, 'UTF-8');
-	$pagemanager_state['pdattr'] = $attribs['PDATTR'];
+	$pagemanager_state['pdattr'] = strpos($attribs['CLASS'], 'pagemanager_pdattr') !== false ? '1' : '0';
 	$pagemanager_state['num']++;
     }
 }
