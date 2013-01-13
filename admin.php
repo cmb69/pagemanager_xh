@@ -282,10 +282,6 @@ function pagemanager_edit() {
 		.' style="display: none"')."\n"
 	    .'</form>'."\n"
 	    .'<div id="pagemanager-footer">&nbsp;</div>'."\n";
-
-    $o .= '<div id="pagemanager-alert" title=\''
-	    .tag('img src="'.$pth['folder']['plugins'].'pagemanager/images/problem'.$image_ext.'"')
-	    .'&nbsp;'.$plugin_tx['pagemanager']['message_information'].'\'></div>'."\n";
 }
 
 

@@ -38,8 +38,7 @@ function pagemanager_do(op) {
 		    }
 		} else {
 		    if ((PAGEMANAGER["verbose"]).toLowerCase() == 'true') {
-			$('#pagemanager-alert').html(PAGEMANAGER["message_no_selection"]);
-			$('#pagemanager-alert').dialog('open');
+			window.alert(PAGEMANAGER["message_no_selection"]);
 		    }
 		}
 	}
@@ -113,14 +112,6 @@ var pagemanager_modified = false;
 	    }
 	});
 
-	var pagemanagerButtons = {};
-	pagemanagerButtons[PAGEMANAGER["button_ok"]] = function () {$(this).dialog('close');}
-	$('#pagemanager-alert').dialog({
-	    'autoOpen': false,
-	    'modal': true,
-	    'buttons': pagemanagerButtons
-	});
-
 	$('#pagemanager').bind('loaded.jstree', function () {
 	    if ($('#pagemanager-structure-warning').length == 0) {
 	        $('#pagemanager-toolbar a:first-child').show();
@@ -153,8 +144,6 @@ var pagemanager_modified = false;
 			    >= PAGEMANAGER["menu_levels"] + (data.args[1] == 'after' ? 1 : 0)) {
 			if ((PAGEMANAGER["verbose"]).toLowerCase() == 'true') {
 			    window.alert(PAGEMANAGER["message_menu_level"]);
-			    //$('#pagemanager-alert').html(PAGEMANAGER["message_menu_level"]);
-			    //$('#pagemanager-alert').dialog('open');
 			}
 			e.stopImmediatePropagation();
 			return false;
@@ -172,8 +161,7 @@ var pagemanager_modified = false;
 		    var toplevels = pagemanager._get_children(-1);
 		    if (toplevels.length == 1 && data.args[0][0] == toplevels[0]) {
 			if ((PAGEMANAGER["verbose"]).toLowerCase() == 'true') {
-			    $('#pagemanager-alert').html(PAGEMANAGER["message_delete_last"]);
-			    $('#pagemanager-alert').dialog('open');
+			    window.alert(PAGEMANAGER["message_delete_last"]);
 			}
 			e.stopImmediatePropagation();
 			return false;
@@ -300,9 +288,9 @@ var pagemanager_modified = false;
 					+ (m.p == 'last' || m.p == 'inside' ? 1 : 0) // paste vs. dnd
 				    <= PAGEMANAGER["menu_levels"]);
 			    if (!m.ot.data.dnd.active && !allowed
-				    && PAGEMANAGER["verbose"].toLowerCase() == 'true') {
-				$('#pagemanager-alert').html(PAGEMANAGER["message_menu_level"]);
-				$('#pagemanager-alert').dialog('open');
+				    && PAGEMANAGER["verbose"].toLowerCase() == 'true')
+			    {
+				window.alert(PAGEMANAGER["message_menu_level"]);
 			    }
 			    return allowed;
 		    }
