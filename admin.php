@@ -134,12 +134,15 @@ function pagemanager_toolbar($image_ext, $save_js) {
 		: 'href="'.$pth['file']['plugin_help'].'" target="_blank"');
 	$img = $imgdir.$tool.($tool != 'separator' || !$horizontal ? '' : '_v').$image_ext;
 	$class = $tool == 'separator' ? 'separator' : 'tool';
+	$help = $tool == 'save'
+	    ? utf8_ucfirst($tx['action']['save'])
+	    : $plugin_tx['pagemanager']['op_'.$tool];
+	$alt = $tool == 'help' ? $tx['editmenu']['help'] : $help;
 	$res .= ($tool != 'separator' ? '<a '.$link.' class="pl_tooltip"'.($tool == 'save' ? ' style="display: none"' : '').'>' : '')
 		.tag('img class="'.$class.'" src="'.$img.'"'
-		    .($tool != 'help' ? ' onclick="pagemanager_do(\''.$tool.'\'); return false;"' : ''))
+		    .($tool != 'help' ? ' onclick="pagemanager_do(\''.$tool.'\'); return false;"' : '') . ' alt=" ' . $alt . '"')
 		.($tool != 'separator'
-		    ? '<span>'.($tool == 'save' ? utf8_ucfirst($tx['action']['save'])
-			    : $plugin_tx['pagemanager']['op_'.$tool]).'</span></a>'
+		    ? '<span>'.$help.'</span></a>'
 		    : '')
 		.($horizontal ? '' : tag('br'))."\n";
     }
