@@ -193,7 +193,6 @@ function pagemanager_edit() {
 
     include_once($pth['folder']['plugins'].'jquery/jquery.inc.php');
     include_jQuery();
-    include_jQueryUI();
     include_jQueryPlugin('jsTree', $pth['folder']['plugins']
 	    .'pagemanager/jstree/jquery.jstree.min.js');
 
