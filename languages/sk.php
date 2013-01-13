@@ -29,7 +29,7 @@
 	$plugin_tx['pagemanager']['message_warning_leave']="Your modifications will be lost!";
 	$plugin_tx['pagemanager']['message_confirm_leave']="*** ÚPRAVY NEBOLI ULOŽENÉ! ***\n\nPotvrďte ich uloženie, inak sa vykonané zmeny stratia!\n";
 	$plugin_tx['pagemanager']['message_information']="Informácia";
-	$plugin_tx['pagemanager']['message_menu_level']="Toto presahuje <em>úrovne menu</em> - potvrdenie!";
+	$plugin_tx['pagemanager']['message_menu_level']="Toto presahuje \"úrovne menu\" - potvrdenie!";
 	$plugin_tx['pagemanager']['message_no_selection']="Prv, ne6 použijete tento nástroj, mus9te zvoliť stránku!";
 	$plugin_tx['pagemanager']['message_delete_last']="Nemôžete vymazať poslednú stránku 1. úrovne!";
 	$plugin_tx['pagemanager']['error_phpversion']="Pagemanager_XH requires at least PHP version %s!";

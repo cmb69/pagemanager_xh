@@ -152,8 +152,9 @@ var pagemanager_modified = false;
 		    if (pagemanager_level(pagemanager._get_node(data.args[0]))
 			    >= PAGEMANAGER["menu_levels"] + (data.args[1] == 'after' ? 1 : 0)) {
 			if ((PAGEMANAGER["verbose"]).toLowerCase() == 'true') {
-			    $('#pagemanager-alert').html(PAGEMANAGER["message_menu_level"]);
-			    $('#pagemanager-alert').dialog('open');
+			    window.alert(PAGEMANAGER["message_menu_level"]);
+			    //$('#pagemanager-alert').html(PAGEMANAGER["message_menu_level"]);
+			    //$('#pagemanager-alert').dialog('open');
 			}
 			e.stopImmediatePropagation();
 			return false;

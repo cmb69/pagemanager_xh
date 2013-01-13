@@ -29,7 +29,7 @@
 	$plugin_tx['pagemanager']['message_warning_leave']="Ihre Änderungen gehen verloren!";
 	$plugin_tx['pagemanager']['message_confirm_leave']="*** UNGESICHERTE ÄNDERUNGEN! ***\n\nBestätigen Sie das Speichern, ansonsten sind die Änderungen verloren!\n";
 	$plugin_tx['pagemanager']['message_information']="Information";
-	$plugin_tx['pagemanager']['message_menu_level']="Das würde Ihre <em>menu levels</em> Konfiguration übersteigen!";
+	$plugin_tx['pagemanager']['message_menu_level']="Das würde Ihre \"menu levels\" Konfiguration übersteigen!";
 	$plugin_tx['pagemanager']['message_no_selection']="Sie müssen eine Seite auswählen, bevor Sie das Werkzeug verwenden können!";
 	$plugin_tx['pagemanager']['message_delete_last']="Sie dürfen die letzte Seite auf oberster Ebene nicht löschen!";
 	$plugin_tx['pagemanager']['error_phpversion']="Pagemanager_XH benötigt mindestens PHP version %s!";

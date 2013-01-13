@@ -29,7 +29,7 @@
 	$plugin_tx['pagemanager']['message_warning_leave']="Dine ændringer vil gå tabt!";
 	$plugin_tx['pagemanager']['message_confirm_leave']="*** Ændringerne er ikke gemt! ***\n\nBekræft for at gemme dem, da de ellers vil gå tabt!\n";
 	$plugin_tx['pagemanager']['message_information']="Information";
-	$plugin_tx['pagemanager']['message_menu_level']="Dette ville overskride dine <em>menu levels</em> konfiguration!";
+	$plugin_tx['pagemanager']['message_menu_level']="Dette ville overskride dine \"menu levels\" konfiguration!";
 	$plugin_tx['pagemanager']['message_no_selection']="Du skal vælge en side, før du bruger dette værktøj!";
 	$plugin_tx['pagemanager']['message_delete_last']="Du må ikke slette den sidste topniveau på siden!";
 	$plugin_tx['pagemanager']['error_phpversion']="Pagemanager_XH kræver mindst PHP version %s!";
