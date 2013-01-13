@@ -16,7 +16,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 
-define('PAGEMANAGER_VERSION', '1pl11');
+define('PAGEMANAGER_VERSION', '2beta1');
 
 
 define('PAGEMANAGER_URL', 'http'
@@ -86,30 +86,31 @@ function pagemanager_rfc() {
 
 
 /**
- * Returns plugin version information.
+ * Returns the plugin version information.
  *
- * @return string
+ * @return string  The (X)HTML
  */
-function pagemanager_version() {
-    return tag('br').tag('hr').'<p><strong>Pagemanager_XH</strong></p>'.tag('hr')."\n"
-	    .'<p>Version: '.PAGEMANAGER_VERSION.'</p>'."\n"
-	    .'<p>Copyright &copy; 2011-2012 <a href="http://3-magi.net">Christoph M. Becker</a></p>'."\n"
-	    .'<p><a href="http://3-magi.net/?CMSimple_XH/Pagemanager_XH">'
-	    .'Pagemanager_XH</a> is powered by '
-	    .'<a href="http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple">'
-	    .'jQuery4CMSimple</a>'
-	    .' and <a href="http://www.jstree.com/">jsTree</a>.</p>'."\n"
-	    .'<p style="text-align: justify">This program is free software: you can redistribute it and/or modify'
-	    .' it under the terms of the GNU General Public License as published by'
-	    .' the Free Software Foundation, either version 3 of the License, or'
-	    .' (at your option) any later version.</p>'."\n"
-	    .'<p style="text-align: justify">This program is distributed in the hope that it will be useful,'
-	    .' but WITHOUT ANY WARRANTY; without even the implied warranty of'
-	    .' MERCHAN&shy;TABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the'
-	    .' GNU General Public License for more details.</p>'."\n"
-	    .'<p style="text-align: justify">You should have received a copy of the GNU General Public License'
-	    .' along with this program.  If not, see'
-	    .' <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>'."\n";
+function pagemanager_version()
+{
+    return tag('br') . tag('hr') . '<p><strong>Pagemanager_XH</strong></p>' . tag('hr')
+	. '<p>Version: '.PAGEMANAGER_VERSION.'</p>'
+	. '<p>Copyright &copy; 2011-2012 <a href="http://3-magi.net">Christoph M. Becker</a></p>'
+	. '<p><a href="http://3-magi.net/?CMSimple_XH/Pagemanager_XH">'
+	. 'Pagemanager_XH</a> is powered by '
+	. '<a href="http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple">'
+	. 'jQuery4CMSimple</a>'
+	. ' and <a href="http://www.jstree.com/">jsTree</a>.</p>'
+	. '<p style="text-align: justify">This program is free software: you can redistribute it and/or modify'
+	. ' it under the terms of the GNU General Public License as published by'
+	. ' the Free Software Foundation, either version 3 of the License, or'
+	. ' (at your option) any later version.</p>'
+	. '<p style="text-align: justify">This program is distributed in the hope that it will be useful,'
+	. ' but WITHOUT ANY WARRANTY; without even the implied warranty of'
+	. ' MERCHAN&shy;TABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the'
+	. ' GNU General Public License for more details.</p>'
+	. '<p style="text-align: justify">You should have received a copy of the GNU General Public License'
+	. ' along with this program.  If not, see'
+	. ' <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>';
 }
 
 
@@ -294,58 +295,112 @@ function pagemanager_edit() {
 }
 
 
+/**
+ * Parsing of jsTree's XML result.
+ *
+ * @package Pagemanager
+ */
 class Pagemanager_Parser
 {
+    /**
+     * The current menu level.
+     *
+     * @var int
+     */
     var $level;
+
+    /**
+     * The current page index.
+     *
+     * @var int
+     */
     var $id;
+
+    /**
+     * The current page title.
+     *
+     * @var string
+     */
     var $title;
+
+    /**
+     * The current value of the pagedata attribute.
+     *
+     * @var string
+     */
     var $pdattr;
+
+    /**
+     * The current page number.
+     *
+     * @var int
+     */
     var $num;
+
+    /**
+     * The contents.
+     *
+     * @var array
+     */
     var $c = array();
+
+    /**
+     * The page data.
+     *
+     * @var array
+     */
     var $pd = array();
 
     /**
-     * Handles start elements of jsTree's xml result.
+     * Handles XML start tags.
      *
+     * @param resource $parser  The XML parser.
+     * @param string $name  The name of the element in upper case.
+     * @param array $attribs  Dictionary of attributes.
      * @return void
      */
-    function handleStartElement($parser, $name, $attribs)
+    function handleStartTag($parser, $name, $attribs)
     {
 	if ($name == 'ITEM') {
 	    $this->level++;
 	    $this->id = $attribs['ID'] == ''
 		? ''
-		: preg_replace('/(copy_)?pagemanager-([0-9]*)/', '$2', $attribs['ID']);
+		: preg_replace('/(copy_)?pagemanager-([0-9]+)/', '$2', $attribs['ID']);
 	    $this->title = htmlspecialchars($attribs['TITLE'], ENT_NOQUOTES, 'UTF-8');
 	    $this->pdattr = strpos($attribs['CLASS'], 'pagemanager_pdattr') !== false ? '1' : '0';
 	    $this->num++;
 	}
     }
 
-
     /**
-     * Handles end elements of jsTree's xml result.
+     * Handles XML end tags.
      *
+     * @param resource $parser  The XML parser.
+     * @param string $name  The name of the element in upper case.
      * @return void
      */
-    function handleEndElement($parser, $name)
+    function handleEndTag($parser, $name)
     {
 	if ($name == 'ITEM') {
 	    $this->level--;
 	}
     }
 
-
     /**
-     * Handles character data of jsTree's xml result.
+     * Handles XML character data.
      *
+     * @global array  The contents.
+     * @global array  The configuration of the core.
+     * @global object  The pagedata router.
+     * @global array  The configuration of the plugins.
+     * @param resource $parser  The XML parser.
+     * @param string $data  The character data.
      * @return void
      */
     function handleCData($parser, $data)
     {
 	global $c, $cf, $pd_router, $plugin_cf;
 
-	//$data = htmlspecialchars($data, ENT_NOQUOTES, 'UTF-8');
 	if (isset($c[$this->id])) {
 	    $cnt = $c[$this->id];
 	    $cnt = preg_replace('/<h[1-' . $cf['menu']['levels'] . ']([^>]*)>'
@@ -357,32 +412,37 @@ class Pagemanager_Parser
 	    $cnt = '<h' . $this->level . '>' . $this->title
 		. '</h' . $this->level . '>';
 	}
-	$this->c[] = $cnt;
+	$this->c[] = rmnl($cnt . "\n");
 
 	if ($this->id == '') {
 	    $pd = $pd_router->new_page(array());
 	} else {
 	    $pd = $pd_router->find_page($this->id);
 	}
-	$pd['url'] = uenc($this->title); // TODO: htmlspecialchars???
+	$pd['url'] = uenc($this->title);
 	$pd[$plugin_cf['pagemanager']['pagedata_attribute']] = $this->pdattr;
 	$this->pd[] = $pd;
     }
 
-
+    /**
+     * Parses the XML and returns the new contents and pagedata array.
+     *
+     * @param string $xml  The XML.
+     * @return array
+     */
     function parse($xml)
     {
 	$this->c = array();
 	$this->pd = array();
 	$parser = xml_parser_create('UTF-8');
-	xml_set_element_handler($parser, array($this, 'handleStartElement'),
-				array($this, 'handleEndElement'));
+	xml_set_element_handler($parser, array($this, 'handleStartTag'),
+				array($this, 'handleEndTag'));
 	xml_set_character_data_handler($parser, array($this, 'handleCData'));
 	$this->level = 0;
 	$this->num = -1;
-	$this->c[] = '<html><head><title>Content</title></head><body>';
+	$this->c[] = "<html><head><title>Content</title></head><body>\n";
 	xml_parse($parser, $xml, true);
-	$this->c[] = '</body></html>';
+	$this->c[] = "</body></html>\n";
 
 	return array($this->c, $this->pd);
     }
@@ -401,9 +461,14 @@ function Pagemanager_save($xml)
     $parser = new Pagemanager_Parser();
     list($c, $pd) = $parser->parse($xml);
     if (($fh = fopen($pth['file']['content'], 'w')) !== false &&
-	fwrite($fh, implode("\n", $c)) !== false)
+	fwrite($fh, implode('', $c)) !== false)
     {
 	$pd_router->model->refresh($pd);
+	$qs = isset($_GET['pagemanager-xhpages'])
+	    ? '?&normal&xhpages'
+	    : '?&pagemanager&normal&admin=plugin_main';
+	header('Location: ' . PAGEMANAGER_URL . $qs);
+	exit();
     } else {
 	e('cntsave', 'content', $pth['file']['content']);
     }
@@ -422,10 +487,10 @@ if ($f === 'xhpages' && isset($cf['pagemanager']['external'])
 }
 
 
-/**
- * Plugin administration
+/*
+ * Handle the plugin administration.
  */
-if (isset($pagemanager)) {
+if (isset($pagemanager) && $pagemanager == 'true') {
     // check requirements (RELEASE-TODO)
     define('PAGEMANAGER_PHP_VERSION', '4.3.0');
     if (version_compare(PHP_VERSION, PAGEMANAGER_PHP_VERSION) < 0)
@@ -445,31 +510,21 @@ if (isset($pagemanager)) {
     include_once $pth['folder']['plugins'] . 'utf8/utf8.php';
     include_once UTF8 . '/ucfirst.php';
 
-    initvar('admin');
-    initvar('action');
-
     $o .= print_plugin_admin('on');
 
     switch ($admin) {
-	case '':
-	    if ($action == 'plugin_save') {
-		Pagemanager_save(stsl($_POST['xml']));
-		if (!headers_sent()) {
-		    header('Location: ' . PAGEMANAGER_URL
-			    .(isset($_GET['pagemanager-xhpages'])
-			    ? '?&normal&xhpages'
-			    : '?&pagemanager&normal&admin=plugin_main'));
-		}
-		exit();
-	    } else {
-		$o .= pagemanager_version();
-	    }
-	    break;
-	case 'plugin_main':
-	    pagemanager_edit();
-	    break;
-	default:
-	    $o .= plugin_admin_common($action, $admin, $plugin);
+    case '':
+	if ($action == 'plugin_save') {
+	    Pagemanager_save(stsl($_POST['xml']));
+	} else {
+	    $o .= pagemanager_version();
+	}
+	break;
+    case 'plugin_main':
+	pagemanager_edit();
+	break;
+    default:
+	$o .= plugin_admin_common($action, $admin, $plugin);
     }
 }
 
