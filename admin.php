@@ -7,15 +7,19 @@
  */
 
 
-// utf-8-marker: äöüß
 
-
+/*
+ * Prevent direct access.
+ */
 if (!defined('CMSIMPLE_XH_VERSION')) {
     header('HTTP/1.0 403 Forbidden');
     exit;
 }
 
 
+/**
+ * The version string.
+ */
 define('PAGEMANAGER_VERSION', '2beta1');
 
 
@@ -27,61 +31,47 @@ define('PAGEMANAGER_URL', 'http'
 
 
 /**
- * Reads content.htm and sets $pagemanager_h.
+ * Returns the list of unmodified headings and the list of flags
+ * whether they are renameable (i.e. without further markup).
  *
- * The function was copied from CMSimple_XH 1.4's cms.php and modified
- * to just set the global $pagemanager_h with the unmodified page titles
- * and $pagemanager_no_rename wether the heading is partially formatted.
+ * It's not possible to use $c here, as this may already be modified by plugins
+ * (e.g. page_param's "Alternative heading").
  *
- * @return void
+ * @global array  The paths of system files and folders.
+ * @global array  The configuration of the core.
+ * @global array  The localization of the core.
+ * @return array
  */
-function pagemanager_rfc() {
-    global $pth, $tx, $cf, $pagemanager_h, $pagemanager_no_rename;
+function Pagemanager_rfc()
+{
+    global $pth, $cf, $tx;
 
-    $c = array();
-    $pagemanager_h = array();
-    $u = array();
-    $l = array();
+    $headings = array();
+    $renameable = array();
     $empty = 0;
-    $duplicate = 0;
 
     $content = file_get_contents($pth['file']['content']);
     $stop = $cf['menu']['levels'];
     $split_token = '#@CMSIMPLE_SPLIT@#';
-
 
     $content = preg_split('~</body>~i', $content);
     $content = preg_replace('~<h[1-' . $stop . ']~i', $split_token . '$0', $content[0]);
     $content = explode($split_token, $content);
     array_shift($content);
 
+    if (empty($content)) {
+        $headings[] = trim(strip_tags($tx['toc']['newpage']));
+	$renameable[] = !preg_match('/.*?<.*?/isU', $tx['toc']['newpage']);
+    }
+
     foreach ($content as $page) {
-        $c[] = $page;
         preg_match('~<h([1-' . $stop . ']).*>(.*)</h~isU', $page, $temp);
-        $l[] = $temp[1];
-        $temp_h[] = trim(strip_tags($temp[2]));
-	$pagemanager_no_rename[] = preg_match('/.*?<.*?/isU', $temp[2]);
+        $heading = trim(strip_tags($temp[2]));
+        $headings[] = empty($heading) ? $tx['toc']['empty'] . ' ' . ++$empty : $heading;
+	$renameable[] = !preg_match('/.*?<.*?/isU', $temp[2]);
     }
 
-    $cl = count($c);
-    $s = -1;
-
-    if ($cl == 0) {
-        $c[] = '<h1>' . $tx['toc']['newpage'] . '</h1>';
-        $pagemanager_h[] = trim(strip_tags($tx['toc']['newpage']));
-	$pagemanager_no_rename[] = preg_match('/.*?<.*?/isU', $tx['toc']['newpage']);
-        $l[] = 1;
-        $s = 0;
-        return;
-    }
-
-    foreach ($temp_h as $i => $pagemanager_heading) {
-        if ($pagemanager_heading == '') {
-            $empty++;
-            $pagemanager_heading = $tx['toc']['empty'] . ' ' . $empty;
-        }
-	$pagemanager_h[$i] = $pagemanager_heading;
-    }
+    return array($headings, $renameable);
 }
 
 
@@ -122,7 +112,8 @@ function Pagemanager_aboutView()
  * @param  string $save_js    The js code for onclick.
  * @return string	      The (x)html.
  */
-function pagemanager_toolbar($image_ext, $save_js) {
+function pagemanager_toolbar($image_ext, $save_js)
+{
     global $pth, $plugin_cf, $plugin_tx, $tx;
 
     $imgdir = $pth['folder']['plugins'].'pagemanager/images/';
@@ -154,17 +145,22 @@ function pagemanager_toolbar($image_ext, $save_js) {
 
 
 /**
- * Instanciate the pagemanager.js template.
+ * Includes the JS scripts.
  *
  * @param  string $image_ext  The image extension (.gif or .png).
- * @return string  	      The (x)html.
+ * @return string  The (X)HTML.
  */
-function pagemanager_instanciateJS($image_ext) {
-    global $pth, $plugin_cf, $plugin_tx, $cf, $tx;
+function Pagemanager_JS($image_ext)
+{
+    global $pth, $cf, $tx, $plugin_cf, $plugin_tx;
 
-    $pcf = $plugin_cf['pagemanager'];
+    include_once($pth['folder']['plugins'] . 'jquery/jquery.inc.php');
+    include_jQuery();
+    include_jQueryPlugin('jsTree', $pth['folder']['plugins']
+			 . 'pagemanager/jstree/jquery.jstree.min.js');
+
     $texts = array();
-    foreach ($pcf as $key => $val) {
+    foreach ($plugin_cf['pagemanager'] as $key => $val) {
 	$texts[$key] = $val;
     }
     foreach ($plugin_tx['pagemanager'] as $key => $val) {
@@ -175,12 +171,121 @@ function pagemanager_instanciateJS($image_ext) {
     $texts['image_ext'] = $image_ext;
     $texts['image_dir'] = $pth['folder']['plugins'] . 'pagemanager/images/';
 
-    $json = json_encode($texts);
+    $json = json_encode($texts); // TODO: provide fallback
 
     return '<script type="text/javascript">/* <![CDATA[ */var PAGEMANAGER = '
 	. $json . ';/* ]]> */</script>'
-	. '<script type="text/javascript" src="'
-	. $pth['folder']['plugins'] . 'pagemanager/pagemanager.js"></script>';
+	. '<script type="text/javascript" src="' . $pth['folder']['plugins']
+	. 'pagemanager/pagemanager.js"></script>';
+}
+
+
+class Pagemanager_Pages
+{
+//    /**
+//     * Returns the index of the parent page of page no. $n.
+//     * Returns null, if $n is a toplevel page.
+//     *
+//     * @param  int $n
+//     * @param  bool $ignoreHidden  Whether hidden pages should be ignored.
+//     * @return int
+//     */
+//    function parentPage($n, $ignoreHidden = true)
+//    {
+//	global $l;
+//
+//	for ($i = $n - 1; $i >= 0; $i--) {
+//	    if ($l[$i] < $l[$n]) {
+//		return $i;
+//	    }
+//	}
+//	return null;
+//    }
+
+    // must call %this->pages() before this is set correctly
+    var $irregular = false;
+
+    /**
+     * Returns the list of indexes of direct children of page no. $n.
+     *
+     * @param  int $n
+     * @param  bool $ignoreHidden  Whether hidden pages should be ignored.
+     * @return array of int.
+     */
+    function childPages($n)
+    {
+	global $cl, $l, $cf;
+
+	$res = array();
+	$ll = $cf['menu']['levelcatch'];
+	for ($i = $n + 1; $i < $cl; $i++) {
+	    if ($l[$i] <= $l[$n]) {
+		break;
+	    }
+	    if ($l[$i] <= $ll) {
+		if ($l[$i] - 1 > $l[$n]) {
+		    $this->irregular = true;
+		}
+		$res[] = $i;
+		$ll = $l[$i];
+	    }
+	}
+	return $res;
+    }
+
+    /**
+     * Returns the list of indexes of toplevel pages.
+     *
+     * @param  bool $ignoreHidden  Whether hidden pages should be ignored.
+     * @return array of int
+     */
+    function toplevelPages()
+    {
+	global $cl, $l;
+
+	$res = array();
+	for ($i = 0; $i < $cl; $i++) {
+	    if ($l[$i] == 1) {
+		$res[] = $i;
+	    }
+	}
+	return $res;
+    }
+
+    function pages($i = null)
+    {
+	$pages = array();
+	$children = isset($i) ? $this->childPages($i) : $this->toplevelPages();
+	foreach ($children as $i) {
+	    $pages[$i] = $this->pages($i);
+	}
+	return $pages;
+    }
+}
+
+
+
+function pagemanager_pagelist($pages, $renameable)
+{
+    global $h, $pd_router, $plugin_cf;
+
+    $o = '<ul>';
+    foreach ($pages as $page => $children) {
+	$pd = $pd_router->find_page($page);
+	$classes = array();
+	if ($renameable[$page]) {
+	    $classes[] = 'pagemanager-no-rename';
+	}
+	if ($pd[$plugin_cf['pagemanager']['pagedata_attribute']] != '0') {
+	    $classes[] = 'pagemanager_pdattr';
+	}
+	$class = implode(' ', $classes);
+	$o .= "<li id=\"pagemanager-$page\" title=\"{$h[$page]}\" class=\"$class\">"
+	    . "<a href=\"#\">{$h[$page]}</a>"
+	    . pagemanager_pagelist($children, $renameable) . '</li>';
+    }
+    $o .= '</ul>';
+    return $o;
 }
 
 
@@ -189,110 +294,42 @@ function pagemanager_instanciateJS($image_ext) {
  *
  * @return void
  */
-function pagemanager_edit() {
-    global $hjs, $pth, $o, $sn, $h, $l, $plugin, $plugin_cf, $tx, $plugin_tx,
-	$u, $pagemanager_h, $pagemanager_no_rename, $pd_router;
+function pagemanager_edit()
+{
+    global $pth, $sn, $tx, $plugin_cf, $plugin_tx;
 
-    include_once($pth['folder']['plugins'].'jquery/jquery.inc.php');
-    include_jQuery();
-    include_jQueryPlugin('jsTree', $pth['folder']['plugins']
-	    .'pagemanager/jstree/jquery.jstree.min.js');
 
     $image_ext = (file_exists($pth['folder']['plugins'].'pagemanager/images/help.png'))
-	    ? '.png' : '.gif';
+	    ? '.png' : '.gif'; // TODO: use PNG only
 
-    pagemanager_rfc();
-
-    $bo = '';
-
-    $swo = '<div id="pagemanager-structure-warning" class="cmsimplecore_warning"><p>'
-	    .$plugin_tx['pagemanager']['error_structure_warning']
-	    .'</p><p><a href="#" onclick="pagemanager_confirmStructureWarning();return false">'
-	    .$plugin_tx['pagemanager']['error_structure_confirmation']
-	    .'</a></div>'."\n";
+    list($h, $renameable) = Pagemanager_rfc();
 
 
     $save_js = 'jQuery(\'#pagemanager-xml\')[0].value ='
 	    .' jQuery(\'#pagemanager\').jstree(\'get_xml\', \'nest\', -1,
 		new Array(\'id\', \'title\', \'pdattr\'))';
     $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
-    $bo .= '<form id="pagemanager-form" action="'.$sn.'?&amp;pagemanager&amp;edit'.$xhpages.'" method="post">'."\n";
-    $bo .= strtolower($plugin_cf['pagemanager']['toolbar_show']) == 'true'
+    $pmp = new Pagemanager_Pages();
+    $toolbar = strtolower($plugin_cf['pagemanager']['toolbar_show']) == 'true'
 	    ? pagemanager_toolbar($image_ext, $save_js) : '';
-
-    // output the treeview of the page structure
-    // uses ugly hack to clean up irregular page structure
-    $irregular = FALSE;
-    $pd = $pd_router->find_page(0);
-
-    $classes = array();
-    if ($pagemanager_no_rename[0]) {
-	$classes[] = 'pagemanager-no-rename';
-    }
-    if ($pd[$plugin_cf['pagemanager']['pagedata_attribute']] != '0') {
-	$classes[] = 'pagemanager_pdattr';
-    }
-    $bo .= '<!-- page structure -->'."\n"
-	    .'<div id="pagemanager" ondblclick="jQuery(\'#pagemanager\').jstree(\'toggle_node\');">'."\n"
-    	    .'<ul>'."\n".'<li id="pagemanager-0" title="'.$pagemanager_h[0].'"'
-	    .' class="' . implode(' ', $classes) . '"'
-	    .'><a href="#">'.$pagemanager_h[0].'</a>';
-    $stack = array();
-    for ($i = 1; $i < count($h); $i++) {
-	$ldiff = $l[$i] - $l[$i-1];
-	if ($ldiff <= 0) { // same level or decreasing
-	    $bo .= '</li>'."\n";
-	    if ($ldiff != 0 && count($stack) > 0) {
-		$jdiff = array_pop($stack);
-		if ($jdiff + $ldiff > 0) {
-		    array_push($stack, $jdiff + $ldiff);
-		    $ldiff = 0;
-		} else {
-		    $ldiff += $jdiff - 1;
-		}
-	    }
-	    for ($j = $ldiff; $j < 0; $j++)
-		$bo .= '</ul></li>'."\n";
-	} else { // level increasing
-	    if ($ldiff > 1) {
-		array_push($stack, $ldiff);
-		$irregular = TRUE;
-	    }
-	    $bo .= "\n".'<ul>'."\n";
-	}
-	$pd = $pd_router->find_page($i);
-	$classes = array();
-	if ($pagemanager_no_rename[$i]) {
-	    $classes[] = 'pagemanager-no-rename';
-	}
-	if ($pd[$plugin_cf['pagemanager']['pagedata_attribute']] != '0') {
-	    $classes[] = 'pagemanager_pdattr';
-	}
-	$bo .= '<li id="pagemanager-'.$i.'"'
-		.' title="'.$pagemanager_h[$i].'"'
-		.' class="' . implode(' ', $classes) . '"'
-		.'><a href="#">'.$pagemanager_h[$i].'</a>';
-    }
-    $bo .= '</ul></div>'."\n";
-
-    if ($irregular)
-	$o .= $swo;
-
-    $o .= $bo;
-
-    $o .= pagemanager_instanciateJS($image_ext);
-
-    // HACK?: send 'edit' as query param to prevent the last if clause in
-    //		rfc() to insert #CMSimple hide#
-    $o .= tag('input type="hidden" name="admin" value=""')."\n"
+    $inputs = tag('input type="hidden" name="admin" value=""')."\n"
 	    .tag('input type="hidden" name="action" value="plugin_save"')."\n"
 	    .tag('input type="hidden" name="xml" id="pagemanager-xml" value=""')."\n"
 	    .tag('input id="pagemanager-submit" type="submit" class="submit" value="'
 		.utf8_ucfirst($tx['action']['save']).'"'
 		.' onclick="'.$save_js.'"'
-		.' style="display: none"')."\n"
-	    .'</form>'."\n"
-	    .'<div id="pagemanager-footer">&nbsp;</div>'."\n";
+		.' style="display: none"');
+
+    $bag = array('ptx' => $plugin_tx['pagemanager'],
+		 'pagelist' => pagemanager_pagelist($pmp->pages(), $renameable),
+		 'irregular' => $pmp->irregular, // order is important!
+		 'toolbar' => $toolbar,
+		 'sn' => $sn,
+		 'xhpages' => $xhpages,
+		 'inputs' => $inputs,
+		 'scripts' => Pagemanager_JS($image_ext));
+
+    return Pagemanager_view('treeview', $bag);
 }
 
 
@@ -484,7 +521,7 @@ if ($f === 'xhpages' && isset($cf['pagemanager']['external'])
 {
     include_once $pth['folder']['plugins'] . 'utf8/utf8.php';
     include_once UTF8 . '/ucfirst.php';
-    pagemanager_edit();
+    $o .= pagemanager_edit();
 }
 
 
@@ -522,7 +559,7 @@ if (isset($pagemanager) && $pagemanager == 'true') {
 	}
 	break;
     case 'plugin_main':
-	pagemanager_edit();
+	$o .= pagemanager_edit();
 	break;
     default:
 	$o .= plugin_admin_common($action, $admin, $plugin);

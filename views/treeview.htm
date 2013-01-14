@@ -1,0 +1,22 @@
+<!-- Pagemanager_XH treeview -->
+<?php if ($irregular):?>
+<div id="pagemanager-structure-warning" class="cmsimplecore_warning">
+    <p><?php echo $ptx['error_structure_warning'];?></p>
+    <p>
+	<a href="#" onclick="pagemanager_confirmStructureWarning();return false">
+	    <?php echo $ptx['error_structure_confirmation'];?>
+	</a>
+    </p>
+</div>
+<?php endif;?>
+<form id="pagemanager-form"
+      action="<?php echo $sn;?>?&amp;pagemanager&amp;edit<?php echo $xhpages;?>"
+							       method="post">
+    <?php echo $toolbar;?>
+    <div id="pagemanager" ondblclick="jQuery('#pagemanager').jstree('toggle_node');">
+	<?php echo $pagelist;?>
+    </div>
+    <?php echo $inputs;?>
+    <div id="pagemanager-footer">&nbsp;</div><!-- TODO: still used? -->
+</form>
+<?php echo $scripts;?>
