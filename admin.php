@@ -337,7 +337,7 @@ function pagemanager_cdata_handler($parser, $data) {
 	$cnt = $c[$pagemanager_state['id']];
 	$cnt = preg_replace('/<h[1-'.$cf['menu']['levels'].']([^>]*)>'
 		.'((<[^>]*>)*)[^<]*((<[^>]*>)*)<\/h[1-'.$cf['menu']['levels'].']([^>]*)>/i',
-		'<h'.$pagemanager_state['level'].'$1>${2}'.$pagemanager_state['title'].'$4'
+		'<h'.$pagemanager_state['level'].'$1>${2}'.addcslashes($pagemanager_state['title'], '$\\').'$4'
 		.'</h'.$pagemanager_state['level'].'$6>', $cnt, 1);
 	fwrite($pagemanager_fp, rmnl($cnt."\n"));
     } else {
