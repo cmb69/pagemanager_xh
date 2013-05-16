@@ -16,7 +16,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 
-define('PAGEMANAGER_VERSION', '1pl11');
+define('PAGEMANAGER_VERSION', '1pl12');
 
 
 define('PAGEMANAGER_URL', 'http'
@@ -93,7 +93,7 @@ function pagemanager_rfc() {
 function pagemanager_version() {
     return tag('br').tag('hr').'<p><strong>Pagemanager_XH</strong></p>'.tag('hr')."\n"
 	    .'<p>Version: '.PAGEMANAGER_VERSION.'</p>'."\n"
-	    .'<p>Copyright &copy; 2011-2012 <a href="http://3-magi.net">Christoph M. Becker</a></p>'."\n"
+	    .'<p>Copyright &copy; 2011-2013 <a href="http://3-magi.net">Christoph M. Becker</a></p>'."\n"
 	    .'<p><a href="http://3-magi.net/?CMSimple_XH/Pagemanager_XH">'
 	    .'Pagemanager_XH</a> is powered by '
 	    .'<a href="http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple">'
