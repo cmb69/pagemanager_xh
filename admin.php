@@ -284,13 +284,11 @@ function pagemanager_edit() {
 	    .'</form>'."\n"
 	    .'<div id="pagemanager-footer">&nbsp;</div>'."\n";
 
-    $o .= '<div id="pagemanager-confirmation" title=\''
-	    .tag('img src="'.$pth['folder']['plugins'].'pagemanager/images/question'.$image_ext.'"')
-	    .'&nbsp;'.$plugin_tx['pagemanager']['message_confirm']
-	    .'\'></div>'."\n"
-	    .'<div id="pagemanager-alert" title=\''
-	    .tag('img src="'.$pth['folder']['plugins'].'pagemanager/images/problem'.$image_ext.'"')
-	    .'&nbsp;'.$plugin_tx['pagemanager']['message_information'].'\'></div>'."\n";
+    $o .= '<div id="pagemanager-confirmation" title="'
+	    .$plugin_tx['pagemanager']['message_confirm']
+	    .'"></div>'."\n"
+	    .'<div id="pagemanager-alert" title="'
+	    .$plugin_tx['pagemanager']['message_information'].'"></div>'."\n";
 }
 
 
