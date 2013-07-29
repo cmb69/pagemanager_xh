@@ -21,9 +21,9 @@ define('PAGEMANAGER_VERSION', '1pl12');
 
 define('PAGEMANAGER_URL', 'http'
    . (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
-   . '://' . $_SERVER['SERVER_NAME']
+   . '://' . $_SERVER['HTTP_HOST']
    . ($_SERVER['SERVER_PORT'] < 1024 ? '' : ':' . $_SERVER['SERVER_PORT'])
-   . preg_replace('/index.php$/', '', $_SERVER['SCRIPT_NAME']));
+   . preg_replace('/index.php$/', '', $sn));
 
 
 /**
