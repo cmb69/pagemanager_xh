@@ -216,7 +216,8 @@ function pagemanager_edit() {
 	    .' jQuery(\'#pagemanager\').jstree(\'get_xml\', \'nest\', -1,
 		new Array(\'id\', \'title\', \'pdattr\'))';
     $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
-    $bo .= '<form id="pagemanager-form" action="'.$sn.'?&amp;pagemanager&amp;edit'.$xhpages.'" method="post">'."\n";
+    $bo .= '<form id="pagemanager-form" action="'.$sn.'?&amp;pagemanager&amp;edit'
+	.$xhpages.'" method="post" accept-charset="UTF-8">'."\n";
     $bo .= strtolower($plugin_cf['pagemanager']['toolbar_show']) == 'true'
 	    ? pagemanager_toolbar($image_ext, $save_js) : '';
 
