@@ -368,6 +368,8 @@ function pagemanager_save($xml) {
     xml_set_character_data_handler($parser, 'pagemanager_cdata_handler');
     $pagemanager_state['level'] = 0;
     $pagemanager_state['num'] = -1;
+    copy($pth['file']['content'], $pth['folder']['content'] . 'pagemanager_content.htm');
+    copy($pth['file']['pagedata'], $pth['folder']['content'] . 'pagemanager_pagedata.php');
     if ($pagemanager_fp = fopen($pth['file']['content'], 'w')) {
 	fputs($pagemanager_fp, '<html><head><title>Content</title></head><body>'."\n");
 	xml_parse($parser, $xml, TRUE);
