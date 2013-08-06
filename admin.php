@@ -16,7 +16,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 
-define('PAGEMANAGER_VERSION', '1pl12');
+define('PAGEMANAGER_VERSION', '1pl13');
 
 
 define('PAGEMANAGER_URL', 'http'
