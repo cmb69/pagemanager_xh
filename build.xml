@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id$ -->
+
+<project name="Pagamanger" default="default">
+
+    <target name="compat">
+        <exec command="pci --dir . --tab 12,12,20 --summarize"
+              logoutput="true"/>
+    </target>
+
+    <target name="build">
+        <fail unless="version" message="version is not defined!"/>
+        <svnexport revision="" repositoryurl="." todir="export"/>
+        <move todir="dist">
+            <fileset dir="export">
+                <include name="admin.php"/>
+                <include name="version.nfo"/>
+            </fileset>
+            <filterchain>
+                <replacetokens>
+                    <token key="PAGEMANAGER_VERSION" value="${version}"/>
+                </replacetokens>
+            </filterchain>
+        </move>
+        <move todir="dist">
+            <fileset dir="export">
+                <exclude name="future.txt"/>
+            </fileset>
+        </move>
+        <delete dir="export"/>
+        <copy file="dist/config/config.php" tofile="dist/config/defaultconfig.php"/>
+        <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
+        <zip destfile="Pagemanager_XH-${version}.zip" basedir="dist" prefix="pagemanager/"/>
+        <delete dir="dist"/>
+    </target>
+
+</project>
