@@ -145,6 +145,43 @@ function pagemanager_toolbar($image_ext, $save_js) {
     return $res;
 }
 
+/**
+ * Returns an escaped plugin configuration option.
+ * Helper for @see{pagemanager_instanciateJS}.
+ *
+ * @param array $matches The matches of a preg_replace.
+ *
+ * @return string
+ *
+ * @since 1pl14
+ */
+function Pagemanager_replaceConfig($matches)
+{
+    global $plugin_cf;
+
+    $cf = $plugin_cf['pagemanager'][$matches[1]];
+    $cf = addcslashes($cf, "\0'\"\\\f\n\r\t\v");
+    return $cf;
+}
+
+/**
+ * Returns an escaped plugin language string.
+ * Helper for @see{pagemanager_instanciateJS}.
+ *
+ * @param array $matches The matches of a preg_replace.
+ *
+ * @return string
+ *
+ * @since 1pl14
+ */
+function Pagemanager_replaceLang($matches)
+{
+    global $plugin_tx;
+
+    $tx = $plugin_tx['pagemanager'][$matches[1]];
+    $tx = addcslashes($tx, "\0'\"\\\f\n\r\t\v");
+    return $tx;
+}
 
 /**
  * Instanciate the pagemanager.js template.
@@ -157,18 +194,8 @@ function pagemanager_instanciateJS($image_ext) {
 
     $js = rf($pth['folder']['plugins'].'pagemanager/pagemanager.js');
 
-    preg_match_all('/<<<PC_(.*)>>>/', $js, $options);
-    foreach ($options[1] as $opt) {
-	$pagemanager_cf[$opt] = addcslashes($plugin_cf['pagemanager'][$opt],
-		"\0'\"\\\f\n\r\t\v");
-    }
-    preg_match_all('/<<<PT_(.*)>>>/', $js, $options);
-    foreach ($options[1] as $opt)
-	$pagemanager_tx[$opt] = addcslashes($plugin_tx['pagemanager'][$opt],
-		"\0'\"\\\f\n\r\t\v");
-
-    $js = preg_replace('/<<<PC_(.*)>>>/e', '$pagemanager_cf["$1"]', $js);
-    $js = preg_replace('/<<<PT_(.*)>>>/e', '$pagemanager_tx["$1"]', $js);
+    $js = preg_replace_callback('/<<<PC_(.*)>>>/', 'Pagemanager_replaceConfig', $js);
+    $js = preg_replace_callback('/<<<PT_(.*)>>>/', 'Pagemanager_replaceLang', $js);
     $js = str_replace('<<<MENU_LEVELS>>>', $cf['menu']['levels'], $js);
     $js = str_replace('<<<TOC_DUPL>>>', $tx['toc']['dupl'], $js);
     $js = str_replace('<<<IMAGE_EXT>>>', $image_ext, $js);
