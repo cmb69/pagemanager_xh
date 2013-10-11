@@ -354,10 +354,10 @@ function pagemanager_cdata_handler($parser, $data) {
 
 
 /**
- * Saves content.htm manually and
- * pagedata.php via $pd_router->model->refresh().
+ * Saves content.htm manually and pagedata.php via $pd_router->model->refresh().
+ * Returns whether that succeeded.
  *
- * @return void
+ * @return bool
  */
 function pagemanager_save($xml) {
     global $pth, $tx, $pd_router, $pagemanager_state, $pagemanager_fp, $pagemanager_pd;
@@ -376,8 +376,10 @@ function pagemanager_save($xml) {
 	fputs($pagemanager_fp, '</body></html>');
 	fclose($pagemanager_fp);
 	$pd_router->model->refresh($pagemanager_pd);
+	return true;
     } else
 	e('cntwriteto', 'content', $pth['file']['content']);
+	return false;
 }
 
 
@@ -424,14 +426,15 @@ if (isset($pagemanager)) {
     switch ($admin) {
 	case '':
 	    if ($action == 'plugin_save') {
-		pagemanager_save(stsl($_POST['xml']));
-		if (!headers_sent()) {
-		    header('Location: ' . PAGEMANAGER_URL
-			    .(isset($_GET['pagemanager-xhpages'])
-			    ? '?&normal&xhpages'
-			    : '?&pagemanager&normal&admin=plugin_main'));
+		if (pagemanager_save(stsl($_POST['xml']))) {
+		    if (!headers_sent()) {
+			header('Location: ' . PAGEMANAGER_URL
+				.(isset($_GET['pagemanager-xhpages'])
+				? '?&normal&xhpages'
+				: '?&pagemanager&normal&admin=plugin_main'));
+		    }
+		    exit();
 		}
-		exit();
 	    } else {
 		$o .= pagemanager_version();
 	    }
