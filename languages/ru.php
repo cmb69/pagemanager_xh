@@ -13,7 +13,6 @@ $plugin_tx['pagemanager']['cf_toolbar_vertical']="<p>Отображать пан
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>Да/нет (по умолчанию <b>да</b>) - установка состояния страниц с помощью поля выбора (\"галочки\"), например, <b>опубликована/published</b> или <b>связана с меню/linked_to_menu</b>.</p><p><strong>Внимание:</strong> если вы выбрали неверный атрибут, вы запутаетесь в ваших страницах (pagedata.php)!</p>";
 $plugin_tx['pagemanager']['cf_treeview_theme']="<p>Тема дерева менеджера страниц: <b>cmsimple</b></p><p>Другие темы доступны на сайте http://3-magi.net/?CMSimple_XH/Pagemanager_XH.</p>";
 $plugin_tx['pagemanager']['cf_treeview_animation']="<p>Продолжительность анимации закрытия/открытия окна в ms. Параметр 0 - без анимации.</p>";
-$plugin_tx['pagemanager']['cf_utf8_marker']="<p>Системная переменная. <strong>Не изменять!</strong></p>";
 $plugin_tx['pagemanager']['menu_main']="Страница администрирования";
 $plugin_tx['pagemanager']['op_expand']="Развернуть все страницы";
 $plugin_tx['pagemanager']['op_collapse']="Свернуть все страницы";
@@ -49,6 +48,5 @@ $plugin_tx['pagemanager']['error_structure_warning']="<strong>Неправиль
 $plugin_tx['pagemanager']['error_nesting']="Структура страниц имеет слишком большую вложенность!";
 $plugin_tx['pagemanager']['error_cant_rename']="Невозможно переименовать страницу в связи с тем, что ее заголовок частично отформатирован.";
 $plugin_tx['pagemanager']['error_offending_extension']="Обнаружено открытие расширения, использующего свою собственную библиотеку jQuery (см. руководство, секция \"Ограничения/Limitations\").";
-$plugin_tx['pagemanager']['utf8_marker']="äöüß";
 
 ?>

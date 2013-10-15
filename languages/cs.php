@@ -6,7 +6,6 @@ $plugin_tx['pagemanager']['cf_toolbar_vertical']="<p>Ukázat nástrojovou lištu
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>Volba YES/NO (předvoleno YES) pro vlastnosti pagedata pro checkboxy, např.: <b>published</b> nebo <b>linked_to_menu</b>.</p><p><strong>Upozornění:</strong> Pokud zvolíte nesprávnou vlastnost, poškodíte pagedata.php!</p>";
 $plugin_tx['pagemanager']['cf_treeview_theme']="<p>Téma stromového modulu: <b>cmsimple</b></p><p>Další vzhledy jsou ke stažení na: http://3-magi.net/?CMSimple_XH/Pagemanager_XH.</p>";
 $plugin_tx['pagemanager']['cf_treeview_animation']="<p>Čas otevření/zavření animace v ms. 0 znamená bez animace.</p>";
-$plugin_tx['pagemanager']['cf_utf8_marker']="<p>Interní použití. <strong>NEMĚNIT!</strong></p>";
 $plugin_tx['pagemanager']['menu_main']="Správa stránek";
 $plugin_tx['pagemanager']['op_expand']="Rozbalit všechny stránky";
 $plugin_tx['pagemanager']['op_collapse']="Smazat všechny strany";
@@ -42,6 +41,5 @@ $plugin_tx['pagemanager']['error_structure_warning']="<strong>Chybná struktura 
 $plugin_tx['pagemanager']['error_nesting']="Příliš hluboko vnořeno v úrovni stránek!";
 $plugin_tx['pagemanager']['error_cant_rename']="Tuto stránku není možné přejmenovat, protože její název je částečně formátován.";
 $plugin_tx['pagemanager']['error_offending_extension']="Offending extension using its own jQuery library detected (see manual, section \"Limitations\").";
-$plugin_tx['pagemanager']['utf8_marker']="ěščřžýáíé";
 
 ?>

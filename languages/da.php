@@ -6,7 +6,6 @@
 	$plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>Ja / nej (med standard ja) pagedata attribut for afkrydsningsfelter, fx <b>published</b> eller <b>linked_to_menu</b>.</p><p><strong>ADVARSEL:</strong> Hvis du vælger et upassende attribut, vil du lave rod i din pagedata.php!</p>";
 	$plugin_tx['pagemanager']['cf_treeview_theme']="<p>Temaet for tree widget: <b>cmsimple</b></p><p>Andre temaer er tilgængeligt på http://3-magi.net/?CMSimple_XH/Pagemanager_XH.</p>";
 	$plugin_tx['pagemanager']['cf_treeview_animation']="<p>Varighed af åbne / lukke animationer i ms. 0 betyder ingen animation.</p>";
-	$plugin_tx['pagemanager']['cf_utf8_marker']="<p>Intern brug. <strong>Må ikke ændres!</strong></p>";
 	$plugin_tx['pagemanager']['menu_main']="Side administration";
 	$plugin_tx['pagemanager']['op_expand']="Vis alle sider";
 	$plugin_tx['pagemanager']['op_collapse']="Skjul alle sider";
@@ -41,6 +40,5 @@
 	$plugin_tx['pagemanager']['error_structure_warning']="<strong>Uregelmæssig sidestruktur fundet.</strong> For nærmere oplysninger se plugin hjælp og kontakt din webmaster!";
 	$plugin_tx['pagemanager']['error_nesting']="Forkert sidestruktur!";
 	$plugin_tx['pagemanager']['error_offending_extension']="Offending extension using its own jQuery library detected (see manual, section \"Limitations\").";
-	$plugin_tx['pagemanager']['utf8_marker']="äöüß";
 
 ?>

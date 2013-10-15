@@ -13,7 +13,6 @@ $plugin_tx['pagemanager']['cf_toolbar_vertical']="<p>Czy przybornik ma być poka
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>The yes/no (with default yes) pagedata attribute for the checkboxes, e.g. <b>published</b> or <b>linked_to_menu</b>.</p><p><strong>Caution:</strong> If you choose an inappropriate attribute, you will mess up your pagedata.php!</p>";
 $plugin_tx['pagemanager']['cf_treeview_theme']="<p>Styl wyświetlania drzewa plików: <b>cmsimple</b></p><p>Inne style dostępne pod adresem http://3-magi.net/?CMSimple_XH/Pagemanager_XH.</p>";
 $plugin_tx['pagemanager']['cf_treeview_animation']="<p>Czas animacji otwarcia/zamknięcia podana w milisekundach. 0 oznacza brak animacji</p>";
-$plugin_tx['pagemanager']['cf_utf8_marker']="<p>Do użytku wewnętrznego <strong>Nie zmieniać!</strong></p>";
 $plugin_tx['pagemanager']['menu_main']="Administracja stonami.";
 $plugin_tx['pagemanager']['op_expand']="Rozwiń wszystkie strony";
 $plugin_tx['pagemanager']['op_collapse']="Zwiń wszystkie strony";
@@ -48,6 +47,5 @@ $plugin_tx['pagemanager']['error_structure_confirmation']="Wiem <em>DOKŁADNIE</
 $plugin_tx['pagemanager']['error_structure_warning']="<strong>Znaleziono nieregularną strukturę strony.</strong> Aby zobaczyć szczegóły zobacz plik pomocy i skonsultuj się z webmasterem!";
 $plugin_tx['pagemanager']['error_nesting']="Zbyt głębokie zagnieżdżenie struktury.";
 $plugin_tx['pagemanager']['error_offending_extension']="Offending extension using its own jQuery library detected (see manual, section \"Limitations\").";
-$plugin_tx['pagemanager']['utf8_marker']="żółć";
 
 ?>

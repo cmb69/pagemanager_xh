@@ -6,7 +6,6 @@
 	$plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>Voľba yes/no (predvolené yes) pre vlastnosti pagedata pre checkboxy, napr.: <b>published</b> alebo <b>linked_to_menu</b>.</p><p><strong>Upozornenie:</strong> Ak zvolíte nesprávnu vlastnosť, poškodíte pagedata.php!</p>";
 	$plugin_tx['pagemanager']['cf_treeview_theme']="<p>Téma stromového modulu: <b>cmsimple</b></p><p>Ďalšie témy sú na stiahnutie na: http://3-magi.net/?CMSimple_XH/Pagemanager_XH.</p>";
 	$plugin_tx['pagemanager']['cf_treeview_animation']="<p>Trvanie open/close animácie v ms. 0 znamená bez animácie.</p>";
-	$plugin_tx['pagemanager']['cf_utf8_marker']="<p>Interné použitie. <strong>NEMENIŤ!</strong></p>";
 	$plugin_tx['pagemanager']['menu_main']="Správa stránky";
 	$plugin_tx['pagemanager']['op_expand']="Expandovať všetky stránky";
 	$plugin_tx['pagemanager']['op_collapse']="Zhrnúť všetky stránky";
@@ -41,6 +40,5 @@
 	$plugin_tx['pagemanager']['error_structure_warning']="<strong>Našla sa chybná štruktúra stránok.</strong> Detailné vysvetlenie je v help.htm. Spojte sa so správcom stránky!";
 	$plugin_tx['pagemanager']['error_nesting']="Príliž hlboko vnorené v úrovniach stránky!";
 	$plugin_tx['pagemanager']['error_offending_extension']="Offending extension using its own jQuery library detected (see manual, section \"Limitations\").";
-	$plugin_tx['pagemanager']['utf8_marker']="äöüßľščťžýáíéúňô";
 
 ?>

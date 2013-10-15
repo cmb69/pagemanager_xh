@@ -6,7 +6,6 @@ $plugin_tx['pagemanager']['cf_toolbar_vertical']="<p>Should the toolbar be displ
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>The yes/no (with default yes) pagedata attribute for the checkboxes, e.g. <b>published</b> or <b>linked_to_menu</b>.</p><p><strong>Caution:</strong> If you choose an inappropriate attribute, you will mess up your pagedata.php!</p>";
 $plugin_tx['pagemanager']['cf_treeview_theme']="<p>Theme of tree view widget: <b>cmsimple</b></p><p>Other themes are available from http://3-magi.net/?CMSimple_XH/Pagemanager_XH.</p>";
 $plugin_tx['pagemanager']['cf_treeview_animation']="<p>Duration of open/close animations in ms. 0 means no animation.</p>";
-$plugin_tx['pagemanager']['cf_utf8_marker']="<p>Internal usage. <strong>Do not change!</strong></p>";
 $plugin_tx['pagemanager']['menu_main']="Page administration";
 $plugin_tx['pagemanager']['op_expand']="Expand all pages";
 $plugin_tx['pagemanager']['op_collapse']="Collapse all pages";
@@ -42,6 +41,5 @@ $plugin_tx['pagemanager']['error_structure_warning']="<strong>Irregular page str
 $plugin_tx['pagemanager']['error_nesting']="Too deep nesting of page structure!";
 $plugin_tx['pagemanager']['error_cant_rename']="This page can't be renamed, as its heading is partially formatted.";
 $plugin_tx['pagemanager']['error_offending_extension']="Offending extension using its own jQuery library detected (see manual, section \"Limitations\").";
-$plugin_tx['pagemanager']['utf8_marker']="äöüß";
 
 ?>

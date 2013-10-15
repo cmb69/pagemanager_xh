@@ -6,7 +6,6 @@ $plugin_tx['pagemanager']['cf_toolbar_vertical']="<p>Afficher la barre d'outils 
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>Les attributs yes/no (yes par défaut) de pagedata pour les cases à cocher, par ex. <b>published</b> or <b>linked_to_menu</b>.</p><p><strong>Attention :</strong> si vous choisissez un attribut inapproprié vous pouvez corompre votre fichier pagedata.php !</p>";
 $plugin_tx['pagemanager']['cf_treeview_theme']="<p>Thème du widget TreeView : <b>cmsimple</b></p><p>D'autres thèmes sont disponibles sur http://3-magi.net/?CMSimple_XH/Pagemanager_XH.</p>";
 $plugin_tx['pagemanager']['cf_treeview_animation']="<p>Durée des animations ouvrir/fermer en ms. 0 signifie sans animation.</p>";
-$plugin_tx['pagemanager']['cf_utf8_marker']="<p>Usage interne. <strong>Ne pas changer !</strong></p>";
 $plugin_tx['pagemanager']['menu_main']="Gestion des pages";
 $plugin_tx['pagemanager']['op_expand']="Ouvrir toutes les pages";
 $plugin_tx['pagemanager']['op_collapse']="Refermer toutes les pages";
@@ -41,6 +40,5 @@ $plugin_tx['pagemanager']['error_structure_confirmation']="Je sais <em>exactemen
 $plugin_tx['pagemanager']['error_structure_warning']="<strong>Structure de page irrégulière trouvée.</strong> Pour les détails voir l'aide du plugin et consultez votre webmaster !";
 $plugin_tx['pagemanager']['error_nesting']="Trop d'imbriquements dans la structure de pages !";
 $plugin_tx['pagemanager']['error_offending_extension']="Offending extension using its own jQuery library detected (see manual, section \"Limitations\").";
-$plugin_tx['pagemanager']['utf8_marker']="äöüß";
 
 ?>

@@ -6,7 +6,6 @@
 	$plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>Das ja/nein (mit Voreinstellung ja) pagedata Attribut für die Checkboxen, z.B. <b>published</b> oder <b>linked_to_menu</b>.</p><p><strong>Vorsicht:</strong> Wenn Sie ein ungeeignetes Attribut wählen, bringen Sie Ihre pagedata.php durcheinander.</p>";
 	$plugin_tx['pagemanager']['cf_treeview_theme']="<p>Stil der Baumansicht: <b>cmsimple</b></p><p>Andere Stile können von http://3-magi.net/?CMSimple_XH/Pagemanager_XH herunter geladen werden.</p>";
 	$plugin_tx['pagemanager']['cf_treeview_animation']="<p>Dauer der Öffnen/Schließen-Animation in ms. 0 bedeutet keine Animation.</p>";
-	$plugin_tx['pagemanager']['cf_utf8_marker']="<p>Interne Verwendung. <strong>Nicht ändern!</strong></p>";
 	$plugin_tx['pagemanager']['menu_main']="Seiten verwalten";
 	$plugin_tx['pagemanager']['op_expand']="Alle Seiten aufklappen";
 	$plugin_tx['pagemanager']['op_collapse']="Alle Seiten einklappen";
@@ -42,6 +41,5 @@
 	$plugin_tx['pagemanager']['error_nesting']="Zu tiefe Verschachtelung der Seitenstruktur!";
 	$plugin_tx['pagemanager']['error_cant_rename']="Diese Seite kann nicht umbenannt werden, da ihre Überschrift teilweise formatiert ist.";
 	$plugin_tx['pagemanager']['error_offending_extension']="Kollision mit einer Erweiterung, die ihre eigene jQuery Bibliothek einbindet, festgestellt (siehe Handbuch, Abschnitt \"Beschränkungen\").";
-	$plugin_tx['pagemanager']['utf8_marker']="äöüß";
 
 ?>

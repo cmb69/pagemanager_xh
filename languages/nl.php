@@ -13,7 +13,6 @@ $plugin_tx['pagemanager']['cf_toolbar_vertical']="<p>Moet de werkbalk vertikaal 
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>De ja/nee eigenschap van de paginagegevens, staan standaard op JA in de selectievakjes b.v.  <b>gepubliceerd</b> of <b>linked_to_menu</b>.</p><p><strong>Caution:</strong> If you choose an inappropriate attribute, you will mess up your pagedata.php!</p>";
 $plugin_tx['pagemanager']['cf_treeview_theme']="<p>Thema van de boomstructuur widget: <b>cmsimple</b></p><p>Andere thema's zijn beschikbaar zie http://3-magi.net/?CMSimple_XH/Pagemanager_XH.</p>";
 $plugin_tx['pagemanager']['cf_treeview_animation']="<p>tijdsduur van openen/sluiten van de animaties in ms. 0 betekent geen animatie.</p>";
-$plugin_tx['pagemanager']['cf_utf8_marker']="<p>Intern gebruik. <strong>Verander NIET!</strong></p>";
 $plugin_tx['pagemanager']['menu_main']="Beheer van de pagina";
 $plugin_tx['pagemanager']['op_expand']="Vouwt alle paginaniveau's uit";
 $plugin_tx['pagemanager']['op_collapse']="Laat alle pagina's samenvouwen";
@@ -48,6 +47,5 @@ $plugin_tx['pagemanager']['error_structure_warning']="<strong>Er is een onregelm
 $plugin_tx['pagemanager']['error_nesting']="De paginastructuur is te ver onderverdeeld!";
 $plugin_tx['pagemanager']['error_cant_rename']="Deze pagina kan niet hernoemd worden omdat de titel gedeeltelijk opgemaakt is.";
 $plugin_tx['pagemanager']['error_offending_extension']="Er is een extensie die gebruik maakt van een eigen jQuery bibliotheek ontdekt (zie gebruiksaanwijzing, sectie \"Beperkingen\").";
-$plugin_tx['pagemanager']['utf8_marker']="äöüß";
 
 ?>

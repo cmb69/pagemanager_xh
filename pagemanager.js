@@ -5,9 +5,6 @@
  */
 
 
-// utf-8 marker: äöüß
-
-
 function pagemanager_do(op) {
     switch (op) {
 	case 'expand': realOp = 'open_all'; break;
