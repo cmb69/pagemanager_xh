@@ -19,11 +19,6 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 define('PAGEMANAGER_VERSION', '@PAGEMANAGER_VERSION@');
 
 
-define('PAGEMANAGER_URL', 'http'
-   . (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
-   . '://' . $_SERVER['HTTP_HOST'] . preg_replace('/index.php$/', '', $sn));
-
-
 /**
  * Reads content.htm and sets $pagemanager_h.
  *
@@ -450,7 +445,7 @@ if (isset($pagemanager)) {
 	    if ($action == 'plugin_save') {
 		if (pagemanager_save(stsl($_POST['xml']))) {
 		    if (!headers_sent()) {
-			header('Location: ' . PAGEMANAGER_URL
+			header('Location: ' . CMSIMPLE_URL
 				.(isset($_GET['pagemanager-xhpages'])
 				? '?&normal&xhpages'
 				: '?&pagemanager&normal&admin=plugin_main'));
