@@ -15,62 +15,36 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 
 define('PAGEMANAGER_VERSION', '@PAGEMANAGER_VERSION@');
 
-
 /**
- * Reads content.htm and sets $pagemanager_h.
- *
- * The function was copied from CMSimple_XH 1.4's cms.php and modified
- * to just set the global $pagemanager_h with the unmodified page titles
- * and $pagemanager_no_rename wether the heading is partially formatted.
+ * Initializes the <var>$pagemanager_h</var> array with the unmodified page
+ * headings and the <var>$pagemanager_no_rename</var> array to flag
+ * whether the page may be renamed.
  *
  * @return void
+ *
+ * @global array The content of the pages.
+ * @global array The configuration of the core.
+ * @global array The unmodified page headings.
+ * @global array Whether the page may be renamed.
+ *
+ * @todo Cater for content modifications by other plugins,
+ * 	 unless we're in edit mode.
  */
-function pagemanager_rfc() {
-    global $pth, $tx, $cf, $pagemanager_h, $pagemanager_no_rename;
+function Pagemanager_getHeadings()
+{
+    global $c, $cf, $pagemanager_h, $pagemanager_no_rename;
 
-    $c = array();
-    $pagemanager_h = array();
-    $u = array();
-    $l = array();
-    $empty = 0;
-    $duplicate = 0;
-
-    $content = file_get_contents($pth['file']['content']);
     $stop = $cf['menu']['levels'];
-    $split_token = '#@CMSIMPLE_SPLIT@#';
-
-
-    $content = preg_split('~</body>~i', $content);
-    $content = preg_replace('~<h[1-' . $stop . ']~i', $split_token . '$0', $content[0]);
-    $content = explode($split_token, $content);
-    array_shift($content);
-
-    foreach ($content as $page) {
-        $c[] = $page;
-        preg_match('~<h([1-' . $stop . ']).*>(.*)</h~isU', $page, $temp);
-        $l[] = $temp[1];
-        $temp_h[] = trim(strip_tags($temp[2]));
-	$pagemanager_no_rename[] = preg_match('/.*?<.*?/isU', $temp[2]);
-    }
-
-    $cl = count($c);
-    $s = -1;
-
-    if ($cl == 0) {
-        $c[] = '<h1>' . $tx['toc']['newpage'] . '</h1>';
-        $pagemanager_h[] = trim(strip_tags($tx['toc']['newpage']));
-	$pagemanager_no_rename[] = preg_match('/.*?<.*?/isU', $tx['toc']['newpage']);
-        $l[] = 1;
-        $s = 0;
-        return;
-    }
-
-    foreach ($temp_h as $i => $pagemanager_heading) {
-        if ($pagemanager_heading == '') {
-            $empty++;
-            $pagemanager_heading = $tx['toc']['empty'] . ' ' . $empty;
-        }
-	$pagemanager_h[$i] = $pagemanager_heading;
+    $empty = 0;
+    foreach ($c as $i => $page) {
+        preg_match('~<h([1-' . $stop . ']).*?>(.*?)</h~isu', $page, $matches);
+	$heading = trim(strip_tags($matches[2]));
+	if ($heading === '') {
+	    $pagemanager_h[$i] = $tx['toc']['empty'] . ' ' . ++$empty;
+	} else {
+	    $pagemanager_h[$i] = $heading;
+	}
+	$pagemanager_no_rename[$i] = preg_match('/.*?<.*?/isu', $matches[2]);
     }
 }
 
@@ -218,7 +192,7 @@ function pagemanager_edit() {
     $image_ext = (file_exists($pth['folder']['plugins'].'pagemanager/images/help.png'))
 	    ? '.png' : '.gif';
 
-    pagemanager_rfc();
+    Pagemanager_getHeadings();
 
     $bo = '';
 
