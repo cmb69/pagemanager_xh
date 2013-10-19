@@ -77,19 +77,70 @@ function Pagemanager_render($_template, $_bag)
 }
 
 /**
+ * Returns the system checks.
+ *
+ * @return array
+ *
+ * @global array The paths of system files and folders.
+ * @global array The localization of the core.
+ * @global array The localization of the plugins.
+ *
+ * @todo Add check for CMSimple_XH 1.6+.
+ */
+function Pagemanager_systemChecks()
+{
+    global $pth, $tx, $plugin_tx;
+
+    $ptx = $plugin_tx['pagemanager'];
+    $phpVersion = '4.3.0';
+    $checks = array();
+    $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]
+	= version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'ok' : 'fail';
+    foreach (array('pcre', 'xml') as $ext) {
+	$checks[sprintf($ptx['syscheck_extension'], $ext)]
+	    = extension_loaded($ext) ? 'ok' : 'fail';
+    }
+    $checks[$ptx['syscheck_magic_quotes']]
+	= !get_magic_quotes_runtime() ? 'ok' : 'fail';
+    $checks[$ptx['syscheck_jquery']]
+	= file_exists($pth['folder']['plugins'].'jquery/jquery.inc.php') ? 'ok' : 'fail';
+    $checks[$ptx['syscheck_utf8']]
+	= file_exists($pth['folder']['plugins'].'utf8/utf8.php') ? 'ok' : 'fail';
+    $checks[$ptx['syscheck_encoding']]
+	= strtoupper($tx['meta']['codepage']) == 'UTF-8' ? 'ok' : 'warn';
+    $folders = array();
+    foreach (array('config/', 'css/', 'languages/') as $folder) {
+	$folders[] = $pth['folder']['plugins'] . 'pagemanager/' . $folder;
+    }
+    foreach ($folders as $folder) {
+	$checks[sprintf($ptx['syscheck_writable'], $folder)]
+	    = is_writable($folder) ? 'ok' : 'warn';
+    }
+    return $checks;
+}
+
+/**
  * Returns plugin version information.
  *
  * @return string
  *
  * @global array The paths of system files and folders.
+ * @global array The localization of the plugins.
  */
 function Pagemanager_version()
 {
-    global $pth;
+    global $pth, $plugin_tx;
 
+    $ptx = $plugin_tx['pagemanager'];
+    $titles = array('syscheck' => $ptx['syscheck_title'], 'about' => $ptx['about']);
+    $checks = Pagemanager_systemChecks();
+    $stateIcons = array();
+    foreach (array('ok', 'warn', 'fail') as $state) {
+	$stateIcons[$state] = "{$pth['folder']['plugins']}pagemanager/images/$state.png";
+    }
     $version = PAGEMANAGER_VERSION;
     $icon = "{$pth['folder']['plugins']}pagemanager/pagemanager.png";
-    $bag = compact('version', 'icon');
+    $bag = compact('titles', 'checks', 'stateIcons', 'version', 'icon');
     return Pagemanager_render('info', $bag);
 }
 
@@ -403,22 +454,6 @@ if ($f === 'xhpages' && isset($cf['pagemanager']['external'])
  * Plugin administration
  */
 if (isset($pagemanager)) {
-    // check requirements (RELEASE-TODO)
-    define('PAGEMANAGER_PHP_VERSION', '4.3.0');
-    if (version_compare(PHP_VERSION, PAGEMANAGER_PHP_VERSION) < 0)
-	$e .= '<li>'.sprintf($plugin_tx['pagemanager']['error_phpversion'], PAGEMANAGER_PHP_VERSION).'</li>'."\n";
-    foreach (array('pcre', 'xml') as $ext) {
-	if (!extension_loaded($ext))
-	    $e .= '<li>'.sprintf($plugin_tx['pagemanager']['error_extension'], $ext).'</li>'."\n";
-    }
-    if (!file_exists($pth['folder']['plugins'].'jquery/jquery.inc.php'))
-	$e .= '<li>'.$plugin_tx['pagemanager']['error_jquery'].'</li>'."\n";
-    if (!file_exists($pth['folder']['plugins'].'utf8/utf8.php'))
-	$e .= '<li>'.$plugin_tx['pagemanager']['error_utf8'].'</li>'."\n";
-    if (strtolower($tx['meta']['codepage']) != 'utf-8') {
-	$e .= '<li>'.$plugin_tx['pagemanager']['error_encoding'].'</li>'."\n";
-    }
-
     include_once $pth['folder']['plugins'] . 'utf8/utf8.php';
     include_once UTF8 . '/ucfirst.php';
 

@@ -1,5 +1,15 @@
 <!-- Pagemanager_XH: info view -->
-<h4>Pagemanager_XH</h4>
+<h4><?php echo $titles['syscheck'];?></h4>
+<ul style="list-style: none">
+<?php foreach ($checks as $check => $state):?>
+    <li>
+        <img src="<?php echo $stateIcons[$state];?>" alt="<?php echo $state;?>"
+            style="margin: 0; height: 1em; padding-right: 1em"/>
+        <span><?php echo $check;?></span>
+    </li>
+<?php endforeach;?>
+</ul>
+<h4><?php echo $titles['about'];?></h4>
 <img src="<?php echo $icon;?>" style="float: left; margin-right: 10px" alt="Plugin Icon"/>
 <p>Version: <?php echo $version;?></p>
 <p>Copyright &copy; 2011-2013 <a href="http://3-magi.net">Christoph M. Becker</a></p>

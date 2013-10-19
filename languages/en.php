@@ -31,15 +31,20 @@ $plugin_tx['pagemanager']['message_information']="Information";
 $plugin_tx['pagemanager']['message_menu_level']="This would exceed your <em>menu levels</em> configuration!";
 $plugin_tx['pagemanager']['message_no_selection']="You must select a page, before using this tool!";
 $plugin_tx['pagemanager']['message_delete_last']="You must not delete the last toplevel page!";
-$plugin_tx['pagemanager']['error_phpversion']="Pagemanager_XH requires at least PHP version %s!";
-$plugin_tx['pagemanager']['error_extension']="Pagemanager_XH requires PHP's %s extension!";
-$plugin_tx['pagemanager']['error_jquery']="Pagemanager_XH requires the jQuery4CMSimple plugin! Please <a href='http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple'>download</a> and install it before proceeding.";
-$plugin_tx['pagemanager']['error_utf8']="Pagemanager_XH requires the Utf8_XH plugin! Please <a href='http://3-magi.net/?CMSimple_XH/Utf8_XH'>download</a> and install it before proceeding.";
-$plugin_tx['pagemanager']['error_encoding']="Pagemanager_XH requires UTF-8 encoding!";
 $plugin_tx['pagemanager']['error_structure_confirmation']="I know <em>exactly</em> what I'm doing! I want to proceed.";
 $plugin_tx['pagemanager']['error_structure_warning']="<strong>Irregular page structure found.</strong> For details see plugin help and consult your webmaster!";
 $plugin_tx['pagemanager']['error_nesting']="Too deep nesting of page structure!";
 $plugin_tx['pagemanager']['error_cant_rename']="This page can't be renamed, as its heading is partially formatted.";
 $plugin_tx['pagemanager']['error_offending_extension']="Offending extension using its own jQuery library detected (see manual, section \"Limitations\").";
+
+$plugin_tx['pagemanager']['syscheck_title']="System check";
+$plugin_tx['pagemanager']['syscheck_phpversion']="PHP version &ge; %s";
+$plugin_tx['pagemanager']['syscheck_extension']="Extension \"%s\" loaded";
+$plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\">jQuery4CMSimple plugin</a> installed";
+$plugin_tx['pagemanager']['syscheck_utf8']="<a href=\"http://3-magi.net/?CMSimple_XH/Utf8_XH\">Utf8_XH plugin</a> installed";
+$plugin_tx['pagemanager']['syscheck_encoding']="Encoding \"UTF-8\" configured";
+$plugin_tx['pagemanager']['syscheck_magic_quotes']="Magic quotes runtime off";
+$plugin_tx['pagemanager']['syscheck_writable']="Folder \"%s\" writable";
+$plugin_tx['pagemanager']['about']="About Pagemanager_XH";
 
 ?>
