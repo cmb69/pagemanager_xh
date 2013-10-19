@@ -147,11 +147,10 @@ function Pagemanager_version()
 /**
  * Returns the toolbar.
  *
- * @param  string $image_ext  The image extension (.gif or .png).
  * @param  string $save_js    The js code for onclick.
  * @return string	      The (x)html.
  */
-function pagemanager_toolbar($image_ext, $save_js) {
+function pagemanager_toolbar($save_js) {
     global $pth, $plugin_cf, $plugin_tx, $tx;
 
     $imgdir = $pth['folder']['plugins'].'pagemanager/images/';
@@ -163,7 +162,7 @@ function pagemanager_toolbar($image_ext, $save_js) {
     foreach ($toolbar as $tool) {
 	$link = ($tool != 'help' ? 'href="#"'
 		: 'href="'.$pth['file']['plugin_help'].'" target="_blank"');
-	$img = $imgdir.$tool.($tool != 'separator' || !$horizontal ? '' : '_v').$image_ext;
+	$img = $imgdir.$tool.($tool != 'separator' || !$horizontal ? '' : '_v').'.png';
 	$class = $tool == 'separator' ? 'separator' : 'tool';
 	$res .= ($tool != 'separator' ? '<a '.$link.' class="pl_tooltip"'.($tool == 'save' ? ' style="display: none"' : '').'>' : '')
 		.tag('img class="'.$class.'" src="'.$img.'"'
@@ -219,10 +218,9 @@ function Pagemanager_replaceLang($matches)
 /**
  * Instanciate the pagemanager.js template.
  *
- * @param  string $image_ext  The image extension (.gif or .png).
  * @return string  	      The (x)html.
  */
-function pagemanager_instanciateJS($image_ext) {
+function pagemanager_instanciateJS() {
     global $pth, $plugin_cf, $plugin_tx, $cf, $tx;
 
     $js = rf($pth['folder']['plugins'].'pagemanager/pagemanager.js');
@@ -231,7 +229,7 @@ function pagemanager_instanciateJS($image_ext) {
     $js = preg_replace_callback('/<<<PT_(.*)>>>/', 'Pagemanager_replaceLang', $js);
     $js = str_replace('<<<MENU_LEVELS>>>', $cf['menu']['levels'], $js);
     $js = str_replace('<<<TOC_DUPL>>>', $tx['toc']['dupl'], $js);
-    $js = str_replace('<<<IMAGE_EXT>>>', $image_ext, $js);
+    $js = str_replace('<<<IMAGE_EXT>>>', '.png', $js);
     $js = str_replace('<<<IMAGE_DIR>>>', $pth['folder']['plugins'].'pagemanager/images/', $js);
 
     return '<!-- initialize jstree -->'."\n"
@@ -256,9 +254,6 @@ function pagemanager_edit() {
     include_jQueryPlugin('jsTree', $pth['folder']['plugins']
 	    .'pagemanager/jstree/jquery.jstree.min.js');
 
-    $image_ext = (file_exists($pth['folder']['plugins'].'pagemanager/images/help.png'))
-	    ? '.png' : '.gif';
-
     Pagemanager_getHeadings();
 
     $bo = '';
@@ -277,7 +272,7 @@ function pagemanager_edit() {
     $bo .= '<form id="pagemanager-form" action="'.$sn.'?&amp;pagemanager&amp;edit'
 	.$xhpages.'" method="post" accept-charset="UTF-8">'."\n";
     $bo .= strtolower($plugin_cf['pagemanager']['toolbar_show']) == 'true'
-	    ? pagemanager_toolbar($image_ext, $save_js) : '';
+	    ? pagemanager_toolbar($save_js) : '';
 
     // output the treeview of the page structure
     // uses ugly hack to clean up irregular page structure
@@ -329,7 +324,7 @@ function pagemanager_edit() {
 
     $o .= $bo;
 
-    $o .= pagemanager_instanciateJS($image_ext);
+    $o .= pagemanager_instanciateJS();
 
     // HACK?: send 'edit' as query param to prevent the last if clause in
     //		rfc() to insert #CMSimple hide#
