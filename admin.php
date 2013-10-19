@@ -48,34 +48,50 @@ function Pagemanager_getHeadings()
     }
 }
 
+/**
+ * Returns a rendered template.
+ *
+ * @param string $_template A template name.
+ * @param array  $_bag      Template variables.
+ *
+ * @return string (X)HTML.
+ *
+ * @global array The paths of system files and folders.
+ * @global array The configuration of the core.
+ */
+function Pagemanager_render($_template, $_bag)
+{
+    global $pth, $cf;
+
+    $_template = "{$pth['folder']['plugins']}pagemanager/views/$_template.php";
+    $_xhtml = $cf['xhtml']['endtags'];
+    unset($pth, $cf);
+    extract($_bag);
+    ob_start();
+    include $_template;
+    $o = ob_get_clean();
+    if (!$_xhtml) {
+	str_replace('/>', '>', $o);
+    }
+    return $o;
+}
 
 /**
  * Returns plugin version information.
  *
  * @return string
+ *
+ * @global array The paths of system files and folders.
  */
-function pagemanager_version() {
-    return tag('br').tag('hr').'<p><strong>Pagemanager_XH</strong></p>'.tag('hr')."\n"
-	    .'<p>Version: '.PAGEMANAGER_VERSION.'</p>'."\n"
-	    .'<p>Copyright &copy; 2011-2013 <a href="http://3-magi.net">Christoph M. Becker</a></p>'."\n"
-	    .'<p><a href="http://3-magi.net/?CMSimple_XH/Pagemanager_XH">'
-	    .'Pagemanager_XH</a> is powered by '
-	    .'<a href="http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple">'
-	    .'jQuery4CMSimple</a>'
-	    .' and <a href="http://www.jstree.com/">jsTree</a>.</p>'."\n"
-	    .'<p style="text-align: justify">This program is free software: you can redistribute it and/or modify'
-	    .' it under the terms of the GNU General Public License as published by'
-	    .' the Free Software Foundation, either version 3 of the License, or'
-	    .' (at your option) any later version.</p>'."\n"
-	    .'<p style="text-align: justify">This program is distributed in the hope that it will be useful,'
-	    .' but WITHOUT ANY WARRANTY; without even the implied warranty of'
-	    .' MERCHAN&shy;TABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the'
-	    .' GNU General Public License for more details.</p>'."\n"
-	    .'<p style="text-align: justify">You should have received a copy of the GNU General Public License'
-	    .' along with this program.  If not, see'
-	    .' <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>'."\n";
-}
+function Pagemanager_version()
+{
+    global $pth;
 
+    $version = PAGEMANAGER_VERSION;
+    $icon = "{$pth['folder']['plugins']}pagemanager/pagemanager.png";
+    $bag = compact('version', 'icon');
+    return Pagemanager_render('info', $bag);
+}
 
 /**
  * Returns the toolbar.
@@ -424,7 +440,7 @@ if (isset($pagemanager)) {
 		    exit();
 		}
 	    } else {
-		$o .= pagemanager_version();
+		$o .= Pagemanager_version();
 	    }
 	    break;
 	case 'plugin_main':
