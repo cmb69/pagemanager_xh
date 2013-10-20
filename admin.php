@@ -87,14 +87,14 @@ function Pagemanager_render($_template, $_bag)
     global $pth, $cf;
 
     $_template = "{$pth['folder']['plugins']}pagemanager/views/$_template.php";
-    $_xhtml = $cf['xhtml']['endtags'];
+    $_xhtml = (bool) $cf['xhtml']['endtags'];
     unset($pth, $cf);
     extract($_bag);
     ob_start();
     include $_template;
     $o = ob_get_clean();
     if (!$_xhtml) {
-	str_replace('/>', '>', $o);
+	$o = str_replace('/>', '>', $o);
     }
     return $o;
 }
@@ -296,7 +296,7 @@ function Pagemanager_structureWarning()
     return <<<HTM
 <div id="pagemanager-structure-warning" class="cmsimplecore_warning">
 <p>$ptx[error_structure_warning]</p>
-<p><button onclick="PAGEMANAGER.confirmStructureWarning()">
+<p><button type="button" onclick="PAGEMANAGER.confirmStructureWarning()">
 $ptx[error_structure_confirmation]</button></p>
 </div>
 
@@ -357,7 +357,7 @@ function Pagemanager_pages()
 		.($pagemanager_no_rename[$i] ? ' class="pagemanager-no-rename"' : '')
 		.'><a href="#">'.$pagemanager_h[$i].'</a>';
     }
-    $o .= '</ul></div>'."\n";
+    $o .= '</ul>'."\n";
     return $o;
 }
 
@@ -379,39 +379,18 @@ function pagemanager_edit()
 
     Pagemanager_getHeadings();
 
-    $o = '';
-    if (Pagemanager_isIrregular()) {
-	$o .= Pagemanager_structureWarning();
-    }
-
     $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
     $actionUrl = $sn . '?&amp;pagemanager&amp;edit' . $xhpages;
-    $o .= '<form id="pagemanager-form" action="' . $actionUrl
-	. '" method="post" accept-charset="UTF-8" onsubmit="PAGEMANAGER.beforeSubmit()">'."\n";
-    $o .= $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar() : '';
-
-    $o .= '<!-- page structure -->'."\n"
-	    .'<div id="pagemanager" ondblclick="jQuery(\'#pagemanager\').jstree(\'toggle_node\');">'."\n"
-    	    .Pagemanager_pages();
-    $o .= '</ul></div>'."\n";
+    $structureWarning = Pagemanager_isIrregular() ? Pagemanager_structureWarning() : '';
+    $toolbar = $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar() : '';
+    $saveButton = utf8_ucfirst($tx['action']['save']);
+    $titleConfirm = $plugin_tx['pagemanager']['message_confirm'];
+    $titleInfo = $plugin_tx['pagemanager']['message_information'];
+    $bag = compact('actionUrl', 'structureWarning', 'toolbar', 'saveButton', 'titleConfirm', 'titleInfo');
+    $o = Pagemanager_render('widget', $bag);
 
     $o .= pagemanager_js();
 
-    // HACK?: send 'edit' as query param to prevent the last if clause in
-    //		rfc() to insert #CMSimple hide#
-    $o .= tag('input type="hidden" name="admin" value=""')."\n"
-	    .tag('input type="hidden" name="action" value="plugin_save"')."\n"
-	    .tag('input type="hidden" name="xml" id="pagemanager-xml" value=""')."\n"
-	    .tag('input id="pagemanager-submit" type="submit" class="submit" value="'
-		.utf8_ucfirst($tx['action']['save']).'"'
-		.' style="display: none"')."\n"
-	    .'</form>'."\n";
-
-    $o .= '<div id="pagemanager-confirmation" title="'
-	    .$plugin_tx['pagemanager']['message_confirm']
-	    .'"></div>'."\n"
-	    .'<div id="pagemanager-alert" title="'
-	    .$plugin_tx['pagemanager']['message_information'].'"></div>'."\n";
     return $o;
 }
 
