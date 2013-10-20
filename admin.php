@@ -178,64 +178,62 @@ function pagemanager_toolbar($save_js) {
 }
 
 /**
- * Returns an escaped plugin configuration option.
- * Helper for @see{pagemanager_instanciateJS}.
+ * Returns the SCRIPT elements.
  *
- * @param array $matches The matches of a preg_replace.
+ * @return string (X)HTML.
  *
- * @return string
- *
- * @since 1pl14
+ * @global array The paths of system files and folders.
+ * @global array The configuration of the core.
+ * @global array The localization of the core.
+ * @global array The configuration of the plugins.
+ * @global array The localization of the plugins.
  */
-function Pagemanager_replaceConfig($matches)
+function pagemanager_js()
 {
-    global $plugin_cf;
+    global $pth, $cf, $tx, $plugin_cf, $plugin_tx;
 
-    $cf = $plugin_cf['pagemanager'][$matches[1]];
-    $cf = addcslashes($cf, "\0'\"\\\f\n\r\t\v");
-    return $cf;
-}
+    $pcf = $plugin_cf['pagemanager'];
+    $ptx = $plugin_tx['pagemanager'];
+    $config = array(
+	'okButton' => $ptx['button_ok'],
+	'cancelButton' => $ptx['button_cancel'],
+	'deleteButton' => $ptx['button_delete'],
+	'menuLevels' => $cf['menu']['levels'],
+	'verbose' => $pcf['verbose'],
+	'menuLevelMessage' => $ptx['message_menu_level'],
+	'cantRenameError' => $ptx['error_cant_rename'],
+	'deleteLastMessage' => $ptx['message_delete_last'],
+	'confirmDeletionMessage' => $ptx['message_confirm_deletion'],
+	'leaveWarning' => $ptx['message_warning_leave'],
+	'leaveConfirmation' => $ptx['message_confirm_leave'],
+	'animated' => $pcf['treeview_animation'],
+	'loading' => $ptx['treeview_loading'],
+	'newNode' => $ptx['treeview_new'],
+	'imageDir' => $pth['folder']['plugins'].'pagemanager/images/',
+	'menuLevelMessage' => $ptx['message_menu_level'],
+	'theme' => $pcf['treeview_theme'],
+	'createOp' => $ptx['op_create'],
+	'createAfterOp' => $ptx['op_create_after'],
+	'renameOp' => $ptx['op_rename'],
+	'deleteOp' => $ptx['op_delete'],
+	'cutOp' => $ptx['op_cut'],
+	'copyOp' => $ptx['op_copy'],
+	'pasteOp' => $ptx['op_paste'],
+	'pasteAfterOp' => $ptx['op_paste_after'],
+	'noSelectionMessage' => $ptx['message_no_selection'],
+	'duplicateHeading' => $tx['toc']['dupl'],
+	'offendingExtensionError' => $ptx['error_offending_extension']
+    );
+    $config = XH_encodeJson($config);
+    $src = "{$pth['folder']['plugins']}pagemanager/pagemanager.js";
+    return <<<EOS
+<script type="text/javascript">/* <![CDATA[ */
+var PAGEMANAGER = {};
+PAGEMANAGER.config = $config;
+/* ]]> */</script>
+<script type="text/javascript" src="$src"></script>
 
-/**
- * Returns an escaped plugin language string.
- * Helper for @see{pagemanager_instanciateJS}.
- *
- * @param array $matches The matches of a preg_replace.
- *
- * @return string
- *
- * @since 1pl14
- */
-function Pagemanager_replaceLang($matches)
-{
-    global $plugin_tx;
-
-    $tx = $plugin_tx['pagemanager'][$matches[1]];
-    $tx = addcslashes($tx, "\0'\"\\\f\n\r\t\v");
-    return $tx;
-}
-
-/**
- * Instanciate the pagemanager.js template.
- *
- * @return string  	      The (x)html.
- */
-function pagemanager_instanciateJS() {
-    global $pth, $plugin_cf, $plugin_tx, $cf, $tx;
-
-    $js = rf($pth['folder']['plugins'].'pagemanager/pagemanager.js');
-
-    $js = preg_replace_callback('/<<<PC_(.*)>>>/', 'Pagemanager_replaceConfig', $js);
-    $js = preg_replace_callback('/<<<PT_(.*)>>>/', 'Pagemanager_replaceLang', $js);
-    $js = str_replace('<<<MENU_LEVELS>>>', $cf['menu']['levels'], $js);
-    $js = str_replace('<<<TOC_DUPL>>>', $tx['toc']['dupl'], $js);
-    $js = str_replace('<<<IMAGE_EXT>>>', '.png', $js);
-    $js = str_replace('<<<IMAGE_DIR>>>', $pth['folder']['plugins'].'pagemanager/images/', $js);
-
-    return '<!-- initialize jstree -->'."\n"
-	    .'<script type="text/javascript">'."\n"
-	    .'/* <![CDATA[ */'.$js.'/* ]]> */'."\n"
-	    .'</script>'."\n";
+EOS;
 }
 
 
@@ -324,7 +322,7 @@ function pagemanager_edit() {
 
     $o .= $bo;
 
-    $o .= pagemanager_instanciateJS();
+    $o .= pagemanager_js();
 
     // HACK?: send 'edit' as query param to prevent the last if clause in
     //		rfc() to insert #CMSimple hide#

@@ -34,8 +34,8 @@ function pagemanager_do(op) {
 			$('#pagemanager').jstree(realOp, sel);
 		    }
 		} else {
-		    if (('<<<PC_verbose>>>').toLowerCase() == 'true') {
-			$('#pagemanager-alert').html('<<<PT_message_no_selection>>>');
+		    if (PAGEMANAGER.config.verbose.toLowerCase() == 'true') {
+			$('#pagemanager-alert').html(PAGEMANAGER.config.noSelectionMessage);
 			$('#pagemanager-alert').dialog('open');
 		    }
 		}
@@ -78,7 +78,7 @@ function pagemanager_markDuplicates(node, duplicates) {
 	duplicates = pagemanager_markDuplicates(children[i], duplicates);
 	for (var j = i+1; j < children.length; j++) {
 	    if (pagemanager.get_text(children[i]) == pagemanager.get_text(children[j])) {
-		pagemanager.set_text(children[j], '<<<TOC_DUPL>>> ' + ++duplicates);
+		pagemanager.set_text(children[j], PAGEMANAGER.config.duplicateHeading + " " + ++duplicates);
 	    }
 	}
     }
@@ -92,7 +92,7 @@ var pagemanager_modified = false;
 (function ($) {
     $(function () {
 	if (typeof $.jstree == 'undefined') {
-	    alert('<<<PT_error_offending_extension>>>');
+	    alert(PAGEMANAGER.config.offendingExtensionError);
 	    return;
 	}
 	$.jstree.plugin('crrm', {
@@ -105,6 +105,7 @@ var pagemanager_modified = false;
 		    if(this.data.crrm.ct_nodes) { this.move_node(this.data.crrm.ct_nodes, obj, 'after'); this.data.crrm.ct_nodes = false; }
 		    if(this.data.crrm.cp_nodes) { this.move_node(this.data.crrm.cp_nodes, obj, 'after', true); }
 		    this.__callback({ "obj" : obj, "nodes" : nodes });
+		    return undefined;
 		}
 	    }
 	});
@@ -114,12 +115,12 @@ var pagemanager_modified = false;
 	    'modal': true
 	});
 
+	var buttons = {};
+	buttons[PAGEMANAGER.config.okButton] = function () {$(this).dialog('close');}
 	$('#pagemanager-alert').dialog({
 	    'autoOpen': false,
 	    'modal': true,
-	    'buttons': {
-		'<<<PT_button_ok>>>': function () {$(this).dialog('close');}
-	    }
+	    'buttons': buttons
 	});
 
 	$('#pagemanager').bind('loaded.jstree', function () {
@@ -151,9 +152,9 @@ var pagemanager_modified = false;
 	    switch (data.func) {
 		case 'create_node':
 		    if (pagemanager_level(pagemanager._get_node(data.args[0]))
-			    >= <<<MENU_LEVELS>>> + (data.args[1] == 'after' ? 1 : 0)) {
-			if (('<<<PC_verbose>>>').toLowerCase() == 'true') {
-			    $('#pagemanager-alert').html('<<<PT_message_menu_level>>>');
+			    >= PAGEMANAGER.config.menuLevels + (data.args[1] == 'after' ? 1 : 0)) {
+			if (PAGEMANAGER.config.verbose.toLowerCase() == 'true') {
+			    $('#pagemanager-alert').html(PAGEMANAGER.config.menuLevelMessage);
 			    $('#pagemanager-alert').dialog('open');
 			}
 			e.stopImmediatePropagation();
@@ -162,7 +163,7 @@ var pagemanager_modified = false;
 		    break;
 		case 'rename':
 		    if ($(data.args[0][0]).hasClass('pagemanager-no-rename')) {
-			alert('<<<PT_error_cant_rename>>>');
+			alert(PAGEMANAGER.config.cantRenameError);
 			e.stopImmediatePropagation();
 			return false;
 		    }
@@ -171,25 +172,25 @@ var pagemanager_modified = false;
 		case 'remove':
 		    var toplevels = pagemanager._get_children(-1);
 		    if (toplevels.length == 1 && data.args[0][0] == toplevels[0]) {
-			if (('<<<PC_verbose>>>').toLowerCase() == 'true') {
-			    $('#pagemanager-alert').html('<<<PT_message_delete_last>>>');
+			if (PAGEMANAGER.config.verbose.toLowerCase() == 'true') {
+			    $('#pagemanager-alert').html(PAGEMANAGER.config.deleteLastMessage);
 			    $('#pagemanager-alert').dialog('open');
 			}
 			e.stopImmediatePropagation();
 			return false;
 		    }
 		    if (data.args[1] != 'confirmed') {
-			if (('<<<PC_verbose>>>').toLowerCase() == 'true') {
-			    $('#pagemanager-confirmation').html('<<<PT_message_confirm_deletion>>>');
-			    $('#pagemanager-confirmation').dialog('option', 'buttons', {
-				'<<<PT_button_delete>>>': function () {
+			if (PAGEMANAGER.config.verbose.toLowerCase() == 'true') {
+			    $('#pagemanager-confirmation').html(PAGEMANAGER.config.confirmDeletionMessage);
+			    var buttons = {};
+			    buttons[PAGEMANAGER.config.deleteButton] = function () {
 				    pagemanager.remove(data.args[0], 'confirmed');
 				    $(this).dialog('close');
-				},
-				'<<<PT_button_cancel>>>': function () {
+				};
+			    buttons[PAGEMANAGER.config.cancelButton] = function () {
 				    $(this).dialog('close');
-				}
-			    });
+				};
+			    $('#pagemanager-confirmation').dialog('option', 'buttons', buttons);
 			    $('#pagemanager-confirmation').dialog('open');
 			    e.stopImmediatePropagation();
 			    return false;
@@ -248,13 +249,13 @@ var pagemanager_modified = false;
 	if (!window.opera) {
 	    window.onbeforeunload = function () {
 		if (pagemanager_modified && $('#pagemanager-xml')[0].value == '') {
-		    return '<<<PT_message_warning_leave>>>';
+		    return PAGEMANAGER.config.leaveWarning;
 		}
 	    };
 	} else {
 	    $(window).unload(function () {
 		if (pagemanager_modified && $('#pagemanager-xml')[0].value == '') {
-		    if (confirm('<<<PT_message_confirm_leave>>>')) {
+		    if (confirm(PAGEMANAGER.config.leaveConfirmation)) {
 			$('#pagemanager-xml')[0].value = pagemanager.get_xml(
 				'nest', -1, new Array('id', 'title', 'pdattr'));
 			$('#pagemanager-form').submit();
@@ -271,17 +272,17 @@ var pagemanager_modified = false;
 	    'plugins': ['themes', 'html_data', 'xml_data', 'dnd', 'ui',
 		    'crrm', 'contextmenu', 'checkbox', 'types'],
 	    'core': {
-		'animation': <<<PC_treeview_animation>>>,
+		'animation': PAGEMANAGER.config.animated,
 		'strings': {
-		    loading:'<<<PT_treeview_loading>>>',
-		    new_node:'<<<PT_treeview_new>>>'
+		    loading: PAGEMANAGER.config.loading,
+		    new_node: PAGEMANAGER.config.newNode
 		}
 	    },
 	    'types': {
 		'types': {
 		    'new': {
 			'icon': {
-			    'image': '<<<IMAGE_DIR>>>new.gif'
+			    'image': PAGEMANAGER.config.imageDir + "new.png"
 			}
 		    },
 		    'default': {
@@ -304,10 +305,10 @@ var pagemanager_modified = false;
 				    (typeof(m.r) == 'object' && pagemanager_childLevels(m.o) // of source
 					+ pagemanager_level(m.r) // of target
 					+ (m.p == 'last' || m.p == 'inside' ? 1 : 0) // paste vs. dnd
-				    <= <<<MENU_LEVELS>>>);
+				    <= PAGEMANAGER.config.menuLevels);
 			    if (!m.ot.data.dnd.active && !allowed
-				    && ('<<<PC_verbose>>>').toLowerCase() == 'true') {
-				$('#pagemanager-alert').html('<<<PT_message_menu_level>>>');
+				    && (PAGEMANAGER.config.verbose.toLowerCase() == 'true')) {
+				$('#pagemanager-alert').html(PAGEMANAGER.config.menuLevelMessage);
 				$('#pagemanager-alert').dialog('open');
 			    }
 			    return allowed;
@@ -315,7 +316,7 @@ var pagemanager_modified = false;
 		}
 	    },
 	    'themes': {
-		'theme': '<<<PC_treeview_theme>>>'
+		'theme': PAGEMANAGER.config.theme
 	    },
 	    'contextmenu': {
 		'show_at_node': false,
@@ -323,44 +324,44 @@ var pagemanager_modified = false;
 		'items': function (node) {
 		    return {
 			'create': {
-			    'label': '<<<PT_op_create>>>',
-			    'icon': '<<<IMAGE_DIR>>>create<<<IMAGE_EXT>>>',
+			    'label': PAGEMANAGER.config.createOp,
+			    'icon': PAGEMANAGER.config.imageDir + "create.png",
 			    'action': function (obj) {this.create(obj);}
 			},
 			'create-after': {
-			    'label': '<<<PT_op_create_after>>>',
-			    'icon': '<<<IMAGE_DIR>>>create_after<<<IMAGE_EXT>>>',
+			    'label': PAGEMANAGER.config.createAfterOp,
+			    'icon': PAGEMANAGER.config.imageDir + "create_after.png",
 			    'action': function(obj) {this.create(obj, 'after');}
 			},
 			'rename': {
-			    'label': '<<<PT_op_rename>>>',
-			    'icon': '<<<IMAGE_DIR>>>rename<<<IMAGE_EXT>>>',
+			    'label': PAGEMANAGER.config.renameOp,
+			    'icon': PAGEMANAGER.config.imageDir + "rename.png",
 			    'action': function(obj) {this.rename(obj);}
 			},
 			'remove' : {
-			    'label': '<<<PT_op_delete>>>',
-			    'icon': '<<<IMAGE_DIR>>>delete<<<IMAGE_EXT>>>',
+			    'label': PAGEMANAGER.config.deleteOp,
+			    'icon': PAGEMANAGER.config.imageDir + "delete.png",
 			    'action': function(obj) {this.remove(obj);}
 			},
 			'cut': {
-			    'label': '<<<PT_op_cut>>>',
+			    'label': PAGEMANAGER.config.cutOp,
 			    'separator_before': true,
-			    'icon': '<<<IMAGE_DIR>>>cut<<<IMAGE_EXT>>>',
+			    'icon': PAGEMANAGER.config.imageDir + "cut.png",
 			    'action': function(obj) {this.cut(obj);}
 			},
 			'copy': {
-			    'label': '<<<PT_op_copy>>>',
-			    'icon': '<<<IMAGE_DIR>>>copy<<<IMAGE_EXT>>>',
+			    'label': PAGEMANAGER.config.copyOp,
+			    'icon': PAGEMANAGER.config.imageDir + "copy.png",
 			    'action': function(obj) {this.copy(obj);}
 			},
 			'paste': {
-			    'label': '<<<PT_op_paste>>>',
-			    'icon': '<<<IMAGE_DIR>>>paste<<<IMAGE_EXT>>>',
+			    'label': PAGEMANAGER.config.pasteOp,
+			    'icon': PAGEMANAGER.config.imageDir + "paste.png",
 			    'action': function(obj) {this.paste(obj);}
 			},
 			'paste-after': {
-			    'label': '<<<PT_op_paste_after>>>',
-			    'icon': '<<<IMAGE_DIR>>>paste_after<<<IMAGE_EXT>>>',
+			    'label': PAGEMANAGER.config.pasteAfterOp,
+			    'icon': PAGEMANAGER.config.imageDir + "paste_after.png",
 			    'action': function(obj) {this.pasteAfter(obj);}
 			}
 		    }
