@@ -17,3 +17,10 @@
 </form>
 <div id="pagemanager-confirmation" title="<?php echo $titleConfirm;?>"></div>
 <div id="pagemanager-alert" title="<?php echo $titleInfo;?>"></div>
+<script type="text/javascript">
+    /* <![CDATA[ */
+    var PAGEMANAGER = {};
+    PAGEMANAGER.config = <?php echo $config;?>;
+    /* ]]> */
+</script>
+<script type="text/javascript" src="<?php echo $script;?>"></script>

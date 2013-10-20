@@ -200,9 +200,9 @@ function pagemanager_toolbar() {
 }
 
 /**
- * Returns the SCRIPT elements.
+ * Returns the widget configuration.
  *
- * @return string (X)HTML.
+ * @return string JSON.
  *
  * @global array The paths of system files and folders.
  * @global array The configuration of the core.
@@ -210,7 +210,7 @@ function pagemanager_toolbar() {
  * @global array The configuration of the plugins.
  * @global array The localization of the plugins.
  */
-function pagemanager_js()
+function pagemanager_config()
 {
     global $pth, $cf, $tx, $plugin_cf, $plugin_tx;
 
@@ -246,16 +246,7 @@ function pagemanager_js()
 	'duplicateHeading' => $tx['toc']['dupl'],
 	'offendingExtensionError' => $ptx['error_offending_extension']
     );
-    $config = XH_encodeJson($config);
-    $src = "{$pth['folder']['plugins']}pagemanager/pagemanager.js";
-    return <<<EOS
-<script type="text/javascript">/* <![CDATA[ */
-var PAGEMANAGER = {};
-PAGEMANAGER.config = $config;
-/* ]]> */</script>
-<script type="text/javascript" src="$src"></script>
-
-EOS;
+    return XH_encodeJson($config);
 }
 
 /**
@@ -366,13 +357,13 @@ function pagemanager_edit()
     $saveButton = utf8_ucfirst($tx['action']['save']);
     $titleConfirm = $ptx['message_confirm'];
     $titleInfo = $ptx['message_information'];
+    $script = "{$pth['folder']['plugins']}pagemanager/pagemanager.js";
+    $config = Pagemanager_config();
     $bag = compact(
 	'actionUrl', 'isIrregular', 'structureWarning', 'structureConfirmation',
-	'toolbar', 'saveButton', 'titleConfirm', 'titleInfo'
+	'toolbar', 'saveButton', 'titleConfirm', 'titleInfo', 'script', 'config'
     );
     $o = Pagemanager_render('widget', $bag);
-
-    $o .= pagemanager_js();
 
     return $o;
 }
