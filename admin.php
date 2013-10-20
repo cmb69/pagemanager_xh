@@ -297,8 +297,9 @@ function Pagemanager_structureWarning()
     return <<<HTM
 <div id="pagemanager-structure-warning" class="cmsimplecore_warning">
 <p>$ptx[error_structure_warning]</p>
-<p><a href="#" onclick="PAGEMANAGER.confirmStructureWarning();return false">
-$ptx[error_structure_confirmation]</a></div>
+<p><button onclick="PAGEMANAGER.confirmStructureWarning()">
+$ptx[error_structure_confirmation]</button></p>
+</div>
 
 HTM;
 }
