@@ -155,16 +155,25 @@ PAGEMANAGER.restorePageHeadings = function (node) {
 };
 
 /**
- * Submits the page structure.
+ * Prepares the form submission.
  *
  * @returns {undefined}
  */
-PAGEMANAGER.submit = function () {
+PAGEMANAGER.beforeSubmit = function () {
     var attribs, xml;
 
     attribs = ["id", "title", "pdattr"];
     xml = PAGEMANAGER.widget.get_xml("nest", -1, attribs);
     jQuery("#pagemanager-xml").val(xml);
+};
+
+/**
+ * Submits the page structure.
+ *
+ * @returns {undefined}
+ */
+PAGEMANAGER.submit = function () {
+    PAGEMANAGER.beforeSubmit();
     jQuery("#pagemanager-form").submit();
 };
 

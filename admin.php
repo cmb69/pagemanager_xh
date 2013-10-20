@@ -170,10 +170,9 @@ function Pagemanager_version()
 /**
  * Returns the toolbar.
  *
- * @param  string $save_js    The js code for onclick.
  * @return string	      The (x)html.
  */
-function pagemanager_toolbar($save_js) {
+function pagemanager_toolbar() {
     global $pth, $plugin_cf, $plugin_tx, $tx;
 
     $imgdir = $pth['folder']['plugins'].'pagemanager/images/';
@@ -325,13 +324,11 @@ function pagemanager_edit() {
 	$o .= Pagemanager_structureWarning();
     }
 
-    $save_js = 'jQuery(\'#pagemanager-xml\')[0].value ='
-	    .' jQuery(\'#pagemanager\').jstree(\'get_xml\', \'nest\', -1,
-		new Array(\'id\', \'title\', \'pdattr\'))';
     $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
-    $o .= '<form id="pagemanager-form" action="'.$sn.'?&amp;pagemanager&amp;edit'
-	.$xhpages.'" method="post" accept-charset="UTF-8">'."\n";
-    $o .= $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar($save_js) : '';
+    $actionUrl = $sn . '?&amp;pagemanager&amp;edit' . $xhpages;
+    $o .= '<form id="pagemanager-form" action="' . $actionUrl
+	. '" method="post" accept-charset="UTF-8" onsubmit="PAGEMANAGER.beforeSubmit()">'."\n";
+    $o .= $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar() : '';
 
     // output the treeview of the page structure
     // uses ugly hack to clean up irregular page structure
@@ -385,10 +382,8 @@ function pagemanager_edit() {
 	    .tag('input type="hidden" name="xml" id="pagemanager-xml" value=""')."\n"
 	    .tag('input id="pagemanager-submit" type="submit" class="submit" value="'
 		.utf8_ucfirst($tx['action']['save']).'"'
-		.' onclick="'.$save_js.'"'
 		.' style="display: none"')."\n"
-	    .'</form>'."\n"
-	    .'<div id="pagemanager-footer">&nbsp;</div>'."\n";
+	    .'</form>'."\n";
 
     $o .= '<div id="pagemanager-confirmation" title="'
 	    .$plugin_tx['pagemanager']['message_confirm']
