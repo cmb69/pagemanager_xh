@@ -283,6 +283,27 @@ function Pagemanager_isIrregular()
 }
 
 /**
+ * Returns the irregular page structure warning.
+ *
+ * @return string (X)HTML.
+ *
+ * @global array The localization of the plugins.
+ */
+function Pagemanager_structureWarning()
+{
+    global $plugin_tx;
+
+    $ptx = $plugin_tx['pagemanager'];
+    return <<<HTM
+<div id="pagemanager-structure-warning" class="cmsimplecore_warning">
+<p>$ptx[error_structure_warning]</p>
+<p><a href="#" onclick="PAGEMANAGER.confirmStructureWarning();return false">
+$ptx[error_structure_confirmation]</a></div>
+
+HTM;
+}
+
+/**
  * Emits the page administration (X)HTML.
  *
  * @return void
@@ -300,13 +321,6 @@ function pagemanager_edit() {
     Pagemanager_getHeadings();
 
     $bo = '';
-
-    $swo = '<div id="pagemanager-structure-warning" class="cmsimplecore_warning"><p>'
-	    .$plugin_tx['pagemanager']['error_structure_warning']
-	    .'</p><p><a href="#" onclick="PAGEMANAGER.confirmStructureWarning();return false">'
-	    .$plugin_tx['pagemanager']['error_structure_confirmation']
-	    .'</a></div>'."\n";
-
 
     $save_js = 'jQuery(\'#pagemanager-xml\')[0].value ='
 	    .' jQuery(\'#pagemanager\').jstree(\'get_xml\', \'nest\', -1,
@@ -361,7 +375,7 @@ function pagemanager_edit() {
     $bo .= '</ul></div>'."\n";
 
     if (Pagemanager_isIrregular())
-	$o .= $swo;
+	$o .= Pagemanager_structureWarning();
 
     $o .= $bo;
 
