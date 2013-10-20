@@ -347,85 +347,20 @@ function pagemanager_edit() {
 
 
 /**
- * Handles start elements of jsTree's xml result.
- *
- * @return void
- */
-function pagemanager_start_element_handler($parser, $name, $attribs) {
-    global $o, $pagemanager_state;
-    if ($name == 'ITEM') {
-	$pagemanager_state['level']++;
-	$pagemanager_state['id'] = $attribs['ID'] == ''
-		? '' : preg_replace('/(copy_)?pagemanager-([0-9]*)/', '$2', $attribs['ID']);
-	$pagemanager_state['title'] = htmlspecialchars($attribs['TITLE'], ENT_NOQUOTES, 'UTF-8');
-	$pagemanager_state['pdattr'] = $attribs['PDATTR'];
-    }
-}
-
-
-/**
- * Handles end elements of jsTree's xml result.
- *
- * @return void
- */
-function pagemanager_end_element_handler($parser, $name) {
-    global $pagemanager_state;
-    if ($name == 'ITEM')
-	$pagemanager_state['level']--;
-}
-
-
-/**
- * Handles character data of jsTree's xml result.
- *
- * @return void
- */
-function pagemanager_cdata_handler($parser, $data) {
-    global $c, $h, $cf, $pagemanager_c, $pagemanager_state, $pagemanager_pd,
-	    $pd_router, $plugin_cf;
-    $data = htmlspecialchars($data, ENT_NOQUOTES, 'UTF-8');
-    if (isset($c[$pagemanager_state['id']])) {
-	$cnt = $c[$pagemanager_state['id']];
-	$cnt = preg_replace('/<h[1-'.$cf['menu']['levels'].']([^>]*)>'
-		.'((<[^>]*>)*)[^<]*((<[^>]*>)*)<\/h[1-'.$cf['menu']['levels'].']([^>]*)>/i',
-		'<h'.$pagemanager_state['level'].'$1>${2}'.addcslashes($pagemanager_state['title'], '$\\').'$4'
-		.'</h'.$pagemanager_state['level'].'$6>', $cnt, 1);
-	$pagemanager_c[] = $cnt;
-    } else {
-	$pagemanager_c[] = '<h'.$pagemanager_state['level'].'>'.$pagemanager_state['title']
-	    .'</h'.$pagemanager_state['level'].'>';
-    }
-
-    if ($pagemanager_state['id'] == '') {
-	$pd = $pd_router->new_page(array());
-    } else {
-	$pd = $pd_router->find_page($pagemanager_state['id']);
-    }
-    $pd['url'] = uenc($pagemanager_state['title']);
-    $pd[$plugin_cf['pagemanager']['pagedata_attribute']] = $pagemanager_state['pdattr'];
-    $pagemanager_pd[] = $pd;
-}
-
-
-/**
  * Saves the content.
  * Returns whether that succeeded.
  *
  * @return bool
  */
 function pagemanager_save($xml) {
-    global $c, $pth, $tx, $pd_router, $pagemanager_state, $pagemanager_c, $pagemanager_pd;
+    global $c, $pth, $pd_router;
+
     if (is_writable($pth['file']['content'])) {
-	$parser = xml_parser_create('UTF-8');
-	xml_set_element_handler($parser, 'pagemanager_start_element_handler',
-		'pagemanager_end_element_handler');
-	xml_set_character_data_handler($parser, 'pagemanager_cdata_handler');
-	$pagemanager_state['level'] = 0;
-	$pagemanager_c = array();
-	$pagemanager_pd = array();
-	xml_parse($parser, $xml, TRUE);
-	$c = $pagemanager_c;
-	return $pd_router->model->refresh($pagemanager_pd);
+	include_once "{$pth['folder']['plugins']}pagemanager/classes/XMLParser.php";
+	$parser = new Pagemanager_XMLParser();
+	$parser->parse($xml);
+	$c = $parser->getContents();
+	return $pd_router->model->refresh($parser->getPageData());
     } else {
 	e('cntwriteto', 'content', $pth['file']['content']);
 	return false;
