@@ -1,6 +1,11 @@
 <!-- Pagemanager_XH: widget -->
 <form id="pagemanager-form" action="<?php echo $actionUrl;?>" method="post" accept-charset="UTF-8" onsubmit="PAGEMANAGER.beforeSubmit()">
-    <?php echo $structureWarning;?>
+<?php if ($isIrregular):?>
+    <div id="pagemanager-structure-warning" class="cmsimplecore_warning">
+        <p><?php echo $structureWarning;?></p>
+        <p><button type="button" onclick="PAGEMANAGER.confirmStructureWarning()"><?php echo $structureConfirmation;?></button></p>
+    </div>
+<?php endif;?>
     <?php echo $toolbar;?>
     <div id="pagemanager" ondblclick="jQuery('#pagemanager').jstree('toggle_node')">
         <?php echo Pagemanager_pages();?>

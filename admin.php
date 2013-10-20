@@ -282,28 +282,6 @@ function Pagemanager_isIrregular()
 }
 
 /**
- * Returns the irregular page structure warning.
- *
- * @return string (X)HTML.
- *
- * @global array The localization of the plugins.
- */
-function Pagemanager_structureWarning()
-{
-    global $plugin_tx;
-
-    $ptx = $plugin_tx['pagemanager'];
-    return <<<HTM
-<div id="pagemanager-structure-warning" class="cmsimplecore_warning">
-<p>$ptx[error_structure_warning]</p>
-<p><button type="button" onclick="PAGEMANAGER.confirmStructureWarning()">
-$ptx[error_structure_confirmation]</button></p>
-</div>
-
-HTM;
-}
-
-/**
  * Returns the pages view.
  *
  * @return string (X)HTML.
@@ -368,9 +346,9 @@ function Pagemanager_pages()
  */
 function pagemanager_edit()
 {
-    global $hjs, $pth, $sn, $h, $l, $plugin, $plugin_cf, $tx, $plugin_tx,
-	$u, $pagemanager_h, $pagemanager_no_rename, $pd_router;
+    global $pth, $sn, $plugin_cf, $tx, $plugin_tx;
 
+    $ptx = $plugin_tx['pagemanager'];
     include_once($pth['folder']['plugins'].'jquery/jquery.inc.php');
     include_jQuery();
     include_jQueryUI();
@@ -381,12 +359,17 @@ function pagemanager_edit()
 
     $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
     $actionUrl = $sn . '?&amp;pagemanager&amp;edit' . $xhpages;
-    $structureWarning = Pagemanager_isIrregular() ? Pagemanager_structureWarning() : '';
+    $isIrregular = Pagemanager_isIrregular();
+    $structureWarning = $ptx['error_structure_warning'];
+    $structureConfirmation = $ptx['error_structure_confirmation'];
     $toolbar = $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar() : '';
     $saveButton = utf8_ucfirst($tx['action']['save']);
-    $titleConfirm = $plugin_tx['pagemanager']['message_confirm'];
-    $titleInfo = $plugin_tx['pagemanager']['message_information'];
-    $bag = compact('actionUrl', 'structureWarning', 'toolbar', 'saveButton', 'titleConfirm', 'titleInfo');
+    $titleConfirm = $ptx['message_confirm'];
+    $titleInfo = $ptx['message_information'];
+    $bag = compact(
+	'actionUrl', 'isIrregular', 'structureWarning', 'structureConfirmation',
+	'toolbar', 'saveButton', 'titleConfirm', 'titleInfo'
+    );
     $o = Pagemanager_render('widget', $bag);
 
     $o .= pagemanager_js();
