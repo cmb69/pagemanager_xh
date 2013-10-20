@@ -99,7 +99,7 @@ function pagemanager_do(op) {
 			$('#pagemanager').jstree(realOp, sel);
 		    }
 		} else {
-		    if (PAGEMANAGER.config.verbose.toLowerCase() == 'true') {
+		    if (PAGEMANAGER.config.verbose) {
 			$('#pagemanager-alert').html(PAGEMANAGER.config.noSelectionMessage);
 			$('#pagemanager-alert').dialog('open');
 		    }
@@ -180,7 +180,7 @@ function pagemanager_confirmStructureWarning() {
 		case 'create_node':
 		    if (PAGEMANAGER.level(pagemanager._get_node(data.args[0]))
 			    >= PAGEMANAGER.config.menuLevels + (data.args[1] == 'after' ? 1 : 0)) {
-			if (PAGEMANAGER.config.verbose.toLowerCase() == 'true') {
+			if (PAGEMANAGER.config.verbose) {
 			    $('#pagemanager-alert').html(PAGEMANAGER.config.menuLevelMessage);
 			    $('#pagemanager-alert').dialog('open');
 			}
@@ -199,7 +199,7 @@ function pagemanager_confirmStructureWarning() {
 		case 'remove':
 		    var toplevels = pagemanager._get_children(-1);
 		    if (toplevels.length == 1 && data.args[0][0] == toplevels[0]) {
-			if (PAGEMANAGER.config.verbose.toLowerCase() == 'true') {
+			if (PAGEMANAGER.config.verbose) {
 			    $('#pagemanager-alert').html(PAGEMANAGER.config.deleteLastMessage);
 			    $('#pagemanager-alert').dialog('open');
 			}
@@ -207,7 +207,7 @@ function pagemanager_confirmStructureWarning() {
 			return false;
 		    }
 		    if (data.args[1] != 'confirmed') {
-			if (PAGEMANAGER.config.verbose.toLowerCase() == 'true') {
+			if (PAGEMANAGER.config.verbose) {
 			    $('#pagemanager-confirmation').html(PAGEMANAGER.config.confirmDeletionMessage);
 			    var buttons = {};
 			    buttons[PAGEMANAGER.config.deleteButton] = function () {
@@ -299,7 +299,7 @@ function pagemanager_confirmStructureWarning() {
 	    'plugins': ['themes', 'html_data', 'xml_data', 'dnd', 'ui',
 		    'crrm', 'contextmenu', 'checkbox', 'types'],
 	    'core': {
-		'animation': PAGEMANAGER.config.animated,
+		'animation': PAGEMANAGER.config.animation,
 		'strings': {
 		    loading: PAGEMANAGER.config.loading,
 		    new_node: PAGEMANAGER.config.newNode
@@ -334,7 +334,7 @@ function pagemanager_confirmStructureWarning() {
 					+ (m.p == 'last' || m.p == 'inside' ? 1 : 0) // paste vs. dnd
 				    <= PAGEMANAGER.config.menuLevels);
 			    if (!m.ot.data.dnd.active && !allowed
-				    && (PAGEMANAGER.config.verbose.toLowerCase() == 'true')) {
+				    && (PAGEMANAGER.config.verbose)) {
 				$('#pagemanager-alert').html(PAGEMANAGER.config.menuLevelMessage);
 				$('#pagemanager-alert').dialog('open');
 			    }
