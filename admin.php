@@ -259,6 +259,28 @@ PAGEMANAGER.config = $config;
 EOS;
 }
 
+/**
+ * Returns whether the page structure is irregular.
+ *
+ * @return  bool
+ *
+ * @global array The headings of the pages.
+ * @global array The menu levels of the pages.
+ * @global int   The number of pages.
+ */
+function Pagemanager_isIrregular()
+{
+    global $h, $l, $cl;
+
+    $stack = array();
+    for ($i = 1; $i < $cl; $i++) {
+	$delta = $l[$i] - $l[$i - 1];
+	if ($delta > 1) {
+	    return true;
+	}
+    }
+    return false;
+}
 
 /**
  * Emits the page administration (X)HTML.
@@ -297,7 +319,6 @@ function pagemanager_edit() {
 
     // output the treeview of the page structure
     // uses ugly hack to clean up irregular page structure
-    $irregular = FALSE;
     $pd = $pd_router->find_page(0);
 
     $bo .= '<!-- page structure -->'."\n"
@@ -326,7 +347,6 @@ function pagemanager_edit() {
 	} else { // level increasing
 	    if ($ldiff > 1) {
 		array_push($stack, $ldiff);
-		$irregular = TRUE;
 	    }
 	    $bo .= "\n".'<ul>'."\n";
 	}
@@ -340,7 +360,7 @@ function pagemanager_edit() {
     }
     $bo .= '</ul></div>'."\n";
 
-    if ($irregular)
+    if (Pagemanager_isIrregular())
 	$o .= $swo;
 
     $o .= $bo;
