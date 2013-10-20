@@ -321,21 +321,23 @@ function pagemanager_edit() {
 
     Pagemanager_getHeadings();
 
-    $bo = '';
+    if (Pagemanager_isIrregular()) {
+	$o .= Pagemanager_structureWarning();
+    }
 
     $save_js = 'jQuery(\'#pagemanager-xml\')[0].value ='
 	    .' jQuery(\'#pagemanager\').jstree(\'get_xml\', \'nest\', -1,
 		new Array(\'id\', \'title\', \'pdattr\'))';
     $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
-    $bo .= '<form id="pagemanager-form" action="'.$sn.'?&amp;pagemanager&amp;edit'
+    $o .= '<form id="pagemanager-form" action="'.$sn.'?&amp;pagemanager&amp;edit'
 	.$xhpages.'" method="post" accept-charset="UTF-8">'."\n";
-    $bo .= $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar($save_js) : '';
+    $o .= $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar($save_js) : '';
 
     // output the treeview of the page structure
     // uses ugly hack to clean up irregular page structure
     $pd = $pd_router->find_page(0);
 
-    $bo .= '<!-- page structure -->'."\n"
+    $o .= '<!-- page structure -->'."\n"
 	    .'<div id="pagemanager" ondblclick="jQuery(\'#pagemanager\').jstree(\'toggle_node\');">'."\n"
     	    .'<ul>'."\n".'<li id="pagemanager-0" title="'.$pagemanager_h[0].'"'
 	    .' pdattr="'.($pd[$plugin_cf['pagemanager']['pagedata_attribute']] == ''
@@ -346,7 +348,7 @@ function pagemanager_edit() {
     for ($i = 1; $i < count($h); $i++) {
 	$ldiff = $l[$i] - $l[$i-1];
 	if ($ldiff <= 0) { // same level or decreasing
-	    $bo .= '</li>'."\n";
+	    $o .= '</li>'."\n";
 	    if ($ldiff != 0 && count($stack) > 0) {
 		$jdiff = array_pop($stack);
 		if ($jdiff + $ldiff > 0) {
@@ -357,27 +359,22 @@ function pagemanager_edit() {
 		}
 	    }
 	    for ($j = $ldiff; $j < 0; $j++)
-		$bo .= '</ul></li>'."\n";
+		$o .= '</ul></li>'."\n";
 	} else { // level increasing
 	    if ($ldiff > 1) {
 		array_push($stack, $ldiff);
 	    }
-	    $bo .= "\n".'<ul>'."\n";
+	    $o .= "\n".'<ul>'."\n";
 	}
 	$pd = $pd_router->find_page($i);
-	$bo .= '<li id="pagemanager-'.$i.'"'
+	$o .= '<li id="pagemanager-'.$i.'"'
 		.' title="'.$pagemanager_h[$i].'"'
 		.' pdattr="'.($pd[$plugin_cf['pagemanager']['pagedata_attribute']] == ''
 		    ? '1' : $pd[$plugin_cf['pagemanager']['pagedata_attribute']]).'"'
 		.($pagemanager_no_rename[$i] ? ' class="pagemanager-no-rename"' : '')
 		.'><a href="#">'.$pagemanager_h[$i].'</a>';
     }
-    $bo .= '</ul></div>'."\n";
-
-    if (Pagemanager_isIrregular())
-	$o .= Pagemanager_structureWarning();
-
-    $o .= $bo;
+    $o .= '</ul></div>'."\n";
 
     $o .= pagemanager_js();
 
