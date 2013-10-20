@@ -189,7 +189,7 @@ function pagemanager_toolbar($save_js) {
 	$class = $tool == 'separator' ? 'separator' : 'tool';
 	$res .= ($tool != 'separator' ? '<a '.$link.' class="pl_tooltip"'.($tool == 'save' ? ' style="display: none"' : '').'>' : '')
 		.tag('img class="'.$class.'" src="'.$img.'"'
-		    .($tool != 'help' ? ' onclick="pagemanager_do(\''.$tool.'\'); return false;"' : ''))
+		    .($tool != 'help' ? ' onclick="PAGEMANAGER.tool(\''.$tool.'\'); return false;"' : ''))
 		.($tool != 'separator'
 		    ? '<span>'.($tool == 'save' ? utf8_ucfirst($tx['action']['save'])
 			    : $plugin_tx['pagemanager']['op_'.$tool]).'</span></a>'
@@ -281,7 +281,7 @@ function pagemanager_edit() {
 
     $swo = '<div id="pagemanager-structure-warning" class="cmsimplecore_warning"><p>'
 	    .$plugin_tx['pagemanager']['error_structure_warning']
-	    .'</p><p><a href="#" onclick="pagemanager_confirmStructureWarning();return false">'
+	    .'</p><p><a href="#" onclick="PAGEMANAGER.confirmStructureWarning();return false">'
 	    .$plugin_tx['pagemanager']['error_structure_confirmation']
 	    .'</a></div>'."\n";
 
