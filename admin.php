@@ -177,7 +177,7 @@ function pagemanager_toolbar($save_js) {
     global $pth, $plugin_cf, $plugin_tx, $tx;
 
     $imgdir = $pth['folder']['plugins'].'pagemanager/images/';
-    $horizontal = (bool) $plugin_cf['pagemanager']['toolbar_vertical'];
+    $horizontal = !$plugin_cf['pagemanager']['toolbar_vertical'];
     $res = '<div id="pagemanager-toolbar" class="'.($horizontal ? 'horizontal' : 'vertical').'">'."\n";
     $toolbar = array('save', 'separator', 'expand', 'collapse', 'separator', 'create',
 	    'create_after', 'rename', 'delete', 'separator', 'cut', 'copy',
