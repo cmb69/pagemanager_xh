@@ -177,7 +177,7 @@ function pagemanager_toolbar($save_js) {
     global $pth, $plugin_cf, $plugin_tx, $tx;
 
     $imgdir = $pth['folder']['plugins'].'pagemanager/images/';
-    $horizontal = strtolower($plugin_cf['pagemanager']['toolbar_vertical']) != 'true';
+    $horizontal = (bool) $plugin_cf['pagemanager']['toolbar_vertical'];
     $res = '<div id="pagemanager-toolbar" class="'.($horizontal ? 'horizontal' : 'vertical').'">'."\n";
     $toolbar = array('save', 'separator', 'expand', 'collapse', 'separator', 'create',
 	    'create_after', 'rename', 'delete', 'separator', 'cut', 'copy',
@@ -329,8 +329,7 @@ function pagemanager_edit() {
     $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
     $bo .= '<form id="pagemanager-form" action="'.$sn.'?&amp;pagemanager&amp;edit'
 	.$xhpages.'" method="post" accept-charset="UTF-8">'."\n";
-    $bo .= strtolower($plugin_cf['pagemanager']['toolbar_show']) == 'true'
-	    ? pagemanager_toolbar($save_js) : '';
+    $bo .= $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar($save_js) : '';
 
     // output the treeview of the page structure
     // uses ugly hack to clean up irregular page structure
