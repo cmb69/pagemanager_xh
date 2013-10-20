@@ -304,47 +304,31 @@ HTM;
 }
 
 /**
- * Returns the page administration view.
+ * Returns the pages view.
  *
  * @return string (X)HTML.
+ *
+ * @global int    The number of pages.
+ * @global array  The menu levels of the pages.
+ * @global object The page data router.
+ * @global array  The configuration of the plugins.
+ * @global array  The unmodified page headings.
+ * @global array  Flags to signal whether the headings may be renamed.
  */
-function pagemanager_edit()
+function Pagemanager_pages()
 {
-    global $hjs, $pth, $sn, $h, $l, $plugin, $plugin_cf, $tx, $plugin_tx,
-	$u, $pagemanager_h, $pagemanager_no_rename, $pd_router;
-
-    include_once($pth['folder']['plugins'].'jquery/jquery.inc.php');
-    include_jQuery();
-    include_jQueryUI();
-    include_jQueryPlugin('jsTree', $pth['folder']['plugins']
-	    .'pagemanager/jstree/jquery.jstree.min.js');
-
-    Pagemanager_getHeadings();
-
-    $o = '';
-    if (Pagemanager_isIrregular()) {
-	$o .= Pagemanager_structureWarning();
-    }
-
-    $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
-    $actionUrl = $sn . '?&amp;pagemanager&amp;edit' . $xhpages;
-    $o .= '<form id="pagemanager-form" action="' . $actionUrl
-	. '" method="post" accept-charset="UTF-8" onsubmit="PAGEMANAGER.beforeSubmit()">'."\n";
-    $o .= $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar() : '';
+    global $cl, $l, $pd_router, $plugin_cf, $pagemanager_h, $pagemanager_no_rename;
 
     // output the treeview of the page structure
     // uses ugly hack to clean up irregular page structure
     $pd = $pd_router->find_page(0);
-
-    $o .= '<!-- page structure -->'."\n"
-	    .'<div id="pagemanager" ondblclick="jQuery(\'#pagemanager\').jstree(\'toggle_node\');">'."\n"
-    	    .'<ul>'."\n".'<li id="pagemanager-0" title="'.$pagemanager_h[0].'"'
+    $o = '<ul>' . "\n" . '<li id="pagemanager-0" title="'.$pagemanager_h[0].'"'
 	    .' pdattr="'.($pd[$plugin_cf['pagemanager']['pagedata_attribute']] == ''
 		? '1' : $pd[$plugin_cf['pagemanager']['pagedata_attribute']]).'"'
 	    .($pagemanager_no_rename[0] ? ' class="pagemanager-no-rename"' : '')
 	    .'><a href="#">'.$pagemanager_h[0].'</a>';
     $stack = array();
-    for ($i = 1; $i < count($h); $i++) {
+    for ($i = 1; $i < $cl; $i++) {
 	$ldiff = $l[$i] - $l[$i-1];
 	if ($ldiff <= 0) { // same level or decreasing
 	    $o .= '</li>'."\n";
@@ -373,6 +357,42 @@ function pagemanager_edit()
 		.($pagemanager_no_rename[$i] ? ' class="pagemanager-no-rename"' : '')
 		.'><a href="#">'.$pagemanager_h[$i].'</a>';
     }
+    $o .= '</ul></div>'."\n";
+    return $o;
+}
+
+/**
+ * Returns the page administration view.
+ *
+ * @return string (X)HTML.
+ */
+function pagemanager_edit()
+{
+    global $hjs, $pth, $sn, $h, $l, $plugin, $plugin_cf, $tx, $plugin_tx,
+	$u, $pagemanager_h, $pagemanager_no_rename, $pd_router;
+
+    include_once($pth['folder']['plugins'].'jquery/jquery.inc.php');
+    include_jQuery();
+    include_jQueryUI();
+    include_jQueryPlugin('jsTree', $pth['folder']['plugins']
+	    .'pagemanager/jstree/jquery.jstree.min.js');
+
+    Pagemanager_getHeadings();
+
+    $o = '';
+    if (Pagemanager_isIrregular()) {
+	$o .= Pagemanager_structureWarning();
+    }
+
+    $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
+    $actionUrl = $sn . '?&amp;pagemanager&amp;edit' . $xhpages;
+    $o .= '<form id="pagemanager-form" action="' . $actionUrl
+	. '" method="post" accept-charset="UTF-8" onsubmit="PAGEMANAGER.beforeSubmit()">'."\n";
+    $o .= $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar() : '';
+
+    $o .= '<!-- page structure -->'."\n"
+	    .'<div id="pagemanager" ondblclick="jQuery(\'#pagemanager\').jstree(\'toggle_node\');">'."\n"
+    	    .Pagemanager_pages();
     $o .= '</ul></div>'."\n";
 
     $o .= pagemanager_js();
