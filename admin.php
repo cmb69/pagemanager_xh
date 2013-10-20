@@ -304,12 +304,13 @@ HTM;
 }
 
 /**
- * Emits the page administration (X)HTML.
+ * Returns the page administration view.
  *
- * @return void
+ * @return string (X)HTML.
  */
-function pagemanager_edit() {
-    global $hjs, $pth, $o, $sn, $h, $l, $plugin, $plugin_cf, $tx, $plugin_tx,
+function pagemanager_edit()
+{
+    global $hjs, $pth, $sn, $h, $l, $plugin, $plugin_cf, $tx, $plugin_tx,
 	$u, $pagemanager_h, $pagemanager_no_rename, $pd_router;
 
     include_once($pth['folder']['plugins'].'jquery/jquery.inc.php');
@@ -320,6 +321,7 @@ function pagemanager_edit() {
 
     Pagemanager_getHeadings();
 
+    $o = '';
     if (Pagemanager_isIrregular()) {
 	$o .= Pagemanager_structureWarning();
     }
@@ -390,6 +392,7 @@ function pagemanager_edit() {
 	    .'"></div>'."\n"
 	    .'<div id="pagemanager-alert" title="'
 	    .$plugin_tx['pagemanager']['message_information'].'"></div>'."\n";
+    return $o;
 }
 
 
@@ -423,7 +426,7 @@ if ($f === 'xhpages' && isset($cf['pagemanager']['external'])
 {
     include_once $pth['folder']['plugins'] . 'utf8/utf8.php';
     include_once UTF8 . '/ucfirst.php';
-    pagemanager_edit();
+    $o .= pagemanager_edit();
 }
 
 
@@ -456,7 +459,7 @@ if (isset($pagemanager)) {
 	    }
 	    break;
 	case 'plugin_main':
-	    pagemanager_edit();
+	    $o .= pagemanager_edit();
 	    break;
 	default:
 	    $o .= plugin_admin_common($action, $admin, $plugin);
