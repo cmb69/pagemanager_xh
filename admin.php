@@ -16,6 +16,29 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 define('PAGEMANAGER_VERSION', '@PAGEMANAGER_VERSION@');
 
 /**
+ * Returns the available themes.
+ *
+ * @return array
+ */
+function Pagemanager_themes()
+{
+    global $pth;
+
+    $themes = array();
+    $path = "{$pth['folder']['plugins']}pagemanager/jstree/themes/";
+    $dir = opendir($path);
+    if ($dir !== false) {
+	while (($entry = readdir($dir)) !== false) {
+	    if ($entry[0] !== '.' && is_dir($path . $entry)) {
+		$themes[] = $entry;
+	    }
+	}
+    }
+    natcasesort($themes);
+    return $themes;
+}
+
+/**
  * Initializes the <var>$pagemanager_h</var> array with the unmodified page
  * headings and the <var>$pagemanager_no_rename</var> array to flag
  * whether the page may be renamed.

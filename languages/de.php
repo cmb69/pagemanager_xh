@@ -1,11 +1,11 @@
 <?php
 
-$plugin_tx['pagemanager']['cf_verbose']="<p>Anzeige von Bestätigungs- und Informationsdialogen? <b>true</b> oder <b>false</b></p><p><strong><b>true</b> wird unbedingt empfohlen</strong>, es sei denn, Sie sind ein Power User <strong>und</strong> bereits mit Pagemanager_XH vertraut.</p>";
-$plugin_tx['pagemanager']['cf_toolbar_show']="<p>Soll die Werkzeugleiste angezeigt werden? <b>true</b> oder <b>false<b></p>";
-$plugin_tx['pagemanager']['cf_toolbar_vertical']="<p>Soll die Werkzeugleiste vertikal angezeigt werden? <b>true</b> oder <b>false</b></p><p>Dies ist eine Option für Power User, die das Layout in Plugin-Stylesheet anpassen können.</p>";
-$plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>Das ja/nein (mit Voreinstellung ja) pagedata Attribut für die Checkboxen, z.B. <b>published</b> oder <b>linked_to_menu</b>.</p><p><strong>Vorsicht:</strong> Wenn Sie ein ungeeignetes Attribut wählen, bringen Sie Ihre pagedata.php durcheinander.</p>";
-$plugin_tx['pagemanager']['cf_treeview_theme']="<p>Stil der Baumansicht: <b>cmsimple</b></p><p>Andere Stile können von http://3-magi.net/?CMSimple_XH/Pagemanager_XH herunter geladen werden.</p>";
-$plugin_tx['pagemanager']['cf_treeview_animation']="<p>Dauer der Öffnen/Schließen-Animation in ms. 0 bedeutet keine Animation.</p>";
+$plugin_tx['pagemanager']['cf_verbose']="Ob Bestätigungs- und Informationsdialoge angezeigt werden sollen.";
+$plugin_tx['pagemanager']['cf_toolbar_show']="Ob die Werkzeugleiste angezeigt werden soll.";
+$plugin_tx['pagemanager']['cf_toolbar_vertical']="Ob die Werkzeugleiste vertikal angezeigt werden soll. Dies ist eine Option für Power User, die das Layout in Plugin-Stylesheet anpassen können.";
+$plugin_tx['pagemanager']['cf_pagedata_attribute']="Das ja/nein (mit Voreinstellung ja) Pagedata Attribut für die Checkboxen, z.B. \"published\" oder \"linked_to_menu\". <strong>Vorsicht:</strong> Wenn Sie ein ungeeignetes Attribut wählen, bringen Sie Ihre pagedata.php durcheinander.";
+$plugin_tx['pagemanager']['cf_treeview_theme']="Stil der Baumansicht. Andere Stile können von <a href=\"http://3-magi.net/?CMSimple_XH/Pagemanager_XH/Themes\">3-magi.net</a> herunter geladen werden.";
+$plugin_tx['pagemanager']['cf_treeview_animation']="Dauer der Öffnen/Schließen-Animation in ms. 0 bedeutet keine Animation.";
 $plugin_tx['pagemanager']['menu_main']="Seiten verwalten";
 $plugin_tx['pagemanager']['op_expand']="Alle Seiten aufklappen";
 $plugin_tx['pagemanager']['op_collapse']="Alle Seiten einklappen";
