@@ -273,6 +273,23 @@ function Pagemanager_isIrregular()
 }
 
 /**
+ * Returns the view of a single page.
+ *
+ * @param int    A page index.
+ * @param string A page heading.
+ * @param string A page data attribute.
+ * @param bool   Whether the page may be renamed.
+ *
+ * @return string (X)HTML.
+ */
+function Pagemanager_page($n, $heading, $pdattr, $mayRename)
+{
+    $rename = $mayRename ? ' class="pagemanager-no-rename"' : '';
+    return "<li id=\"pagemanager-$n\" title=\"$heading\" pdattr=\"$pdattr\""
+	    . "$rename><a href=\"#\">$heading</a>";
+}
+
+/**
  * Returns the pages view.
  *
  * @return string (X)HTML.
@@ -290,15 +307,17 @@ function Pagemanager_pages()
 
     // output the treeview of the page structure
     // uses ugly hack to clean up irregular page structure
+    $pcf = $plugin_cf['pagemanager'];
     $pd = $pd_router->find_page(0);
-    $o = '<ul>' . "\n" . '<li id="pagemanager-0" title="'.$pagemanager_h[0].'"'
-	    .' pdattr="'.($pd[$plugin_cf['pagemanager']['pagedata_attribute']] == ''
-		? '1' : $pd[$plugin_cf['pagemanager']['pagedata_attribute']]).'"'
-	    .($pagemanager_no_rename[0] ? ' class="pagemanager-no-rename"' : '')
-	    .'><a href="#">'.$pagemanager_h[0].'</a>';
+    $pdattr = $pd[$pcf['pagedata_attribute']] == ''
+	? '1' : $pd[$pcf['pagedata_attribute']];
+    $o = '<ul>' . "\n";
+    $o .= Pagemanager_page(
+	0, $pagemanager_h[0], $pdattr, $pagemanager_no_rename[0]
+    );
     $stack = array();
     for ($i = 1; $i < $cl; $i++) {
-	$ldiff = $l[$i] - $l[$i-1];
+	$ldiff = $l[$i] - $l[$i - 1];
 	if ($ldiff <= 0) { // same level or decreasing
 	    $o .= '</li>'."\n";
 	    if ($ldiff != 0 && count($stack) > 0) {
@@ -319,12 +338,11 @@ function Pagemanager_pages()
 	    $o .= "\n".'<ul>'."\n";
 	}
 	$pd = $pd_router->find_page($i);
-	$o .= '<li id="pagemanager-'.$i.'"'
-		.' title="'.$pagemanager_h[$i].'"'
-		.' pdattr="'.($pd[$plugin_cf['pagemanager']['pagedata_attribute']] == ''
-		    ? '1' : $pd[$plugin_cf['pagemanager']['pagedata_attribute']]).'"'
-		.($pagemanager_no_rename[$i] ? ' class="pagemanager-no-rename"' : '')
-		.'><a href="#">'.$pagemanager_h[$i].'</a>';
+	$pdattr = $pd[$pcf['pagedata_attribute']] == ''
+	    ? '1' : $pd[$pcf['pagedata_attribute']];
+	$o .= Pagemanager_page(
+	    $i, $pagemanager_h[$i], $pdattr, $pagemanager_no_rename[$i]
+	);
     }
     $o .= '</ul>'."\n";
     return $o;
