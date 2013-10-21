@@ -20,9 +20,9 @@
  *
  * @category CMSimple_XH
  * @package  Pagemanager
- * @author    Christoph M. Becker <cmbecker69@gmx.de>
+ * @author   Christoph M. Becker <cmbecker69@gmx.de>
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
+ * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 class Pagemanager_Model
 {
@@ -59,6 +59,7 @@ class Pagemanager_Model
         $stop = $cf['menu']['levels'];
         $empty = 0;
         foreach ($c as $i => $page) {
+            // TODO: what, if the following fails?
             preg_match('~<h([1-' . $stop . ']).*?>(.*?)</h~isu', $page, $matches);
             $heading = trim(strip_tags($matches[2]));
             if ($heading === '') {

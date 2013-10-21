@@ -4,6 +4,17 @@
 
 <project name="Pagamanger" default="default">
 
+    <target name="unit-tests">
+        <phpunit haltonerror="true" haltonfailure="true">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset dir="tests/">
+                    <include name="*Test.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit>
+    </target>
+
     <target name="compat">
         <exec command="pci --dir . --tab 12,12,20 --summarize"
               logoutput="true"/>
