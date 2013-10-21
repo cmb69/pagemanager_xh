@@ -6,7 +6,14 @@
         <p><button type="button" onclick="PAGEMANAGER.confirmStructureWarning()"><?php echo $structureConfirmation;?></button></p>
     </div>
 <?php endif;?>
-    <?php echo $toolbar;?>
+    <!-- toolbar -->
+<?php if ($showToolbar):?>
+    <div id="pagemanager-toolbar" class="<?php echo $toolbarClass;?>">
+<?php foreach ($tools as $tool):?>
+        <?php echo Pagemanager_tool($tool);?>
+<?php endforeach;?>
+    </div>
+<?php endif;?>
     <div id="pagemanager" ondblclick="jQuery('#pagemanager').jstree('toggle_node')">
         <?php echo Pagemanager_pages();?>
     </div>

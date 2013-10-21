@@ -213,26 +213,6 @@ function Pagemanager_tool($tool)
 }
 
 /**
- * Returns the toolbar.
- *
- * @return string	      The (x)html.
- */
-function pagemanager_toolbar() {
-    global $plugin_cf;
-
-    $horizontal = !$plugin_cf['pagemanager']['toolbar_vertical'];
-    $res = '<div id="pagemanager-toolbar" class="'.($horizontal ? 'horizontal' : 'vertical').'">'."\n";
-    $toolbar = array('save', 'separator', 'expand', 'collapse', 'separator', 'create',
-	    'create_after', 'rename', 'delete', 'separator', 'cut', 'copy',
-	    'paste', 'paste_after', 'separator', 'help');
-    foreach ($toolbar as $tool) {
-	$res .= Pagemanager_tool($tool);
-    }
-    $res .= '</div>'."\n";
-    return $res;
-}
-
-/**
  * Returns the widget configuration.
  *
  * @return string JSON.
@@ -404,7 +384,14 @@ function pagemanager_edit()
     $isIrregular = Pagemanager_isIrregular();
     $structureWarning = $ptx['error_structure_warning'];
     $structureConfirmation = $ptx['error_structure_confirmation'];
-    $toolbar = $plugin_cf['pagemanager']['toolbar_show'] ? pagemanager_toolbar() : '';
+    $showToolbar = $plugin_cf['pagemanager']['toolbar_show'];
+    $tools = array(
+	'save', 'separator', 'expand', 'collapse', 'separator', 'create',
+	'create_after', 'rename', 'delete', 'separator', 'cut', 'copy',
+	'paste', 'paste_after', 'separator', 'help'
+    );
+    $toolbarClass = !$plugin_cf['pagemanager']['toolbar_vertical']
+	? 'horizontal' : 'vertical';
     $saveButton = utf8_ucfirst($tx['action']['save']);
     $titleConfirm = $ptx['message_confirm'];
     $titleInfo = $ptx['message_information'];
@@ -412,7 +399,8 @@ function pagemanager_edit()
     $config = Pagemanager_config();
     $bag = compact(
 	'actionUrl', 'isIrregular', 'structureWarning', 'structureConfirmation',
-	'toolbar', 'saveButton', 'titleConfirm', 'titleInfo', 'script', 'config'
+	'showToolbar', 'tools', 'toolbarClass', 'saveButton', 'titleConfirm',
+	'titleInfo', 'script', 'config'
     );
     $o = Pagemanager_render('widget', $bag);
 
