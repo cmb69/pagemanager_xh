@@ -16,62 +16,6 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 define('PAGEMANAGER_VERSION', '@PAGEMANAGER_VERSION@');
 
 /**
- * Returns the available themes.
- *
- * @return array
- */
-function Pagemanager_themes()
-{
-    global $pth;
-
-    $themes = array();
-    $path = "{$pth['folder']['plugins']}pagemanager/jstree/themes/";
-    $dir = opendir($path);
-    if ($dir !== false) {
-	while (($entry = readdir($dir)) !== false) {
-	    if ($entry[0] !== '.' && is_dir($path . $entry)) {
-		$themes[] = $entry;
-	    }
-	}
-    }
-    natcasesort($themes);
-    return $themes;
-}
-
-/**
- * Initializes the <var>$pagemanager_h</var> array with the unmodified page
- * headings and the <var>$pagemanager_no_rename</var> array to flag
- * whether the page may be renamed.
- *
- * @return void
- *
- * @global array The content of the pages.
- * @global array The configuration of the core.
- * @global array The unmodified page headings.
- * @global array Whether the page may be renamed.
- *
- * @todo Cater for content modifications by other plugins,
- * 	 unless we're in edit mode.
- */
-function Pagemanager_getHeadings()
-{
-    global $c, $cf, $pagemanager_h, $pagemanager_no_rename;
-
-    $stop = $cf['menu']['levels'];
-    $empty = 0;
-    foreach ($c as $i => $page) {
-        preg_match('~<h([1-' . $stop . ']).*?>(.*?)</h~isu', $page, $matches);
-	$heading = trim(strip_tags($matches[2]));
-	if ($heading === '') {
-	    $pagemanager_h[$i] = $tx['toc']['empty'] . ' ' . ++$empty;
-	} else {
-	    $pagemanager_h[$i] = $heading;
-	}
-	$pagemanager_no_rename[$i] = preg_match('/.*?<.*?/isu', $matches[2]);
-    }
-}
-
-/**
  * Returns a rendered template.
  *
  * @param string $_template A template name.
@@ -263,29 +207,6 @@ function pagemanager_config()
 }
 
 /**
- * Returns whether the page structure is irregular.
- *
- * @return  bool
- *
- * @global array The headings of the pages.
- * @global array The menu levels of the pages.
- * @global int   The number of pages.
- */
-function Pagemanager_isIrregular()
-{
-    global $h, $l, $cl;
-
-    $stack = array();
-    for ($i = 1; $i < $cl; $i++) {
-	$delta = $l[$i] - $l[$i - 1];
-	if ($delta > 1) {
-	    return true;
-	}
-    }
-    return false;
-}
-
-/**
  * Returns the view of a single page.
  *
  * @param int    A page index.
@@ -297,7 +218,7 @@ function Pagemanager_isIrregular()
  */
 function Pagemanager_page($n, $heading, $pdattr, $mayRename)
 {
-    $rename = $mayRename ? ' class="pagemanager-no-rename"' : '';
+    $rename = $mayRename ? '' : ' class="pagemanager-no-rename"';
     return "<li id=\"pagemanager-$n\" title=\"$heading\" pdattr=\"$pdattr\""
 	    . "$rename><a href=\"#\">$heading</a>";
 }
@@ -311,12 +232,12 @@ function Pagemanager_page($n, $heading, $pdattr, $mayRename)
  * @global array  The menu levels of the pages.
  * @global object The page data router.
  * @global array  The configuration of the plugins.
- * @global array  The unmodified page headings.
+ * @global object The pagemanager model.
  * @global array  Flags to signal whether the headings may be renamed.
  */
 function Pagemanager_pages()
 {
-    global $cl, $l, $pd_router, $plugin_cf, $pagemanager_h, $pagemanager_no_rename;
+    global $cl, $l, $pd_router, $plugin_cf, $_Pagemanager;
 
     // output the treeview of the page structure
     // uses ugly hack to clean up irregular page structure
@@ -326,7 +247,7 @@ function Pagemanager_pages()
 	? '1' : $pd[$pcf['pagedata_attribute']];
     $o = '<ul>' . "\n";
     $o .= Pagemanager_page(
-	0, $pagemanager_h[0], $pdattr, $pagemanager_no_rename[0]
+	0, $_Pagemanager->headings[0], $pdattr, $_Pagemanager->mayRename[0]
     );
     $stack = array();
     for ($i = 1; $i < $cl; $i++) {
@@ -354,7 +275,7 @@ function Pagemanager_pages()
 	$pdattr = $pd[$pcf['pagedata_attribute']] == ''
 	    ? '1' : $pd[$pcf['pagedata_attribute']];
 	$o .= Pagemanager_page(
-	    $i, $pagemanager_h[$i], $pdattr, $pagemanager_no_rename[$i]
+	    $i, $_Pagemanager->headings[$i], $pdattr, $_Pagemanager->mayRename[$i]
 	);
     }
     $o .= '</ul>'."\n";
@@ -368,7 +289,7 @@ function Pagemanager_pages()
  */
 function pagemanager_edit()
 {
-    global $pth, $sn, $plugin_cf, $tx, $plugin_tx;
+    global $pth, $sn, $plugin_cf, $tx, $plugin_tx, $_Pagemanager;
 
     $ptx = $plugin_tx['pagemanager'];
     include_once($pth['folder']['plugins'].'jquery/jquery.inc.php');
@@ -377,11 +298,11 @@ function pagemanager_edit()
     include_jQueryPlugin('jsTree', $pth['folder']['plugins']
 	    .'pagemanager/jstree/jquery.jstree.min.js');
 
-    Pagemanager_getHeadings();
+    $_Pagemanager->getHeadings();
 
     $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
     $actionUrl = $sn . '?&amp;pagemanager&amp;edit' . $xhpages;
-    $isIrregular = Pagemanager_isIrregular();
+    $isIrregular = $_Pagemanager->isIrregular();
     $structureWarning = $ptx['error_structure_warning'];
     $structureConfirmation = $ptx['error_structure_confirmation'];
     $showToolbar = $plugin_cf['pagemanager']['toolbar_show'];
@@ -429,8 +350,27 @@ function pagemanager_save($xml) {
     }
 }
 
-
 /**
+ * Wrapper for Pagemananger_Model::themes().
+ *
+ * @return array
+ *
+ * @global object The pagemanager model.
+ */
+function Pagemanager_themes()
+{
+    global $_Pagemanager;
+
+    return $_Pagemanager->themes();
+}
+
+/*
+ * Initialize the global model object.
+ */
+require_once $pth['folder']['plugin_classes'] . 'Model.php';
+$_Pagemanager = new Pagemanager_Model();
+
+/*
  * Hook into new edit menu of CMSimple_XH 1.5
  */
 if ($f === 'xhpages' && isset($cf['pagemanager']['external'])
