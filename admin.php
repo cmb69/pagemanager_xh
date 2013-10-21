@@ -168,32 +168,65 @@ function Pagemanager_version()
 }
 
 /**
+ * Returns the view of a single tool.
+ *
+ * @param string $tool A tool name.
+ *
+ * @return string (X)HTML.
+ *
+ * @global array The paths of system files and folders.
+ * @global array The configuration of the plugins.
+ * @global array The localization of the core.
+ * @global array The localization of the plugins.
+ */
+function Pagemanager_tool($tool)
+{
+    global $pth, $plugin_cf, $tx, $plugin_tx;
+
+    $imgdir = $pth['folder']['plugins'] . 'pagemanager/images/';
+    $horizontal = !$plugin_cf['pagemanager']['toolbar_vertical'];
+    $link = $tool != 'help'
+	? 'href="#"'
+	: 'href="' . $pth['file']['plugin_help'] . '" target="_blank"';
+    $suffix = $tool === 'separator' && $horizontal ? '_v' : '';
+    $img = $imgdir . $tool . $suffix . '.png';
+    $class = $tool == 'separator' ? 'separator' : 'tool';
+    $o = '';
+    if ($tool !== 'separator') {
+	$style = $tool === 'save' ? ' style="display: none"' : '';
+	$o .= '<a ' . $link . ' class="pl_tooltip"' . $style . '>';
+    }
+    $onclick = 'PAGEMANAGER.tool(\''.$tool.'\'); return false';
+    $onclick = $tool !== 'help' ? " onclick=\"$onclick\"" : '';
+    $o .= tag('img class="' . $class . '" src="' . $img . '"' . $onclick);
+    if ($tool !== 'separator') {
+	$tooltip = $tool == 'save'
+	    ? utf8_ucfirst($tx['action']['save'])
+	    : $plugin_tx['pagemanager']['op_'.$tool];
+	$o .= '<span>' . $tooltip . '</span></a>';
+    }
+    if (!$horizontal) {
+	$o .= tab('br');
+    }
+    $o .= "\n";
+    return $o;
+}
+
+/**
  * Returns the toolbar.
  *
  * @return string	      The (x)html.
  */
 function pagemanager_toolbar() {
-    global $pth, $plugin_cf, $plugin_tx, $tx;
+    global $plugin_cf;
 
-    $imgdir = $pth['folder']['plugins'].'pagemanager/images/';
     $horizontal = !$plugin_cf['pagemanager']['toolbar_vertical'];
     $res = '<div id="pagemanager-toolbar" class="'.($horizontal ? 'horizontal' : 'vertical').'">'."\n";
     $toolbar = array('save', 'separator', 'expand', 'collapse', 'separator', 'create',
 	    'create_after', 'rename', 'delete', 'separator', 'cut', 'copy',
 	    'paste', 'paste_after', 'separator', 'help');
     foreach ($toolbar as $tool) {
-	$link = ($tool != 'help' ? 'href="#"'
-		: 'href="'.$pth['file']['plugin_help'].'" target="_blank"');
-	$img = $imgdir.$tool.($tool != 'separator' || !$horizontal ? '' : '_v').'.png';
-	$class = $tool == 'separator' ? 'separator' : 'tool';
-	$res .= ($tool != 'separator' ? '<a '.$link.' class="pl_tooltip"'.($tool == 'save' ? ' style="display: none"' : '').'>' : '')
-		.tag('img class="'.$class.'" src="'.$img.'"'
-		    .($tool != 'help' ? ' onclick="PAGEMANAGER.tool(\''.$tool.'\'); return false;"' : ''))
-		.($tool != 'separator'
-		    ? '<span>'.($tool == 'save' ? utf8_ucfirst($tx['action']['save'])
-			    : $plugin_tx['pagemanager']['op_'.$tool]).'</span></a>'
-		    : '')
-		.($horizontal ? '' : tag('br'))."\n";
+	$res .= Pagemanager_tool($tool);
     }
     $res .= '</div>'."\n";
     return $res;
