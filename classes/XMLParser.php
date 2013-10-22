@@ -128,7 +128,7 @@ class Pagemanager_XMLParser
             $this->title = htmlspecialchars(
                 $attribs['TITLE'], ENT_NOQUOTES, 'UTF-8'
             );
-            $this->pdattr = $attribs['PDATTR'];
+            $this->pdattr = $attribs['DATA-PDATTR'];
         }
     }
 

@@ -66,7 +66,7 @@ PAGEMANAGER.checkPages = function (parent) {
     nodes = PAGEMANAGER.widget._get_children(parent);
     for (i = 0; i < nodes.length; i += 1) {
 	node = PAGEMANAGER.widget._get_node(nodes[i]);
-	if (node.attr('pdattr') === '1') {
+	if (node.attr("data-pdattr") === '1') {
 	    PAGEMANAGER.widget.check_node(node);
 	}
 	PAGEMANAGER.checkPages(node);
@@ -162,7 +162,7 @@ PAGEMANAGER.restorePageHeadings = function (node) {
 PAGEMANAGER.beforeSubmit = function () {
     var attribs, xml;
 
-    attribs = ["id", "title", "pdattr"];
+    attribs = ["id", "title", "data-pdattr"];
     xml = PAGEMANAGER.widget.get_xml("nest", -1, attribs);
     jQuery("#pagemanager-xml").val(xml);
 };
@@ -501,7 +501,7 @@ PAGEMANAGER.init = function () {
     });
 
     PAGEMANAGER.element.bind("change_state.jstree", function (e, data) {
-	data.rslt.attr("pdattr", data.args[1] ? "0" : "1");
+	data.rslt.attr("data-pdattr", data.args[1] ? "0" : "1");
     });
 
     PAGEMANAGER.element.bind("create_node.jstree", function (e, data) {

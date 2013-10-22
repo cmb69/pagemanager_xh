@@ -138,16 +138,26 @@ function Pagemanager_tool($tool)
     $o = '';
     if ($tool !== 'separator') {
 	$style = $tool === 'save' ? ' style="display: none"' : '';
-	$o .= '<a ' . $link . ' class="pl_tooltip"' . $style . '>';
+	$o .= '<a ' . $link . $style . '>';
     }
     $onclick = 'PAGEMANAGER.tool(\''.$tool.'\'); return false';
     $onclick = $tool !== 'help' ? " onclick=\"$onclick\"" : '';
-    $o .= tag('img class="' . $class . '" src="' . $img . '"' . $onclick);
+    switch ($tool) {
+    case 'separator':
+	$tooltip = '';
+	break;
+    case 'save':
+	$tooltip = XH_hsc(utf8_ucfirst($tx['action']['save']));
+	break;
+    default:
+	$tooltip = XH_hsc($plugin_tx['pagemanager']['op_'.$tool]);
+    }
+    $o .= tag(
+	'img class="' . $class . '" src="' . $img . '"' . ' alt="' . $tooltip
+	. '" title="' . $tooltip . '"' . $onclick
+    );
     if ($tool !== 'separator') {
-	$tooltip = $tool == 'save'
-	    ? utf8_ucfirst($tx['action']['save'])
-	    : $plugin_tx['pagemanager']['op_'.$tool];
-	$o .= '<span>' . $tooltip . '</span></a>';
+	$o .= '</a>';
     }
     if (!$horizontal) {
 	$o .= tab('br');
@@ -219,7 +229,7 @@ function pagemanager_config()
 function Pagemanager_page($n, $heading, $pdattr, $mayRename)
 {
     $rename = $mayRename ? '' : ' class="pagemanager-no-rename"';
-    return "<li id=\"pagemanager-$n\" title=\"$heading\" pdattr=\"$pdattr\""
+    return "<li id=\"pagemanager-$n\" title=\"$heading\" data-pdattr=\"$pdattr\""
 	    . "$rename><a href=\"#\">$heading</a>";
 }
 
