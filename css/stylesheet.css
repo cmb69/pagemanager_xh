@@ -50,10 +50,6 @@
     margin: 6px 2px;
 }
 
-#pagemanager-toolbar.pagemanager-horizontal .pagemanager-separator {
-    margin: 0 0 5px 0;
-}
-
 /*
  * vertical toolbar
  *
@@ -95,10 +91,6 @@
 
 #pagemanager-toolbar.pagemanager-vertical .pagemanager-tool {
     margin: 6px 2px;
-}
-
-#pagemanager-toolbar.pagemanager-vertical .pagemanager-separator {
-    margin: 0 2px;
 }
 
 

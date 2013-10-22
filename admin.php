@@ -132,20 +132,14 @@ function Pagemanager_tool($tool)
     $link = $tool != 'help'
 	? 'href="#"'
 	: 'href="' . $pth['file']['plugin_help'] . '" target="_blank"';
-    $suffix = $tool === 'separator' && $horizontal ? '_v' : '';
-    $img = $imgdir . $tool . $suffix . '.png';
-    $class = $tool == 'separator' ? 'pagemanager-separator' : 'pagemanager-tool';
+    $img = $imgdir . $tool . '.png';
+    $class = 'pagemanager-tool';
     $o = '';
-    if ($tool !== 'separator') {
-	$style = $tool === 'save' ? ' style="display: none"' : '';
-	$o .= '<a ' . $link . $style . '>';
-    }
+    $style = $tool === 'save' ? ' style="display: none"' : '';
+    $o .= '<a ' . $link . $style . '>';
     $onclick = 'PAGEMANAGER.tool(\''.$tool.'\'); return false';
     $onclick = $tool !== 'help' ? " onclick=\"$onclick\"" : '';
     switch ($tool) {
-    case 'separator':
-	$tooltip = '';
-	break;
     case 'save':
 	$tooltip = XH_hsc(utf8_ucfirst($tx['action']['save']));
 	break;
@@ -156,9 +150,7 @@ function Pagemanager_tool($tool)
 	'img class="' . $class . '" src="' . $img . '"' . ' alt="' . $tooltip
 	. '" title="' . $tooltip . '"' . $onclick
     );
-    if ($tool !== 'separator') {
-	$o .= '</a>';
-    }
+    $o .= '</a>';
     if (!$horizontal) {
 	$o .= tab('br');
     }
@@ -329,9 +321,9 @@ function pagemanager_edit()
     $structureConfirmation = $ptx['error_structure_confirmation'];
     $showToolbar = $plugin_cf['pagemanager']['toolbar_show'];
     $tools = array(
-	'save', 'separator', 'expand', 'collapse', 'separator', 'create',
-	'create_after', 'rename', 'delete', 'separator', 'cut', 'copy',
-	'paste', 'paste_after', 'separator', 'help'
+	'save', 'expand', 'collapse', 'create',
+	'create_after', 'rename', 'delete', 'cut', 'copy',
+	'paste', 'paste_after', 'help'
     );
     $toolbarClass = !$plugin_cf['pagemanager']['toolbar_vertical']
 	? 'pagemanager-horizontal' : 'pagemanager-vertical';
