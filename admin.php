@@ -134,7 +134,7 @@ function Pagemanager_tool($tool)
 	: 'href="' . $pth['file']['plugin_help'] . '" target="_blank"';
     $suffix = $tool === 'separator' && $horizontal ? '_v' : '';
     $img = $imgdir . $tool . $suffix . '.png';
-    $class = $tool == 'separator' ? 'separator' : 'tool';
+    $class = $tool == 'separator' ? 'pagemanager-separator' : 'pagemanager-tool';
     $o = '';
     if ($tool !== 'separator') {
 	$style = $tool === 'save' ? ' style="display: none"' : '';
@@ -312,7 +312,7 @@ function pagemanager_edit()
 	'paste', 'paste_after', 'separator', 'help'
     );
     $toolbarClass = !$plugin_cf['pagemanager']['toolbar_vertical']
-	? 'horizontal' : 'vertical';
+	? 'pagemanager-horizontal' : 'pagemanager-vertical';
     $saveButton = utf8_ucfirst($tx['action']['save']);
     $titleConfirm = $ptx['message_confirm'];
     $titleInfo = $ptx['message_information'];

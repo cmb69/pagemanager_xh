@@ -89,7 +89,7 @@
  * Toolbar
  */
 
-div#pagemanager-toolbar {
+#pagemanager-toolbar {
     margin: 1px 0;
     border: 1px solid #999;
     background-color: #eee;
@@ -97,7 +97,7 @@ div#pagemanager-toolbar {
     font-size: 14px;
 }
 
-div#pagemanager-toolbar a:focus {
+#pagemanager-toolbar a:focus {
     background: none;
 }
 
@@ -108,22 +108,22 @@ div#pagemanager-toolbar a:focus {
 
 /* for floating horizontal toolbar: uncomment the following */
 /*
-div#pagemanager-toolbar.horizontal {
+#pagemanager-toolbar.pagemanager-horizontal {
     position: fixed;
     top: 150px;
     z-index: 1000;
 }
 */
 
-div#pagemanager-toolbar.horizontal img {
+#pagemanager-toolbar.pagemanager-horizontal img {
     margin: 8px 0;
 }
 
-div#pagemanager-toolbar.horizontal img.tool {
+#pagemanager-toolbar.pagemanager-horizontal .pagemanager-tool {
     margin: 6px 2px;
 }
 
-div#pagemanager-toolbar.horizontal img.separator {
+#pagemanager-toolbar.pagemanager-horizontal .pagemanager-separator {
     margin: 0 0 5px 0;
 }
 
@@ -134,7 +134,7 @@ div#pagemanager-toolbar.horizontal img.separator {
  * Change top and left accordingly.
  */
 
-div#pagemanager-toolbar.vertical {
+#pagemanager-toolbar.pagemanager-vertical {
     width: 25px;
     text-align: center;
     position: fixed;
@@ -157,20 +157,20 @@ div#pagemanager-toolbar.vertical {
 */
 /* and for a righthand toolbar the position of the tooltips */
 /*
-div#pagemanager-toolbar.vertical a.pl_tooltip:hover span {
+#pagemanager-toolbar.pagemanager-vertical a.pl_tooltip:hover span {
     left: -320px;
 }
 */
 
-div#pagemanager-toolbar.vertical img {
+#pagemanager-toolbar.pagemanager-vertical img {
     margin: 0 8px;
 }
 
-div#pagemanager-toolbar.vertical img.tool {
+#pagemanager-toolbar.pagemanager-vertical .pagemanager-tool {
     margin: 6px 2px;
 }
 
-div#pagemanager-toolbar.vertical img.separator {
+#pagemanager-toolbar.pagemanager-vertical .pagemanager-separator {
     margin: 0 2px;
 }
 
@@ -180,11 +180,11 @@ div#pagemanager-toolbar.vertical img.separator {
  */
 
 /* To have enough space for the whole context menu, if the template has a small footer */
-div#pagemanager-footer {
+#pagemanager-footer {
     height: 150px;
 }
 
-div#vakata-contextmenu {
+#vakata-contextmenu {
     width: 400px;
     text-align: left;
     padding: 9px 0;
@@ -194,17 +194,14 @@ div#vakata-contextmenu {
     /* margin-left: 100px; */
 }
 
-div#vakata-contextmenu.jstree-cmsimple-context li.vakata-separator,
-div#vakata-contextmenu.jstree-classic-context li.vakata-separator,
-div#vakata-contextmenu.jstree-default-context li.vakata-separator,
-div#vakata-contextmenu.jstree-apple-context li.vakata-separator {
-    margin: 5px 0;
+#vakata-contextmenu li.vakata-separator {
+    margin: 5px 0 !important;
 }
 
-div#vakata-contextmenu ul {
+#vakata-contextmenu ul {
     width: 100%;
 }
 
-div#vakata-contextmenu li ins {
+#vakata-contextmenu li ins {
     margin: 0 10px 0 6px;
 }
