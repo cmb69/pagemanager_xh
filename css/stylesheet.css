@@ -12,79 +12,6 @@
     overflow: scroll !important;
 }
 
-#pagemanager ul {
-    padding: 0;
-    margin: 0;
-    background: none;
-}
-
-
-/*
- * <h1>
- */
-
-#pagemanager ul li {
-    background: none;
-    font-family: arial, sans-serif;
-    font-weight: 700;
-    border: 0px solid #aaa;
-    padding: 0px;
-    margin: 6px 0px 3px 0;
-    list-style-image: none;
-    width: 230px;
-    overflow: visible;
-}
-
-#pagemanager ul li a:link {
-    font-size: 15px;
-}
-
-#pagemanager ul li a:visited {
-    font-size: 14px;
-}
-
-
-/*
- * <h2>
- */
-
-#pagemanager ul ul li {
-    background: none;
-    font-weight: 100;
-    border: 0px solid #999;
-    padding: 0px;
-    margin: 6px 0px 3px 19px;
-}
-
-#pagemanager ul ul li a:link {
-    font-size: 14px;
-}
-
-#pagemanager ul ul li a:visited {
-    font-size: 15px;
-}
-
-
-/*
- * <h3>
- */
-
-#pagemanager ul ul ul li {
-    background: none;
-    border: 0px solid #666;
-    padding: 0px;
-    margin: 1px 0px 1px 19px;
-}
-
-#pagemanager ul ul ul li a:link {
-    color: #666;
-}
-
-#pagemanager ul ul ul li a:visited {
-    color: #666;
-}
-
-
 /*
  * Toolbar
  */
@@ -185,23 +112,5 @@
 }
 
 #vakata-contextmenu {
-    width: 400px;
-    text-align: left;
-    padding: 9px 0;
-    font-family: arial;
-    font-size: 14px;
-    /* the following line will open the context menu further to the right */
-    /* margin-left: 100px; */
-}
-
-#vakata-contextmenu li.vakata-separator {
-    margin: 5px 0 !important;
-}
-
-#vakata-contextmenu ul {
-    width: 100%;
-}
-
-#vakata-contextmenu li ins {
-    margin: 0 10px 0 6px;
+    width: 20em;
 }
