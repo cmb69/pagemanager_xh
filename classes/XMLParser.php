@@ -128,7 +128,8 @@ class Pagemanager_XMLParser
             $this->title = htmlspecialchars(
                 $attribs['TITLE'], ENT_NOQUOTES, 'UTF-8'
             );
-            $this->pdattr = $attribs['DATA-PDATTR'];
+            $this->pdattr = isset($attribs['DATA-PDATTR'])
+		? $attribs['DATA-PDATTR'] : null;
         }
     }
 
@@ -185,7 +186,9 @@ class Pagemanager_XMLParser
             $pd = $pd_router->find_page($this->id);
         }
         $pd['url'] = uenc($this->title);
-        $pd[$plugin_cf['pagemanager']['pagedata_attribute']] = $this->pdattr;
+	if (isset($this->pdattr)) {
+	    $pd[$plugin_cf['pagemanager']['pagedata_attribute']] = $this->pdattr;
+	}
         $this->pageData[] = $pd;
     }
 }

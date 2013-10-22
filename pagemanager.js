@@ -479,9 +479,16 @@ PAGEMANAGER.init = function () {
 	}
     });
 
-    /* initialize checkboxes */
+    if (PAGEMANAGER.config.hasCheckboxes) {
+	PAGEMANAGER.element.bind('loaded.jstree', function () {
+	    PAGEMANAGER.checkPages(-1);
+	});
+	PAGEMANAGER.element.bind("change_state.jstree", function (e, data) {
+	    data.rslt.attr("data-pdattr", data.args[1] ? "0" : "1");
+	});
+    }
+
     PAGEMANAGER.element.bind('loaded.jstree', function () {
-	PAGEMANAGER.checkPages(-1);
 	PAGEMANAGER.element.bind('move_node.jstree create_node.jstree rename_node.jstree remove.jstree change_state.jstree', function () {
 	    PAGEMANAGER.modified = true;
 	});
@@ -498,10 +505,6 @@ PAGEMANAGER.init = function () {
 	default:
 	    return undefined;
 	}
-    });
-
-    PAGEMANAGER.element.bind("change_state.jstree", function (e, data) {
-	data.rslt.attr("data-pdattr", data.args[1] ? "0" : "1");
     });
 
     PAGEMANAGER.element.bind("create_node.jstree", function (e, data) {
@@ -546,9 +549,9 @@ PAGEMANAGER.init = function () {
      * Initialize jsTree.
      */
 
-    PAGEMANAGER.element.jstree({
+    config = {
 	"plugins": [
-	    "checkbox", "contextmenu", "crrm", "dnd", "html_data", "themes",
+	    "contextmenu", "crrm", "dnd", "html_data", "themes",
 	    "types", "xml_data", "ui"
 	],
 	"core": {
@@ -588,7 +591,11 @@ PAGEMANAGER.init = function () {
 	"ui": {
 	    "select_limit": 1
 	}
-    });
+    };
+    if (PAGEMANAGER.config.hasCheckboxes) {
+	config.plugins.push("checkbox");
+    }
+    PAGEMANAGER.element.jstree(config);
     PAGEMANAGER.widget = jQuery.jstree._reference("#pagemanager");
 }
 

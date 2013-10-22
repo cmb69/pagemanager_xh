@@ -211,7 +211,8 @@ function pagemanager_config()
 	'pasteAfterOp' => $ptx['op_paste_after'],
 	'noSelectionMessage' => $ptx['message_no_selection'],
 	'duplicateHeading' => $tx['toc']['dupl'],
-	'offendingExtensionError' => $ptx['error_offending_extension']
+	'offendingExtensionError' => $ptx['error_offending_extension'],
+	'hasCheckboxes' => $pcf['pagedata_attribute'] !== ''
     );
     return XH_encodeJson($config);
 }
@@ -228,9 +229,10 @@ function pagemanager_config()
  */
 function Pagemanager_page($n, $heading, $pdattr, $mayRename)
 {
+    $pdattr = isset($pdattr) ?  " data-pdattr=\"$pdattr\"" : '';
     $rename = $mayRename ? '' : ' class="pagemanager-no-rename"';
-    return "<li id=\"pagemanager-$n\" title=\"$heading\" data-pdattr=\"$pdattr\""
-	    . "$rename><a href=\"#\">$heading</a>";
+    return "<li id=\"pagemanager-$n\" title=\"$heading\"$pdattr$rename>"
+	. "<a href=\"#\">$heading</a>";
 }
 
 /**
@@ -253,8 +255,13 @@ function Pagemanager_pages()
     // uses ugly hack to clean up irregular page structure
     $pcf = $plugin_cf['pagemanager'];
     $pd = $pd_router->find_page(0);
-    $pdattr = $pd[$pcf['pagedata_attribute']] == ''
-	? '1' : $pd[$pcf['pagedata_attribute']];
+    if ($pcf['pagedata_attribute'] === '') {
+	$pdattr = null;
+    } elseif ($pd[$pcf['pagedata_attribute']] === '') {
+	$pdattr = '1';
+    } else {
+	$pdattr = $pd[$pcf['pagedata_attribute']];
+    }
     $o = '<ul>' . "\n";
     $o .= Pagemanager_page(
 	0, $_Pagemanager->headings[0], $pdattr, $_Pagemanager->mayRename[0]
@@ -282,8 +289,13 @@ function Pagemanager_pages()
 	    $o .= "\n".'<ul>'."\n";
 	}
 	$pd = $pd_router->find_page($i);
-	$pdattr = $pd[$pcf['pagedata_attribute']] == ''
-	    ? '1' : $pd[$pcf['pagedata_attribute']];
+	if ($pcf['pagedata_attribute'] === '') {
+	    $pdattr = null;
+	} elseif ($pd[$pcf['pagedata_attribute']] === '') {
+	    $pdattr = '1';
+	} else {
+	    $pdattr = $pd[$pcf['pagedata_attribute']];
+	}
 	$o .= Pagemanager_page(
 	    $i, $_Pagemanager->headings[$i], $pdattr, $_Pagemanager->mayRename[$i]
 	);
