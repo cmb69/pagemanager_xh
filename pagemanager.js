@@ -477,35 +477,32 @@ PAGEMANAGER.init = function () {
 	if (jQuery("#pagemanager-structure-warning").length === 0) {
 	    jQuery("#pagemanager-toolbar a:first-child, #pagemanager-submit").show();
 	}
+	PAGEMANAGER.markDuplicates(-1, 0);
+	if (PAGEMANAGER.config.hasCheckboxes) {
+	    PAGEMANAGER.checkPages(-1);
+	}
+	PAGEMANAGER.element.bind('move_node.jstree create_node.jstree rename_node.jstree remove.jstree change_state.jstree', function () {
+	    PAGEMANAGER.modified = true;
+	});
+	PAGEMANAGER.element.bind("before.jstree", function (e, data) {
+	    switch (data.func) {
+	    case "create_node":
+		return PAGEMANAGER.beforeCreateNode(e, data);
+	    case "rename":
+		return PAGEMANAGER.beforeRename(e, data);
+	    case "remove":
+		return PAGEMANAGER.beforeRemove(e, data);
+	    default:
+		return undefined;
+	    }
+	});
     });
 
     if (PAGEMANAGER.config.hasCheckboxes) {
-	PAGEMANAGER.element.bind('loaded.jstree', function () {
-	    PAGEMANAGER.checkPages(-1);
-	});
 	PAGEMANAGER.element.bind("change_state.jstree", function (e, data) {
 	    data.rslt.attr("data-pdattr", data.args[1] ? "0" : "1");
 	});
     }
-
-    PAGEMANAGER.element.bind('loaded.jstree', function () {
-	PAGEMANAGER.element.bind('move_node.jstree create_node.jstree rename_node.jstree remove.jstree change_state.jstree', function () {
-	    PAGEMANAGER.modified = true;
-	});
-    });
-
-    PAGEMANAGER.element.bind("before.jstree", function (e, data) {
-	switch (data.func) {
-	case "create_node":
-	    return PAGEMANAGER.beforeCreateNode(e, data);
-	case "rename":
-	    return PAGEMANAGER.beforeRename(e, data);
-	case "remove":
-	    return PAGEMANAGER.beforeRemove(e, data);
-	default:
-	    return undefined;
-	}
-    });
 
     PAGEMANAGER.element.bind("create_node.jstree", function (e, data) {
 	PAGEMANAGER.widget.set_type('new', data.rslt.obj);
@@ -518,13 +515,8 @@ PAGEMANAGER.init = function () {
 
     PAGEMANAGER.element.bind('move_node.jstree', PAGEMANAGER.markCopiedPages);
 
-    /* restore page titles */
     PAGEMANAGER.element.bind('rename_node.jstree remove.jstree move_node.jstree', function (e, data) {
 	PAGEMANAGER.restorePageHeadings(-1);
-    });
-
-    /* mark duplicate headers */
-    PAGEMANAGER.element.bind('loaded.jstree rename_node.jstree remove.jstree move_node.jstree', function (e, data) {
 	PAGEMANAGER.markDuplicates(-1, 0);
     });
 
@@ -548,7 +540,6 @@ PAGEMANAGER.init = function () {
     /*
      * Initialize jsTree.
      */
-
     config = {
 	"plugins": [
 	    "contextmenu", "crrm", "dnd", "html_data", "themes",
