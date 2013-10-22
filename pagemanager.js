@@ -66,7 +66,7 @@ PAGEMANAGER.checkPages = function (parent) {
     nodes = PAGEMANAGER.widget._get_children(parent);
     for (i = 0; i < nodes.length; i += 1) {
 	node = PAGEMANAGER.widget._get_node(nodes[i]);
-	if (node.attr("data-pdattr") === '1') {
+	if (node.attr("data-pdattr") === "1") {
 	    PAGEMANAGER.widget.check_node(node);
 	}
 	PAGEMANAGER.checkPages(node);
@@ -149,7 +149,7 @@ PAGEMANAGER.restorePageHeadings = function (node) {
     children = PAGEMANAGER.widget._get_children(node);
     for (i = 0; i < children.length; i += 1) {
 	child = children[i];
-	PAGEMANAGER.widget.set_text(child, PAGEMANAGER.widget._get_node(child).attr('title'));
+	PAGEMANAGER.widget.set_text(child, PAGEMANAGER.widget._get_node(child).attr("title"));
 	PAGEMANAGER.restorePageHeadings(child);
     }
 };
@@ -289,7 +289,7 @@ PAGEMANAGER.beforeCreateNode = function (event, data) {
 
     node = data.args[0];
     where = data.args[1];
-    targetLevel = PAGEMANAGER.level(node) - (where === 'after' ? 1 : 0);
+    targetLevel = PAGEMANAGER.level(node) - (where === "after" ? 1 : 0);
     if (targetLevel < PAGEMANAGER.config.menuLevels) {
 	return undefined;
     } else {
@@ -384,7 +384,7 @@ PAGEMANAGER.isLegalMove = function (move) {
     }
     sourceLevels = PAGEMANAGER.childLevels(move.o);
     targetLevels = PAGEMANAGER.level(move.r);
-    extraLevels = move.p == 'last' || move.p == 'inside' ? 1 : 0; // paste vs. dnd
+    extraLevels = move.p == "last" || move.p == "inside" ? 1 : 0; // paste vs. dnd
     totalLevels = sourceLevels + targetLevels + extraLevels;
     var allowed =  totalLevels <= PAGEMANAGER.config.menuLevels;
     if (!allowed && !move.ot.data.dnd.active && PAGEMANAGER.config.verbose) {
@@ -481,7 +481,7 @@ PAGEMANAGER.init = function () {
 	if (PAGEMANAGER.config.hasCheckboxes) {
 	    PAGEMANAGER.checkPages(-1);
 	}
-	PAGEMANAGER.element.bind('move_node.jstree create_node.jstree rename_node.jstree remove.jstree change_state.jstree', function () {
+	PAGEMANAGER.element.bind("move_node.jstree create_node.jstree rename_node.jstree remove.jstree change_state.jstree", function () {
 	    PAGEMANAGER.modified = true;
 	});
 	PAGEMANAGER.element.bind("before.jstree", function (e, data) {
@@ -505,31 +505,31 @@ PAGEMANAGER.init = function () {
     }
 
     PAGEMANAGER.element.bind("create_node.jstree", function (e, data) {
-	PAGEMANAGER.widget.set_type('new', data.rslt.obj);
+	PAGEMANAGER.widget.set_type("new", data.rslt.obj);
 	PAGEMANAGER.widget.check_node(data.rslt.obj);
     });
 
-    PAGEMANAGER.element.bind('rename_node.jstree', function (e, data) {
-	PAGEMANAGER.widget._get_node(data.rslt.obj).attr('title', PAGEMANAGER.widget.get_text(data.rslt.obj));
+    PAGEMANAGER.element.bind("rename_node.jstree", function (e, data) {
+	PAGEMANAGER.widget._get_node(data.rslt.obj).attr("title", PAGEMANAGER.widget.get_text(data.rslt.obj));
     });
 
-    PAGEMANAGER.element.bind('move_node.jstree', PAGEMANAGER.markCopiedPages);
+    PAGEMANAGER.element.bind("move_node.jstree", PAGEMANAGER.markCopiedPages);
 
-    PAGEMANAGER.element.bind('rename_node.jstree remove.jstree move_node.jstree', function (e, data) {
+    PAGEMANAGER.element.bind("rename_node.jstree remove.jstree move_node.jstree", function (e, data) {
 	PAGEMANAGER.restorePageHeadings(-1);
 	PAGEMANAGER.markDuplicates(-1, 0);
     });
 
     if (!window.opera) {
 	window.onbeforeunload = function () {
-	    if (PAGEMANAGER.modified && jQuery('#pagemanager-xml').val() === '') {
+	    if (PAGEMANAGER.modified && jQuery("#pagemanager-xml").val() === "") {
 		return PAGEMANAGER.config.leaveWarning;
 	    }
 	    return undefined;
 	};
     } else {
 	jQuery(window).unload(function () {
-	    if (PAGEMANAGER.modified && jQuery('#pagemanager-xml').val() === '') {
+	    if (PAGEMANAGER.modified && jQuery("#pagemanager-xml").val() === "") {
 		if (confirm(PAGEMANAGER.config.leaveConfirmation)) {
 		    PAGEMANAGER.submit();
 		}
