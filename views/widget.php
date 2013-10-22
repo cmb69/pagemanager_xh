@@ -22,6 +22,7 @@
     <input type="hidden" name="xml" id="pagemanager-xml" value=""/>
     <input id="pagemanager-submit" type="submit" class="submit" value="<?php echo $saveButton;?>" style="display: none"/>
 </form>
+<div id="pagemanager-footer"></div>
 <div id="pagemanager-confirmation" title="<?php echo $titleConfirm;?>"></div>
 <div id="pagemanager-alert" title="<?php echo $titleInfo;?>"></div>
 <script type="text/javascript">
