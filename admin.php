@@ -146,7 +146,7 @@ function Pagemanager_tool($tool)
 	$o .= '<button type="button" id="' . $id . '" ' . $style . $onclick . ' title="' . $tooltip . '"' . '>';
 	$o .= '</button>';
     } else {
-	$o .= '<a href="' . $pth['file']['plugin_help'] . '" target="_blank" id="' . $id . '"></a>';
+	$o .= '<a href="' . $pth['file']['plugin_help'] . '" target="_blank" id="' . $id . '" title="' . $tooltip . '"></a>';
     }
     if (!$horizontal) {
 	$o .= tab('br');
