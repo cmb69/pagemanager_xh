@@ -8,12 +8,26 @@
         <phpunit haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
-                <fileset dir="tests/unit/">
+                <fileset dir="tests/unit">
                     <include name="*Test.php"/>
                 </fileset>
             </batchtest>
         </phpunit>
     </target>
+
+    <target name="attack-tests">
+        <fail unless="env.CMSIMPLEDIR" message="CMSIMPLEDIR undefined!"/>
+        <phpunit haltonerror="true" haltonfailure="true">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset dir="tests/attack">
+                    <include name="*Test.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit>
+    </target>
+
+    <target name="all-tests" depends="unit-tests,attack-tests"/>
 
     <target name="compat">
         <exec command="pci --dir . --tab 12,12,20 --summarize"

@@ -408,6 +408,7 @@ if (isset($pagemanager)) {
     switch ($admin) {
 	case '':
 	    if ($action == 'plugin_save') {
+		$_XH_csrfProtection->check();
 		if (pagemanager_save(stsl($_POST['xml']))) {
 		    if (!headers_sent()) {
 			header('Location: ' . CMSIMPLE_URL

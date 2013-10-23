@@ -12,7 +12,7 @@
 <?php foreach ($tools as $tool):?>
         <?php echo Pagemanager_tool($tool);?>
 <?php endforeach;?>
-        <div style="clear"></div>
+        <div style="clear: both"></div>
     </div>
 <?php endif;?>
     <div id="pagemanager" ondblclick="jQuery('#pagemanager').jstree('toggle_node')">
@@ -22,6 +22,7 @@
     <input type="hidden" name="action" value="plugin_save"/>
     <input type="hidden" name="xml" id="pagemanager-xml" value=""/>
     <input id="pagemanager-submit" type="submit" class="submit" value="<?php echo $saveButton;?>" style="display: none"/>
+    <?php global $_XH_csrfProtection; echo $_XH_csrfProtection->tokenInput();?>
 </form>
 <div id="pagemanager-footer"></div>
 <div id="pagemanager-confirmation" title="<?php echo $titleConfirm;?>"></div>
