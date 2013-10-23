@@ -12,6 +12,7 @@
 <?php foreach ($tools as $tool):?>
         <?php echo Pagemanager_tool($tool);?>
 <?php endforeach;?>
+        <div style="clear"></div>
     </div>
 <?php endif;?>
     <div id="pagemanager" ondblclick="jQuery('#pagemanager').jstree('toggle_node')">

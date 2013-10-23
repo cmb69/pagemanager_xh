@@ -239,7 +239,7 @@ PAGEMANAGER.tool = function (operation) {
  */
 PAGEMANAGER.confirmStructureWarning = function () {
     jQuery("#pagemanager-structure-warning").hide(500);
-    jQuery("#pagemanager-toolbar a:first-child, #pagemanager-submit").show();
+    jQuery("#pagemanager-save, #pagemanager-submit").show();
 };
 
 /**
@@ -475,7 +475,7 @@ PAGEMANAGER.init = function () {
 
     PAGEMANAGER.element.bind("loaded.jstree", function () {
 	if (jQuery("#pagemanager-structure-warning").length === 0) {
-	    jQuery("#pagemanager-toolbar a:first-child, #pagemanager-submit").show();
+	    jQuery("#pagemanager-save, #pagemanager-submit").show();
 	}
 	PAGEMANAGER.markDuplicates(-1, 0);
 	if (PAGEMANAGER.config.hasCheckboxes) {

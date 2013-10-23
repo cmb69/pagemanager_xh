@@ -129,15 +129,11 @@ function Pagemanager_tool($tool)
 
     $imgdir = $pth['folder']['plugins'] . 'pagemanager/images/';
     $horizontal = !$plugin_cf['pagemanager']['toolbar_vertical'];
-    $link = $tool != 'help'
-	? 'href="#"'
-	: 'href="' . $pth['file']['plugin_help'] . '" target="_blank"';
     $img = $imgdir . $tool . '.png';
-    $class = 'pagemanager-tool';
+    $id = "pagemanager-$tool";
     $o = '';
     $style = $tool === 'save' ? ' style="display: none"' : '';
-    $o .= '<a ' . $link . $style . '>';
-    $onclick = 'PAGEMANAGER.tool(\''.$tool.'\'); return false';
+    $onclick = 'PAGEMANAGER.tool(\''.$tool.'\')';
     $onclick = $tool !== 'help' ? " onclick=\"$onclick\"" : '';
     switch ($tool) {
     case 'save':
@@ -146,11 +142,12 @@ function Pagemanager_tool($tool)
     default:
 	$tooltip = XH_hsc($plugin_tx['pagemanager']['op_'.$tool]);
     }
-    $o .= tag(
-	'img class="' . $class . '" src="' . $img . '"' . ' alt="' . $tooltip
-	. '" title="' . $tooltip . '"' . $onclick
-    );
-    $o .= '</a>';
+    if ($tool !== 'help') {
+	$o .= '<button type="button" id="' . $id . '" ' . $style . $onclick . ' title="' . $tooltip . '"' . '>';
+	$o .= '</button>';
+    } else {
+	$o .= '<a href="' . $pth['file']['plugin_help'] . '" target="_blank" id="' . $id . '"></a>';
+    }
     if (!$horizontal) {
 	$o .= tab('br');
     }

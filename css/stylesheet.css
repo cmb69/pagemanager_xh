@@ -24,10 +24,27 @@
     font-size: 14px;
 }
 
-#pagemanager-toolbar a:focus {
-    background: none;
+#pagemanager-toolbar button,
+#pagemanager-toolbar a {
+    border: 0;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    background-image: url("../images/tools.png");
+    cursor: pointer;
 }
 
+#pagemanager-expand {background-position: -16px 0}
+#pagemanager-collapse {background-position: -32px 0}
+#pagemanager-create {background-position: -48px 0}
+#pagemanager-create_after {background-position: 0 -16px}
+#pagemanager-rename {background-position: -16px -16px}
+#pagemanager-delete {background-position: -32px -16px}
+#pagemanager-cut {background-position: -48px -16px}
+#pagemanager-copy {background-position: 0 -32px}
+#pagemanager-paste {background-position: -16px -32px}
+#pagemanager-paste_after {background-position: -32px -32px}
+#pagemanager-help {background-position: -48px -32px; float: right}
 
 /*
  * horizontal toolbar
@@ -46,7 +63,8 @@
     margin: 8px 0;
 }
 
-#pagemanager-toolbar.pagemanager-horizontal .pagemanager-tool {
+#pagemanager-toolbar.pagemanager-horizontal button,
+#pagemanager-toolbar.pagemanager-horizontal a {
     margin: 6px 2px;
 }
 
@@ -89,7 +107,8 @@
     margin: 0 8px;
 }
 
-#pagemanager-toolbar.pagemanager-vertical .pagemanager-tool {
+#pagemanager-toolbar.pagemanager-vertical button,
+#pagemanager-toolbar.pagemanager-vertical a {
     margin: 6px 2px;
 }
 
