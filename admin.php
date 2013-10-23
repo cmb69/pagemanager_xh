@@ -414,7 +414,7 @@ if (isset($pagemanager)) {
 			header('Location: ' . CMSIMPLE_URL
 				.(isset($_GET['pagemanager-xhpages'])
 				? '?&normal&xhpages'
-				: '?&pagemanager&normal&admin=plugin_main'));
+				: '?&pagemanager&normal&admin=plugin_main'), true, 303);
 		    }
 		    exit();
 		}
