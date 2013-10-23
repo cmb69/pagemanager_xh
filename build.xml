@@ -8,7 +8,7 @@
         <phpunit haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
-                <fileset dir="tests/">
+                <fileset dir="tests/unit/">
                     <include name="*Test.php"/>
                 </fileset>
             </batchtest>
