@@ -1,3 +1,6 @@
+Version 1pl15 - released 2013-10-29
+cmb     fixed bug, where modified jstree.js relied on $ (reported by johnjdoe)
+
 Version 1pl14 - released 2013-10-11
 cmb     fixed bug, where error message was suppressed when saving failed
 cmb     fixed issue with regard to some templates (reported by Torsten.Behrens)
