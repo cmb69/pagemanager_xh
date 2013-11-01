@@ -14,7 +14,6 @@
  * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
-
 /**
  * The model class of Pagemanager_XH.
  *
@@ -118,7 +117,6 @@ class Pagemanager_Model
         natcasesort($themes);
         return $themes;
     }
-
 }
 
 ?>

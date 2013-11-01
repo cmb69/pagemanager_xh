@@ -10,13 +10,13 @@
 <?php if ($showToolbar):?>
     <div id="pagemanager-toolbar" class="<?php echo $toolbarClass;?>">
 <?php foreach ($tools as $tool):?>
-        <?php echo Pagemanager_tool($tool);?>
+        <?php echo $this->tool($tool);?>
 <?php endforeach;?>
         <div style="clear: both"></div>
     </div>
 <?php endif;?>
     <div id="pagemanager" ondblclick="jQuery('#pagemanager').jstree('toggle_node')">
-        <?php echo Pagemanager_pages();?>
+        <?php echo $this->pages();?>
     </div>
     <input type="hidden" name="admin" value=""/>
     <input type="hidden" name="action" value="plugin_save"/>
