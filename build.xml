@@ -11,7 +11,7 @@
         <include name="classes/*.php"/>
     </fileset>
 
-    <!-- checks -->
+    <!-- Checks -->
 
     <target name="sniff">
         <phpcodesniffer standard="PEAR">
@@ -23,6 +23,8 @@
         <exec command="pci --dir . --tab 12,12,20 --summarize"
               logoutput="true"/>
     </target>
+
+    <!-- Tests -->
 
     <target name="unit-tests">
         <phpunit haltonerror="true" haltonfailure="true">
@@ -48,6 +50,24 @@
     </target>
 
     <target name="all-tests" depends="unit-tests,attack-tests"/>
+
+    <!-- Documentation -->
+
+    <target name="php-doc">
+        <phpdoc title="Pagemanager_XH Developer Documentation" destdir="doc/php"
+                output="HTML:frames:default" defaultpackagename="Pagemanager"
+                defaultcategoryname="CMSimple_XH">
+            <fileset refid="php-sources"/>
+        </phpdoc>
+    </target>
+
+    <target name="js-doc">
+        <exec command="jsdoc --destination doc/js pagemanager.js" checkreturn="true"/>
+    </target>
+
+    <target name="doc" depends="php-doc"/>
+
+    <!-- Build -->
 
     <target name="build">
         <fail unless="version" message="version is not defined!"/>
