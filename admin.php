@@ -345,13 +345,22 @@ function pagemanager_edit()
  * Returns whether that succeeded.
  *
  * @return bool
+ *
+ * @global array  The contents of the pages.
+ * @global array  The paths of system files and folders.
+ * @global array  The configuration of the core.
+ * @global array  The configuration of the plugins.
+ * @global object The page data router.
  */
 function pagemanager_save($xml) {
-    global $c, $pth, $pd_router;
+    global $c, $pth, $cf, $plugin_cf, $pd_router;
 
     if (is_writable($pth['file']['content'])) {
 	include_once "{$pth['folder']['plugins']}pagemanager/classes/XMLParser.php";
-	$parser = new Pagemanager_XMLParser();
+	$parser = new Pagemanager_XMLParser(
+	    $c, (int) $cf['menu']['levels'],
+	    $plugin_cf['pagemanager']['pagedata_attribute']
+	);
 	$parser->parse($xml);
 	$c = $parser->getContents();
 	return $pd_router->model->refresh($parser->getPageData());

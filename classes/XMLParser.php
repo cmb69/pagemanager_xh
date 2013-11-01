@@ -26,7 +26,7 @@
 class Pagemanager_XMLParser
 {
     /**
-     * The new contents array.
+     * The contents array.
      *
      * @var array
      */
@@ -38,6 +38,13 @@ class Pagemanager_XMLParser
      * @var array
      */
     var $pageData;
+
+    /**
+     * The maximum nesting level.
+     *
+     * @var int
+     */
+    var $levels;
 
     /**
      * The current nesting level.
@@ -61,11 +68,30 @@ class Pagemanager_XMLParser
     var $title;
 
     /**
+     * The name of the page data attribute.
+     *
+     * @var string
+     */
+    var $pdattrName;
+
+    /**
      * The current page data attribute.
      *
      * @var bool
      */
     var $pdattr;
+
+    /**
+     * Initializes a newly created object.
+     *
+     * @param array $contents Page contents.
+     */
+    function Pagemanager_XMLParser($contents, $levels, $pdattrName)
+    {
+	$this->contents = $contents;
+	$this->levels = $levels;
+	$this->pdattrName = $pdattrName;
+    }
 
     /**
      * Parses the given <var>$xml</var>.
@@ -101,7 +127,7 @@ class Pagemanager_XMLParser
     /**
      * Returns the new page data array.
      *
-     * @return array.
+     * @return array
      */
     function getPageData()
     {
@@ -116,6 +142,8 @@ class Pagemanager_XMLParser
      * @param array    $attribs Attributes of the current element.
      *
      * @return void
+     *
+     * @access protected
      */
     function startElementHandler($parser, $name, $attribs)
     {
@@ -140,6 +168,8 @@ class Pagemanager_XMLParser
      * @param string   $name   Name of the current element.
      *
      * @return void
+     *
+     * @access protected
      */
     function endElementHandler($parser, $name)
     {
@@ -156,21 +186,20 @@ class Pagemanager_XMLParser
      *
      * @return void
      *
-     * @global array  The contents of the pages.
-     * @global array  The configuration of the core.
-     * @global array  The configuration of the plugins.
      * @global object The page data router.
+     *
+     * @access protected
      */
     function cDataHandler($parser, $data)
     {
-        global $c, $cf, $plugin_cf, $pd_router;
+        global $pd_router;
 
         $data = htmlspecialchars($data, ENT_NOQUOTES, 'UTF-8');
-        if (isset($c[$this->id])) {
-            $cnt = $c[$this->id];
-            $pattern = '/<h[1-' . $cf['menu']['levels'] . ']([^>]*)>'
+        if (isset($this->contents[$this->id])) {
+            $cnt = $this->contents[$this->id];
+            $pattern = '/<h[1-' . $this->levels . ']([^>]*)>'
                 . '((<[^>]*>)*)[^<]*((<[^>]*>)*)'
-                . '<\/h[1-' . $cf['menu']['levels'] . ']([^>]*)>/i';
+                . '<\/h[1-' . $this->levels . ']([^>]*)>/i';
             $replacement = '<h' . $this->level . '$1>${2}'
                 . addcslashes($this->title, '$\\') . '$4'
                 . '</h' . $this->level . '$6>';
@@ -187,7 +216,7 @@ class Pagemanager_XMLParser
         }
         $pd['url'] = uenc($this->title);
 	if (isset($this->pdattr)) {
-	    $pd[$plugin_cf['pagemanager']['pagedata_attribute']] = $this->pdattr;
+	    $pd[$this->pdattrName] = $this->pdattr;
 	}
         $this->pageData[] = $pd;
     }
