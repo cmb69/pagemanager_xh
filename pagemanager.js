@@ -1,9 +1,3 @@
-/**
- * Page administration of Pagemanager_XH
- *
- * Copyright (c) 2011-2013 Christoph M. Becker (see license.txt)
- */
-
 if (!PAGEMANAGER) {
     /**
      * The pagemanager namespace.

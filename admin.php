@@ -33,7 +33,7 @@ require_once $pth['folder']['plugin_classes'] . 'Controller.php';
 define('PAGEMANAGER_VERSION', '@PAGEMANAGER_VERSION@');
 
 /**
- * Functional rapper for Pagemananger_Model::themes().
+ * Functional wrapper for Pagemananger_Model::themes().
  *
  * @return array
  *

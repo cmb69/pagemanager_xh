@@ -348,7 +348,7 @@ class Pagemanager_Controller
         include_jQueryUI();
         include_jQueryPlugin(
             'jsTree',
-            $pth['folder']['plugins'] . 'pagemanager/jstree/jquery.jstree.min.js'
+            $pth['folder']['plugins'] . 'pagemanager/jstree/jquery.jstree.js'
         );
 
         $this->model->getHeadings();
