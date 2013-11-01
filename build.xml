@@ -58,6 +58,10 @@
                 output="HTML:frames:default" defaultpackagename="Pagemanager"
                 defaultcategoryname="CMSimple_XH">
             <fileset refid="php-sources"/>
+            <projdocfileset dir=".">
+               <include name="README"/>
+               <include name="CHANGELOG"/>
+            </projdocfileset>
         </phpdoc>
     </target>
 
