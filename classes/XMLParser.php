@@ -109,13 +109,15 @@ class Pagemanager_XMLParser
     /**
      * Initializes a newly created object.
      *
-     * @param array $contents Page contents.
+     * @param array  $contents   Page contents.
+     * @param int    $levels     Maximum page level.
+     * @param string $pdattrName Name of a page data attribute.
      */
     function Pagemanager_XMLParser($contents, $levels, $pdattrName)
     {
-	$this->contents = $contents;
-	$this->levels = $levels;
-	$this->pdattrName = $pdattrName;
+        $this->contents = $contents;
+        $this->levels = $levels;
+        $this->pdattrName = $pdattrName;
     }
 
     /**
@@ -127,16 +129,16 @@ class Pagemanager_XMLParser
      */
     function parse($xml)
     {
-	$parser = xml_parser_create('UTF-8');
-	xml_set_element_handler(
+        $parser = xml_parser_create('UTF-8');
+        xml_set_element_handler(
             $parser, array($this, 'startElementHandler'),
             array($this, 'endElementHandler')
         );
-	xml_set_character_data_handler($parser, array($this, 'cDataHandler'));
-	$this->level = 0;
-	$this->newContents = array();
-	$this->pageData = array();
-	xml_parse($parser, $xml, true);
+        xml_set_character_data_handler($parser, array($this, 'cDataHandler'));
+        $this->level = 0;
+        $this->newContents = array();
+        $this->pageData = array();
+        xml_parse($parser, $xml, true);
     }
 
     /**
@@ -182,7 +184,7 @@ class Pagemanager_XMLParser
                 $attribs['TITLE'], ENT_NOQUOTES, 'UTF-8'
             );
             $this->pdattr = isset($attribs['DATA-PDATTR'])
-		? $attribs['DATA-PDATTR'] : null;
+                ? $attribs['DATA-PDATTR'] : null;
         }
     }
 
@@ -219,9 +221,9 @@ class Pagemanager_XMLParser
     {
         global $pd_router;
 
-	if (trim($data) === '') {
-	    return;
-	}
+        if (trim($data) === '') {
+            return;
+        }
         $data = htmlspecialchars($data, ENT_NOQUOTES, 'UTF-8');
         if (isset($this->contents[$this->id])) {
             $content = $this->contents[$this->id];
@@ -243,9 +245,9 @@ class Pagemanager_XMLParser
             $pageData = $pd_router->new_page();
         }
         $pageData['url'] = uenc($this->title);
-	if ($this->pdattrName !== '') {
-	    $pageData[$this->pdattrName] = $this->pdattr;
-	}
+        if ($this->pdattrName !== '') {
+            $pageData[$this->pdattrName] = $this->pdattr;
+        }
         $this->pageData[] = $pageData;
     }
 }

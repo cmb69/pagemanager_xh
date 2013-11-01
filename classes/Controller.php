@@ -241,10 +241,10 @@ class Pagemanager_Controller
     /**
      * Returns the view of a single page.
      *
-     * @param int    A page index.
-     * @param string A page heading.
-     * @param string A page data attribute.
-     * @param bool   Whether the page may be renamed.
+     * @param int    $n         A page index.
+     * @param string $heading   A page heading.
+     * @param string $pdattr    A page data attribute.
+     * @param bool   $mayRename Whether the page may be renamed.
      *
      * @return string (X)HTML.
      */
@@ -300,8 +300,9 @@ class Pagemanager_Controller
                         $ldiff += $jdiff - 1;
                     }
                 }
-                for ($j = $ldiff; $j < 0; $j++)
+                for ($j = $ldiff; $j < 0; $j++) {
                     $o .= '</ul></li>'."\n";
+                }
             } else { // level increasing
                 if ($ldiff > 1) {
                     array_push($stack, $ldiff);
@@ -342,11 +343,13 @@ class Pagemanager_Controller
         include_once $pth['folder']['plugins'] . 'utf8/utf8.php';
         include_once UTF8 . '/ucfirst.php';
         $ptx = $plugin_tx['pagemanager'];
-        include_once($pth['folder']['plugins'].'jquery/jquery.inc.php');
+        include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jQuery();
         include_jQueryUI();
-        include_jQueryPlugin('jsTree', $pth['folder']['plugins']
-                .'pagemanager/jstree/jquery.jstree.min.js');
+        include_jQueryPlugin(
+            'jsTree',
+            $pth['folder']['plugins'] . 'pagemanager/jstree/jquery.jstree.min.js'
+        );
 
         $this->model->getHeadings();
 
@@ -380,6 +383,8 @@ class Pagemanager_Controller
 
     /**
      * Saves the content. Returns whether that succeeded.
+     *
+     * @param string $xml An XML document.
      *
      * @return bool
      *
@@ -431,7 +436,8 @@ class Pagemanager_Controller
      */
     function dispatch()
     {
-        global $admin, $action, $pagemanager, $_XH_csrfProtection, $pth, $plugin, $f, $cf;
+        global $admin, $action, $pagemanager, $_XH_csrfProtection, $pth,
+            $plugin, $f, $cf;
 
         $o = '';
         /*

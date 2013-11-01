@@ -4,6 +4,26 @@
 
 <project name="Pagamanger" default="default">
 
+    <!-- Filesets -->
+
+    <fileset id="php-sources" dir=".">
+        <include name="admin.php"/>
+        <include name="classes/*.php"/>
+    </fileset>
+
+    <!-- checks -->
+
+    <target name="sniff">
+        <phpcodesniffer standard="PEAR">
+            <fileset refid="php-sources"/>
+        </phpcodesniffer>
+    </target>
+
+    <target name="compat">
+        <exec command="pci --dir . --tab 12,12,20 --summarize"
+              logoutput="true"/>
+    </target>
+
     <target name="unit-tests">
         <phpunit haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
@@ -28,11 +48,6 @@
     </target>
 
     <target name="all-tests" depends="unit-tests,attack-tests"/>
-
-    <target name="compat">
-        <exec command="pci --dir . --tab 12,12,20 --summarize"
-              logoutput="true"/>
-    </target>
 
     <target name="build">
         <fail unless="version" message="version is not defined!"/>
