@@ -86,7 +86,6 @@
         <move todir="dist">
             <fileset dir="export">
                 <exclude name="build.xml"/>
-                <exclude name="future.txt"/>
             </fileset>
         </move>
         <delete dir="export"/>
