@@ -26,16 +26,29 @@
 class Pagemanager_XMLParser
 {
     /**
-     * The contents array.
+     * The original contents array.
      *
      * @var array
+     *
+     * @access protected
      */
     var $contents;
+
+    /**
+     * The new contents array.
+     *
+     * @var array
+     *
+     * @access protected
+     */
+    var $newContents;
 
     /**
      * The new page data array.
      *
      * @var array
+     *
+     * @access protected
      */
     var $pageData;
 
@@ -43,6 +56,8 @@ class Pagemanager_XMLParser
      * The maximum nesting level.
      *
      * @var int
+     *
+     * @access protected
      */
     var $levels;
 
@@ -50,6 +65,8 @@ class Pagemanager_XMLParser
      * The current nesting level.
      *
      * @var int
+     *
+     * @access protected
      */
     var $level;
 
@@ -57,6 +74,8 @@ class Pagemanager_XMLParser
      * The current page id (number?).
      *
      * @var int
+     *
+     * @access protected
      */
     var $id;
 
@@ -64,6 +83,8 @@ class Pagemanager_XMLParser
      * The current page heading.
      *
      * @var string
+     *
+     * @access protected
      */
     var $title;
 
@@ -71,6 +92,8 @@ class Pagemanager_XMLParser
      * The name of the page data attribute.
      *
      * @var string
+     *
+     * @access protected
      */
     var $pdattrName;
 
@@ -78,6 +101,8 @@ class Pagemanager_XMLParser
      * The current page data attribute.
      *
      * @var bool
+     *
+     * @access protected
      */
     var $pdattr;
 
@@ -109,7 +134,7 @@ class Pagemanager_XMLParser
         );
 	xml_set_character_data_handler($parser, array($this, 'cDataHandler'));
 	$this->level = 0;
-	$this->contents = array();
+	$this->newContents = array();
 	$this->pageData = array();
 	xml_parse($parser, $xml, true);
     }
@@ -121,7 +146,7 @@ class Pagemanager_XMLParser
      */
     function getContents()
     {
-        return $this->contents;
+        return $this->newContents;
     }
 
     /**
@@ -151,8 +176,8 @@ class Pagemanager_XMLParser
             $this->level++;
             $pattern = '/(copy_)?pagemanager-([0-9]*)/';
             $this->id = $attribs['ID'] === ''
-                ? ''
-                : preg_replace($pattern, '$2', $attribs['ID']);
+                ? null
+                : (int) preg_replace($pattern, '$2', $attribs['ID']);
             $this->title = htmlspecialchars(
                 $attribs['TITLE'], ENT_NOQUOTES, 'UTF-8'
             );
@@ -194,31 +219,34 @@ class Pagemanager_XMLParser
     {
         global $pd_router;
 
+	if (trim($data) === '') {
+	    return;
+	}
         $data = htmlspecialchars($data, ENT_NOQUOTES, 'UTF-8');
         if (isset($this->contents[$this->id])) {
-            $cnt = $this->contents[$this->id];
+            $content = $this->contents[$this->id];
             $pattern = '/<h[1-' . $this->levels . ']([^>]*)>'
                 . '((<[^>]*>)*)[^<]*((<[^>]*>)*)'
                 . '<\/h[1-' . $this->levels . ']([^>]*)>/i';
             $replacement = '<h' . $this->level . '$1>${2}'
                 . addcslashes($this->title, '$\\') . '$4'
                 . '</h' . $this->level . '$6>';
-            $cnt = preg_replace($pattern, $replacement, $cnt, 1);
-            $this->contents[] = $cnt;
+            $content = preg_replace($pattern, $replacement, $content, 1);
+            $this->newContents[] = $content;
         } else {
-            $this->contents[] = '<h' . $this->level . '>' . $this->title
+            $this->newContents[] = '<h' . $this->level . '>' . $this->title
                 . '</h' . $this->level . '>';
         }
-        if ($this->id == '') {
-            $pd = $pd_router->new_page(array());
+        if (isset($this->id)) {
+            $pageData = $pd_router->find_page($this->id);
         } else {
-            $pd = $pd_router->find_page($this->id);
+            $pageData = $pd_router->new_page();
         }
-        $pd['url'] = uenc($this->title);
-	if (isset($this->pdattr)) {
-	    $pd[$this->pdattrName] = $this->pdattr;
+        $pageData['url'] = uenc($this->title);
+	if ($this->pdattrName !== '') {
+	    $pageData[$this->pdattrName] = $this->pdattr;
 	}
-        $this->pageData[] = $pd;
+        $this->pageData[] = $pageData;
     }
 }
 
