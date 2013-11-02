@@ -241,18 +241,31 @@ class Pagemanager_Controller
     /**
      * Returns the view of a single page.
      *
-     * @param int    $n         A page index.
+     * @param int    $index     A page index.
      * @param string $heading   A page heading.
-     * @param string $pdattr    A page data attribute.
      * @param bool   $mayRename Whether the page may be renamed.
      *
      * @return string (X)HTML.
+     *
+     * @global array  The configuration of the plugins.
+     * @global object The page data router.
      */
-    function page($n, $heading, $pdattr, $mayRename)
+    function page($index, $heading, $mayRename)
     {
-        $pdattr = isset($pdattr) ?  " data-pdattr=\"$pdattr\"" : '';
+        global $plugin_cf, $pd_router;
+
+        $pcf = $plugin_cf['pagemanager'];
+        $pageData = $pd_router->find_page($index);
+        if ($pcf['pagedata_attribute'] === '') {
+            $pdattr = '';
+        } elseif ($pageData[$pcf['pagedata_attribute']] === '') {
+            $pdattr =  ' data-pdattr="1"';
+        } else {
+            $pdattr = $pageData[$pcf['pagedata_attribute']];
+            $pdattr = " data-pdattr=\"$pdattr\"";
+        }
         $rename = $mayRename ? '' : ' class="pagemanager-no-rename"';
-        return "<li id=\"pagemanager-$n\" title=\"$heading\"$pdattr$rename>"
+        return "<li id=\"pagemanager-$index\" title=\"$heading\"$pdattr$rename>"
             . "<a href=\"#\">$heading</a>";
     }
 
@@ -263,28 +276,17 @@ class Pagemanager_Controller
      *
      * @global int    The number of pages.
      * @global array  The menu levels of the pages.
-     * @global object The page data router.
-     * @global array  The configuration of the plugins.
      * @global array  Flags to signal whether the headings may be renamed.
      */
     function pages()
     {
-        global $cl, $l, $pd_router, $plugin_cf;
+        global $cl, $l;
 
         // output the treeview of the page structure
         // uses ugly hack to clean up irregular page structure
-        $pcf = $plugin_cf['pagemanager'];
-        $pd = $pd_router->find_page(0);
-        if ($pcf['pagedata_attribute'] === '') {
-            $pdattr = null;
-        } elseif ($pd[$pcf['pagedata_attribute']] === '') {
-            $pdattr = '1';
-        } else {
-            $pdattr = $pd[$pcf['pagedata_attribute']];
-        }
         $o = '<ul>' . "\n";
         $o .= $this->page(
-            0, $this->model->headings[0], $pdattr, $this->model->mayRename[0]
+            0, $this->model->headings[0], $this->model->mayRename[0]
         );
         $stack = array();
         for ($i = 1; $i < $cl; $i++) {
@@ -309,16 +311,8 @@ class Pagemanager_Controller
                 }
                 $o .= "\n".'<ul>'."\n";
             }
-            $pd = $pd_router->find_page($i);
-            if ($pcf['pagedata_attribute'] === '') {
-                $pdattr = null;
-            } elseif ($pd[$pcf['pagedata_attribute']] === '') {
-                $pdattr = '1';
-            } else {
-                $pdattr = $pd[$pcf['pagedata_attribute']];
-            }
             $o .= $this->page(
-                $i, $this->model->headings[$i], $pdattr, $this->model->mayRename[$i]
+                $i, $this->model->headings[$i], $this->model->mayRename[$i]
             );
         }
         $o .= '</ul>'."\n";
