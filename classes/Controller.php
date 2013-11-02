@@ -434,6 +434,29 @@ class Pagemanager_Controller
     }
 
     /**
+     * Saves the submitted site structure.
+     *
+     * @return (X)HTML.
+     *
+     * @global array  The paths of system files and folders.
+     * @global object The CSRF protection object.
+     */
+    function save()
+    {
+        global $pth, $_XH_csrfProtection;
+
+        $_XH_csrfProtection->check();
+        if ($this->model->save(stsl($_POST['xml']))) {
+            header('Location: ' . $this->redirectURL(), true, 303);
+            exit();
+        } else {
+            e('cntwriteto', 'content', $pth['file']['content']);
+            $o = $this->editView();
+        }
+        return $o;
+    }
+
+    /**
      * Dispatches according to the current request.
      *
      * @return string The (X)HTML.
@@ -441,14 +464,13 @@ class Pagemanager_Controller
      * @global string The admin parameter.
      * @global string The action parameter.
      * @global string Whether pagemanager administration is requested.
-     * @global object The CSRF protection object.
      * @global array  The paths of system files and folders.
      * @global string The requested function.
      * @global array  The configuration of the core.
      */
     function dispatch()
     {
-        global $admin, $action, $pagemanager, $_XH_csrfProtection, $pth,
+        global $admin, $action, $pagemanager, $pth,
             $plugin, $f, $cf;
 
         $o = '';
@@ -468,15 +490,8 @@ class Pagemanager_Controller
             case 'plugin_main':
                 switch ($action) {
                 case 'plugin_save':
-                    $_XH_csrfProtection->check();
-                    if ($this->model->save(stsl($_POST['xml']))) {
-                        header('Location: ' . $this->redirectURL(), true, 303);
-                        exit('hallo');
-                    } else {
-                        e('cntwriteto', 'content', $pth['file']['content']);
-                        $o .= $this->editView();
-                        break;
-                    }
+                    $o .= $this->save();
+                    break;
                 default:
                     $o .= $this->editView();
                 }
