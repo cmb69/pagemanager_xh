@@ -23,6 +23,7 @@ $plugin_tx['pagemanager']['treeview_new']="Neue Seite";
 $plugin_tx['pagemanager']['button_delete']="Löschen";
 $plugin_tx['pagemanager']['button_ok']="OK";
 $plugin_tx['pagemanager']['button_cancel']="Abbrechen";
+$plugin_tx['pagemanager']['button_save']="Speichern";
 $plugin_tx['pagemanager']['message_confirm']="Bestätigung";
 $plugin_tx['pagemanager']['message_confirm_deletion']="Die Seite mit all Ihren Unterseiten wird gelöscht!";
 $plugin_tx['pagemanager']['message_warning_leave']="Ihre Änderungen gehen verloren!";

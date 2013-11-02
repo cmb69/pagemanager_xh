@@ -23,6 +23,7 @@ $plugin_tx['pagemanager']['treeview_new']="New page";
 $plugin_tx['pagemanager']['button_delete']="Delete";
 $plugin_tx['pagemanager']['button_ok']="OK";
 $plugin_tx['pagemanager']['button_cancel']="Cancel";
+$plugin_tx['pagemanager']['button_save']="Save";
 $plugin_tx['pagemanager']['message_confirm']="Confirmation";
 $plugin_tx['pagemanager']['message_confirm_deletion']="The page with all it's sub-pages will be deleted!";
 $plugin_tx['pagemanager']['message_warning_leave']="Your modifications will be lost!";

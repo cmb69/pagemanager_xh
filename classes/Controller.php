@@ -48,26 +48,22 @@ class Pagemanager_Controller
     /**
      * Returns a rendered template.
      *
-     * @param string $_template A template name.
-     * @param array  $_bag      Template variables.
+     * @param string $template A template name.
      *
      * @return string (X)HTML.
      *
      * @global array The paths of system files and folders.
      * @global array The configuration of the core.
      */
-    function render($_template, $_bag)
+    function render($template)
     {
         global $pth, $cf;
 
-        $_template = "{$pth['folder']['plugins']}pagemanager/views/$_template.php";
-        $_xhtml = (bool) $cf['xhtml']['endtags'];
-        unset($pth, $cf);
-        extract($_bag);
+        $template = "{$pth['folder']['plugins']}pagemanager/views/$template.php";
         ob_start();
-        include $_template;
+        include $template;
         $o = ob_get_clean();
-        if (!$_xhtml) {
+        if (!$cf['xhtml']['endtags']) {
             $o = str_replace('/>', '>', $o);
         }
         return $o;
@@ -117,31 +113,45 @@ class Pagemanager_Controller
     }
 
     /**
-     * Returns plugin version information.
+     * Returns the path of the plugin icon file.
+     *
+     * @return string
+     *
+     * @lobal array The paths of system files and folders.
+     */
+    function pluginIconPath()
+    {
+        global $pth;
+
+        return $pth['folder']['plugins'] . 'pagemanager/pagemanager.png';
+    }
+
+    /**
+     * Returns the path of a state icon file.
      *
      * @return string
      *
      * @global array The paths of system files and folders.
+     */
+    function stateIconPath($state)
+    {
+        global $pth;
+
+        return "{$pth['folder']['plugins']}pagemanager/images/$state.png";
+    }
+
+    /**
+     * Returns a language string.
+     *
+     * @param string $key A key.
+     *
      * @global array The localization of the plugins.
      */
-    function version()
+    function lang($key)
     {
-        global $pth, $plugin_tx;
+        global $plugin_tx;
 
-        $ptx = $plugin_tx['pagemanager'];
-        $titles = array(
-            'syscheck' => $ptx['syscheck_title'], 'about' => $ptx['about']
-        );
-        $checks = $this->systemChecks();
-        $stateIcons = array();
-        foreach (array('ok', 'warn', 'fail') as $state) {
-            $stateIcons[$state]
-                = "{$pth['folder']['plugins']}pagemanager/images/$state.png";
-        }
-        $version = PAGEMANAGER_VERSION;
-        $icon = "{$pth['folder']['plugins']}pagemanager/pagemanager.png";
-        $bag = compact('titles', 'checks', 'stateIcons', 'version', 'icon');
-        return $this->render('info', $bag);
+        return $plugin_tx['pagemanager'][$key];
     }
 
     /**
@@ -198,7 +208,7 @@ class Pagemanager_Controller
      * @global array The configuration of the plugins.
      * @global array The localization of the plugins.
      */
-    function config()
+    function jsConfig()
     {
         global $pth, $cf, $tx, $plugin_cf, $plugin_tx;
 
@@ -241,16 +251,14 @@ class Pagemanager_Controller
     /**
      * Returns the view of a single page.
      *
-     * @param int    $index     A page index.
-     * @param string $heading   A page heading.
-     * @param bool   $mayRename Whether the page may be renamed.
+     * @param int $index A page index.
      *
      * @return string (X)HTML.
      *
      * @global array  The configuration of the plugins.
      * @global object The page data router.
      */
-    function page($index, $heading, $mayRename)
+    function page($index)
     {
         global $plugin_cf, $pd_router;
 
@@ -259,11 +267,13 @@ class Pagemanager_Controller
         if ($pcf['pagedata_attribute'] === '') {
             $pdattr = '';
         } elseif ($pageData[$pcf['pagedata_attribute']] === '') {
-            $pdattr =  ' data-pdattr="1"';
+            $pdattr = ' data-pdattr="1"';
         } else {
             $pdattr = $pageData[$pcf['pagedata_attribute']];
             $pdattr = " data-pdattr=\"$pdattr\"";
         }
+        $heading = $this->model->headings[$index];
+        $mayRename = $this->model->mayRename[$index];
         $rename = $mayRename ? '' : ' class="pagemanager-no-rename"';
         return "<li id=\"pagemanager-$index\" title=\"$heading\"$pdattr$rename>"
             . "<a href=\"#\">$heading</a>";
@@ -285,9 +295,7 @@ class Pagemanager_Controller
         // output the treeview of the page structure
         // uses ugly hack to clean up irregular page structure
         $o = '<ul>' . "\n";
-        $o .= $this->page(
-            0, $this->model->headings[0], $this->model->mayRename[0]
-        );
+        $o .= $this->page(0);
         $stack = array();
         for ($i = 1; $i < $cl; $i++) {
             $ldiff = $l[$i] - $l[$i - 1];
@@ -311,12 +319,81 @@ class Pagemanager_Controller
                 }
                 $o .= "\n".'<ul>'."\n";
             }
-            $o .= $this->page(
-                $i, $this->model->headings[$i], $this->model->mayRename[$i]
-            );
+            $o .= $this->page($i);
         }
         $o .= '</ul>'."\n";
         return $o;
+    }
+
+    /**
+     * Returns the class name of the toolbar.
+     *
+     * @return string
+     *
+     * @global array The configuration of the plugins.
+     */
+    function toolbarClass()
+    {
+        global $plugin_cf;
+
+        return $plugin_cf['pagemanager']['toolbar_vertical']
+            ? 'pagemanager-vertical' : 'pagemanager-horizontal';
+    }
+
+    /**
+     * Returns whether the toolbar shall be shown.
+     *
+     * @return bool
+     *
+     * @global array The configuration of the plugins.
+     */
+    function hasToolbar()
+    {
+        global $plugin_cf;
+
+        return (bool) $plugin_cf['pagemanager']['toolbar_show'];
+    }
+
+    /**
+     * Returns the available tools.
+     *
+     * @return array
+     */
+    function tools()
+    {
+        return array(
+            'save', 'expand', 'collapse', 'create', 'create_after', 'rename',
+            'delete', 'cut', 'copy', 'paste', 'paste_after', 'help'
+        );
+    }
+
+    /**
+     * Returns the URL for saving.
+     *
+     * @return string
+     *
+     * @global string The script name.
+     */
+    function submissionURL()
+    {
+        global $sn;
+
+        $xhpages = isset($_GET['xhpages']) ? '&pagemanager-xhpages' : '';
+        return "$sn?&pagemanager&edit$xhpages";
+    }
+
+    /**
+     * Returns the path of the JS script file.
+     *
+     * @return string
+     *
+     * @global array The paths of system files and folders.
+     */
+    function jsScriptPath()
+    {
+        global $pth;
+
+        return "{$pth['folder']['plugins']}pagemanager/pagemanager.js";
     }
 
     /**
@@ -325,18 +402,13 @@ class Pagemanager_Controller
      * @return string (X)HTML.
      *
      * @global array  The paths of system files and folders.
-     * @global string The script name.
-     * @global array  The configuration of the plugins.
-     * @global array  The localization of the core.
-     * @global array  The localization of the plugins.
      */
-    function edit()
+    function editView()
     {
-        global $pth, $sn, $plugin_cf, $tx, $plugin_tx;
+        global $pth;
 
         include_once $pth['folder']['plugins'] . 'utf8/utf8.php';
         include_once UTF8 . '/ucfirst.php';
-        $ptx = $plugin_tx['pagemanager'];
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jQuery();
         include_jQueryUI();
@@ -347,30 +419,7 @@ class Pagemanager_Controller
 
         $this->model->getHeadings();
 
-        $xhpages = isset($_GET['xhpages']) ? '&amp;pagemanager-xhpages' : '';
-        $actionUrl = $sn . '?&amp;pagemanager&amp;edit' . $xhpages;
-        $isIrregular = $this->model->isIrregular();
-        $structureWarning = $ptx['error_structure_warning'];
-        $structureConfirmation = $ptx['error_structure_confirmation'];
-        $showToolbar = $plugin_cf['pagemanager']['toolbar_show'];
-        $tools = array(
-            'save', 'expand', 'collapse', 'create',
-            'create_after', 'rename', 'delete', 'cut', 'copy',
-            'paste', 'paste_after', 'help'
-        );
-        $toolbarClass = !$plugin_cf['pagemanager']['toolbar_vertical']
-            ? 'pagemanager-horizontal' : 'pagemanager-vertical';
-        $saveButton = utf8_ucfirst($tx['action']['save']);
-        $titleConfirm = $ptx['message_confirm'];
-        $titleInfo = $ptx['message_information'];
-        $script = "{$pth['folder']['plugins']}pagemanager/pagemanager.js";
-        $config = $this->config();
-        $bag = compact(
-            'actionUrl', 'isIrregular', 'structureWarning', 'structureConfirmation',
-            'showToolbar', 'tools', 'toolbarClass', 'saveButton', 'titleConfirm',
-            'titleInfo', 'script', 'config'
-        );
-        $o = $this->render('widget', $bag);
+        $o = $this->render('widget');
 
         return $o;
     }
@@ -440,7 +489,7 @@ class Pagemanager_Controller
         if ($f === 'xhpages'
             && in_array($cf['pagemanager']['external'], array('', 'pagemanager'))
         ) {
-            $o .= $this->edit();
+            $o .= $this->editView();
         } elseif (isset($pagemanager) && $pagemanager === 'true') {
             $o .= print_plugin_admin('on');
             switch ($admin) {
@@ -448,19 +497,19 @@ class Pagemanager_Controller
                 if ($action == 'plugin_save') {
                     $_XH_csrfProtection->check();
                     if ($this->save(stsl($_POST['xml']))) {
-                        header('Location: ' . $this->redirectURL, true, 303);
-                        exit();
+                        header('Location: ' . $this->redirectURL(), true, 303);
+                        exit('hallo');
                     } else {
                         e('cntwriteto', 'content', $pth['file']['content']);
-                        $o .= $this->edit();
+                        $o .= $this->editView();
                         break;
                     }
                 } else {
-                    $o .= $this->version();
+                    $o .= $this->render('info');
                 }
                 break;
             case 'plugin_main':
-                $o .= $this->edit();
+                $o .= $this->editView();
                 break;
             default:
                 $o .= plugin_admin_common($action, $admin, $plugin);
