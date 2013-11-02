@@ -117,6 +117,33 @@ class Pagemanager_Model
         natcasesort($themes);
         return $themes;
     }
+
+    /**
+     * Saves the content. Returns whether that succeeded.
+     *
+     * @param string $xml An XML document.
+     *
+     * @return bool
+     *
+     * @global array  The contents of the pages.
+     * @global array  The paths of system files and folders.
+     * @global array  The configuration of the core.
+     * @global array  The configuration of the plugins.
+     * @global object The page data router.
+     */
+    function save($xml)
+    {
+        global $c, $pth, $cf, $plugin_cf, $pd_router;
+
+        include_once "{$pth['folder']['plugins']}pagemanager/classes/XMLParser.php";
+        $parser = new Pagemanager_XMLParser(
+            $c, (int) $cf['menu']['levels'],
+            $plugin_cf['pagemanager']['pagedata_attribute']
+        );
+        $parser->parse($xml);
+        $c = $parser->getContents();
+        return $pd_router->model->refresh($parser->getPageData());
+    }
 }
 
 ?>
