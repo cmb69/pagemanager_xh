@@ -377,7 +377,7 @@ class Pagemanager_Controller
         global $sn;
 
         $xhpages = isset($_GET['xhpages']) ? '&pagemanager-xhpages' : '';
-        return "$sn?&pagemanager&edit$xhpages";
+        return "$sn?&pagemanager&$xhpages&edit";
     }
 
     /**
@@ -455,8 +455,8 @@ class Pagemanager_Controller
     function redirectURL()
     {
         $queryString = isset($_GET['pagemanager-xhpages'])
-            ? '&normal&xhpages'
-            : '&pagemanager&normal&admin=plugin_main';
+            ? '&xhpages&normal'
+            : '&pagemanager&admin=plugin_main&action=plugin_text&normal';
         return CMSIMPLE_URL . '?' . $queryString;
     }
 
@@ -490,7 +490,11 @@ class Pagemanager_Controller
             $o .= print_plugin_admin('on');
             switch ($admin) {
             case '':
-                if ($action == 'plugin_save') {
+                $o .= $this->render('info');
+                break;
+            case 'plugin_main':
+                switch ($action) {
+                case 'plugin_save':
                     $_XH_csrfProtection->check();
                     if ($this->save(stsl($_POST['xml']))) {
                         header('Location: ' . $this->redirectURL(), true, 303);
@@ -500,12 +504,9 @@ class Pagemanager_Controller
                         $o .= $this->editView();
                         break;
                     }
-                } else {
-                    $o .= $this->render('info');
+                default:
+                    $o .= $this->editView();
                 }
-                break;
-            case 'plugin_main':
-                $o .= $this->editView();
                 break;
             default:
                 $o .= plugin_admin_common($action, $admin, $plugin);

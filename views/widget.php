@@ -23,7 +23,7 @@
     <div id="pagemanager" ondblclick="jQuery('#pagemanager').jstree('toggle_node')">
         <?php echo $this->pages();?>
     </div>
-    <input type="hidden" name="admin" value=""/>
+    <input type="hidden" name="admin" value="plugin_main"/>
     <input type="hidden" name="action" value="plugin_save"/>
     <input type="hidden" name="xml" id="pagemanager-xml" value=""/>
     <input id="pagemanager-submit" type="submit" class="submit"
