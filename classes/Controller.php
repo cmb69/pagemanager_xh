@@ -97,8 +97,6 @@ class Pagemanager_Controller
             = !get_magic_quotes_runtime() ? 'ok' : 'fail';
         $ok = file_exists($pth['folder']['plugins'].'jquery/jquery.inc.php');
         $checks[$ptx['syscheck_jquery']] = $ok ? 'ok' : 'fail';
-        $ok = file_exists($pth['folder']['plugins'].'utf8/utf8.php');
-        $checks[$ptx['syscheck_utf8']] = $ok ? 'ok' : 'fail';
         $checks[$ptx['syscheck_encoding']]
             = strtoupper($tx['meta']['codepage']) == 'UTF-8' ? 'ok' : 'warn';
         $folders = array();
@@ -179,7 +177,7 @@ class Pagemanager_Controller
         $onclick = 'PAGEMANAGER.tool(\''.$tool.'\')';
         $onclick = $tool !== 'help' ? " onclick=\"$onclick\"" : '';
         if ($tool === 'save') {
-            $tooltip = XH_hsc(utf8_ucfirst($tx['action']['save']));
+            $tooltip = XH_hsc($plugin_tx['pagemanager']['button_save']);
         } else {
             $tooltip = XH_hsc($plugin_tx['pagemanager']['op_'.$tool]);
         }
@@ -407,8 +405,6 @@ class Pagemanager_Controller
     {
         global $pth;
 
-        include_once $pth['folder']['plugins'] . 'utf8/utf8.php';
-        include_once UTF8 . '/ucfirst.php';
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jQuery();
         include_jQueryUI();

@@ -42,7 +42,6 @@ $plugin_tx['pagemanager']['syscheck_title']="System-Prüfung";
 $plugin_tx['pagemanager']['syscheck_phpversion']="PHP-Version ≥ %s";
 $plugin_tx['pagemanager']['syscheck_extension']="Erweiterung \"%s\" geladen";
 $plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\">jQuery4CMSimple Plugin</a> installiert";
-$plugin_tx['pagemanager']['syscheck_utf8']="<a href=\"http://3-magi.net/?CMSimple_XH/Utf8_XH\">Utf8_XH Plugin</a> installiert";
 $plugin_tx['pagemanager']['syscheck_encoding']="UTF-8-Kodierung eingestellt";
 $plugin_tx['pagemanager']['syscheck_magic_quotes']="magic_quotes_runtime off";
 $plugin_tx['pagemanager']['syscheck_writable']="Ordner \"%s\" beschreibbar";
