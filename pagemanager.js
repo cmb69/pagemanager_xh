@@ -550,8 +550,7 @@ PAGEMANAGER.init = function () {
      */
     config = {
 	"plugins": [
-	    "contextmenu", "crrm", "dnd", "html_data", "themes",
-	    "types", "xml_data", "ui"
+	    "contextmenu", "crrm", "dnd", "themes", "types", "xml_data", "ui"
 	],
 	"core": {
 	    "animation": PAGEMANAGER.config.animation,
@@ -589,6 +588,12 @@ PAGEMANAGER.init = function () {
 	},
 	"ui": {
 	    "select_limit": 1
+	},
+	"xml_data": {
+	    "ajax": {
+		"url": PAGEMANAGER.config.dataURL
+	    },
+	    "xsl": "nest"
 	}
     };
     if (PAGEMANAGER.config.hasCheckboxes) {

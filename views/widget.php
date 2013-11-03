@@ -20,9 +20,7 @@
         <div style="clear: both"></div>
     </div>
 <?php endif;?>
-    <div id="pagemanager" ondblclick="jQuery('#pagemanager').jstree('toggle_node')">
-        <?php echo $this->pages();?>
-    </div>
+    <div id="pagemanager" ondblclick="jQuery('#pagemanager').jstree('toggle_node')"></div>
     <input type="hidden" name="admin" value="plugin_main"/>
     <input type="hidden" name="action" value="plugin_save"/>
     <input type="hidden" name="xml" id="pagemanager-xml" value=""/>

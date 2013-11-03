@@ -200,15 +200,16 @@ class Pagemanager_Controller
      *
      * @return string JSON.
      *
-     * @global array The paths of system files and folders.
-     * @global array The configuration of the core.
-     * @global array The localization of the core.
-     * @global array The configuration of the plugins.
-     * @global array The localization of the plugins.
+     * @global array  The paths of system files and folders.
+     * @global string The script name.
+     * @global array  The configuration of the core.
+     * @global array  The localization of the core.
+     * @global array  The configuration of the plugins.
+     * @global array  The localization of the plugins.
      */
     function jsConfig()
     {
-        global $pth, $cf, $tx, $plugin_cf, $plugin_tx;
+        global $pth, $sn, $cf, $tx, $plugin_cf, $plugin_tx;
 
         $pcf = $plugin_cf['pagemanager'];
         $ptx = $plugin_tx['pagemanager'];
@@ -241,86 +242,10 @@ class Pagemanager_Controller
             'noSelectionMessage' => $ptx['message_no_selection'],
             'duplicateHeading' => $tx['toc']['dupl'],
             'offendingExtensionError' => $ptx['error_offending_extension'],
-            'hasCheckboxes' => $pcf['pagedata_attribute'] !== ''
+            'hasCheckboxes' => $pcf['pagedata_attribute'] !== '',
+            'dataURL' => $sn . '?&pagemanager&admin=plugin_main&action=plugin_data&edit'
         );
         return XH_encodeJson($config);
-    }
-
-    /**
-     * Returns the view of a single page.
-     *
-     * @param int $index A page index.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array  The configuration of the plugins.
-     * @global object The page data router.
-     */
-    function page($index)
-    {
-        global $plugin_cf, $pd_router;
-
-        $pcf = $plugin_cf['pagemanager'];
-        $pageData = $pd_router->find_page($index);
-        if ($pcf['pagedata_attribute'] === '') {
-            $pdattr = '';
-        } elseif ($pageData[$pcf['pagedata_attribute']] === '') {
-            $pdattr = ' data-pdattr="1"';
-        } else {
-            $pdattr = $pageData[$pcf['pagedata_attribute']];
-            $pdattr = " data-pdattr=\"$pdattr\"";
-        }
-        $heading = $this->model->headings[$index];
-        $mayRename = $this->model->mayRename[$index];
-        $rename = $mayRename ? '' : ' class="pagemanager-no-rename"';
-        return "<li id=\"pagemanager-$index\" title=\"$heading\"$pdattr$rename>"
-            . "<a href=\"#\">$heading</a>";
-    }
-
-    /**
-     * Returns the pages view.
-     *
-     * @return string (X)HTML.
-     *
-     * @global int    The number of pages.
-     * @global array  The menu levels of the pages.
-     * @global array  Flags to signal whether the headings may be renamed.
-     */
-    function pages()
-    {
-        global $cl, $l;
-
-        // output the treeview of the page structure
-        // uses ugly hack to clean up irregular page structure
-        $o = '<ul>' . "\n";
-        $o .= $this->page(0);
-        $stack = array();
-        for ($i = 1; $i < $cl; $i++) {
-            $ldiff = $l[$i] - $l[$i - 1];
-            if ($ldiff <= 0) { // same level or decreasing
-                $o .= '</li>'."\n";
-                if ($ldiff != 0 && count($stack) > 0) {
-                    $jdiff = array_pop($stack);
-                    if ($jdiff + $ldiff > 0) {
-                        array_push($stack, $jdiff + $ldiff);
-                        $ldiff = 0;
-                    } else {
-                        $ldiff += $jdiff - 1;
-                    }
-                }
-                for ($j = $ldiff; $j < 0; $j++) {
-                    $o .= '</ul></li>'."\n";
-                }
-            } else { // level increasing
-                if ($ldiff > 1) {
-                    array_push($stack, $ldiff);
-                }
-                $o .= "\n".'<ul>'."\n";
-            }
-            $o .= $this->page($i);
-        }
-        $o .= '</ul>'."\n";
-        return $o;
     }
 
     /**
@@ -412,12 +337,7 @@ class Pagemanager_Controller
             'jsTree',
             $pth['folder']['plugins'] . 'pagemanager/jstree/jquery.jstree.js'
         );
-
-        $this->model->getHeadings();
-
-        $o = $this->render('widget');
-
-        return $o;
+        return $this->render('widget');
     }
 
     /**
@@ -457,6 +377,82 @@ class Pagemanager_Controller
     }
 
     /**
+     * Returns the view of a single page.
+     *
+     * @param int $index A page index.
+     *
+     * @return string XML.
+     *
+     * @global array  The configuration of the plugins.
+     * @global object The page data router.
+     */
+    function page($index)
+    {
+        global $plugin_cf, $pd_router;
+
+        $pcf = $plugin_cf['pagemanager'];
+        $pageData = $pd_router->find_page($index);
+        if ($pcf['pagedata_attribute'] === '') {
+            $pdattr = '';
+        } elseif ($pageData[$pcf['pagedata_attribute']] === '') {
+            $pdattr = ' data-pdattr="1"';
+        } else {
+            $pdattr = $pageData[$pcf['pagedata_attribute']];
+            $pdattr = " data-pdattr=\"$pdattr\"";
+        }
+        $heading = $this->model->headings[$index];
+        $mayRename = $this->model->mayRename[$index];
+        $rename = $mayRename ? '' : ' class="pagemanager-no-rename"';
+        return "<item id=\"pagemanager-$index\" title=\"$heading\"$pdattr$rename>"
+            . "<content><name>$heading</name></content>";
+    }
+
+    /**
+     * Returns the pages' view.
+     *
+     * @return string XML.
+     *
+     * @global int    The number of pages.
+     * @global array  The menu levels of the pages.
+     */
+    function pages()
+    {
+        global $cl, $l;
+
+        // ugly hack to cater for irregular page structure
+        $o = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL
+            . '<root>' . PHP_EOL;
+        $o .= $this->page(0);
+        $stack = array();
+        for ($i = 1; $i < $cl; $i++) {
+            $ldiff = $l[$i] - $l[$i - 1];
+            if ($ldiff <= 0) { // same level or decreasing
+                $o .= '</item>'."\n";
+                if ($ldiff != 0 && count($stack) > 0) {
+                    $jdiff = array_pop($stack);
+                    if ($jdiff + $ldiff > 0) {
+                        array_push($stack, $jdiff + $ldiff);
+                        $ldiff = 0;
+                    } else {
+                        $ldiff += $jdiff - 1;
+                    }
+                }
+                for ($j = $ldiff; $j < 0; $j++) {
+                    $o .= '</item>'."\n";
+                }
+            } else { // level increasing
+                if ($ldiff > 1) {
+                    array_push($stack, $ldiff);
+                }
+                $o .= "\n".''."\n";
+            }
+            $o .= $this->page($i);
+        }
+        $o .= '</item>' . PHP_EOL . '</root>' . PHP_EOL;
+        return $o;
+    }
+
+    /**
      * Dispatches according to the current request.
      *
      * @return string The (X)HTML.
@@ -470,13 +466,9 @@ class Pagemanager_Controller
      */
     function dispatch()
     {
-        global $admin, $action, $pagemanager, $pth,
-            $plugin, $f, $cf;
+        global $admin, $action, $pagemanager, $pth, $plugin, $f, $cf;
 
         $o = '';
-        /*
-         * Hook into new edit menu of CMSimple_XH 1.5
-         */
         if ($f === 'xhpages'
             && in_array($cf['pagemanager']['external'], array('', 'pagemanager'))
         ) {
@@ -489,6 +481,11 @@ class Pagemanager_Controller
                 break;
             case 'plugin_main':
                 switch ($action) {
+                case 'plugin_data':
+                    $this->model->getHeadings();
+                    header('Content-Type: application/xml; charset=UTF-8');
+                    echo $this->pages();
+                    exit;
                 case 'plugin_save':
                     $o .= $this->save();
                     break;
