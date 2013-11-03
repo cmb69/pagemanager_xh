@@ -51,6 +51,10 @@
 
     <target name="all-tests" depends="unit-tests,attack-tests"/>
 
+    <target name="coverage">
+        <exec command="phpunit --coverage-html tests/coverage tests/unit"/>
+    </target>
+
     <!-- Documentation -->
 
     <target name="php-doc">
