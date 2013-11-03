@@ -33,6 +33,13 @@ class Pagemanager_Controller
     var $model;
 
     /**
+     * The pages object.
+     *
+     * @var object
+     */
+    var $pages;
+
+    /**
      * Initializes a newly create object.
      *
      * @global array The paths of system files and folders.
@@ -430,47 +437,34 @@ class Pagemanager_Controller
     }
 
     /**
-     * Returns the pages' view.
+     * Returns the page structure.
+     *
+     * @param int $parent The index of the parent page.
      *
      * @return string XML.
      *
-     * @global int    The number of pages.
-     * @global array  The menu levels of the pages.
+     * @global array The paths of system files and folders.
      */
-    function pages()
+    function pages($parent = null)
     {
-        global $cl, $l;
+        global $pth;
 
-        // ugly hack to cater for irregular page structure
-        $o = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL
-            . '<root>' . PHP_EOL;
-        $o .= $this->page(0);
-        $stack = array();
-        for ($i = 1; $i < $cl; $i++) {
-            $ldiff = $l[$i] - $l[$i - 1];
-            if ($ldiff <= 0) { // same level or decreasing
-                $o .= '</item>'."\n";
-                if ($ldiff != 0 && count($stack) > 0) {
-                    $jdiff = array_pop($stack);
-                    if ($jdiff + $ldiff > 0) {
-                        array_push($stack, $jdiff + $ldiff);
-                        $ldiff = 0;
-                    } else {
-                        $ldiff += $jdiff - 1;
-                    }
-                }
-                for ($j = $ldiff; $j < 0; $j++) {
-                    $o .= '</item>'."\n";
-                }
-            } else { // level increasing
-                if ($ldiff > 1) {
-                    array_push($stack, $ldiff);
-                }
-                $o .= "\n".''."\n";
-            }
-            $o .= $this->page($i);
+        include_once $pth['folder']['classes'] . 'Pages.php';
+        if (!isset($this->pages)) {
+            $this->pages = new XH_Pages();
         }
-        $o .= '</item>' . PHP_EOL . '</root>' . PHP_EOL;
+        if (!isset($parent)) {
+            $o = '<root>';
+        }
+        $children = !isset($parent)
+            ? $this->pages->toplevels(false)
+            : $this->pages->children($parent, false);
+        foreach ($children as $index) {
+            $o .= $this->page($index) . $this->pages($index) . '</item>';
+        }
+        if (!isset($parent)) {
+            $o .= '</root>';
+        }
         return $o;
     }
 
