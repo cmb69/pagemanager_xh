@@ -139,6 +139,20 @@ class Pagemanager_Controller
     }
 
     /**
+     * Returns the path of the ajax loader GIF file.
+     *
+     * @return string
+     *
+     * @global array The paths of system files and folders.
+     */
+    function ajaxLoaderPath()
+    {
+        global $pth;
+
+        return "{$pth['folder']['plugins']}pagemanager/images/ajax-loader-bar.gif";
+    }
+
+    /**
      * Returns a language string.
      *
      * @param string $key A key.
@@ -359,21 +373,24 @@ class Pagemanager_Controller
      * @return (X)HTML.
      *
      * @global array  The paths of system files and folders.
+     * @global array  The localization of the plugins.
      * @global object The CSRF protection object.
      */
     function save()
     {
-        global $pth, $_XH_csrfProtection;
+        global $pth, $plugin_tx, $_XH_csrfProtection;
 
         $_XH_csrfProtection->check();
+        $ptx = $plugin_tx['pagemanager'];
         if ($this->model->save(stsl($_POST['xml']))) {
-            header('Location: ' . $this->redirectURL(), true, 303);
-            exit();
+            echo XH_message('success', $ptx['message_save_success']);
         } else {
-            e('cntwriteto', 'content', $pth['file']['content']);
-            $o = $this->editView();
+            $message = sprintf(
+                $ptx['message_save_failure'], $pth['file']['content']
+            );
+            echo XH_message('fail', $message);
         }
-        return $o;
+        exit;
     }
 
     /**

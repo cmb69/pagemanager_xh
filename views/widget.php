@@ -1,6 +1,6 @@
 <!-- Pagemanager_XH: widget -->
 <form id="pagemanager-form" action="<?php echo XH_hsc($this->submissionURL());?>"
-      method="post" accept-charset="UTF-8" onsubmit="PAGEMANAGER.beforeSubmit()">
+      method="post" accept-charset="UTF-8" onsubmit="PAGEMANAGER.submit(); return false">
 <?php if ($this->model->isIrregular()):?>
     <div id="pagemanager-structure-warning" class="cmsimplecore_warning">
         <p><?php echo $this->lang('error_structure_warning');?></p>
@@ -11,6 +11,9 @@
         </p>
     </div>
 <?php endif;?>
+    <p class="pagemanager-status" style="display:none">
+        <img src="<?php echo $this->ajaxLoaderPath();?>" alt="Loading"/>
+    </p>
     <!-- toolbar -->
 <?php if ($this->hasToolbar()):?>
     <div id="pagemanager-toolbar" class="<?php echo $this->toolbarClass();?>">
@@ -27,6 +30,9 @@
     <input id="pagemanager-submit" type="submit" class="submit"
            value="<?php echo $this->lang('button_save');?>" style="display: none"/>
     <?php global $_XH_csrfProtection; echo $_XH_csrfProtection->tokenInput();?>
+    <p class="pagemanager-status" style="display:none">
+        <img src="<?php echo $this->ajaxLoaderPath();?>" alt="Loading"/>
+    </p>
 </form>
 <div id="pagemanager-footer"></div>
 <div id="pagemanager-confirmation" title="<?php echo $this->lang('message_confirm');?>"></div>

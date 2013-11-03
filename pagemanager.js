@@ -181,9 +181,21 @@ PAGEMANAGER.beforeSubmit = function () {
  * @returns {undefined}
  */
 PAGEMANAGER.submit = function () {
+    var form, data, message, status;
+
     PAGEMANAGER.beforeSubmit();
-    jQuery("#pagemanager-form").submit();
-};
+    form = jQuery("#pagemanager-form");
+    url = form.attr("action");
+    message = form.children(".cmsimplecore_success, .cmsimplecore_fail"); //TODO xh_
+    message.remove();
+    status = jQuery(".pagemanager-status");
+    status.css("display", "block");
+    data = form.serialize();
+    jQuery.post(url, data, function (data, textStatus) {
+	status.css("display", "none");
+	status.after(data);
+    });
+}
 
 /**
  * Do an operation on the currently selected node.
