@@ -127,6 +127,8 @@ class Pagemanager_Controller
     /**
      * Returns the path of a state icon file.
      *
+     * @param string $state "ok", "warn" or "fail".
+     *
      * @return string
      *
      * @global array The paths of system files and folders.
@@ -156,6 +158,8 @@ class Pagemanager_Controller
      * Returns a language string.
      *
      * @param string $key A key.
+     *
+     * @return string
      *
      * @global array The localization of the plugins.
      */
@@ -257,7 +261,8 @@ class Pagemanager_Controller
             'duplicateHeading' => $tx['toc']['dupl'],
             'offendingExtensionError' => $ptx['error_offending_extension'],
             'hasCheckboxes' => $pcf['pagedata_attribute'] !== '',
-            'dataURL' => $sn . '?&pagemanager&admin=plugin_main&action=plugin_data&edit'
+            'dataURL' => $sn . '?&pagemanager&admin=plugin_main'
+                . '&action=plugin_data&edit'
         );
         return XH_encodeJson($config);
     }
