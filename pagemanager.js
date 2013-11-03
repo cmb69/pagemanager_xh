@@ -186,7 +186,9 @@ PAGEMANAGER.submit = function () {
     PAGEMANAGER.beforeSubmit();
     form = jQuery("#pagemanager-form");
     url = form.attr("action");
-    message = form.children(".cmsimplecore_success, .cmsimplecore_fail"); //TODO xh_
+    message = form.children(
+	".xh_success, .xh_fail, .cmsimplecore_success, .cmsimplecore_fail"
+    );
     message.remove();
     status = jQuery(".pagemanager-status");
     status.css("display", "block");
