@@ -47,9 +47,6 @@ class Pagemanager_Model
      * @global array The content of the pages.
      * @global array The configuration of the core.
      * @global array The localization of the core.
-     *
-     * @todo Cater for content modifications by other plugins,
-     * 	     unless we're in edit mode.
      */
     function getHeadings()
     {
