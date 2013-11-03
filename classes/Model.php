@@ -55,7 +55,6 @@ class Pagemanager_Model
         $stop = $cf['menu']['levels'];
         $empty = 0;
         foreach ($c as $i => $page) {
-            // TODO: what, if the following fails?
             preg_match('~<h([1-' . $stop . ']).*?>(.*?)</h~isu', $page, $matches);
             $heading = trim(strip_tags($matches[2]));
             if ($heading === '') {

@@ -41,10 +41,10 @@ $plugin_tx['pagemanager']['error_cant_rename']="Diese Seite kann nicht umbenannt
 $plugin_tx['pagemanager']['error_offending_extension']="Kollision mit einer Erweiterung, die ihre eigene jQuery Bibliothek einbindet, festgestellt (siehe Handbuch, Abschnitt \"Beschränkungen\").";
 
 $plugin_tx['pagemanager']['syscheck_title']="System-Prüfung";
-$plugin_tx['pagemanager']['syscheck_phpversion']="PHP-Version ≥ %s";
+$plugin_tx['pagemanager']['syscheck_phpversion']="PHP-Version &ge; %s";
 $plugin_tx['pagemanager']['syscheck_extension']="Erweiterung \"%s\" geladen";
+$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH-Version &ge; %s";
 $plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\">jQuery4CMSimple Plugin</a> installiert";
-$plugin_tx['pagemanager']['syscheck_encoding']="UTF-8-Kodierung eingestellt";
 $plugin_tx['pagemanager']['syscheck_magic_quotes']="magic_quotes_runtime off";
 $plugin_tx['pagemanager']['syscheck_writable']="Ordner \"%s\" beschreibbar";
 $plugin_tx['pagemanager']['about']="Über Pagemanager_XH";

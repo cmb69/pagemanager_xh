@@ -84,8 +84,6 @@ class Pagemanager_Controller
      * @global array The paths of system files and folders.
      * @global array The localization of the core.
      * @global array The localization of the plugins.
-     *
-     * @todo Add check for CMSimple_XH 1.6+.
      */
     function systemChecks()
     {
@@ -94,25 +92,30 @@ class Pagemanager_Controller
         $ptx = $plugin_tx['pagemanager'];
         $phpVersion = '4.3.0';
         $checks = array();
-        $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]
-            = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'ok' : 'fail';
+        $key = sprintf($ptx['syscheck_phpversion'], $phpVersion);
+        $ok = version_compare(PHP_VERSION, $phpVersion) >= 0;
+        $checks[$key] = $ok ? 'ok' : 'fail';
         foreach (array('pcre', 'xml') as $ext) {
-            $checks[sprintf($ptx['syscheck_extension'], $ext)]
-                = extension_loaded($ext) ? 'ok' : 'fail';
+            $key = sprintf($ptx['syscheck_extension'], $ext);
+            $checks[$key] = extension_loaded($ext) ? 'ok' : 'fail';
         }
-        $checks[$ptx['syscheck_magic_quotes']]
-            = !get_magic_quotes_runtime() ? 'ok' : 'fail';
+        $key = $ptx['syscheck_magic_quotes'];
+        $checks[$key] = !get_magic_quotes_runtime() ? 'ok' : 'fail';
+        $xhVersion = 'CMSimple_XH 1.6beta';
+        $ok = strpos(CMSIMPLE_XH_VERSION, 'CMSimple_XH') === 0
+            && version_compare(CMSIMPLE_XH_VERSION, $xhVersion) >= 0;
+        $xhVersion = substr($xhVersion, 12);
+        $key = sprintf($ptx['syscheck_xhversion'], $xhVersion);
+        $checks[$key] = $ok ? 'ok' : 'fail';
         $ok = file_exists($pth['folder']['plugins'].'jquery/jquery.inc.php');
         $checks[$ptx['syscheck_jquery']] = $ok ? 'ok' : 'fail';
-        $checks[$ptx['syscheck_encoding']]
-            = strtoupper($tx['meta']['codepage']) == 'UTF-8' ? 'ok' : 'warn';
         $folders = array();
         foreach (array('config/', 'css/', 'languages/') as $folder) {
             $folders[] = $pth['folder']['plugins'] . 'pagemanager/' . $folder;
         }
         foreach ($folders as $folder) {
-            $checks[sprintf($ptx['syscheck_writable'], $folder)]
-                = is_writable($folder) ? 'ok' : 'warn';
+            $key = sprintf($ptx['syscheck_writable'], $folder);
+            $checks[$key] = is_writable($folder) ? 'ok' : 'warn';
         }
         return $checks;
     }

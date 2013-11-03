@@ -43,8 +43,8 @@ $plugin_tx['pagemanager']['error_offending_extension']="Offending extension usin
 $plugin_tx['pagemanager']['syscheck_title']="System check";
 $plugin_tx['pagemanager']['syscheck_phpversion']="PHP version &ge; %s";
 $plugin_tx['pagemanager']['syscheck_extension']="Extension \"%s\" loaded";
+$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH version &ge; %s";
 $plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\">jQuery4CMSimple plugin</a> installed";
-$plugin_tx['pagemanager']['syscheck_encoding']="Encoding \"UTF-8\" configured";
 $plugin_tx['pagemanager']['syscheck_magic_quotes']="Magic quotes runtime off";
 $plugin_tx['pagemanager']['syscheck_writable']="Folder \"%s\" writable";
 $plugin_tx['pagemanager']['about']="About Pagemanager_XH";
