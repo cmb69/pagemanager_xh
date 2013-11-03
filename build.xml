@@ -20,7 +20,7 @@
     </target>
 
     <target name="compat">
-        <exec command="pci --dir . --tab 12,12,20 --summarize"
+        <exec command="pci --dir . --ignore-dirs --tab 12,12,20 --summarize"
               logoutput="true"/>
     </target>
 
