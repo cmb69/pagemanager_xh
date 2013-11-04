@@ -1,3 +1,17 @@
+Version 2.0beta1
+cmb     adapted for CMSimple_XH 1.6
+cmb     added possibility to suppress checkboxes by leaving pagedata_attribute empty and made that the default (suggested by Jerry)
+cmb     replaced "cmsimple" theme with original themes
+cmb     made system check implicit
+cmb     removed out-dated language files
+cmb     improved performance (especially, for many pages)
+cmb     added CSRF protection
+cmb     removed dependency on Utf8_XH plugin
+cmb     fixed invalid markup
+cmb     refactored PHP code to MVC
+cmb     refactored JS code to use namespace
+cmb     added unit tests and developer documentation
+
 Version 1pl15 - released 2013-10-29
 cmb     fixed bug, where modified jstree.js relied on $ (reported by johnjdoe)
 cmb     replaced plugin icon
