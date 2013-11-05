@@ -419,43 +419,35 @@ PAGEMANAGER.contextMenuItems = function () {
     return {
 	"create": {
 	    "label": PAGEMANAGER.config.createOp,
-	    "icon": PAGEMANAGER.config.imageDir + "create.png",
 	    "action": function (obj) {this.create(obj);}
 	},
 	"create-after": {
 	    "label": PAGEMANAGER.config.createAfterOp,
-	    "icon": PAGEMANAGER.config.imageDir + "create_after.png",
 	    "action": function(obj) {this.create(obj, "after");}
 	},
 	"rename": {
 	    "label": PAGEMANAGER.config.renameOp,
-	    "icon": PAGEMANAGER.config.imageDir + "rename.png",
 	    "action": function(obj) {this.rename(obj);}
 	},
 	"remove" : {
 	    "label": PAGEMANAGER.config.deleteOp,
-	    "icon": PAGEMANAGER.config.imageDir + "delete.png",
 	    "action": function(obj) {this.remove(obj);}
 	},
 	"cut": {
 	    "label": PAGEMANAGER.config.cutOp,
 	    "separator_before": true,
-	    "icon": PAGEMANAGER.config.imageDir + "cut.png",
 	    "action": function(obj) {this.cut(obj);}
 	},
 	"copy": {
 	    "label": PAGEMANAGER.config.copyOp,
-	    "icon": PAGEMANAGER.config.imageDir + "copy.png",
 	    "action": function(obj) {this.copy(obj);}
 	},
 	"paste": {
 	    "label": PAGEMANAGER.config.pasteOp,
-	    "icon": PAGEMANAGER.config.imageDir + "paste.png",
 	    "action": function(obj) {this.paste(obj);}
 	},
 	"paste-after": {
 	    "label": PAGEMANAGER.config.pasteAfterOp,
-	    "icon": PAGEMANAGER.config.imageDir + "paste_after.png",
 	    "action": function(obj) {this.pasteAfter(obj);}
 	}
     }
