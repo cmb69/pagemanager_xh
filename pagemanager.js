@@ -196,6 +196,9 @@ PAGEMANAGER.submit = function () {
     jQuery.post(url, data, function (data, textStatus) {
 	status.css("display", "none");
 	status.after(data);
+	// TODO: optimization: fix structure instead of reloading
+	PAGEMANAGER.widget.destroy();
+	PAGEMANAGER.init();
     });
 }
 
