@@ -66,7 +66,7 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
         return array(
             array(
                 array(
-                      'admin' => '',
+                      'admin' => 'plugin_main',
                       'action' => 'plugin_save'
                 ),
                 '&pagemanager'
