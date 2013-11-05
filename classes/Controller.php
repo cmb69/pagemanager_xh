@@ -370,19 +370,6 @@ class Pagemanager_Controller
     }
 
     /**
-     * Returns the URL to redirect to.
-     *
-     * @return string
-     */
-    function redirectURL()
-    {
-        $queryString = isset($_GET['pagemanager-xhpages'])
-            ? '&xhpages&normal'
-            : '&pagemanager&admin=plugin_main&action=plugin_text&normal';
-        return CMSIMPLE_URL . '?' . $queryString;
-    }
-
-    /**
      * Saves the submitted site structure.
      *
      * @return (X)HTML.
