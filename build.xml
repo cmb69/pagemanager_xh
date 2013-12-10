@@ -93,6 +93,7 @@
         </move>
         <move todir="dist">
             <fileset dir="export">
+                <exclude name="pagemanager.komodoproject"/>
                 <exclude name="build.xml"/>
                 <exclude name="dirs.txt"/>
             </fileset>
