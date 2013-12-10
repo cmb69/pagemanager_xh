@@ -1,0 +1,4 @@
+* irregular page structure doesn't stop user from fiddling around (okay, he can't save, but...)
+* switch to PHP_CI 2
+* submit without jQuery
+* help icon to the left? (insp. by manu)
