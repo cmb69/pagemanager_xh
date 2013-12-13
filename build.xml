@@ -20,7 +20,7 @@
     </target>
 
     <target name="compat">
-        <exec command="pci --dir . --ignore-dirs --tab 12,12,20 --summarize"
+        <exec command="phpcompatinfo --configuration phpcompatinfo.xml print --exclude-pattern pagemanager ."
               logoutput="true"/>
     </target>
 
@@ -95,7 +95,8 @@
             <fileset dir="export">
                 <exclude name="pagemanager.komodoproject"/>
                 <exclude name="build.xml"/>
-                <exclude name="dirs.txt"/>
+                <exclude name="phpcompatinfo.xml"/>
+                <exclude name="TODO"/>
             </fileset>
         </move>
         <delete dir="export"/>
