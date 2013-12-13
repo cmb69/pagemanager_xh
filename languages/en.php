@@ -3,7 +3,7 @@
 $plugin_tx['pagemanager']['cf_verbose']="Whether to show information and confirmation dialogs.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Whether the toolbar shall be shown.";
 $plugin_tx['pagemanager']['cf_toolbar_vertical']="Whether the toolbar shall be displayed vertically. This option is for power users, who can adjust the layout in Plugin Stylesheet.";
-$plugin_tx['pagemanager']['cf_pagedata_attribute']="The yes/no (with default yes) pagedata attribute for the checkboxes, e.g. \"published\" or \"linked_to_menu\".  <strong>Caution:</strong> If you choose an inappropriate attribute, you will mess up your pagedata.php!";
+$plugin_tx['pagemanager']['cf_pagedata_attribute']="The pagedata attribute to be edited with the checkboxes: \"linked_to_menu\" (visible in menu) or \"published\" (published). Leave empty to hide the checkboxes.";
 $plugin_tx['pagemanager']['cf_treeview_theme']="Theme of tree view widget. Further themes are available from <a href=\"http://3-magi.net/?CMSimple_XH/Pagemanager_XH/Themes\">3-magi.net</a>.";
 $plugin_tx['pagemanager']['cf_treeview_animation']="Duration of open/close animations in ms. 0 means no animation.";
 $plugin_tx['pagemanager']['menu_main']="Page administration";

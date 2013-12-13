@@ -3,7 +3,7 @@
 $plugin_tx['pagemanager']['cf_verbose']="Ob Bestätigungs- und Informationsdialoge angezeigt werden sollen.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Ob die Werkzeugleiste angezeigt werden soll.";
 $plugin_tx['pagemanager']['cf_toolbar_vertical']="Ob die Werkzeugleiste vertikal angezeigt werden soll. Dies ist eine Option für Power User, die das Layout in Plugin-Stylesheet anpassen können.";
-$plugin_tx['pagemanager']['cf_pagedata_attribute']="Das ja/nein (mit Voreinstellung ja) Pagedata Attribut für die Checkboxen, z.B. \"published\" oder \"linked_to_menu\". <strong>Vorsicht:</strong> Wenn Sie ein ungeeignetes Attribut wählen, bringen Sie Ihre pagedata.php durcheinander.";
+$plugin_tx['pagemanager']['cf_pagedata_attribute']="Das Pagedata Attribut, das mit den Checkboxen bearbeitet werden kann: \"linked_to_menu\" (sichtbar im Menü) oder \"published\" (veröffentlicht). Leer lassen, um keine Checkboxen anzuzeigen.";
 $plugin_tx['pagemanager']['cf_treeview_theme']="Stil der Baumansicht. Andere Stile können von <a href=\"http://3-magi.net/?CMSimple_XH/Pagemanager_XH/Themes\">3-magi.net</a> herunter geladen werden.";
 $plugin_tx['pagemanager']['cf_treeview_animation']="Dauer der Öffnen/Schließen-Animation in ms. 0 bedeutet keine Animation.";
 $plugin_tx['pagemanager']['menu_main']="Seiten verwalten";
