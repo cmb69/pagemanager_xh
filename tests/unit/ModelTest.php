@@ -14,6 +14,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
+require_once 'vfsStream/vfsStream.php';
+
 /**
  * The file under test.
  */
@@ -61,6 +63,24 @@ class ModelTest extends PHPUnit_Framework_TestCase
         );
         $this->model->getHeadings();
         $actual = $this->model->headings;
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testThemes()
+    {
+        global $pth;
+
+        vfsStreamWrapper::register();
+        vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
+        $pth['folder']['plugins'] = vfsStream::url('test') . '/';
+        $path = $pth['folder']['plugins'] . 'pagemanager/jstree/themes/';
+        mkdir($path, 0777, true);
+        $expected = array('foo', 'bar', 'baz');
+        foreach ($expected as $theme) {
+            mkdir("$path/$theme");
+        }
+        file_put_contents("$path/foobar", '');
+        $actual = $this->model->themes();
         $this->assertEquals($expected, $actual);
     }
 
