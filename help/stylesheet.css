@@ -40,3 +40,15 @@ body {
 .toplink {
     text-align: right;
 }
+
+@media screen and (max-width: 50em) {
+
+    #body {
+        margin-left: 0;
+    }
+
+    #nav {
+        float: none;
+    }
+
+}

@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * Testing the model class.
+ *
+ * PHP version 5
+ *
+ * @category  Testing
+ * @package   Pagemanager
+ * @author    Christoph M. Becker <cmbecker69@gmx.de>
+ * @copyright 2011-2013 Christoph M. Becker <http://3-magi.net>
+ * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @version   SVN: $Id$
+ * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
+ */
+
+require_once 'vfsStream/vfsStream.php';
+
+/**
+ * The file under test.
+ */
+require_once './classes/Model.php';
+
+/**
+ * A test case to for the model class.
+ *
+ * @category Testing
+ * @package  Pagemanager
+ * @author   Christoph M. Becker <cmbecker69@gmx.de>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
+ */
+class ModelTest extends PHPUnit_Framework_TestCase
+{
+    protected $model;
+
+    public function setUp()
+    {
+        global $c, $cl, $l, $cf, $tx;
+
+        $c = array(
+            '<h1>Welcome</h1>',
+            '<h2>Subpage</h2>',
+            '<h2>Subpage</h2>',
+            '<h2></h2>'
+        );
+        $cl = count($c);
+        $l = array(1, 2, 2, 2);
+
+        $cf['menu']['levels'] = '3';
+        $tx['toc']['empty'] = 'EMPTY HEADING';
+
+        $this->model = new Pagemanager_Model();
+    }
+
+    public function testGetHeadings()
+    {
+        $expected = array(
+            'Welcome',
+            'Subpage',
+            'Subpage', // not "DUPLICATE HEADING 1"
+            'EMPTY HEADING 1'
+        );
+        $this->model->getHeadings();
+        $actual = $this->model->headings;
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testThemes()
+    {
+        global $pth;
+
+        vfsStreamWrapper::register();
+        vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
+        $pth['folder']['plugins'] = vfsStream::url('test') . '/';
+        $path = $pth['folder']['plugins'] . 'pagemanager/jstree/themes/';
+        mkdir($path, 0777, true);
+        $expected = array('foo', 'bar', 'baz');
+        foreach ($expected as $theme) {
+            mkdir("$path/$theme");
+        }
+        file_put_contents("$path/foobar", '');
+        $actual = $this->model->themes();
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testIsIrregular()
+    {
+        global $l;
+
+        $this->assertFalse($this->model->isIrregular());
+        $l = array(1, 3);
+        $this->assertTrue($this->model->isIrregular());
+    }
+}
+
+
+?>
