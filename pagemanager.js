@@ -616,7 +616,10 @@ PAGEMANAGER.init = function () {
 	},
 	"xml_data": {
 	    "ajax": {
-		"url": PAGEMANAGER.config.dataURL
+		"url": PAGEMANAGER.config.dataURL,
+		"error": function (jqXHR, textStatus, errorThrown) {
+		    alert(errorThrown);
+		}
 	    },
 	    "xsl": "nest"
 	}
