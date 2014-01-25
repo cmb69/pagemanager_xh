@@ -170,7 +170,7 @@ PAGEMANAGER.restorePageHeadings = function (node) {
 PAGEMANAGER.beforeSubmit = function () {
     var attribs, xml;
 
-    attribs = ["id", "title", "data-pdattr"];
+    attribs = ["id", "title", "data-pdattr", "class"];
     xml = PAGEMANAGER.widget.get_xml("nest", -1, attribs);
     jQuery("#pagemanager-xml").val(xml);
 };

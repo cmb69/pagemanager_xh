@@ -107,6 +107,15 @@ class Pagemanager_XMLParser
     var $pdattr;
 
     /**
+     * Whether the current page may be renamed.
+     *
+     * @var bool
+     *
+     * @access protected
+     */
+    var $mayRename;
+
+    /**
      * Initializes a newly created object.
      *
      * @param array  $contents   Page contents.
@@ -185,6 +194,7 @@ class Pagemanager_XMLParser
             );
             $this->pdattr = isset($attribs['DATA-PDATTR'])
                 ? $attribs['DATA-PDATTR'] : null;
+            $this->mayRename = $attribs['CLASS'] == '';
         }
     }
 
@@ -227,13 +237,15 @@ class Pagemanager_XMLParser
         $data = htmlspecialchars($data, ENT_NOQUOTES, 'UTF-8');
         if (isset($this->contents[$this->id])) {
             $content = $this->contents[$this->id];
-            $pattern = '/<h[1-' . $this->levels . ']([^>]*)>'
-                . '((<[^>]*>)*)[^<]*((<[^>]*>)*)'
-                . '<\/h[1-' . $this->levels . ']([^>]*)>/i';
-            $replacement = '<h' . $this->level . '$1>${2}'
-                . addcslashes($this->title, '$\\') . '$4'
-                . '</h' . $this->level . '$6>';
-            $content = preg_replace($pattern, $replacement, $content, 1);
+            if ($this->mayRename) {
+                $pattern = '/<h[1-' . $this->levels . ']([^>]*)>'
+                    . '((<[^>]*>)*)[^<]*((<[^>]*>)*)'
+                    . '<\/h[1-' . $this->levels . ']([^>]*)>/i';
+                $replacement = '<h' . $this->level . '$1>${2}'
+                    . addcslashes($this->title, '$\\') . '$4'
+                    . '</h' . $this->level . '$6>';
+                $content = preg_replace($pattern, $replacement, $content, 1);
+            }
             $this->newContents[] = $content;
         } else {
             $this->newContents[] = '<h' . $this->level . '>' . $this->title
@@ -244,7 +256,9 @@ class Pagemanager_XMLParser
         } else {
             $pageData = $pd_router->new_page();
         }
-        $pageData['url'] = uenc($this->title);
+        if ($this->mayRename) {
+            $pageData['url'] = uenc($this->title);
+        }
         if ($this->pdattrName !== '') {
             $pageData[$this->pdattrName] = $this->pdattr;
         }

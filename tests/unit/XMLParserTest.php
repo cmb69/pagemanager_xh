@@ -75,13 +75,13 @@ class XMLParserTest extends PHPUnit_Framework_TestCase
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel="" state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="1" rel="">
+        <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
         </item>
     </item>
-    <item id="pagemanager-2" title="News" data-pdattr="0" rel="">
+    <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
         <content><name><![CDATA[News]]></name></content>
     </item>
 </root>'
@@ -101,16 +101,16 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel="" state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="1" rel="">
+        <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
         </item>
-        <item id="" title="New Page" data-pdattr="1" rel="">
+        <item id="" title="New Page" data-pdattr="1" class="" rel="">
             <content><name><![CDATA[New Page]]></name></content>
         </item>
     </item>
-    <item id="pagemanager-2" title="News" data-pdattr="0" rel="">
+    <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
         <content><name><![CDATA[News]]></name></content>
     </item>
 </root>'
@@ -132,10 +132,10 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel="" state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
     </item>
-    <item id="pagemanager-2" title="News" data-pdattr="0" rel="">
+    <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
         <content><name><![CDATA[News]]></name></content>
     </item>
 </root>'
@@ -153,11 +153,11 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel="" state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="1" rel="">
+        <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
-            <item id="pagemanager-2" title="News" data-pdattr="0" rel="">
+            <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
                 <content><name><![CDATA[News]]></name></content>
             </item>
         </item>
@@ -179,16 +179,16 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel="" state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="1" rel="">
+        <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
         </item>
-        <item id="copy_pagemanager-1" title="About" data-pdattr="1" rel="new">
+        <item id="copy_pagemanager-1" title="About" data-pdattr="1" class="" rel="new">
             <content><name><![CDATA[DUPLICATE HEADING 1]]></name></content>
         </item>
     </item>
-    <item id="pagemanager-2" title="News" data-pdattr="0" rel="">
+    <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
         <content><name><![CDATA[News]]></name></content>
     </item>
 </root>'
@@ -210,13 +210,13 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="0" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="0" class="" rel="" state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="0" rel="">
+        <item id="pagemanager-1" title="About" data-pdattr="0" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
         </item>
     </item>
-    <item id="pagemanager-2" title="News" data-pdattr="1" rel="">
+    <item id="pagemanager-2" title="News" data-pdattr="1" class="" rel="">
         <content><name><![CDATA[News]]></name></content>
     </item>
 </root>'
@@ -231,7 +231,33 @@ XML
                     array('url' => 'About', 'foo' => 'bar', 'show' => '0'),
                     array('url' => 'News', 'foo' => 'bar', 'show' => '1')
                 )
-            )
+            ),
+            array( // no rename
+                <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <item id="pagemanager-0" title="WelcomeNew" data-pdattr="1" class="pagemanager-no-rename" rel="" state="closed">
+        <content><name><![CDATA[WelcomeNew]]></name></content>
+        <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
+            <content><name><![CDATA[About]]></name></content>
+        </item>
+    </item>
+    <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
+        <content><name><![CDATA[News]]></name></content>
+    </item>
+</root>'
+XML
+                , array(
+                    '<h1>Welcome</h1>Welcome to my website!',
+                    '<h2>About</h2>About me',
+                    '<h1>News</h1>Here are some news.'
+                ),
+                array(
+                    array('url' => 'Welcome', 'foo' => 'bar', 'show' => '1'),
+                    array('url' => 'About', 'foo' => 'bar', 'show' => '1'),
+                    array('url' => 'News', 'foo' => 'bar', 'show' => '0')
+                )
+            ),
         );
     }
 
