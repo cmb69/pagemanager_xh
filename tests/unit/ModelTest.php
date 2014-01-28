@@ -8,7 +8,7 @@
  * @category  Testing
  * @package   Pagemanager
  * @author    Christoph M. Becker <cmbecker69@gmx.de>
- * @copyright 2011-2013 Christoph M. Becker <http://3-magi.net>
+ * @copyright 2011-2014 Christoph M. Becker <http://3-magi.net>
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @version   SVN: $Id$
  * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
@@ -42,10 +42,13 @@ class ModelTest extends PHPUnit_Framework_TestCase
             '<h1>Welcome</h1>',
             '<h2>Subpage</h2>',
             '<h2>Subpage</h2>',
-            '<h2></h2>'
+            '<h2></h2>',
+            '<h1>F<em>o</em>o</h1>',
+            '<h2>Foo &amp; bar</h2>',
+            '<h2>Foo &nbsp; bar</h2>'
         );
         $cl = count($c);
-        $l = array(1, 2, 2, 2);
+        $l = array(1, 2, 2, 2, 1, 2, 2);
 
         $cf['menu']['levels'] = '3';
         $tx['toc']['empty'] = 'EMPTY HEADING';
@@ -59,7 +62,10 @@ class ModelTest extends PHPUnit_Framework_TestCase
             'Welcome',
             'Subpage',
             'Subpage', // not "DUPLICATE HEADING 1"
-            'EMPTY HEADING 1'
+            'EMPTY HEADING 1',
+            'Foo',
+            'Foo &amp; bar',
+            "Foo \xC2\xA0 bar"
         );
         $this->model->getHeadings();
         $actual = $this->model->headings;

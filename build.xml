@@ -93,7 +93,7 @@
         <exec command="jsdoc --destination doc/js pagemanager.js" checkreturn="true"/>
     </target>
 
-    <target name="doc" depends="php-doc"/>
+    <target name="doc" depends="php-doc, js-doc"/>
 
     <!-- Build -->
 
