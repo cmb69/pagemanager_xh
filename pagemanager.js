@@ -5,7 +5,7 @@ if (!PAGEMANAGER) {
      * @namespace
      *
      * @author    Christoph M. Becker <cmbecker69@gmx.de>
-     * @copyright 2011-2013 Christoph M. Becker (http://3-magi.net)
+     * @copyright 2011-2014 Christoph M. Becker (http://3-magi.net)
      * @license   GNU GPLv3 (http://www.gnu.org/licenses/gpl-3.0.en.html)
      * @version   $Id$
      */
