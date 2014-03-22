@@ -199,8 +199,6 @@ PAGEMANAGER.submit = function () {
 	    "application/x-www-form-urlencoded");
     request.onreadystatechange = function () {
 	if (request.readyState == 4) {
-	    console.log(request.status);
-	    console.log(request.responseText);
 	    status.css("display", "none");
 	    if (request.status == 200) {
 		message = request.responseText;
