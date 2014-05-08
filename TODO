@@ -1,1 +1,1 @@
-
+* pagemanager_toolbar {overflow: hidden} (to avoid problems with float/clear)
