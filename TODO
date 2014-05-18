@@ -1,1 +1,3 @@
 * pagemanager_toolbar {overflow: hidden} (to avoid problems with float/clear)
+* change default of pagedata_attribute
+* make toolbar icons transparent
