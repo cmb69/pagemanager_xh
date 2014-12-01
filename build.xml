@@ -1,85 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id$ -->
-
-<project name="Pagamanger" default="default">
-
-    <!-- Properties -->
-
-    <property name="styledir" value="C:\xampp\php\data\phing\etc"/>
-
-    <!-- Filesets -->
+<project name="Pagamanger" default="help">
 
     <fileset id="php-sources" dir=".">
         <include name="admin.php"/>
         <include name="classes/*.php"/>
     </fileset>
 
-    <!-- Checks -->
+    <fileset id="unit-tests" dir="tests/unit">
+        <include name="*Test.php"/>
+    </fileset>
 
-    <target name="sniff">
+    <fileset id="attack-tests" dir="tests/attack">
+        <include name="*Test.php"/>
+    </fileset>
+
+    <target name="help" description="lists available targets">
+        <exec command="phing -l" outputProperty="help"/>
+        <echo>${help}</echo>
+    </target>
+
+    <target name="sniff" description="checks adherence to PEAR CS">
         <phpcodesniffer standard="PEAR" format="full">
             <fileset refid="php-sources"/>
         </phpcodesniffer>
     </target>
 
-    <target name="compat">
-        <exec command="phpcompatinfo --configuration phpcompatinfo.xml print --exclude-pattern pagemanager ."
+    <target name="compat2" description="checks compatibility with PHP_CompatInfo 2">
+        <exec command="C:\xampp\php\phpcompatinfo --configuration phpcompatinfo.xml print --exclude-pattern pagemanager ."
               logoutput="true"/>
     </target>
 
-    <!-- Tests -->
+    <target name="compat"
+            description="checks compatibility with PHP_CompatInfo 3">
+        <exec command="phpcompatinfo analyser:run ." logoutput="true"/>
+    </target>
 
-    <target name="unit-tests">
+    <target name="unit-tests" description="runs all unit tests">
         <phpunit haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
-                <fileset dir="tests/unit">
-                    <include name="*Test.php"/>
-                </fileset>
+                <fileset refid="unit-tests"/>
             </batchtest>
         </phpunit>
     </target>
 
-    <target name="attack-tests">
+    <target name="attack-tests" description="runs all attack tests">
         <fail unless="env.CMSIMPLEDIR" message="CMSIMPLEDIR undefined!"/>
         <phpunit haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
-                <fileset dir="tests/attack">
-                    <include name="*Test.php"/>
-                </fileset>
+                <fileset refid="attack-tests"/>
             </batchtest>
         </phpunit>
     </target>
 
-    <target name="all-tests" depends="unit-tests,attack-tests"/>
+    <target name="all-tests" depends="unit-tests,attack-tests"
+            description="runs all tests"/>
 
-    <!-- Code coverage -->
-
-    <target name="coverage">
-        <coverage-setup database="tests/coverage/coverage.db">
-            <fileset dir="classes">
-                <include name="*.php"/>
-            </fileset>
-        </coverage-setup>
-        <phpunit codecoverage="true">
-            <batchtest>
-                <fileset dir="tests/unit">
-                    <include name="*Test.php"/>
-                </fileset>
-            </batchtest>
-        </phpunit>
-        <coverage-report outfile="tests/coverage/coverage.xml">
-            <report todir="tests/coverage" styledir="${styledir}"/>
-        </coverage-report>
+    <target name="coverage" description="generates coverage report">
+        <exec command="phpunit --configuration coverage.xml" logoutput="true"/>
     </target>
-
-    <!-- Documentation -->
 
     <target name="php-doc">
         <phpdoc title="Pagemanager_XH Developer Documentation" destdir="doc/php"
-                output="HTML:frames:default" defaultpackagename="Pagemanager"
+                output="HTML:Smarty:HandS" defaultpackagename="Pagemanager"
                 defaultcategoryname="CMSimple_XH">
             <fileset refid="php-sources"/>
             <projdocfileset dir=".">
@@ -93,11 +78,10 @@
         <exec command="jsdoc --destination doc/js pagemanager.js" checkreturn="true"/>
     </target>
 
-    <target name="doc" depends="php-doc, js-doc"/>
+    <target name="doc" depends="php-doc, js-doc"
+            description="generates developer documentation"/>
 
-    <!-- Build -->
-
-    <target name="build">
+    <target name="build" description="builds distributable ZIP archive">
         <fail unless="version" message="version is not defined!"/>
         <svnexport revision="" repositoryurl="." todir="export"/>
         <move todir="dist">

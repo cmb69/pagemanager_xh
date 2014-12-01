@@ -10,12 +10,8 @@
 
     <excludes>
         <exclude id="pagemanager">
-            <directory name="config"/>
-            <directory name="css"/>
-            <directory name="help"/>
-            <directory name="images"/>
-            <directory name="languages"/>
             <directory name="tests"/>
+            <directory name="vendor"/>
         </exclude>
     </excludes>
 </phpcompatinfo>
