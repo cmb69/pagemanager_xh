@@ -33,8 +33,20 @@ require_once '../../cmsimple/functions.php';
  */
 class XMLParserTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * The test subject.
+     *
+     * @var Pagemanager_XMLParser
+     */
     var $parser;
 
+    /**
+     * Sets up the page data router stub.
+     *
+     * @return void
+     *
+     * @global XH_PageDataRouter The page data router.
+     */
     protected function setUpPDRouterStub()
     {
         global $pd_router;
@@ -55,6 +67,13 @@ class XMLParserTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValueMap($map));
     }
 
+    /**
+     * Sets up the test fixture.
+     *
+     * @return void
+     *
+     * @global array The configuration of the core.
+     */
     protected function setUp()
     {
         global $cf;
@@ -71,6 +90,11 @@ class XMLParserTest extends PHPUnit_Framework_TestCase
         $this->parser = new Pagemanager_XMLParser($contents, $levels, $pdattrName);
     }
 
+    /**
+     * Returns data for testParse().
+     *
+     * @return array
+     */
     public function dataForParse()
     {
         return array(
@@ -78,7 +102,8 @@ class XMLParserTest extends PHPUnit_Framework_TestCase
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel=""
+            state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
         <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
@@ -104,7 +129,8 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel=""
+            state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
         <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
@@ -135,7 +161,8 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel=""
+            state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
     </item>
     <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
@@ -156,7 +183,8 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel=""
+            state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
         <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
@@ -182,12 +210,14 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel=""
+            state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
         <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
         </item>
-        <item id="copy_pagemanager-1" title="About" data-pdattr="1" class="" rel="new">
+        <item id="copy_pagemanager-1" title="About" data-pdattr="1" class=""
+                rel="new">
             <content><name><![CDATA[DUPLICATE HEADING 1]]></name></content>
         </item>
     </item>
@@ -213,7 +243,8 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="0" class="" rel="" state="closed">
+    <item id="pagemanager-0" title="Welcome" data-pdattr="0" class="" rel=""
+            state="closed">
         <content><name><![CDATA[Welcome]]></name></content>
         <item id="pagemanager-1" title="About" data-pdattr="0" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
@@ -239,7 +270,8 @@ XML
                 <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <item id="pagemanager-0" title="WelcomeNew" data-pdattr="1" class="pagemanager-no-rename" rel="" state="closed">
+    <item id="pagemanager-0" title="WelcomeNew" data-pdattr="1"
+            class="pagemanager-no-rename" rel="" state="closed">
         <content><name><![CDATA[WelcomeNew]]></name></content>
         <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
             <content><name><![CDATA[About]]></name></content>
@@ -265,11 +297,22 @@ XML
     }
 
     /**
+     * Tests parsing.
+     *
+     * @param string $xml              An XML string.
+     * @param array  $expectedContent  An array of expected content.
+     * @param array  $expectedPageData An array of expected page data.
+     *
      * @dataProvider dataForParse
+     *
+     * @return void
+     *
+     * @global XH_PageDataRouter The page data router.
      */
     public function testParse($xml, $expectedContent, $expectedPageData)
     {
         global $pd_router;
+
         $this->parser->parse($xml);
         $this->assertEquals($expectedContent, $this->parser->getContents());
         $this->assertEquals($expectedPageData, $this->parser->getPageData());

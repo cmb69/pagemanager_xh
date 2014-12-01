@@ -28,14 +28,33 @@
  */
 class CSRFAttackTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * The URL of the installation.
+     *
+     * @var string
+     */
     protected $url;
 
+    /**
+     * The cURL handle.
+     *
+     * @var resource
+     */
     protected $curlHandle;
 
+    /**
+     * The path of the cookie file.
+     *
+     * @var string
+     */
     protected $cookieFile;
 
     /**
+     * Sets up the test fixture.
+     *
      * Log in to back-end and store cookies in a temp file.
+     *
+     * @return void
      */
     public function setUp()
     {
@@ -49,6 +68,13 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
         curl_close($this->curlHandle);
     }
 
+    /**
+     * Sets the cURL options.
+     *
+     * @param array $fields An array of POST fields.
+     *
+     * @return void
+     */
     protected function setCurlOptions($fields)
     {
         $options = array(
@@ -61,6 +87,11 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
         curl_setopt_array($this->curlHandle, $options);
     }
 
+    /**
+     * Returns data for testAttack().
+     *
+     * @return array
+     */
     public function dataForAttack()
     {
         return array(
@@ -75,7 +106,14 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the attacks.
+     *
+     * @param array  $fields      An array of POST fields.
+     * @param string $queryString A query string.
+     *
      * @dataProvider dataForAttack
+     *
+     * @return void
      */
     public function testAttack($fields, $queryString = null)
     {

@@ -32,8 +32,24 @@ require_once './classes/Model.php';
  */
 class ModelTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * The test subject.
+     *
+     * @var Pagemanager_Model
+     */
     protected $model;
 
+    /**
+     * Sets up the test fixture.
+     *
+     * @return void
+     *
+     * @global array The content of the pages.
+     * @global int   The number of pages.
+     * @global array The levels of the pages.
+     * @global array The configuration of the core.
+     * @global array The localization of the core.
+     */
     public function setUp()
     {
         global $c, $cl, $l, $cf, $tx;
@@ -56,6 +72,11 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->model = new Pagemanager_Model();
     }
 
+    /**
+     * Tests getHeadings().
+     *
+     * @return void
+     */
     public function testGetHeadings()
     {
         $expected = array(
@@ -72,6 +93,13 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * Tests themes().
+     *
+     * @return void
+     *
+     * @global array The paths of system files and folders.
+     */
     public function testThemes()
     {
         global $pth;
@@ -90,6 +118,13 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * Tests isIrregular().
+     *
+     * @return void
+     *
+     * @global array The levels of the pages.
+     */
     public function testIsIrregular()
     {
         global $l;
@@ -99,6 +134,5 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->model->isIrregular());
     }
 }
-
 
 ?>

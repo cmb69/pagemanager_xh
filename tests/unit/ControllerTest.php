@@ -30,6 +30,11 @@ require_once './classes/Controller.php';
  */
 class ControllerTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Tests nothing. ;)
+     *
+     * @return void
+     */
     public function testNothing()
     {
 

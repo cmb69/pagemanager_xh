@@ -1,1 +1,2 @@
 * shring JS files
+* ModelTest.php: Use new vfsStream
