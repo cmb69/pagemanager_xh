@@ -57,6 +57,9 @@ class XMLParserTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        global $cf;
+
+        $cf['uri']['word_separator'] = '_';
         $contents = array(
             '<h1>Welcome</h1>Welcome to my website!',
             '<h2>About</h2>About me',
