@@ -105,9 +105,11 @@
         </jsMin>
         <move todir="dist">
             <fileset dir="export">
-                <exclude name="pagemanager.komodoproject"/>
                 <exclude name="build.xml"/>
-                <exclude name="phpcompatinfo.xml"/>
+                <exclude name="composer.*"/>
+                <exclude name="coverage.xml"/>
+                <exclude name="pagemanager.komodoproject"/>
+                <exclude name="phpcompatinfo.*"/>
                 <exclude name="TODO"/>
                 <exclude name="tests/**"/>
             </fileset>
