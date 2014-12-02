@@ -1,3 +1,8 @@
+Version 2.0.4 - released 2014-12-02
+* fixed bug, where saving purged content.htm under PHP 4 (reported by marcus)
+* added Dutch localization (contributed by bastingse)
+* shrinked JS files
+
 Version 2.0.3 - released 2014-05-21
 * fixed insufficient styling
 * changed default of pagedata_attribute to linked_to_menu
