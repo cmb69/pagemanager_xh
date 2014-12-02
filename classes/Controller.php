@@ -125,7 +125,7 @@ class Pagemanager_Controller
      *
      * @return string
      *
-     * @lobal array The paths of system files and folders.
+     * @global array The paths of system files and folders.
      */
     function pluginIconPath()
     {
