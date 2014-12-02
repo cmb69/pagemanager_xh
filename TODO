@@ -1,2 +1,2 @@
-* shring JS files
-* ModelTest.php: Use new vfsStream
+* shrink JS files
+* fix PHP 4 bug; credit marcus

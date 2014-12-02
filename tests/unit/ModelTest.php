@@ -14,12 +14,16 @@
  * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
-require_once 'vfsStream/vfsStream.php';
+require_once './vendor/autoload.php';
 
 /**
  * The file under test.
  */
 require_once './classes/Model.php';
+
+use org\bovigo\vfs\vfsStreamWrapper;
+use org\bovigo\vfs\vfsStreamDirectory;
+use org\bovigo\vfs\vfsStream;
 
 /**
  * A test case to for the model class.
