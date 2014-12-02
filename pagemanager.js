@@ -1,3 +1,9 @@
+/*!
+ * JavaScript of Pagemanager_XH.
+ *
+ * Copyright 2011-2014 Christoph M. Becker (http://3-magi.net)
+ * Licensed under GNU GPLv3, see LICENSE.
+ */
 if (!PAGEMANAGER) {
     /**
      * The pagemanager namespace.
