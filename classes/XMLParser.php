@@ -139,11 +139,21 @@ class Pagemanager_XMLParser
     function parse($xml)
     {
         $parser = xml_parser_create('UTF-8');
-        xml_set_element_handler(
-            $parser, array($this, 'startElementHandler'),
-            array($this, 'endElementHandler')
-        );
-        xml_set_character_data_handler($parser, array($this, 'cDataHandler'));
+        // In PHP 4, we have to use a reference to create the callbacks.
+        // For PHP 5, we don't want references, though.
+        if (version_compare(phpversion(), '5', 'ge')) {
+            xml_set_element_handler(
+                $parser, array($this, 'startElementHandler'),
+                array($this, 'endElementHandler')
+            );
+            xml_set_character_data_handler($parser, array($this, 'cDataHandler'));
+        } else {
+            xml_set_element_handler(
+                $parser, array(&$this, 'startElementHandler'),
+                array(&$this, 'endElementHandler')
+            );
+            xml_set_character_data_handler($parser, array(&$this, 'cDataHandler'));
+        }
         $this->level = 0;
         $this->newContents = array();
         $this->pageData = array();
