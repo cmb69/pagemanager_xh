@@ -465,14 +465,13 @@ class Pagemanager_Controller
      *
      * @global string The admin parameter.
      * @global string The action parameter.
-     * @global string Whether pagemanager administration is requested.
      * @global array  The paths of system files and folders.
      * @global string The requested function.
      * @global array  The configuration of the core.
      */
     function dispatch()
     {
-        global $admin, $action, $pagemanager, $pth, $plugin, $f, $cf;
+        global $admin, $action, $pth, $plugin, $f, $cf;
 
         if (function_exists('XH_registerStandardPluginMenuItems')) {
             XH_registerStandardPluginMenuItems(false);
@@ -482,7 +481,7 @@ class Pagemanager_Controller
             && in_array($cf['pagemanager']['external'], array('', 'pagemanager'))
         ) {
             $o .= $this->editView();
-        } elseif (isset($pagemanager) && $pagemanager === 'true') {
+        } elseif ($this->isAdministrationRequested()) {
             $o .= print_plugin_admin('on');
             switch ($admin) {
             case '':
@@ -507,6 +506,24 @@ class Pagemanager_Controller
             }
         }
         return $o;
+    }
+
+    /**
+     * Returns whether the plugin administration is requested.
+     *
+     * @return bool
+     *
+     * @global string Whether the plugin administration is requested.
+     *
+     * @access protected
+     */
+    function isAdministrationRequested()
+    {
+        global $pagemanager;
+
+        return function_exists('XH_wantsPluginAdministration')
+            && XH_wantsPluginAdministration('pagemanager')
+            || isset($pagemanager) && $pagemanager === 'true';
     }
 }
 
