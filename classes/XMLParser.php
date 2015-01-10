@@ -267,6 +267,7 @@ class Pagemanager_XMLParser
             $pageData = $pd_router->find_page($this->id);
         } else {
             $pageData = $pd_router->new_page();
+            $pageData['last_edit'] = time();
         }
         if ($this->mayRename) {
             $pageData['url'] = uenc($this->title);
