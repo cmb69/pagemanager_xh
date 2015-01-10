@@ -1,6 +1,5 @@
 <?php
 
-$plugin_tx['pagemanager']['about']="O Pagemanageer_XH";
 $plugin_tx['pagemanager']['button_cancel']="Zrušiť";
 $plugin_tx['pagemanager']['button_delete']="Vymazať";
 $plugin_tx['pagemanager']['button_ok']="OK";
@@ -40,7 +39,6 @@ $plugin_tx['pagemanager']['op_paste_after']="Vložiť (na rovnakej úrovni - za 
 $plugin_tx['pagemanager']['op_rename']="Premenovať stránku";
 $plugin_tx['pagemanager']['syscheck_extension']="Rozšírenie '%s' načítané";
 $plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\" title=\"Stiahnuť a nainštalovať\">jQuery4CMSimple Plugin</a> nainštalovaný.";
-$plugin_tx['pagemanager']['syscheck_magic_quotes']="Magic quotes runtime' vypnuté";
 $plugin_tx['pagemanager']['syscheck_phpversion']="PHP-verzia ≥ %s";
 $plugin_tx['pagemanager']['syscheck_title']="Systémová kontrola";
 $plugin_tx['pagemanager']['syscheck_writable']="'%s' umožňuje zápis";

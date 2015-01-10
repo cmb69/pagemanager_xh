@@ -101,8 +101,6 @@ class Pagemanager_Controller
             $key = sprintf($ptx['syscheck_extension'], $ext);
             $checks[$key] = extension_loaded($ext) ? 'ok' : 'fail';
         }
-        $key = $ptx['syscheck_magic_quotes'];
-        $checks[$key] = !get_magic_quotes_runtime() ? 'ok' : 'fail';
         $xhVersion = 'CMSimple_XH 1.6beta';
         $ok = strpos(CMSIMPLE_XH_VERSION, 'CMSimple_XH') === 0
             && version_compare(CMSIMPLE_XH_VERSION, $xhVersion) >= 0;

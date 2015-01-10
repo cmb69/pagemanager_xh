@@ -39,6 +39,5 @@ $plugin_tx['pagemanager']['error_structure_warning']="<strong>Structure de page 
 $plugin_tx['pagemanager']['error_nesting']="Trop d'imbrications dans la structure de pages !";
 $plugin_tx['pagemanager']['error_cant_rename']="Cette page ne peut être renommée car son titre est partiellement formaté.";
 $plugin_tx['pagemanager']['error_offending_extension']="Fonction irrégulière utilisant sa propre librairie JQuery détectée (voir manuel, section \"Limitations\").";
-$plugin_tx['pagemanager']['about']="Au sujet de Pagemanager_XH";
 
 ?>

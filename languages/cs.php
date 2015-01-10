@@ -6,7 +6,6 @@
  * This work is licensed under the GNU General Public License v3.
  */
 
-$plugin_tx['pagemanager']['about']="O Pagemanager_XH";
 $plugin_tx['pagemanager']['button_cancel']="Zrušit";
 $plugin_tx['pagemanager']['button_delete']="Vymazat";
 $plugin_tx['pagemanager']['button_ok']="OK";
@@ -46,7 +45,6 @@ $plugin_tx['pagemanager']['op_paste_after']="Vložit (na stejnou úroveň)";
 $plugin_tx['pagemanager']['op_rename']="Přejmenovat stránku";
 $plugin_tx['pagemanager']['syscheck_extension']="Rozšíření \"%s\" načteno";
 $plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\">jQuery4CMSimple plugin</a> instalován";
-$plugin_tx['pagemanager']['syscheck_magic_quotes']="Magic quotes runtime off";
 $plugin_tx['pagemanager']['syscheck_phpversion']="PHP verze &ge; %s";
 $plugin_tx['pagemanager']['syscheck_title']="Kontrola systému";
 $plugin_tx['pagemanager']['syscheck_writable']="Adresář \"%s\" je zapisovatelný";
