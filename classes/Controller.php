@@ -474,6 +474,9 @@ class Pagemanager_Controller
     {
         global $admin, $action, $pagemanager, $pth, $plugin, $f, $cf;
 
+        if (function_exists('XH_registerStandardPluginMenuItems')) {
+            XH_registerStandardPluginMenuItems(false);
+        }
         $o = '';
         if ($f === 'xhpages'
             && in_array($cf['pagemanager']['external'], array('', 'pagemanager'))
