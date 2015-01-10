@@ -14,6 +14,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
+require_once './vendor/autoload.php';
+
 /**
  * The class under test.
  */
@@ -88,6 +90,8 @@ class XMLParserTest extends PHPUnit_Framework_TestCase
         $pdattrName = 'show';
         $this->setUpPDRouterStub();
         $this->parser = new Pagemanager_XMLParser($contents, $levels, $pdattrName);
+        $timeMock = new PHPUnit_Extensions_MockFunction('time', $this->parser);
+        $timeMock->expects($this->any())->will($this->returnValue(1420903422));
     }
 
     /**
@@ -153,7 +157,10 @@ XML
                 array(
                     array('url' => 'Welcome', 'foo' => 'bar', 'show' => '1'),
                     array('url' => 'About', 'foo' => 'bar', 'show' => '1'),
-                    array('url' => 'New_Page', 'foo' => 'bar', 'show' => '1'),
+                    array(
+                        'url' => 'New_Page', 'foo' => 'bar', 'show' => '1',
+                        'last_edit' => 1420903422
+                    ),
                     array('url' => 'News', 'foo' => 'bar', 'show' => '0')
                 )
             ),
