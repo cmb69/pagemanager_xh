@@ -357,8 +357,9 @@ class Pagemanager_Controller
      */
     function editView()
     {
-        global $pth;
+        global $pth, $title, $plugin_tx;
 
+        $title = 'Pagemanager &ndash; ' . $plugin_tx['pagemanager']['menu_main'];
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jQuery();
         include_jQueryUI();
@@ -485,7 +486,7 @@ class Pagemanager_Controller
             $o .= print_plugin_admin('on');
             switch ($admin) {
             case '':
-                $o .= $this->render('info');
+                $o .= $this->renderInfoView();
                 break;
             case 'plugin_main':
                 switch ($action) {
@@ -524,6 +525,22 @@ class Pagemanager_Controller
         return function_exists('XH_wantsPluginAdministration')
             && XH_wantsPluginAdministration('pagemanager')
             || isset($pagemanager) && $pagemanager === 'true';
+    }
+
+    /**
+     * Renders the info view.
+     *
+     * @return string (X)HTML.
+     *
+     * @global array  The localization of the plugins.
+     * @global string The title of the current page.
+     */
+    function renderInfoView()
+    {
+        global $title, $plugin_tx;
+
+        $title = 'Pagemanager &ndash; ' . $plugin_tx['pagemanager']['menu_info'];
+        return $this->render('info');
     }
 }
 
