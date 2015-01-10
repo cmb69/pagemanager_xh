@@ -121,6 +121,8 @@ class Pagemanager_XMLParser
      * @param array  $contents   Page contents.
      * @param int    $levels     Maximum page level.
      * @param string $pdattrName Name of a page data attribute.
+     *
+     * @return void
      */
     function Pagemanager_XMLParser($contents, $levels, $pdattrName)
     {

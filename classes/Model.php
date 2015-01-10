@@ -114,7 +114,7 @@ class Pagemanager_Model
     /**
      * Returns whether the page structure is irregular.
      *
-     * @return  bool
+     * @return bool
      *
      * @global array The menu levels of the pages.
      * @global int   The number of pages.

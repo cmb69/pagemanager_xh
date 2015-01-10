@@ -43,6 +43,8 @@ class Pagemanager_Controller
      * Initializes a newly create object.
      *
      * @global array The paths of system files and folders.
+     *
+     * @return void
      */
     function Pagemanager_Controller()
     {
