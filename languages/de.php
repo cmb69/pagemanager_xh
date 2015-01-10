@@ -1,6 +1,7 @@
 <?php
 
 $plugin_tx['pagemanager']['menu_main']="Seiten verwalten";
+$plugin_tx['pagemanager']['menu_info']="Info";
 $plugin_tx['pagemanager']['treeview_loading']="Laden...";
 $plugin_tx['pagemanager']['treeview_new']="Neue Seite";
 $plugin_tx['pagemanager']['button_delete']="Löschen";
