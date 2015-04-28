@@ -21,7 +21,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
     exit;
 }
 
-use Pagemanager_Controller;
+use Pagemanager\Controller;
 
 /**
  * Pagemanager version.
