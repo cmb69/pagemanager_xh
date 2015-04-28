@@ -123,7 +123,6 @@ class Pagemanager_Model
     {
         global $l, $cl;
 
-        $stack = array();
         for ($i = 1; $i < $cl; $i++) {
             $delta = $l[$i] - $l[$i - 1];
             if ($delta > 1) {

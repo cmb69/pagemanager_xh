@@ -192,6 +192,8 @@ class Pagemanager_XMLParser
      * @return void
      *
      * @access protected
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     function startElementHandler($parser, $name, $attribs)
     {
@@ -219,6 +221,8 @@ class Pagemanager_XMLParser
      * @return void
      *
      * @access protected
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     function endElementHandler($parser, $name)
     {
@@ -238,6 +242,8 @@ class Pagemanager_XMLParser
      * @global object The page data router.
      *
      * @access protected
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     function cDataHandler($parser, $data)
     {

@@ -84,12 +84,11 @@ class Pagemanager_Controller
      * @return array
      *
      * @global array The paths of system files and folders.
-     * @global array The localization of the core.
      * @global array The localization of the plugins.
      */
     function systemChecks()
     {
-        global $pth, $tx, $plugin_tx;
+        global $pth, $plugin_tx;
 
         $ptx = $plugin_tx['pagemanager'];
         $phpVersion = '4.3.0';
@@ -189,16 +188,13 @@ class Pagemanager_Controller
      *
      * @global array The paths of system files and folders.
      * @global array The configuration of the plugins.
-     * @global array The localization of the core.
      * @global array The localization of the plugins.
      */
     function tool($tool)
     {
-        global $pth, $plugin_cf, $tx, $plugin_tx;
+        global $pth, $plugin_cf, $plugin_tx;
 
-        $imgdir = $pth['folder']['plugins'] . 'pagemanager/images/';
         $horizontal = !$plugin_cf['pagemanager']['toolbar_vertical'];
-        $img = $imgdir . $tool . '.png';
         $id = "pagemanager-$tool";
         $o = '';
         $style = $tool === 'save' ? ' style="display: none"' : '';
@@ -466,13 +462,12 @@ class Pagemanager_Controller
      *
      * @global string The admin parameter.
      * @global string The action parameter.
-     * @global array  The paths of system files and folders.
      * @global string The requested function.
      * @global array  The configuration of the core.
      */
     function dispatch()
     {
-        global $admin, $action, $pth, $plugin, $f, $cf;
+        global $admin, $action, $plugin, $f, $cf;
 
         if (function_exists('XH_registerStandardPluginMenuItems')) {
             XH_registerStandardPluginMenuItems(false);
