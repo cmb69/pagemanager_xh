@@ -89,7 +89,7 @@ class Controller
         global $pth, $plugin_tx;
 
         $ptx = $plugin_tx['pagemanager'];
-        $phpVersion = '4.3.0';
+        $phpVersion = '5.3.0';
         $checks = array();
         $key = sprintf($ptx['syscheck_phpversion'], $phpVersion);
         $ok = version_compare(PHP_VERSION, $phpVersion) >= 0;
@@ -98,7 +98,7 @@ class Controller
             $key = sprintf($ptx['syscheck_extension'], $ext);
             $checks[$key] = extension_loaded($ext) ? 'ok' : 'fail';
         }
-        $xhVersion = 'CMSimple_XH 1.6beta';
+        $xhVersion = 'CMSimple_XH 1.7dev';
         $ok = strpos(CMSIMPLE_XH_VERSION, 'CMSimple_XH') === 0
             && version_compare(CMSIMPLE_XH_VERSION, $xhVersion) >= 0;
         $xhVersion = substr($xhVersion, 12);
