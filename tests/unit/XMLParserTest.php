@@ -47,13 +47,13 @@ class XMLParserTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      *
-     * @global XH_PageDataRouter The page data router.
+     * @global XH\PageDataRouter The page data router.
      */
     protected function setUpPDRouterStub()
     {
         global $pd_router;
 
-        $pd_router = $this->getMockBuilder('XH_PageDataRouter')
+        $pd_router = $this->getMockBuilder('XH\PageDataRouter')
             ->disableOriginalConstructor()
             ->getMock();
         $pd_router->expects($this->any())
@@ -314,7 +314,7 @@ XML
      *
      * @return void
      *
-     * @global XH_PageDataRouter The page data router.
+     * @global XH\PageDataRouter The page data router.
      */
     public function testParse($xml, $expectedContent, $expectedPageData)
     {
