@@ -78,13 +78,8 @@ class Model
     protected function cleanedHeading($heading)
     {
         $heading = trim(strip_tags($heading));
-        if (version_compare(PHP_VERSION, '5', 'ge')) {
-            $heading = html_entity_decode($heading, ENT_COMPAT, 'UTF-8');
-            $heading = htmlspecialchars($heading, ENT_COMPAT, 'UTF-8');
-        } else {
-            $pattern = '/&(?!(?:amp|quot|lt|gt);).+;/';
-            $heading = preg_replace($pattern, "\xEF\xBF\xBD", $heading);
-        }
+        $heading = html_entity_decode($heading, ENT_COMPAT, 'UTF-8');
+        $heading = htmlspecialchars($heading, ENT_COMPAT, 'UTF-8');
         return $heading;
     }
 
