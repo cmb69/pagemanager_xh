@@ -372,7 +372,7 @@ class Controller
 
         $_XH_csrfProtection->check();
         $ptx = $plugin_tx['pagemanager'];
-        if ($this->model->save(stsl($_POST['xml']))) {
+        if ($this->model->save(stsl($_POST['json']))) {
             echo XH_message('success', $ptx['message_save_success']);
         } else {
             $message = sprintf(
@@ -414,7 +414,7 @@ class Controller
             case 'plugin_main':
                 switch ($action) {
                 case 'plugin_data':
-                    $temp = new XMLGenerator($this->model, new Pages());
+                    $temp = new JSONGenerator($this->model, new Pages());
                     $temp->execute();
                     exit;
                 case 'plugin_save':

@@ -27,7 +27,7 @@
     <div id="pagemanager" class="<?php echo $this->toolbarClass();?>"></div>
     <input type="hidden" name="admin" value="plugin_main"/>
     <input type="hidden" name="action" value="plugin_save"/>
-    <input type="hidden" name="xml" id="pagemanager-xml" value=""/>
+    <input type="hidden" name="json" id="pagemanager-json" value=""/>
     <input id="pagemanager-submit" type="submit" class="submit"
            value="<?php echo $this->lang('button_save');?>" style="display: none"/>
     <?php global $_XH_csrfProtection; echo $_XH_csrfProtection->tokenInput();?>

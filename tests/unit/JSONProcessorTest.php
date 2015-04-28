@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Testing the XML parser class.
+ * Testing the JSON processor class.
  *
  * PHP version 5
  *
@@ -18,15 +18,15 @@ require_once './vendor/autoload.php';
 /**
  * The class under test.
  */
-require_once './classes/XMLParser.php';
+require_once './classes/JSONProcessor.php';
 
 require_once '../../cmsimple/classes/PageDataRouter.php';
 require_once '../../cmsimple/functions.php';
 
-use Pagemanager\XMLParser;
+use Pagemanager\JSONProcessor;
 
 /**
- * A test case to for the XML parser class.
+ * Testing the JSON processor class.
  *
  * @category Testing
  * @package  Pagemanager
@@ -34,12 +34,12 @@ use Pagemanager\XMLParser;
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
-class XMLParserTest extends PHPUnit_Framework_TestCase
+class JSONProcessorTest extends PHPUnit_Framework_TestCase
 {
     /**
      * The test subject.
      *
-     * @var XMLParser
+     * @var JSONProcessor
      */
     var $parser;
 
@@ -90,35 +90,44 @@ class XMLParserTest extends PHPUnit_Framework_TestCase
         $levels = 3;
         $pdattrName = 'show';
         $this->setUpPDRouterStub();
-        $this->parser = new XMLParser($contents, $levels, $pdattrName);
-        $timeMock = new PHPUnit_Extensions_MockFunction('time', $this->parser);
+        $this->subject = new JSONProcessor($contents, $levels, $pdattrName);
+        $timeMock = new PHPUnit_Extensions_MockFunction('time', $this->subject);
         $timeMock->expects($this->any())->will($this->returnValue(1420903422));
     }
 
     /**
-     * Returns data for testParse().
+     * Returns data for testProcess().
      *
      * @return array
      */
-    public function dataForParse()
+    public function dataForProcess()
     {
         return array(
             array( // unmodified
-                <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel=""
-            state="closed">
-        <content><name><![CDATA[Welcome]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
-            <content><name><![CDATA[About]]></name></content>
-        </item>
-    </item>
-    <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
-        <content><name><![CDATA[News]]></name></content>
-    </item>
-</root>'
-XML
+                <<<JSON
+[{
+    "data": "Welcome",
+    "attr": {
+        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1",
+        "class": ""
+    },
+    "children": [{
+        "data": "About",
+        "attr": {
+            "id": "pagemanager-1", "title": "About", "data-pdattr": "1",
+            "class": ""
+        },
+        "children": []
+    }]
+}, {
+    "data": "News",
+    "attr": {
+        "id": "pagemanager-2", "title": "News", "data-pdattr": "0",
+        "class": ""
+    },
+    "children": []
+}]
+JSON
                 , array(
                     '<h1>Welcome</h1>Welcome to my website!',
                     '<h2>About</h2>About me',
@@ -131,24 +140,35 @@ XML
                 )
             ),
             array( // insert page
-                <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel=""
-            state="closed">
-        <content><name><![CDATA[Welcome]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
-            <content><name><![CDATA[About]]></name></content>
-        </item>
-        <item id="" title="New Page" data-pdattr="1" class="" rel="">
-            <content><name><![CDATA[New Page]]></name></content>
-        </item>
-    </item>
-    <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
-        <content><name><![CDATA[News]]></name></content>
-    </item>
-</root>'
-XML
+                <<<JSON
+[{
+    "data": "Welcome",
+    "attr": {
+        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1",
+        "class": ""
+    },
+    "children": [{
+        "data": "About",
+        "attr": {
+            "id": "pagemanager-1", "title": "About", "data-pdattr": "1",
+            "class": ""
+        },
+        "children": []
+    }, {
+        "data": "New Page",
+        "attr": {
+            "id": "", "title": "New Page", "data-pdattr": "1", "class": ""
+        },
+        "children": []
+    }]
+}, {
+    "data": "News",
+    "attr": {
+        "id": "pagemanager-2", "title": "News", "data-pdattr": "0", "class": ""
+    },
+    "children": []
+}]
+JSON
                 , array(
                     '<h1>Welcome</h1>Welcome to my website!',
                     '<h2>About</h2>About me',
@@ -166,18 +186,22 @@ XML
                 )
             ),
             array( // delete page
-                <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel=""
-            state="closed">
-        <content><name><![CDATA[Welcome]]></name></content>
-    </item>
-    <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
-        <content><name><![CDATA[News]]></name></content>
-    </item>
-</root>'
-XML
+                <<<JSON
+[{
+    "data": "Welcome",
+    "attr": {
+        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1",
+        "class": ""
+    },
+    "children": []
+}, {
+    "data": "News",
+    "attr": {
+        "id": "pagemanager-2", "title": "News", "data-pdattr": "0", "class": ""
+    },
+    "children": []
+}]
+JSON
                 , array(
                     '<h1>Welcome</h1>Welcome to my website!',
                     '<h1>News</h1>Here are some news.'
@@ -188,21 +212,28 @@ XML
                 )
             ),
             array( // move page
-                <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel=""
-            state="closed">
-        <content><name><![CDATA[Welcome]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
-            <content><name><![CDATA[About]]></name></content>
-            <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
-                <content><name><![CDATA[News]]></name></content>
-            </item>
-        </item>
-    </item>
-</root>'
-XML
+                <<<JSON
+[{
+    "data": "Welcome",
+    "attr": {
+        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1", "class": ""
+    },
+    "children": [{
+        "data": "About",
+        "attr": {
+            "id": "pagemanager-1", "title": "About", "data-pdattr": "1", "class": ""
+        },
+        "children": [{
+            "data": "News",
+            "attr": {
+                "id": "pagemanager-2", "title": "News", "data-pdattr": "0",
+                "class": ""
+            },
+            "children": []
+        }]
+    }]
+}]
+JSON
                 , array(
                     '<h1>Welcome</h1>Welcome to my website!',
                     '<h2>About</h2>About me',
@@ -215,25 +246,34 @@ XML
                 )
             ),
             array( // copy page
-                <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="1" class="" rel=""
-            state="closed">
-        <content><name><![CDATA[Welcome]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
-            <content><name><![CDATA[About]]></name></content>
-        </item>
-        <item id="copy_pagemanager-1" title="About" data-pdattr="1" class=""
-                rel="new">
-            <content><name><![CDATA[DUPLICATE HEADING 1]]></name></content>
-        </item>
-    </item>
-    <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
-        <content><name><![CDATA[News]]></name></content>
-    </item>
-</root>'
-XML
+                <<<JSON
+[{
+    "data": "Welcome",
+    "attr": {
+        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1", "class": ""
+    },
+    "children": [{
+        "data": "About",
+        "attr": {
+            "id": "pagemanager-1", "title": "About", "data-pdattr": "1", "class": ""
+        },
+        "children": []
+    }, {
+        "data": "About",
+        "attr": {
+            "id": "copy_pagemanager-1", "title": "About", "data-pdattr": "1",
+            "class": ""
+            },
+        "children": []
+    }]
+}, {
+    "data": "News",
+    "attr": {
+        "id": "pagemanager-2", "title": "News", "data-pdattr": "0", "class": ""
+    },
+    "children": []
+}]
+JSON
                 , array(
                     '<h1>Welcome</h1>Welcome to my website!',
                     '<h2>About</h2>About me',
@@ -248,21 +288,28 @@ XML
                 )
             ),
             array( // flip page data attribute
-                <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <item id="pagemanager-0" title="Welcome" data-pdattr="0" class="" rel=""
-            state="closed">
-        <content><name><![CDATA[Welcome]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="0" class="" rel="">
-            <content><name><![CDATA[About]]></name></content>
-        </item>
-    </item>
-    <item id="pagemanager-2" title="News" data-pdattr="1" class="" rel="">
-        <content><name><![CDATA[News]]></name></content>
-    </item>
-</root>'
-XML
+                <<<JSON
+[{
+    "data": "Welcome",
+    "attr": {
+        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "0", "class": ""
+    },
+    "children": [{
+        "data": "About",
+        "attr": {
+            "id": "pagemanager-1", "title": "About", "data-pdattr": "0",
+            "class": ""
+        },
+        "children": []
+    }]
+}, {
+    "data": "News",
+    "attr": {
+        "id": "pagemanager-2", "title": "News", "data-pdattr": "1", "class": ""
+    },
+    "children": []
+}]
+JSON
                 , array(
                     '<h1>Welcome</h1>Welcome to my website!',
                     '<h2>About</h2>About me',
@@ -275,21 +322,28 @@ XML
                 )
             ),
             array( // no rename
-                <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <item id="pagemanager-0" title="WelcomeNew" data-pdattr="1"
-            class="pagemanager-no-rename" rel="" state="closed">
-        <content><name><![CDATA[WelcomeNew]]></name></content>
-        <item id="pagemanager-1" title="About" data-pdattr="1" class="" rel="">
-            <content><name><![CDATA[About]]></name></content>
-        </item>
-    </item>
-    <item id="pagemanager-2" title="News" data-pdattr="0" class="" rel="">
-        <content><name><![CDATA[News]]></name></content>
-    </item>
-</root>'
-XML
+                <<<JSON
+[{
+    "data": "Welcome",
+    "attr": {
+        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1",
+        "class": "pagemanager-no-rename"
+    },
+    "children": [{
+        "data": "About",
+        "attr": {
+            "id": "pagemanager-1", "title": "About", "data-pdattr": "1", "class": ""
+        },
+        "children": []
+    }]
+}, {
+    "data": "News",
+    "attr": {
+        "id": "pagemanager-2", "title": "News", "data-pdattr": "0", "class": ""
+    },
+    "children": []
+}]
+JSON
                 , array(
                     '<h1>Welcome</h1>Welcome to my website!',
                     '<h2>About</h2>About me',
@@ -307,23 +361,19 @@ XML
     /**
      * Tests parsing.
      *
-     * @param string $xml              An XML string.
+     * @param string $json             A JSON string.
      * @param array  $expectedContent  An array of expected content.
      * @param array  $expectedPageData An array of expected page data.
      *
-     * @dataProvider dataForParse
+     * @dataProvider dataForProcess
      *
      * @return void
-     *
-     * @global XH\PageDataRouter The page data router.
      */
-    public function testParse($xml, $expectedContent, $expectedPageData)
+    public function testProcess($json, $expectedContent, $expectedPageData)
     {
-        global $pd_router;
-
-        $this->parser->parse($xml);
-        $this->assertEquals($expectedContent, $this->parser->getContents());
-        $this->assertEquals($expectedPageData, $this->parser->getPageData());
+        $this->subject->process($json);
+        $this->assertEquals($expectedContent, $this->subject->getContents());
+        $this->assertEquals($expectedPageData, $this->subject->getPageData());
     }
 
 }

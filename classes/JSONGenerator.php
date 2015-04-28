@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The XML generators.
+ * The JSON generators.
  *
  * PHP version 5
  *
@@ -18,7 +18,7 @@ namespace Pagemanager;
 use XH\Pages;
 
 /**
- * The XML generators.
+ * The JSON generators.
  *
  * @category CMSimple_XH
  * @package  Pagemanager
@@ -26,7 +26,7 @@ use XH\Pages;
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
-class XMLGenerator
+class JSONGenerator
 {
     /**
      * The pagemanager model.
@@ -62,8 +62,8 @@ class XMLGenerator
     public function execute()
     {
         $this->model->getHeadings();
-        header('Content-Type: application/xml; charset=UTF-8');
-        echo $this->renderPages();
+        header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode($this->getPagesData());
     }
 
     /**
@@ -71,54 +71,56 @@ class XMLGenerator
      *
      * @param int $parent The index of the parent page.
      *
-     * @return string XML.
+     * @return array
      */
-    public function renderPages($parent = null)
+    protected function getPagesData($parent = null)
     {
-        if (!isset($parent)) {
-            $o = '<root>';
-        }
+        $res = array();
         $children = !isset($parent)
             ? $this->pages->toplevels(false)
             : $this->pages->children($parent, false);
         foreach ($children as $index) {
-            $o .= $this->renderPage($index) . $this->renderPages($index) . '</item>';
+            $res[] = $this->getPageData($index);
         }
-        if (!isset($parent)) {
-            $o .= '</root>';
-        }
-        return $o;
+        return $res;
     }
 
     /**
-     * Returns the view of a single page.
+     * Returns the data of a single page.
      *
      * @param int $index A page index.
      *
-     * @return string XML.
+     * @return string
      *
      * @global array  The configuration of the plugins.
      * @global object The page data router.
      */
-    protected function renderPage($index)
+    protected function getPageData($index)
     {
         global $plugin_cf, $pd_router;
 
-        $pcf = $plugin_cf['pagemanager'];
+        $pdattr = $plugin_cf['pagemanager']['pagedata_attribute'];
         $pageData = $pd_router->find_page($index);
-        if ($pcf['pagedata_attribute'] === '') {
-            $pdattr = '';
-        } elseif ($pageData[$pcf['pagedata_attribute']] === '') {
-            $pdattr = ' data-pdattr="1"';
-        } else {
-            $pdattr = $pageData[$pcf['pagedata_attribute']];
-            $pdattr = " data-pdattr=\"$pdattr\"";
+
+        $res = array(
+            'data' => $this->model->headings[$index],
+            'attr' => array(
+                'id' => "pagemanager-$index",
+                'title' => $this->model->headings[$index]
+            ),
+            'children' => $this->getPagesData($index)
+        );
+        if ($pdattr !== '') {
+            if ($pageData[$pdattr] === '') {
+                $res['attr']['data-pdattr'] = '1';
+            } else {
+                $res['attr']['data-pdattr'] = $pageData[$pdattr];
+            }
         }
-        $heading = $this->model->headings[$index];
-        $mayRename = $this->model->mayRename[$index];
-        $rename = $mayRename ? '' : ' class="pagemanager-no-rename"';
-        return "<item id=\"pagemanager-$index\" title=\"$heading\"$pdattr$rename>"
-            . "<content><name>$heading</name></content>";
+        if (!$this->model->mayRename[$index]) {
+            $res['attr']['class'] = 'pagemanager-no-rename';
+        }
+        return $res;
     }
 }
 

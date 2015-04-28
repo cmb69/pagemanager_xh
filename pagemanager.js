@@ -174,11 +174,11 @@ PAGEMANAGER.restorePageHeadings = function (node) {
  * @returns {undefined}
  */
 PAGEMANAGER.beforeSubmit = function () {
-    var attribs, xml;
+    var attribs, json;
 
     attribs = ["id", "title", "data-pdattr", "class"];
-    xml = PAGEMANAGER.widget.get_xml("nest", -1, attribs);
-    jQuery("#pagemanager-xml").val(xml);
+    json = JSON.stringify(PAGEMANAGER.widget.get_json(-1, attribs));
+    jQuery("#pagemanager-json").val(json);
 };
 
 /**
@@ -559,14 +559,14 @@ PAGEMANAGER.init = function () {
 
     if (!window.opera) {
 	window.onbeforeunload = function () {
-	    if (PAGEMANAGER.modified && jQuery("#pagemanager-xml").val() === "") {
+	    if (PAGEMANAGER.modified && jQuery("#pagemanager-json").val() === "") {
 		return PAGEMANAGER.config.leaveWarning;
 	    }
 	    return undefined;
 	};
     } else {
 	jQuery(window).unload(function () {
-	    if (PAGEMANAGER.modified && jQuery("#pagemanager-xml").val() === "") {
+	    if (PAGEMANAGER.modified && jQuery("#pagemanager-json").val() === "") {
 		if (confirm(PAGEMANAGER.config.leaveConfirmation)) {
 		    PAGEMANAGER.submit();
 		}
@@ -579,7 +579,7 @@ PAGEMANAGER.init = function () {
      */
     config = {
 	"plugins": [
-	    "contextmenu", "crrm", "dnd", "themes", "types", "xml_data", "ui"
+	    "contextmenu", "crrm", "dnd", "themes", "types", "json_data", "ui"
 	],
 	"core": {
 	    "animation": PAGEMANAGER.config.animation,
@@ -618,14 +618,13 @@ PAGEMANAGER.init = function () {
 	"ui": {
 	    "select_limit": 1
 	},
-	"xml_data": {
+	"json_data": {
 	    "ajax": {
 		"url": PAGEMANAGER.config.dataURL,
 		"error": function (jqXHR, textStatus, errorThrown) {
 		    alert(errorThrown);
 		}
-	    },
-	    "xsl": "nest"
+	    }
 	}
     };
     if (PAGEMANAGER.config.hasCheckboxes) {

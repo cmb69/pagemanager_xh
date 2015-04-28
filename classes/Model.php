@@ -165,7 +165,7 @@ class Model
     /**
      * Saves the content. Returns whether that succeeded.
      *
-     * @param string $xml An XML document.
+     * @param string $json A JSON string.
      *
      * @return bool
      *
@@ -174,15 +174,15 @@ class Model
      * @global array  The configuration of the plugins.
      * @global object The page data router.
      */
-    public function save($xml)
+    public function save($json)
     {
         global $c, $cf, $plugin_cf, $pd_router;
 
-        $parser = new XMLParser(
+        $parser = new JSONProcessor(
             $c, (int) $cf['menu']['levels'],
             $plugin_cf['pagemanager']['pagedata_attribute']
         );
-        $parser->parse($xml);
+        $parser->process($json);
         $c = $parser->getContents();
         return $pd_router->refresh($parser->getPageData());
     }
