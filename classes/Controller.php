@@ -38,13 +38,6 @@ class Controller
     public $model;
 
     /**
-     * The pages object.
-     *
-     * @var object
-     */
-    protected $pages;
-
-    /**
      * Initializes a newly create object.
      */
     public function __construct()
@@ -391,64 +384,6 @@ class Controller
     }
 
     /**
-     * Returns the view of a single page.
-     *
-     * @param int $index A page index.
-     *
-     * @return string XML.
-     *
-     * @global array  The configuration of the plugins.
-     * @global object The page data router.
-     */
-    protected function page($index)
-    {
-        global $plugin_cf, $pd_router;
-
-        $pcf = $plugin_cf['pagemanager'];
-        $pageData = $pd_router->find_page($index);
-        if ($pcf['pagedata_attribute'] === '') {
-            $pdattr = '';
-        } elseif ($pageData[$pcf['pagedata_attribute']] === '') {
-            $pdattr = ' data-pdattr="1"';
-        } else {
-            $pdattr = $pageData[$pcf['pagedata_attribute']];
-            $pdattr = " data-pdattr=\"$pdattr\"";
-        }
-        $heading = $this->model->headings[$index];
-        $mayRename = $this->model->mayRename[$index];
-        $rename = $mayRename ? '' : ' class="pagemanager-no-rename"';
-        return "<item id=\"pagemanager-$index\" title=\"$heading\"$pdattr$rename>"
-            . "<content><name>$heading</name></content>";
-    }
-
-    /**
-     * Returns the page structure.
-     *
-     * @param int $parent The index of the parent page.
-     *
-     * @return string XML.
-     */
-    protected function pages($parent = null)
-    {
-        if (!isset($this->pages)) {
-            $this->pages = new Pages();
-        }
-        if (!isset($parent)) {
-            $o = '<root>';
-        }
-        $children = !isset($parent)
-            ? $this->pages->toplevels(false)
-            : $this->pages->children($parent, false);
-        foreach ($children as $index) {
-            $o .= $this->page($index) . $this->pages($index) . '</item>';
-        }
-        if (!isset($parent)) {
-            $o .= '</root>';
-        }
-        return $o;
-    }
-
-    /**
      * Dispatches according to the current request.
      *
      * @return string The (X)HTML.
@@ -479,9 +414,8 @@ class Controller
             case 'plugin_main':
                 switch ($action) {
                 case 'plugin_data':
-                    $this->model->getHeadings();
-                    header('Content-Type: application/xml; charset=UTF-8');
-                    echo $this->pages();
+                    $temp = new XMLGenerator($this->model, new Pages());
+                    $temp->execute();
                     exit;
                 case 'plugin_save':
                     $o .= $this->save();
