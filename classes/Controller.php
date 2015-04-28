@@ -13,6 +13,10 @@
  * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
+namespace Pagemanager;
+
+use XH\Pages;
+
 /**
  * The controller class of Pagemanager_XH.
  *
@@ -22,7 +26,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
-class Pagemanager_Controller
+class Controller
 {
     /**
      * The pagemanager model.
@@ -42,15 +46,10 @@ class Pagemanager_Controller
 
     /**
      * Initializes a newly create object.
-     *
-     * @global array The paths of system files and folders.
      */
     public function __construct()
     {
-        global $pth;
-
-        include_once $pth['folder']['plugin_classes'] . 'Model.php';
-        $this->model = new Pagemanager_Model();
+        $this->model = new Model();
     }
 
     /**
@@ -428,16 +427,11 @@ class Pagemanager_Controller
      * @param int $parent The index of the parent page.
      *
      * @return string XML.
-     *
-     * @global array The paths of system files and folders.
      */
     protected function pages($parent = null)
     {
-        global $pth;
-
-        include_once $pth['folder']['classes'] . 'Pages.php';
         if (!isset($this->pages)) {
-            $this->pages = new XH_Pages();
+            $this->pages = new Pages();
         }
         if (!isset($parent)) {
             $o = '<root>';

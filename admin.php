@@ -21,10 +21,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
     exit;
 }
 
-/**
- * Pagemanager controller.
- */
-require_once $pth['folder']['plugin_classes'] . 'Controller.php';
+use Pagemanager_Controller;
 
 /**
  * Pagemanager version.
@@ -48,7 +45,7 @@ function Pagemanager_themes()
 /*
  * Initialize the global controller object and handle requests.
  */
-$_Pagemanager = new Pagemanager_Controller();
+$_Pagemanager = new Controller();
 $o .= $_Pagemanager->dispatch();
 
 ?>

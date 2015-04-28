@@ -23,6 +23,8 @@ require_once './classes/XMLParser.php';
 require_once '../../cmsimple/classes/PageDataRouter.php';
 require_once '../../cmsimple/functions.php';
 
+use Pagemanager\XMLParser;
+
 /**
  * A test case to for the XML parser class.
  *
@@ -37,7 +39,7 @@ class XMLParserTest extends PHPUnit_Framework_TestCase
     /**
      * The test subject.
      *
-     * @var Pagemanager_XMLParser
+     * @var XMLParser
      */
     var $parser;
 
@@ -88,7 +90,7 @@ class XMLParserTest extends PHPUnit_Framework_TestCase
         $levels = 3;
         $pdattrName = 'show';
         $this->setUpPDRouterStub();
-        $this->parser = new Pagemanager_XMLParser($contents, $levels, $pdattrName);
+        $this->parser = new XMLParser($contents, $levels, $pdattrName);
         $timeMock = new PHPUnit_Extensions_MockFunction('time', $this->parser);
         $timeMock->expects($this->any())->will($this->returnValue(1420903422));
     }

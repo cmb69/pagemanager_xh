@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
+namespace Pagemanager;
+
 /**
  * The XML parser class.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
-class Pagemanager_XMLParser
+class XMLParser
 {
     /**
      * The original contents array.

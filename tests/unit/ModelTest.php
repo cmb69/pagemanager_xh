@@ -23,6 +23,7 @@ require_once './classes/Model.php';
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
+use Pagemanager\Model;
 
 /**
  * A test case to for the model class.
@@ -38,7 +39,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     /**
      * The test subject.
      *
-     * @var Pagemanager_Model
+     * @var Model
      */
     protected $model;
 
@@ -72,7 +73,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $cf['menu']['levels'] = '3';
         $tx['toc']['empty'] = 'EMPTY HEADING';
 
-        $this->model = new Pagemanager_Model();
+        $this->model = new Model();
     }
 
     /**

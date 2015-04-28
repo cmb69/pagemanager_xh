@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
+namespace Pagemanager;
+
 /**
  * The model class of Pagemanager_XH.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
-class Pagemanager_Model
+class Model
 {
     /**
      * The unmodified page headings.
@@ -168,17 +170,15 @@ class Pagemanager_Model
      * @return bool
      *
      * @global array  The contents of the pages.
-     * @global array  The paths of system files and folders.
      * @global array  The configuration of the core.
      * @global array  The configuration of the plugins.
      * @global object The page data router.
      */
     public function save($xml)
     {
-        global $c, $pth, $cf, $plugin_cf, $pd_router;
+        global $c, $cf, $plugin_cf, $pd_router;
 
-        include_once "{$pth['folder']['plugins']}pagemanager/classes/XMLParser.php";
-        $parser = new Pagemanager_XMLParser(
+        $parser = new XMLParser(
             $c, (int) $cf['menu']['levels'],
             $plugin_cf['pagemanager']['pagedata_attribute']
         );
