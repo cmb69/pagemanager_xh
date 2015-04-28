@@ -65,8 +65,8 @@
         <exec command="phpunit --configuration coverage.xml" logoutput="true"/>
     </target>
 
-    <target name="php-doc">
-        <phpdoc title="Pagemanager_XH Developer Documentation" destdir="doc/php"
+    <target name="doc" description="generates developer documentation">
+        <phpdoc title="Pagemanager_XH Developer Documentation" destdir="doc"
                 output="HTML:Smarty:HandS" defaultpackagename="Pagemanager"
                 defaultcategoryname="CMSimple_XH">
             <fileset refid="php-sources"/>
@@ -76,13 +76,6 @@
             </projdocfileset>
         </phpdoc>
     </target>
-
-    <target name="js-doc">
-        <exec command="jsdoc --destination doc/js pagemanager.js" checkreturn="true"/>
-    </target>
-
-    <target name="doc" depends="php-doc, js-doc"
-            description="generates developer documentation"/>
 
     <target name="build" description="builds distributable ZIP archive">
         <fail unless="version" message="version is not defined!"/>
