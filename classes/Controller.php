@@ -189,15 +189,13 @@ class Controller
         $id = "pagemanager-$tool";
         $o = '';
         $style = $tool === 'save' ? ' style="display: none"' : '';
-        $onclick = 'PAGEMANAGER.tool(\''.$tool.'\')';
-        $onclick = $tool !== 'help' ? " onclick=\"$onclick\"" : '';
         if ($tool === 'save') {
             $tooltip = XH_hsc($plugin_tx['pagemanager']['button_save']);
         } else {
             $tooltip = XH_hsc($plugin_tx['pagemanager']['op_'.$tool]);
         }
         if ($tool !== 'help') {
-            $o .= '<button type="button" id="' . $id . '" ' . $style . $onclick
+            $o .= '<button type="button" id="' . $id . '" ' . $style
                 . ' title="' . $tooltip . '"' . '></button>';
         } else {
             $o .= '<a href="' . $pth['file']['plugin_help']

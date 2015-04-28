@@ -38,10 +38,5 @@
 <div id="pagemanager-footer"></div>
 <div id="pagemanager-confirmation" title="<?php echo $this->lang('message_confirm');?>"></div>
 <div id="pagemanager-alert" title="<?php echo $this->lang('message_information');?>"></div>
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var PAGEMANAGER = {};
-    PAGEMANAGER.config = <?php echo $this->jsConfig();?>;
-    /* ]]> */
-</script>
+<script type="text/javascript">var PAGEMANAGER = <?php echo $this->jsConfig();?>;</script>
 <script type="text/javascript" src="<?php echo $this->jsScriptPath();?>"></script>
