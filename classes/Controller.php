@@ -53,20 +53,15 @@ class Controller
      * @return string (X)HTML.
      *
      * @global array The paths of system files and folders.
-     * @global array The configuration of the core.
      */
     protected function render($template)
     {
-        global $pth, $cf;
+        global $pth;
 
         $template = "{$pth['folder']['plugins']}pagemanager/views/$template.php";
         ob_start();
         include $template;
-        $o = ob_get_clean();
-        if (!$cf['xhtml']['endtags']) {
-            $o = str_replace('/>', '>', $o);
-        }
-        return $o;
+        return ob_get_clean();
     }
 
     /**
@@ -202,7 +197,7 @@ class Controller
                 . '" target="_blank" id="' . $id . '" title="' . $tooltip . '"></a>';
         }
         if (!$horizontal) {
-            $o .= tag('br');
+            $o .= '<br>';
         }
         $o .= "\n";
         return $o;

@@ -13,7 +13,7 @@
     </div>
 <?php endif;?>
     <p class="pagemanager-status" style="display:none">
-        <img src="<?php echo $this->ajaxLoaderPath();?>" alt="Loading"/>
+        <img src="<?php echo $this->ajaxLoaderPath();?>" alt="Loading">
     </p>
     <!-- toolbar -->
 <?php if ($this->hasToolbar()):?>
@@ -25,14 +25,14 @@
     </div>
 <?php endif;?>
     <div id="pagemanager" class="<?php echo $this->toolbarClass();?>"></div>
-    <input type="hidden" name="admin" value="plugin_main"/>
-    <input type="hidden" name="action" value="plugin_save"/>
-    <input type="hidden" name="json" id="pagemanager-json" value=""/>
+    <input type="hidden" name="admin" value="plugin_main">
+    <input type="hidden" name="action" value="plugin_save">
+    <input type="hidden" name="json" id="pagemanager-json" value="">
     <input id="pagemanager-submit" type="submit" class="submit"
-           value="<?php echo $this->lang('button_save');?>" style="display: none"/>
+           value="<?php echo $this->lang('button_save');?>" style="display: none">
     <?php global $_XH_csrfProtection; echo $_XH_csrfProtection->tokenInput();?>
     <p class="pagemanager-status" style="display:none">
-        <img src="<?php echo $this->ajaxLoaderPath();?>" alt="Loading"/>
+        <img src="<?php echo $this->ajaxLoaderPath();?>" alt="Loading">
     </p>
 </form>
 <div id="pagemanager-footer"></div>
