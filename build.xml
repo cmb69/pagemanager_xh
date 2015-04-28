@@ -28,13 +28,8 @@
         </phpcodesniffer>
     </target>
 
-    <target name="compat2" description="checks compatibility with PHP_CompatInfo 2">
-        <exec command="C:\xampp\php\phpcompatinfo --configuration phpcompatinfo.xml print --exclude-pattern pagemanager ."
-              logoutput="true"/>
-    </target>
-
     <target name="compat"
-            description="checks compatibility with PHP_CompatInfo 3">
+            description="checks compatibility with PHP_CompatInfo">
         <exec command="phpcompatinfo analyser:run ." logoutput="true"/>
     </target>
 
