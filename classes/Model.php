@@ -181,7 +181,7 @@ class Pagemanager_Model
         );
         $parser->parse($xml);
         $c = $parser->getContents();
-        return $pd_router->model->refresh($parser->getPageData());
+        return $pd_router->refresh($parser->getPageData());
     }
 }
 
