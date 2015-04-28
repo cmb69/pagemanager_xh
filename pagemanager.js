@@ -633,6 +633,17 @@ PAGEMANAGER.init = function () {
     }
     PAGEMANAGER.element.jstree(config);
     PAGEMANAGER.widget = jQuery.jstree._reference("#pagemanager");
+
+    $("#pagemanager-form").submit(function (event) {
+	PAGEMANAGER.submit();
+	event.preventDefault();
+    });
+    $("#pagemanager-structure-warning button").click(
+	PAGEMANAGER.confirmStructureWarning
+    );
+    PAGEMANAGER.element.off("dblclick").dblclick(function () {
+	PAGEMANAGER.element.jstree("toggle_node");
+    });
 }
 
 /*

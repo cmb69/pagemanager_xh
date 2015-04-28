@@ -1,12 +1,12 @@
 <!-- Pagemanager_XH: widget -->
 <h1>Pagemanager &ndash; <?php echo $this->lang('menu_main')?></h1>
 <form id="pagemanager-form" action="<?php echo XH_hsc($this->submissionURL());?>"
-      method="post" accept-charset="UTF-8" onsubmit="PAGEMANAGER.submit(); return false">
+      method="post" accept-charset="UTF-8">
 <?php if ($this->model->isIrregular()):?>
     <div id="pagemanager-structure-warning" class="cmsimplecore_warning">
         <p><?php echo $this->lang('error_structure_warning');?></p>
         <p>
-            <button type="button" onclick="PAGEMANAGER.confirmStructureWarning()">
+            <button type="button">
                 <?php echo $this->lang('error_structure_confirmation');?>
             </button>
         </p>
@@ -24,7 +24,7 @@
         <div style="clear: both"></div>
     </div>
 <?php endif;?>
-    <div id="pagemanager" class="<?php echo $this->toolbarClass();?>" ondblclick="jQuery('#pagemanager').jstree('toggle_node')"></div>
+    <div id="pagemanager" class="<?php echo $this->toolbarClass();?>"></div>
     <input type="hidden" name="admin" value="plugin_main"/>
     <input type="hidden" name="action" value="plugin_save"/>
     <input type="hidden" name="xml" id="pagemanager-xml" value=""/>
