@@ -3,7 +3,7 @@
 /**
  * The model class of Pagemanager_XH.
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * @category  CMSimple_XH
  * @package   Pagemanager
@@ -29,15 +29,19 @@ class Pagemanager_Model
      * The unmodified page headings.
      *
      * @var array
+     *
+     * @todo Make protected.
      */
-    var $headings;
+    public $headings;
 
     /**
      * Whether the pages may be renamed.
      *
      * @var array
+     *
+     * @todo Make protected.
      */
-    var $mayRename;
+    public $mayRename;
 
     /**
      * Returns whether a heading may be renamed.
@@ -51,7 +55,7 @@ class Pagemanager_Model
      *
      * @since 2.0.1
      */
-    function mayRename($heading)
+    protected function mayRename($heading)
     {
         return !preg_match('/<|&(?!(?:amp|quot|lt|gt);)/', $heading);
     }
@@ -70,7 +74,7 @@ class Pagemanager_Model
      *
      * @since 2.0.1
      */
-    function cleanedHeading($heading)
+    protected function cleanedHeading($heading)
     {
         $heading = trim(strip_tags($heading));
         if (version_compare(PHP_VERSION, '5', 'ge')) {
@@ -92,7 +96,7 @@ class Pagemanager_Model
      * @global array The configuration of the core.
      * @global array The localization of the core.
      */
-    function getHeadings()
+    public function getHeadings()
     {
         global $c, $cf, $tx;
 
@@ -119,7 +123,7 @@ class Pagemanager_Model
      * @global array The menu levels of the pages.
      * @global int   The number of pages.
      */
-    function isIrregular()
+    public function isIrregular()
     {
         global $l, $cl;
 
@@ -139,7 +143,7 @@ class Pagemanager_Model
      *
      * @global array The paths of system files and folders.
      */
-    function themes()
+    public function themes()
     {
         global $pth;
 
@@ -170,7 +174,7 @@ class Pagemanager_Model
      * @global array  The configuration of the plugins.
      * @global object The page data router.
      */
-    function save($xml)
+    public function save($xml)
     {
         global $c, $pth, $cf, $plugin_cf, $pd_router;
 

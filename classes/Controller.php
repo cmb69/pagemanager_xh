@@ -3,7 +3,7 @@
 /**
  * The controller class of Pagemanager_XH.
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * @category  CMSimple_XH
  * @package   Pagemanager
@@ -29,24 +29,24 @@ class Pagemanager_Controller
      * The pagemanager model.
      *
      * @var object
+     *
+     * @todo Make protected.
      */
-    var $model;
+    public $model;
 
     /**
      * The pages object.
      *
      * @var object
      */
-    var $pages;
+    protected $pages;
 
     /**
      * Initializes a newly create object.
      *
      * @global array The paths of system files and folders.
-     *
-     * @return void
      */
-    function Pagemanager_Controller()
+    public function __construct()
     {
         global $pth;
 
@@ -64,7 +64,7 @@ class Pagemanager_Controller
      * @global array The paths of system files and folders.
      * @global array The configuration of the core.
      */
-    function render($template)
+    protected function render($template)
     {
         global $pth, $cf;
 
@@ -86,7 +86,7 @@ class Pagemanager_Controller
      * @global array The paths of system files and folders.
      * @global array The localization of the plugins.
      */
-    function systemChecks()
+    protected function systemChecks()
     {
         global $pth, $plugin_tx;
 
@@ -126,7 +126,7 @@ class Pagemanager_Controller
      *
      * @global array The paths of system files and folders.
      */
-    function pluginIconPath()
+    protected function pluginIconPath()
     {
         global $pth;
 
@@ -142,7 +142,7 @@ class Pagemanager_Controller
      *
      * @global array The paths of system files and folders.
      */
-    function stateIconPath($state)
+    protected function stateIconPath($state)
     {
         global $pth;
 
@@ -156,7 +156,7 @@ class Pagemanager_Controller
      *
      * @global array The paths of system files and folders.
      */
-    function ajaxLoaderPath()
+    protected function ajaxLoaderPath()
     {
         global $pth;
 
@@ -172,7 +172,7 @@ class Pagemanager_Controller
      *
      * @global array The localization of the plugins.
      */
-    function lang($key)
+    protected function lang($key)
     {
         global $plugin_tx;
 
@@ -190,7 +190,7 @@ class Pagemanager_Controller
      * @global array The configuration of the plugins.
      * @global array The localization of the plugins.
      */
-    function tool($tool)
+    protected function tool($tool)
     {
         global $pth, $plugin_cf, $plugin_tx;
 
@@ -231,7 +231,7 @@ class Pagemanager_Controller
      * @global array  The configuration of the plugins.
      * @global array  The localization of the plugins.
      */
-    function jsConfig()
+    protected function jsConfig()
     {
         global $pth, $sn, $cf, $tx, $plugin_cf, $plugin_tx;
 
@@ -280,7 +280,7 @@ class Pagemanager_Controller
      *
      * @global array The configuration of the plugins.
      */
-    function toolbarClass()
+    protected function toolbarClass()
     {
         global $plugin_cf;
 
@@ -295,7 +295,7 @@ class Pagemanager_Controller
      *
      * @global array The configuration of the plugins.
      */
-    function hasToolbar()
+    protected function hasToolbar()
     {
         global $plugin_cf;
 
@@ -307,7 +307,7 @@ class Pagemanager_Controller
      *
      * @return array
      */
-    function tools()
+    protected function tools()
     {
         return array(
             'save', 'expand', 'collapse', 'create', 'create_after', 'rename',
@@ -322,7 +322,7 @@ class Pagemanager_Controller
      *
      * @global string The script name.
      */
-    function submissionURL()
+    protected function submissionURL()
     {
         global $sn;
 
@@ -337,7 +337,7 @@ class Pagemanager_Controller
      *
      * @global array The paths of system files and folders.
      */
-    function jsScriptPath()
+    protected function jsScriptPath()
     {
         global $pth;
 
@@ -351,7 +351,7 @@ class Pagemanager_Controller
      *
      * @global array  The paths of system files and folders.
      */
-    function editView()
+    protected function editView()
     {
         global $pth, $title, $plugin_tx;
 
@@ -375,7 +375,7 @@ class Pagemanager_Controller
      * @global array  The localization of the plugins.
      * @global object The CSRF protection object.
      */
-    function save()
+    protected function save()
     {
         global $pth, $plugin_tx, $_XH_csrfProtection;
 
@@ -402,7 +402,7 @@ class Pagemanager_Controller
      * @global array  The configuration of the plugins.
      * @global object The page data router.
      */
-    function page($index)
+    protected function page($index)
     {
         global $plugin_cf, $pd_router;
 
@@ -432,7 +432,7 @@ class Pagemanager_Controller
      *
      * @global array The paths of system files and folders.
      */
-    function pages($parent = null)
+    protected function pages($parent = null)
     {
         global $pth;
 
@@ -465,7 +465,7 @@ class Pagemanager_Controller
      * @global string The requested function.
      * @global array  The configuration of the core.
      */
-    function dispatch()
+    public function dispatch()
     {
         global $admin, $action, $plugin, $f, $cf;
 
@@ -510,10 +510,8 @@ class Pagemanager_Controller
      * @return bool
      *
      * @global string Whether the plugin administration is requested.
-     *
-     * @access protected
      */
-    function isAdministrationRequested()
+    protected function isAdministrationRequested()
     {
         global $pagemanager;
 
@@ -530,7 +528,7 @@ class Pagemanager_Controller
      * @global array  The localization of the plugins.
      * @global string The title of the current page.
      */
-    function renderInfoView()
+    protected function renderInfoView()
     {
         global $title, $plugin_tx;
 

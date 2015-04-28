@@ -3,7 +3,7 @@
 /**
  * XMLParser of Pagemanager_XH
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * @category  CMSimple_XH
  * @package   Pagemanager
@@ -29,91 +29,71 @@ class Pagemanager_XMLParser
      * The original contents array.
      *
      * @var array
-     *
-     * @access protected
      */
-    var $contents;
+    protected $contents;
 
     /**
      * The new contents array.
      *
      * @var array
-     *
-     * @access protected
      */
-    var $newContents;
+    protected $newContents;
 
     /**
      * The new page data array.
      *
      * @var array
-     *
-     * @access protected
      */
-    var $pageData;
+    protected $pageData;
 
     /**
      * The maximum nesting level.
      *
      * @var int
-     *
-     * @access protected
      */
-    var $levels;
+    protected $levels;
 
     /**
      * The current nesting level.
      *
      * @var int
-     *
-     * @access protected
      */
-    var $level;
+    protected $level;
 
     /**
      * The current page id (number?).
      *
      * @var int
-     *
-     * @access protected
      */
-    var $id;
+    protected $id;
 
     /**
      * The current page heading.
      *
      * @var string
-     *
-     * @access protected
      */
-    var $title;
+    protected $title;
 
     /**
      * The name of the page data attribute.
      *
      * @var string
-     *
-     * @access protected
      */
-    var $pdattrName;
+    protected $pdattrName;
 
     /**
      * The current page data attribute.
      *
      * @var bool
-     *
-     * @access protected
      */
-    var $pdattr;
+    protected $pdattr;
 
     /**
      * Whether the current page may be renamed.
      *
      * @var bool
-     *
-     * @access protected
      */
-    var $mayRename;
+    protected $mayRename;
 
     /**
      * Initializes a newly created object.
@@ -121,10 +101,8 @@ class Pagemanager_XMLParser
      * @param array  $contents   Page contents.
      * @param int    $levels     Maximum page level.
      * @param string $pdattrName Name of a page data attribute.
-     *
-     * @return void
      */
-    function Pagemanager_XMLParser($contents, $levels, $pdattrName)
+    public function __construct($contents, $levels, $pdattrName)
     {
         $this->contents = $contents;
         $this->levels = $levels;
@@ -138,7 +116,7 @@ class Pagemanager_XMLParser
      *
      * @return void
      */
-    function parse($xml)
+    public function parse($xml)
     {
         $parser = xml_parser_create('UTF-8');
         // In PHP 4, we have to use a reference to create the callbacks.
@@ -167,7 +145,7 @@ class Pagemanager_XMLParser
      *
      * @return array
      */
-    function getContents()
+    public function getContents()
     {
         return $this->newContents;
     }
@@ -177,7 +155,7 @@ class Pagemanager_XMLParser
      *
      * @return array
      */
-    function getPageData()
+    public function getPageData()
     {
         return $this->pageData;
     }
@@ -191,11 +169,9 @@ class Pagemanager_XMLParser
      *
      * @return void
      *
-     * @access protected
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    function startElementHandler($parser, $name, $attribs)
+    protected function startElementHandler($parser, $name, $attribs)
     {
         if ($name === 'ITEM') {
             $this->level++;
@@ -220,11 +196,9 @@ class Pagemanager_XMLParser
      *
      * @return void
      *
-     * @access protected
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    function endElementHandler($parser, $name)
+    protected function endElementHandler($parser, $name)
     {
         if ($name === 'ITEM') {
             $this->level--;
@@ -241,11 +215,9 @@ class Pagemanager_XMLParser
      *
      * @global object The page data router.
      *
-     * @access protected
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    function cDataHandler($parser, $data)
+    protected function cDataHandler($parser, $data)
     {
         global $pd_router;
 
