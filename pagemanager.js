@@ -674,13 +674,13 @@
             "#pagemanager-create, #pagemanager-create_after," +
             "#pagemanager-rename, #pagemanager-delete, #pagemanager-cut," +
             "#pagemanager-copy, #pagemanager-paste, #pagemanager-paste_after";
-        $(ids).click(function () {
+        $(ids).off("click").click(function () {
             tool(this.id.substr(12));
         });
 
-        $("#pagemanager-form").submit(function (event) {
-            submit();
+        $("#pagemanager-form").off("submit").submit(function (event) {
             event.preventDefault();
+            submit();
         });
         $("#pagemanager-structure-warning button").click(
             confirmStructureWarning
