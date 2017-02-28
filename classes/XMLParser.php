@@ -123,7 +123,7 @@ class Pagemanager_XMLParser
      *
      * @return void
      */
-    function Pagemanager_XMLParser($contents, $levels, $pdattrName)
+    function __construct($contents, $levels, $pdattrName)
     {
         $this->contents = $contents;
         $this->levels = $levels;
@@ -131,6 +131,20 @@ class Pagemanager_XMLParser
     }
 
     /**
+     * Fallback constructor for PHP 4
+     *
+     * @param array  $contents   Page contents.
+     * @param int    $levels     Maximum page level.
+     * @param string $pdattrName Name of a page data attribute.
+     *
+     * @return void
+     */
+    function Pagemanager_XMLParser($contents, $levels, $pdattrName)
+    {
+        Pagemanager_XMLParser::__construct($contents, $levels, $pdattrName);
+    }
+ 
+     /**
      * Parses the given <var>$xml</var>.
      *
      * @param string $xml XML.

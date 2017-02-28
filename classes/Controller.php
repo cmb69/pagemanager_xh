@@ -45,7 +45,7 @@ class Pagemanager_Controller
      *
      * @return void
      */
-    function Pagemanager_Controller()
+    function __construct()
     {
         global $pth;
 
@@ -53,6 +53,16 @@ class Pagemanager_Controller
         $this->model = new Pagemanager_Model();
     }
 
+    /**
+     * Fallback constructor for PHP 4
+     *
+     * @return void
+     */
+    function Pagemanager_Controller()
+    {
+        Pagemanager_Controller::__construct();
+    }
+ 
     /**
      * Returns a rendered template.
      *
