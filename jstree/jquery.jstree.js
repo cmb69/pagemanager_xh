@@ -13,7 +13,7 @@
  *
  * - Removed dependency on $.fn.andSelf()
  * - fixed XML Ajax loading for IE11
- * Copyright (c) 2013-2015 Christoph M. Becker <http://3-magi.net/>
+ * Copyright (c) 2013-2017 Christoph M. Becker <http://3-magi.net/>
  */
 
 /*jslint browser: true, onevar: true, undef: true, bitwise: true, strict: true */
