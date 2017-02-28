@@ -1,7 +1,7 @@
 /*!
  * Pagemanager_XH.
  *
- * Copyright 2011-2015 Christoph M. Becker (http://3-magi.net/)
+ * Copyright 2011-2017 Christoph M. Becker (http://3-magi.net/)
  * Licensed under GNU GPLv3, see LICENSE.
  */
 
