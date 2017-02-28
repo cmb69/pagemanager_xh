@@ -1,12 +1,12 @@
 {
     "require-dev": {
-        "phing/phing": "2.10.*",
-        "squizlabs/php_codesniffer": "2.3.*",
-        "phpmd/phpmd": "2.2.*",
-        "bartlett/php-compatinfo": "4.1.*",
-        "phpunit/phpunit": "4.6.*",
+        "phing/phing": "2.16.*",
+        "squizlabs/php_codesniffer": "2.8.*",
+        "phpmd/phpmd": "2.6.*",
+        "bartlett/php-compatinfo": "5.0.*",
+        "phpunit/phpunit": "5.7.*",
         "tcz/phpunit-mockfunction": "1.0.*",
-        "mikey179/vfsStream": "1.5.*",
-        "tedivm/jshrink": "1.0.*"
+        "mikey179/vfsStream": "1.6.*",
+        "tedivm/jshrink": "1.1.*"
     }
 }
