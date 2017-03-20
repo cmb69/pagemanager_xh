@@ -25,9 +25,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 use Pagemanager\Model;
-use Pagemanager\Controller;
-
-define('PAGEMANAGER_VERSION', '@PAGEMANAGER_VERSION@');
+use Pagemanager\Plugin;
 
 /**
  * @return array
@@ -37,6 +35,6 @@ function Pagemanager_themes()
     return Model::getThemes();
 }
 
-$temp = new Controller();
-$o .= $temp->dispatch();
+$temp = new Plugin();
+$temp->run();
 $temp = null;
