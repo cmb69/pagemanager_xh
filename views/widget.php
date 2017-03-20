@@ -36,5 +36,3 @@
 <div id="pagemanager-footer"></div>
 <div id="pagemanager-confirmation" title="<?=$this->text('message_confirm')?>"></div>
 <div id="pagemanager-alert" title="<?=$this->text('message_information')?>"></div>
-<script type="text/javascript">var PAGEMANAGER = <?=$this->jsConfig()?>;</script>
-<script type="text/javascript" src="<?=$this->jsScriptPath()?>"></script>

@@ -70,7 +70,7 @@ class MainAdminController extends Controller
 
     public function indexAction()
     {
-        global $pth, $title;
+        global $pth, $title, $bjs;
 
         $title = "Pagemanager – {$this->lang['menu_main']}";
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
@@ -80,6 +80,8 @@ class MainAdminController extends Controller
             'jsTree',
             "{$this->pluginFolder}jstree/jquery.jstree.js"
         );
+        $bjs .= '<script type="text/javascript">var PAGEMANAGER = ' . $this->jsConfig() . ';</script>'
+            . '<script type="text/javascript" src="' . XH_hsc("{$this->pluginFolder}pagemanager.js") . '"></script>';
         $view = new View('widget');
         $view->submissionUrl = $this->submissionURL();
         $view->isIrregular = $this->model->isIrregular();
@@ -92,8 +94,6 @@ class MainAdminController extends Controller
         }
         $view->tools = $tools;
         $view->csrfTokenInput = new HtmlString($this->csrfProtector->tokenInput());
-        $view->jsConfig = new HtmlString($this->jsConfig());
-        $view->jsScriptPath = "{$this->pluginFolder}pagemanager.js";
         $view->render();
     }
 
