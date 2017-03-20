@@ -24,17 +24,17 @@ namespace Pagemanager;
 class JSONProcessor
 {
     /**
-     * @var array
+     * @var string[]
      */
     private $contents;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $newContents;
 
     /**
-     * @var array
+     * @var array[]
      */
     private $pageData;
 
@@ -69,10 +69,10 @@ class JSONProcessor
     private $mayRename;
 
     /**
-     * @param array $contents
+     * @param string[] $contents
      * @param string $pdattrName
      */
-    public function __construct($contents, $pdattrName)
+    public function __construct(array $contents, $pdattrName)
     {
         $this->contents = $contents;
         $this->pdattrName = $pdattrName;
@@ -90,9 +90,9 @@ class JSONProcessor
     }
 
     /**
-     * @param array $pages
+     * @param array[] $pages
      */
-    private function processPages($pages)
+    private function processPages(array $pages)
     {
         $this->level++;
         foreach ($pages as $page) {
@@ -101,10 +101,7 @@ class JSONProcessor
         $this->level--;
     }
 
-    /**
-     * @param array $page
-     */
-    private function processPage($page)
+    private function processPage(array $page)
     {
         $pattern = '/(copy_)?pagemanager-([0-9]*)/';
         $this->id = empty($page['attr']['id'])
@@ -171,7 +168,7 @@ class JSONProcessor
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getContents()
     {
@@ -179,7 +176,7 @@ class JSONProcessor
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function getPageData()
     {

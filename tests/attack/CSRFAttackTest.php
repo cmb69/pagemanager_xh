@@ -57,10 +57,7 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
         curl_close($this->curlHandle);
     }
 
-    /**
-     * @param array $fields
-     */
-    private function setCurlOptions($fields)
+    private function setCurlOptions(array $fields)
     {
         $options = array(
             CURLOPT_POST => true,
@@ -73,7 +70,7 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function dataForAttack()
     {
@@ -90,10 +87,9 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataForAttack
-     * @param array $fields
-     * @param string $queryString
+     * @param ?string $queryString
      */
-    public function testAttack($fields, $queryString = null)
+    public function testAttack(array $fields, $queryString = null)
     {
         $url = $this->url . (isset($queryString) ? '?' . $queryString : '');
         $this->curlHandle = curl_init($url);

@@ -24,13 +24,13 @@ namespace Pagemanager;
 class Model
 {
     /**
-     * @var array
+     * @var string[]
      * @todo Make private.
      */
     public $headings;
 
     /**
-     * @var array
+     * @var bool[]
      */
     private $mayRename;
 
@@ -89,7 +89,7 @@ class Model
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function themes()
     {

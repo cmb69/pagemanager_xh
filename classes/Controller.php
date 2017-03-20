@@ -225,7 +225,7 @@ class Controller
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     private function tools()
     {

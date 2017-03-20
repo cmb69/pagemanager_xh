@@ -69,7 +69,7 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function dataForProcess()
     {
@@ -332,10 +332,10 @@ JSON
     /**
      * @dataProvider dataForProcess
      * @param string $json
-     * @param array $expectedContent
-     * @param array $expectedPageData
+     * @param string[] $expectedContent
+     * @param array[] $expectedPageData
      */
-    public function testProcess($json, $expectedContent, $expectedPageData)
+    public function testProcess($json, array $expectedContent, array $expectedPageData)
     {
         $this->subject->process($json);
         $this->assertEquals($expectedContent, $this->subject->getContents());

@@ -54,7 +54,7 @@ class JSONGenerator
 
     /**
      * @param ?int $parent
-     * @return array
+     * @return array[]
      */
     private function getPagesData($parent = null)
     {
