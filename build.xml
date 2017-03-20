@@ -65,18 +65,6 @@
         <exec command="phpunit --configuration coverage.xml" logoutput="true"/>
     </target>
 
-    <target name="doc" description="generates developer documentation">
-        <phpdoc title="Pagemanager_XH Developer Documentation" destdir="doc"
-                output="HTML:Smarty:HandS" defaultpackagename="Pagemanager"
-                defaultcategoryname="CMSimple_XH">
-            <fileset refid="php-sources"/>
-            <projdocfileset dir=".">
-               <include name="README"/>
-               <include name="CHANGELOG"/>
-            </projdocfileset>
-        </phpdoc>
-    </target>
-
     <target name="build" description="builds distributable ZIP archive">
         <fail unless="version" message="version is not defined!"/>
         <exec command="git archive -o export.tar HEAD" checkreturn="true"/>
