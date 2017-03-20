@@ -28,12 +28,12 @@ class JSONGenerator
     /**
      * @var Model
      */
-    protected $model;
+    private $model;
 
     /**
      * @var Pages
      */
-    protected $pages;
+    private $pages;
 
     /**
      * @param Model $model
@@ -56,7 +56,7 @@ class JSONGenerator
      * @param ?int $parent
      * @return array
      */
-    protected function getPagesData($parent = null)
+    private function getPagesData($parent = null)
     {
         $res = array();
         $children = !isset($parent)
@@ -72,7 +72,7 @@ class JSONGenerator
      * @param int $index
      * @return array
      */
-    protected function getPageData($index)
+    private function getPageData($index)
     {
         global $plugin_cf, $pd_router;
 

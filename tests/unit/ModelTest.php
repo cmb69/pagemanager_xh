@@ -31,9 +31,9 @@ class ModelTest extends PHPUnit_Framework_TestCase
     /**
      * @var Model
      */
-    protected $model;
+    private $model;
 
-    public function setUp()
+    protected function setUp()
     {
         global $h, $cl, $l, $tx;
 

@@ -25,21 +25,20 @@ class Model
 {
     /**
      * @var array
-     * @todo Make protected.
+     * @todo Make private.
      */
     public $headings;
 
     /**
      * @var array
-     * @todo Make protected.
      */
-    public $mayRename;
+    private $mayRename;
 
     /**
      * @param string $heading
      * @return string
      */
-    protected function mayRename($heading)
+    private function mayRename($heading)
     {
         return !preg_match('/<|&(?!(?:amp|quot|lt|gt);)/', $heading);
     }
@@ -48,7 +47,7 @@ class Model
      * @param string $heading
      * @return string
      */
-    protected function cleanedHeading($heading)
+    private function cleanedHeading($heading)
     {
         $heading = trim(strip_tags($heading));
         $heading = html_entity_decode($heading, ENT_COMPAT, 'UTF-8');

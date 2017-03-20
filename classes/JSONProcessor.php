@@ -26,22 +26,22 @@ class JSONProcessor
     /**
      * @var array
      */
-    protected $contents;
+    private $contents;
 
     /**
      * @var array
      */
-    protected $newContents;
+    private $newContents;
 
     /**
      * @var array
      */
-    protected $pageData;
+    private $pageData;
 
     /**
      * @var int
      */
-    protected $level;
+    private $level;
 
     /**
      * @var int
@@ -51,22 +51,22 @@ class JSONProcessor
     /**
      * @var string
      */
-    protected $title;
+    private $title;
 
     /**
      * @var string
      */
-    protected $pdattrName;
+    private $pdattrName;
 
     /**
      * @var bool
      */
-    protected $pdattr;
+    private $pdattr;
 
     /**
      * @var bool
      */
-    protected $mayRename;
+    private $mayRename;
 
     /**
      * @param array $contents
@@ -92,7 +92,7 @@ class JSONProcessor
     /**
      * @param array $pages
      */
-    protected function processPages($pages)
+    private function processPages($pages)
     {
         $this->level++;
         foreach ($pages as $page) {
@@ -104,7 +104,7 @@ class JSONProcessor
     /**
      * @param array $page
      */
-    protected function processPage($page)
+    private function processPage($page)
     {
         $pattern = '/(copy_)?pagemanager-([0-9]*)/';
         $this->id = empty($page['attr']['id'])
@@ -125,7 +125,7 @@ class JSONProcessor
         $this->processPages($page['children']);
     }
 
-    protected function appendExistingPageContent()
+    private function appendExistingPageContent()
     {
         $content = $this->contents[$this->id];
         if ($this->mayRename) {
@@ -138,7 +138,7 @@ class JSONProcessor
      * @param string $content
      * @return string
      */
-    protected function replaceHeading($content)
+    private function replaceHeading($content)
     {
         $pattern = "/<!--XH_ml[0-9]:.*?-->/";
         $replacement = "<!--XH_ml{$this->level}:"
@@ -146,12 +146,12 @@ class JSONProcessor
         return preg_replace($pattern, $replacement, $content, 1);
     }
 
-    protected function appendNewPageContent()
+    private function appendNewPageContent()
     {
         $this->newContents[] = "<!--XH_ml{$this->level}:{$this->title}-->";
     }
 
-    protected function appendPageData()
+    private function appendPageData()
     {
         global $pd_router;
 

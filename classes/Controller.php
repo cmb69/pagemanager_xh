@@ -27,9 +27,8 @@ class Controller
 {
     /**
      * @var object
-     * @todo Make protected.
      */
-    public $model;
+    private $model;
 
     public function __construct()
     {
@@ -40,7 +39,7 @@ class Controller
      * @param string $template
      * @return string
      */
-    protected function render($template)
+    private function render($template)
     {
         global $pth;
 
@@ -53,7 +52,7 @@ class Controller
     /**
      * @return array
      */
-    protected function systemChecks()
+    private function systemChecks()
     {
         global $pth, $plugin_tx;
 
@@ -89,7 +88,7 @@ class Controller
     /**
      * @return string
      */
-    protected function pluginIconPath()
+    private function pluginIconPath()
     {
         global $pth;
 
@@ -100,7 +99,7 @@ class Controller
      * @param string $state
      * @return string
      */
-    protected function stateIconPath($state)
+    private function stateIconPath($state)
     {
         global $pth;
 
@@ -110,7 +109,7 @@ class Controller
     /**
      * @return string
      */
-    protected function ajaxLoaderPath()
+    private function ajaxLoaderPath()
     {
         global $pth;
 
@@ -121,7 +120,7 @@ class Controller
      * @param string $key
      * @return string
      */
-    protected function lang($key)
+    private function lang($key)
     {
         global $plugin_tx;
 
@@ -132,7 +131,7 @@ class Controller
      * @param string $tool
      * @return string
      */
-    protected function tool($tool)
+    private function tool($tool)
     {
         global $pth, $plugin_cf, $plugin_tx;
 
@@ -162,7 +161,7 @@ class Controller
     /**
      * @return string
      */
-    protected function jsConfig()
+    private function jsConfig()
     {
         global $pth, $sn, $tx, $plugin_cf, $plugin_tx;
 
@@ -207,7 +206,7 @@ class Controller
     /**
      * @return string
      */
-    protected function toolbarClass()
+    private function toolbarClass()
     {
         global $plugin_cf;
 
@@ -218,7 +217,7 @@ class Controller
     /**
      * @return bool
      */
-    protected function hasToolbar()
+    private function hasToolbar()
     {
         global $plugin_cf;
 
@@ -228,7 +227,7 @@ class Controller
     /**
      * @return array
      */
-    protected function tools()
+    private function tools()
     {
         return array(
             'save', 'expand', 'collapse', 'create', 'create_after', 'rename',
@@ -239,7 +238,7 @@ class Controller
     /**
      * @return string
      */
-    protected function submissionURL()
+    private function submissionURL()
     {
         global $sn;
 
@@ -250,7 +249,7 @@ class Controller
     /**
      * @return string
      */
-    protected function jsScriptPath()
+    private function jsScriptPath()
     {
         global $pth;
 
@@ -260,7 +259,7 @@ class Controller
     /**
      * @return string
      */
-    protected function editView()
+    private function editView()
     {
         global $pth, $title, $plugin_tx;
 
@@ -275,7 +274,7 @@ class Controller
         return $this->render('widget');
     }
 
-    protected function save()
+    private function save()
     {
         global $pth, $plugin_tx, $_XH_csrfProtection;
 
@@ -334,7 +333,7 @@ class Controller
     /**
      * @return bool
      */
-    protected function isAdministrationRequested()
+    private function isAdministrationRequested()
     {
         global $pagemanager;
 
@@ -346,7 +345,7 @@ class Controller
     /**
      * @return string
      */
-    protected function renderInfoView()
+    private function renderInfoView()
     {
         global $title, $plugin_tx;
 

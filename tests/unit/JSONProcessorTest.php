@@ -31,7 +31,7 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
      */
     private $parser;
 
-    protected function setUpPDRouterStub()
+    private function setUpPDRouterStub()
     {
         global $pd_router;
 

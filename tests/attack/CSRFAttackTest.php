@@ -26,22 +26,24 @@
 
 namespace Pagemanager;
 
+use PHPUnit_Framework_TestCase;
+
 class CSRFAttackTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var string
      */
-    protected $url;
+    private $url;
 
     /**
      * @var resource
      */
-    protected $curlHandle;
+    private $curlHandle;
 
     /**
      * @var string
      */
-    protected $cookieFile;
+    private $cookieFile;
 
     public function setUp()
     {
@@ -58,7 +60,7 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
     /**
      * @param array $fields
      */
-    protected function setCurlOptions($fields)
+    private function setCurlOptions($fields)
     {
         $options = array(
             CURLOPT_POST => true,
