@@ -48,13 +48,6 @@ class JSONProcessor
     protected $pageData;
 
     /**
-     * The maximum nesting level.
-     *
-     * @var int
-     */
-    protected $levels;
-
-    /**
      * The current nesting level.
      *
      * @var int
@@ -100,13 +93,11 @@ class JSONProcessor
      * Initializes a newly created object.
      *
      * @param array  $contents   Page contents.
-     * @param int    $levels     Maximum page level.
      * @param string $pdattrName Name of a page data attribute.
      */
-    public function __construct($contents, $levels, $pdattrName)
+    public function __construct($contents, $pdattrName)
     {
         $this->contents = $contents;
-        $this->levels = $levels;
         $this->pdattrName = $pdattrName;
     }
 
@@ -194,12 +185,9 @@ class JSONProcessor
      */
     protected function replaceHeading($content)
     {
-        $pattern = '/<h[1-' . $this->levels . ']([^>]*)>'
-            . '((<[^>]*>)*)[^<]*((<[^>]*>)*)'
-            . '<\/h[1-' . $this->levels . ']([^>]*)>/i';
-        $replacement = '<h' . $this->level . '$1>${2}'
-            . addcslashes($this->title, '$\\') . '$4'
-            . '</h' . $this->level . '$6>';
+        $pattern = "/<!--XH_ml[0-9]:.*?-->/";
+        $replacement = "<!--XH_ml{$this->level}:" 
+            . addcslashes($this->title, '$\\') . '-->';
         return preg_replace($pattern, $replacement, $content, 1);
     }
 
@@ -210,8 +198,7 @@ class JSONProcessor
      */
     protected function appendNewPageContent()
     {
-        $this->newContents[] = '<h' . $this->level . '>' . $this->title
-            . '</h' . $this->level . '>';
+        $this->newContents[] = "<!--XH_ml{$this->level}:{$this->title}-->";
     }
 
     /**

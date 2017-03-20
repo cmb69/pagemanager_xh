@@ -83,14 +83,13 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
 
         $cf['uri']['word_separator'] = '_';
         $contents = array(
-            '<h1>Welcome</h1>Welcome to my website!',
-            '<h2>About</h2>About me',
-            '<h1>News</h1>Here are some news.'
+            '<!--XH_ml1:Welcome-->Welcome to my website!',
+            '<!--XH_ml2:About-->About me',
+            '<!--XH_ml1:News-->Here are some news.'
         );
-        $levels = 3;
         $pdattrName = 'show';
         $this->setUpPDRouterStub();
-        $this->subject = new JSONProcessor($contents, $levels, $pdattrName);
+        $this->subject = new JSONProcessor($contents, $pdattrName);
         $timeMock = new PHPUnit_Extensions_MockFunction('time', $this->subject);
         $timeMock->expects($this->any())->will($this->returnValue(1420903422));
     }
@@ -129,9 +128,9 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
 }]
 JSON
                 , array(
-                    '<h1>Welcome</h1>Welcome to my website!',
-                    '<h2>About</h2>About me',
-                    '<h1>News</h1>Here are some news.'
+                    '<!--XH_ml1:Welcome-->Welcome to my website!',
+                    '<!--XH_ml2:About-->About me',
+                    '<!--XH_ml1:News-->Here are some news.'
                 ),
                 array(
                     array('url' => 'Welcome', 'foo' => 'bar', 'show' => '1'),
@@ -170,10 +169,10 @@ JSON
 }]
 JSON
                 , array(
-                    '<h1>Welcome</h1>Welcome to my website!',
-                    '<h2>About</h2>About me',
-                    '<h2>New Page</h2>',
-                    '<h1>News</h1>Here are some news.'
+                    '<!--XH_ml1:Welcome-->Welcome to my website!',
+                    '<!--XH_ml2:About-->About me',
+                    '<!--XH_ml2:New Page-->',
+                    '<!--XH_ml1:News-->Here are some news.'
                 ),
                 array(
                     array('url' => 'Welcome', 'foo' => 'bar', 'show' => '1'),
@@ -203,8 +202,8 @@ JSON
 }]
 JSON
                 , array(
-                    '<h1>Welcome</h1>Welcome to my website!',
-                    '<h1>News</h1>Here are some news.'
+                    '<!--XH_ml1:Welcome-->Welcome to my website!',
+                    '<!--XH_ml1:News-->Here are some news.'
                 ),
                 array(
                     array('url' => 'Welcome', 'foo' => 'bar', 'show' => '1'),
@@ -235,9 +234,9 @@ JSON
 }]
 JSON
                 , array(
-                    '<h1>Welcome</h1>Welcome to my website!',
-                    '<h2>About</h2>About me',
-                    '<h3>News</h3>Here are some news.'
+                    '<!--XH_ml1:Welcome-->Welcome to my website!',
+                    '<!--XH_ml2:About-->About me',
+                    '<!--XH_ml3:News-->Here are some news.'
                 ),
                 array(
                     array('url' => 'Welcome', 'foo' => 'bar', 'show' => '1'),
@@ -275,10 +274,10 @@ JSON
 }]
 JSON
                 , array(
-                    '<h1>Welcome</h1>Welcome to my website!',
-                    '<h2>About</h2>About me',
-                    '<h2>About</h2>About me',
-                    '<h1>News</h1>Here are some news.'
+                    '<!--XH_ml1:Welcome-->Welcome to my website!',
+                    '<!--XH_ml2:About-->About me',
+                    '<!--XH_ml2:About-->About me',
+                    '<!--XH_ml1:News-->Here are some news.'
                 ),
                 array(
                     array('url' => 'Welcome', 'foo' => 'bar', 'show' => '1'),
@@ -311,9 +310,9 @@ JSON
 }]
 JSON
                 , array(
-                    '<h1>Welcome</h1>Welcome to my website!',
-                    '<h2>About</h2>About me',
-                    '<h1>News</h1>Here are some news.'
+                    '<!--XH_ml1:Welcome-->Welcome to my website!',
+                    '<!--XH_ml2:About-->About me',
+                    '<!--XH_ml1:News-->Here are some news.'
                 ),
                 array(
                     array('url' => 'Welcome', 'foo' => 'bar', 'show' => '0'),
@@ -345,9 +344,9 @@ JSON
 }]
 JSON
                 , array(
-                    '<h1>Welcome</h1>Welcome to my website!',
-                    '<h2>About</h2>About me',
-                    '<h1>News</h1>Here are some news.'
+                    '<!--XH_ml1:Welcome-->Welcome to my website!',
+                    '<!--XH_ml2:About-->About me',
+                    '<!--XH_ml1:News-->Here are some news.'
                 ),
                 array(
                     array('url' => 'Welcome', 'foo' => 'bar', 'show' => '1'),

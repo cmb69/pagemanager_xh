@@ -210,14 +210,13 @@ class Controller
      *
      * @global array  The paths of system files and folders.
      * @global string The script name.
-     * @global array  The configuration of the core.
      * @global array  The localization of the core.
      * @global array  The configuration of the plugins.
      * @global array  The localization of the plugins.
      */
     protected function jsConfig()
     {
-        global $pth, $sn, $cf, $tx, $plugin_cf, $plugin_tx;
+        global $pth, $sn, $tx, $plugin_cf, $plugin_tx;
 
         $pcf = $plugin_cf['pagemanager'];
         $ptx = $plugin_tx['pagemanager'];
@@ -225,7 +224,7 @@ class Controller
             'okButton' => $ptx['button_ok'],
             'cancelButton' => $ptx['button_cancel'],
             'deleteButton' => $ptx['button_delete'],
-            'menuLevels' => (int) $cf['menu']['levels'],
+            'menuLevels' => 9,
             'verbose' => (bool) $pcf['verbose'],
             'menuLevelMessage' => $ptx['message_menu_level'],
             'cantRenameError' => $ptx['error_cant_rename'],

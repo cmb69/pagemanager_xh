@@ -88,26 +88,23 @@ class Model
      *
      * @return void
      *
-     * @global array The content of the pages.
-     * @global array The configuration of the core.
+     * @global array The headings of the pages.
      * @global array The localization of the core.
      */
     public function getHeadings()
     {
-        global $c, $cf, $tx;
+        global $h, $tx;
 
-        $stop = $cf['menu']['levels'];
         $empty = 0;
-        foreach ($c as $i => $page) {
-            preg_match('~<h([1-' . $stop . ']).*?>(.*?)</h~isu', $page, $matches);
-            $heading = $this->cleanedHeading($matches[2]);
+        foreach (array_keys($h) as $i) {
+            $heading = $this->cleanedHeading($h[$i]);
             if ($heading === '') {
                 $empty += 1;
                 $this->headings[$i] = $tx['toc']['empty'] . ' ' . $empty;
             } else {
                 $this->headings[$i] = $heading;
             }
-            $this->mayRename[$i] = $this->mayRename($matches[2]);
+            $this->mayRename[$i] = $this->mayRename($h[$i]);
         }
     }
 
@@ -165,16 +162,15 @@ class Model
      * @return bool
      *
      * @global array  The contents of the pages.
-     * @global array  The configuration of the core.
      * @global array  The configuration of the plugins.
      * @global object The page data router.
      */
     public function save($json)
     {
-        global $c, $cf, $plugin_cf, $pd_router;
+        global $c, $plugin_cf, $pd_router;
 
         $parser = new JSONProcessor(
-            $c, (int) $cf['menu']['levels'],
+            $c,
             $plugin_cf['pagemanager']['pagedata_attribute']
         );
         $parser->process($json);

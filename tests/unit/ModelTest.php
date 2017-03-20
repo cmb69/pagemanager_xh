@@ -48,29 +48,27 @@ class ModelTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      *
-     * @global array The content of the pages.
+     * @global array The headings of the pages.
      * @global int   The number of pages.
      * @global array The levels of the pages.
-     * @global array The configuration of the core.
      * @global array The localization of the core.
      */
     public function setUp()
     {
-        global $c, $cl, $l, $cf, $tx;
+        global $h, $cl, $l, $tx;
 
-        $c = array(
-            '<h1>Welcome</h1>',
-            '<h2>Subpage</h2>',
-            '<h2>Subpage</h2>',
-            '<h2></h2>',
-            '<h1>F<em>o</em>o</h1>',
-            '<h2>Foo &amp; bar</h2>',
-            '<h2>Foo &nbsp; bar</h2>'
+        $h = array(
+            'Welcome',
+            'Subpage',
+            'Subpage',
+            '',
+            'Foo',
+            'Foo &amp; bar',
+            'Foo &nbsp; bar'
         );
-        $cl = count($c);
+        $cl = count($h);
         $l = array(1, 2, 2, 2, 1, 2, 2);
 
-        $cf['menu']['levels'] = '3';
         $tx['toc']['empty'] = 'EMPTY HEADING';
 
         $this->model = new Model();
