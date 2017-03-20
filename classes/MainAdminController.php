@@ -87,7 +87,7 @@ class MainAdminController extends Controller
         $view->isIrregular = $this->model->isIrregular();
         $view->ajaxLoaderPath = "{$this->pluginFolder}images/ajax-loader-bar.gif";
         $view->hasToolbar = (bool) $this->config['toolbar_show'];
-        $view->toolbarClass = $this->config['toolbar_vertical'] ? 'pagemanager-vertical' : 'pagemanager-horizontal';
+        $view->toolbarClass = $this->config['toolbar_vertical'] ? 'pagemanager_vertical' : 'pagemanager_horizontal';
         $tools = array();
         foreach ($this->tools() as $tool) {
             $tools[] = new HtmlString($this->tool($tool));
@@ -106,7 +106,7 @@ class MainAdminController extends Controller
 
         $url = new Url($sn, array('pagemanager' => '', 'edit' => ''));
         if (isset($_GET['xhpages'])) {
-            $url = $url->with('pagemanager-xhpages', '');
+            $url = $url->with('pagemanager_xhpages', '');
         }
         return (string) $url;
     }
@@ -131,7 +131,7 @@ class MainAdminController extends Controller
         global $pth;
 
         $horizontal = !$this->config['toolbar_vertical'];
-        $id = "pagemanager-$tool";
+        $id = "pagemanager_{$tool}";
         $o = '';
         $style = $tool === 'save' ? ' style="display: none"' : '';
         if ($tool === 'save') {
@@ -230,7 +230,7 @@ class MainAdminController extends Controller
         $res = array(
             'data' => $this->model->getHeading($index),
             'attr' => array(
-                'id' => "pagemanager-$index",
+                'id' => "pagemanager_{$index}",
                 'title' => $this->model->getHeading($index)
             ),
             'children' => $this->getPagesData($index)
@@ -243,7 +243,7 @@ class MainAdminController extends Controller
             }
         }
         if (!$this->model->getMayRename[$index]) {
-            $res['attr']['class'] = 'pagemanager-no-rename';
+            $res['attr']['class'] = 'pagemanager_no_rename';
         }
         return $res;
     }

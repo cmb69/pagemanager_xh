@@ -111,7 +111,7 @@ class JSONProcessor
 
     private function processPage(array $page)
     {
-        $pattern = '/(copy_)?pagemanager-([0-9]*)/';
+        $pattern = '/(copy_)?pagemanager_([0-9]*)/';
         $this->id = empty($page['attr']['id'])
             ? null
             : (int) preg_replace($pattern, '$2', $page['attr']['id']);

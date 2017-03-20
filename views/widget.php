@@ -1,8 +1,8 @@
 <h1>Pagemanager – <?=$this->text('menu_main')?></h1>
-<form id="pagemanager-form" action="<?=$this->submissionUrl()?>"
+<form id="pagemanager_form" action="<?=$this->submissionUrl()?>"
       method="post" accept-charset="UTF-8">
 <?php if ($this->isIrregular):?>
-    <div id="pagemanager-structure-warning" class="cmsimplecore_warning">
+    <div id="pagemanager_structure_warning" class="cmsimplecore_warning">
         <p><?=$this->text('error_structure_warning')?></p>
         <p>
             <button type="button">
@@ -11,11 +11,11 @@
         </p>
     </div>
 <?php endif?>
-    <p class="pagemanager-status" style="display:none">
+    <p class="pagemanager_status" style="display:none">
         <img src="<?=$this->ajaxLoaderPath()?>" alt="Loading">
     </p>
 <?php if ($this->hasToolbar):?>
-    <div id="pagemanager-toolbar" class="<?=$this->toolbarClass()?>">
+    <div id="pagemanager_toolbar" class="<?=$this->toolbarClass()?>">
 <?php   foreach ($this->tools as $tool):?>
         <?=$this->escape($tool)?>
 <?php   endforeach?>
@@ -25,14 +25,14 @@
     <div id="pagemanager" class="<?=$this->toolbarClass()?>"></div>
     <input type="hidden" name="admin" value="plugin_main">
     <input type="hidden" name="action" value="plugin_save">
-    <input type="hidden" name="json" id="pagemanager-json" value="">
-    <input id="pagemanager-submit" type="submit" class="submit"
+    <input type="hidden" name="json" id="pagemanager_json" value="">
+    <input id="pagemanager_submit" type="submit" class="submit"
            value="<?=$this->text('button_save')?>" style="display: none">
     <?=$this->csrfTokenInput()?>
-    <p class="pagemanager-status" style="display:none">
+    <p class="pagemanager_status" style="display:none">
         <img src="<?=$this->ajaxLoaderPath()?>" alt="Loading">
     </p>
 </form>
-<div id="pagemanager-footer"></div>
-<div id="pagemanager-confirmation" title="<?=$this->text('message_confirm')?>"></div>
-<div id="pagemanager-alert" title="<?=$this->text('message_information')?>"></div>
+<div id="pagemanager_footer"></div>
+<div id="pagemanager_confirmation" title="<?=$this->text('message_confirm')?>"></div>
+<div id="pagemanager_alert" title="<?=$this->text('message_information')?>"></div>

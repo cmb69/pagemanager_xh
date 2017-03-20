@@ -79,13 +79,13 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
 [{
     "data": "Welcome",
     "attr": {
-        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1",
+        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1",
         "class": ""
     },
     "children": [{
         "data": "About",
         "attr": {
-            "id": "pagemanager-1", "title": "About", "data-pdattr": "1",
+            "id": "pagemanager_1", "title": "About", "data-pdattr": "1",
             "class": ""
         },
         "children": []
@@ -93,7 +93,7 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
 }, {
     "data": "News",
     "attr": {
-        "id": "pagemanager-2", "title": "News", "data-pdattr": "0",
+        "id": "pagemanager_2", "title": "News", "data-pdattr": "0",
         "class": ""
     },
     "children": []
@@ -115,13 +115,13 @@ JSON
 [{
     "data": "Welcome",
     "attr": {
-        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1",
+        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1",
         "class": ""
     },
     "children": [{
         "data": "About",
         "attr": {
-            "id": "pagemanager-1", "title": "About", "data-pdattr": "1",
+            "id": "pagemanager_1", "title": "About", "data-pdattr": "1",
             "class": ""
         },
         "children": []
@@ -135,7 +135,7 @@ JSON
 }, {
     "data": "News",
     "attr": {
-        "id": "pagemanager-2", "title": "News", "data-pdattr": "0", "class": ""
+        "id": "pagemanager_2", "title": "News", "data-pdattr": "0", "class": ""
     },
     "children": []
 }]
@@ -161,14 +161,14 @@ JSON
 [{
     "data": "Welcome",
     "attr": {
-        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1",
+        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1",
         "class": ""
     },
     "children": []
 }, {
     "data": "News",
     "attr": {
-        "id": "pagemanager-2", "title": "News", "data-pdattr": "0", "class": ""
+        "id": "pagemanager_2", "title": "News", "data-pdattr": "0", "class": ""
     },
     "children": []
 }]
@@ -187,17 +187,17 @@ JSON
 [{
     "data": "Welcome",
     "attr": {
-        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1", "class": ""
+        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1", "class": ""
     },
     "children": [{
         "data": "About",
         "attr": {
-            "id": "pagemanager-1", "title": "About", "data-pdattr": "1", "class": ""
+            "id": "pagemanager_1", "title": "About", "data-pdattr": "1", "class": ""
         },
         "children": [{
             "data": "News",
             "attr": {
-                "id": "pagemanager-2", "title": "News", "data-pdattr": "0",
+                "id": "pagemanager_2", "title": "News", "data-pdattr": "0",
                 "class": ""
             },
             "children": []
@@ -221,18 +221,18 @@ JSON
 [{
     "data": "Welcome",
     "attr": {
-        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1", "class": ""
+        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1", "class": ""
     },
     "children": [{
         "data": "About",
         "attr": {
-            "id": "pagemanager-1", "title": "About", "data-pdattr": "1", "class": ""
+            "id": "pagemanager_1", "title": "About", "data-pdattr": "1", "class": ""
         },
         "children": []
     }, {
         "data": "About",
         "attr": {
-            "id": "copy_pagemanager-1", "title": "About", "data-pdattr": "1",
+            "id": "copy_pagemanager_1", "title": "About", "data-pdattr": "1",
             "class": ""
             },
         "children": []
@@ -240,7 +240,7 @@ JSON
 }, {
     "data": "News",
     "attr": {
-        "id": "pagemanager-2", "title": "News", "data-pdattr": "0", "class": ""
+        "id": "pagemanager_2", "title": "News", "data-pdattr": "0", "class": ""
     },
     "children": []
 }]
@@ -263,12 +263,12 @@ JSON
 [{
     "data": "Welcome",
     "attr": {
-        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "0", "class": ""
+        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "0", "class": ""
     },
     "children": [{
         "data": "About",
         "attr": {
-            "id": "pagemanager-1", "title": "About", "data-pdattr": "0",
+            "id": "pagemanager_1", "title": "About", "data-pdattr": "0",
             "class": ""
         },
         "children": []
@@ -276,7 +276,7 @@ JSON
 }, {
     "data": "News",
     "attr": {
-        "id": "pagemanager-2", "title": "News", "data-pdattr": "1", "class": ""
+        "id": "pagemanager_2", "title": "News", "data-pdattr": "1", "class": ""
     },
     "children": []
 }]
@@ -297,20 +297,20 @@ JSON
 [{
     "data": "Welcome",
     "attr": {
-        "id": "pagemanager-0", "title": "Welcome", "data-pdattr": "1",
-        "class": "pagemanager-no-rename"
+        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1",
+        "class": "pagemanager_no_rename"
     },
     "children": [{
         "data": "About",
         "attr": {
-            "id": "pagemanager-1", "title": "About", "data-pdattr": "1", "class": ""
+            "id": "pagemanager_1", "title": "About", "data-pdattr": "1", "class": ""
         },
         "children": []
     }]
 }, {
     "data": "News",
     "attr": {
-        "id": "pagemanager-2", "title": "News", "data-pdattr": "0", "class": ""
+        "id": "pagemanager_2", "title": "News", "data-pdattr": "0", "class": ""
     },
     "children": []
 }]

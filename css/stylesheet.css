@@ -12,7 +12,7 @@
     overflow: scroll !important;
 }
 
-#pagemanager.pagemanager-vertical {
+#pagemanager.pagemanager_vertical {
     margin-left: 27px;
 }
 
@@ -20,7 +20,7 @@
  * Toolbar
  */
 
-#pagemanager-toolbar {
+#pagemanager_toolbar {
     margin: 1px 0;
     border: 1px solid #999;
     background-color: #eee;
@@ -29,8 +29,8 @@
     overflow: hidden;
 }
 
-#pagemanager-toolbar button,
-#pagemanager-toolbar a {
+#pagemanager_toolbar button,
+#pagemanager_toolbar a {
     float: left;
     border: 0;
     padding: 0;
@@ -41,17 +41,17 @@
     cursor: pointer;
 }
 
-#pagemanager-expand {background-position: -16px 0}
-#pagemanager-collapse {background-position: -32px 0}
-#pagemanager-create {background-position: -48px 0}
-#pagemanager-create_after {background-position: 0 -16px}
-#pagemanager-rename {background-position: -16px -16px}
-#pagemanager-delete {background-position: -32px -16px}
-#pagemanager-cut {background-position: -48px -16px}
-#pagemanager-copy {background-position: 0 -32px}
-#pagemanager-paste {background-position: -16px -32px}
-#pagemanager-paste_after {background-position: -32px -32px}
-#pagemanager-help {background-position: -48px -32px}
+#pagemanager_expand {background-position: -16px 0}
+#pagemanager_collapse {background-position: -32px 0}
+#pagemanager_create {background-position: -48px 0}
+#pagemanager_create_after {background-position: 0 -16px}
+#pagemanager_rename {background-position: -16px -16px}
+#pagemanager_delete {background-position: -32px -16px}
+#pagemanager_cut {background-position: -48px -16px}
+#pagemanager_copy {background-position: 0 -32px}
+#pagemanager_paste {background-position: -16px -32px}
+#pagemanager_paste_after {background-position: -32px -32px}
+#pagemanager_help {background-position: -48px -32px}
 
 /*
  * horizontal toolbar
@@ -59,19 +59,19 @@
 
 /* for floating horizontal toolbar: uncomment the following */
 /*
-#pagemanager-toolbar.pagemanager-horizontal {
+#pagemanager_toolbar.pagemanager_horizontal {
     position: fixed;
     top: 150px;
     z-index: 1000;
 }
 */
 
-#pagemanager-toolbar.pagemanager-horizontal img {
+#pagemanager_toolbar.pagemanager_horizontal img {
     margin: 8px 0;
 }
 
-#pagemanager-toolbar.pagemanager-horizontal button,
-#pagemanager-toolbar.pagemanager-horizontal a {
+#pagemanager_toolbar.pagemanager_horizontal button,
+#pagemanager_toolbar.pagemanager_horizontal a {
     margin: 6px 5px;
 }
 
@@ -82,7 +82,7 @@
  * Change top and left accordingly.
  */
 
-#pagemanager-toolbar.pagemanager-vertical {
+#pagemanager_toolbar.pagemanager_vertical {
     text-align: center;
     position: fixed;
     margin: 0 auto;
@@ -98,23 +98,23 @@
 */
 /* and for a lefthand toolbar the margin of the submit button */
 /*
-#pagemanager-submit {
+#pagemanager_submit {
     margin-left: 32px !important;
 }
 */
 /* and for a righthand toolbar the position of the tooltips */
 /*
-#pagemanager-toolbar.pagemanager-vertical a.pl_tooltip:hover span {
+#pagemanager_toolbar.pagemanager_vertical a.pl_tooltip:hover span {
     left: -320px;
 }
 */
 
-#pagemanager-toolbar.pagemanager-vertical img {
+#pagemanager_toolbar.pagemanager_vertical img {
     margin: 0 8px;
 }
 
-#pagemanager-toolbar.pagemanager-vertical button,
-#pagemanager-toolbar.pagemanager-vertical a {
+#pagemanager_toolbar.pagemanager_vertical button,
+#pagemanager_toolbar.pagemanager_vertical a {
     margin: 6px 2px;
 }
 
@@ -124,7 +124,7 @@
  */
 
 /* To have enough space for the whole context menu, if the template has a small footer */
-#pagemanager-footer {
+#pagemanager_footer {
     height: 150px;
 }
 

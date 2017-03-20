@@ -130,7 +130,7 @@
 
         attribs = ["id", "title", "data-pdattr", "class"];
         json = JSON.stringify(widget.get_json(-1, attribs));
-        $("#pagemanager-json").val(json);
+        $("#pagemanager_json").val(json);
     }
 
     /**
@@ -159,13 +159,13 @@
         }
 
         beforeSubmit();
-        form = $("#pagemanager-form");
+        form = $("#pagemanager_form");
         url = form.attr("action");
         message = form.children(
             ".xh_success, .xh_fail, .cmsimplecore_success, .cmsimplecore_fail"
         );
         message.remove();
-        status = $(".pagemanager-status");
+        status = $(".pagemanager_status");
         status.css("display", "block");
         data = form.serialize();
         request = new XMLHttpRequest();
@@ -182,8 +182,8 @@
      * @returns {undefined}
      */
     function confirmStructureWarning() {
-        $("#pagemanager-structure-warning").hide(500);
-        $("#pagemanager-save, #pagemanager-submit").show();
+        $("#pagemanager_structure_warning").hide(500);
+        $("#pagemanager_save, #pagemanager_submit").show();
     }
 
     /**
@@ -194,7 +194,7 @@
      * @returns {undefined}
      */
     function alert(message) {
-        $("#pagemanager-alert").html(message).dialog("open");
+        $("#pagemanager_alert").html(message).dialog("open");
     }
 
     /**
@@ -289,7 +289,7 @@
     function beforeRename(event, data) {
         var node = data.args[0], title, result;
 
-        if (!node.hasClass("pagemanager-no-rename")) {
+        if (!node.hasClass("pagemanager_no_rename")) {
             title = node.attr("title");
             widget.set_text(node, title);
             result = undefined;
@@ -336,7 +336,7 @@
                 buttons[PAGEMANAGER.cancelButton] = function () {
                     $(this).dialog("close");
                 };
-                $("#pagemanager-confirmation")
+                $("#pagemanager_confirmation")
                     .html(PAGEMANAGER.confirmDeletionMessage)
                     .dialog("option", "buttons", buttons)
                     .dialog("open");
@@ -479,7 +479,7 @@
     function initDialogs() {
         var buttons = {};
 
-        $("#pagemanager-confirmation").dialog({
+        $("#pagemanager_confirmation").dialog({
             "autoOpen": false,
             "modal": true
         });
@@ -487,7 +487,7 @@
         buttons[PAGEMANAGER.okButton] = function () {
             $(this).dialog("close");
         };
-        $("#pagemanager-alert").dialog({
+        $("#pagemanager_alert").dialog({
             "autoOpen": false,
             "modal": true,
             "buttons": buttons
@@ -549,8 +549,8 @@
         element.bind("loaded.jstree", function () {
             var events;
 
-            if ($("#pagemanager-structure-warning").length === 0) {
-                $("#pagemanager-save, #pagemanager-submit").show();
+            if ($("#pagemanager_structure_warning").length === 0) {
+                $("#pagemanager_save, #pagemanager_submit").show();
             }
             markDuplicates(-1, 0);
             if (PAGEMANAGER.hasCheckboxes) {
@@ -609,14 +609,14 @@
 
         if (!window.opera) {
             window.onbeforeunload = function () {
-                if (modified && $("#pagemanager-json").val() === "") {
+                if (modified && $("#pagemanager_json").val() === "") {
                     return PAGEMANAGER.leaveWarning;
                 }
                 return undefined;
             };
         } else {
             $(window).unload(function () {
-                if (modified && $("#pagemanager-json").val() === "") {
+                if (modified && $("#pagemanager_json").val() === "") {
                     if (window.confirm(PAGEMANAGER.leaveConfirmation)) {
                         submit();
                     }
@@ -682,19 +682,19 @@
         element.jstree(config);
         widget = $.jstree._reference("#pagemanager");
 
-        ids = "#pagemanager-save, #pagemanager-expand, #pagemanager-collapse," +
-            "#pagemanager-create, #pagemanager-create_after," +
-            "#pagemanager-rename, #pagemanager-delete, #pagemanager-cut," +
-            "#pagemanager-copy, #pagemanager-paste, #pagemanager-paste_after";
+        ids = "#pagemanager_save, #pagemanager_expand, #pagemanager_collapse," +
+            "#pagemanager_create, #pagemanager_create_after," +
+            "#pagemanager_rename, #pagemanager_delete, #pagemanager_cut," +
+            "#pagemanager_copy, #pagemanager_paste, #pagemanager_paste_after";
         $(ids).off("click").click(function () {
             tool(this.id.substr(12));
         });
 
-        $("#pagemanager-form").off("submit").submit(function (event) {
+        $("#pagemanager_form").off("submit").submit(function (event) {
             event.preventDefault();
             submit();
         });
-        $("#pagemanager-structure-warning button").click(
+        $("#pagemanager_structure_warning button").click(
             confirmStructureWarning
         );
         element.off("dblclick").dblclick(function () {
