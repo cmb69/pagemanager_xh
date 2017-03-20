@@ -66,7 +66,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             "Foo \xC2\xA0 bar"
         );
         $this->model->calculateHeadings();
-        $actual = $this->model->headings;
+        $actual = $this->model->getHeadings();
         $this->assertEquals($expected, $actual);
     }
 

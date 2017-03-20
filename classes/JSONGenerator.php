@@ -80,10 +80,10 @@ class JSONGenerator
         $pageData = $pd_router->find_page($index);
 
         $res = array(
-            'data' => $this->model->headings[$index],
+            'data' => $this->model->getHeading($index),
             'attr' => array(
                 'id' => "pagemanager-$index",
-                'title' => $this->model->headings[$index]
+                'title' => $this->model->getHeading($index)
             ),
             'children' => $this->getPagesData($index)
         );
@@ -94,7 +94,7 @@ class JSONGenerator
                 $res['attr']['data-pdattr'] = $pageData[$pdattr];
             }
         }
-        if (!$this->model->mayRename[$index]) {
+        if (!$this->model->getMayRename[$index]) {
             $res['attr']['class'] = 'pagemanager-no-rename';
         }
         return $res;

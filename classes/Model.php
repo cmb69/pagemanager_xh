@@ -27,12 +27,38 @@ class Model
      * @var string[]
      * @todo Make private.
      */
-    public $headings;
+    private $headings;
 
     /**
      * @var bool[]
      */
-    public $mayRename;
+    private $mayRename;
+
+    /**
+     * @param int $index
+     * @return string
+     */
+    public function getHeading($index)
+    {
+        return $this->headings[$index];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getHeadings()
+    {
+        return $this->headings;
+    }
+
+    /**
+     * @param int $index
+     * @return bool
+     */
+    public function getMayRename($index)
+    {
+        return $this->mayRename[$index];
+    }
 
     /**
      * @param string $heading
