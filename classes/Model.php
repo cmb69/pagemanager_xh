@@ -1,60 +1,29 @@
 <?php
 
 /**
- * The model class of Pagemanager_XH.
- *
- * PHP version 5
- *
- * @category  CMSimple_XH
- * @package   Pagemanager
- * @author    Christoph M. Becker <cmbecker69@gmx.de>
  * @copyright 2011-2017 Christoph M. Becker <http://3-magi.net>
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
 namespace Pagemanager;
 
-/**
- * The model class of Pagemanager_XH.
- *
- * @category CMSimple_XH
- * @package  Pagemanager
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
- */
 class Model
 {
     /**
-     * The unmodified page headings.
-     *
      * @var array
-     *
      * @todo Make protected.
      */
     public $headings;
 
     /**
-     * Whether the pages may be renamed.
-     *
      * @var array
-     *
      * @todo Make protected.
      */
     public $mayRename;
 
     /**
-     * Returns whether a heading may be renamed.
-     *
-     * Renaming is only allow if the heading doesn't contain any markup,
-     * besides the generally recognized XML entities.
-     *
-     * @param string $heading A page heading.
-     *
+     * @param string $heading
      * @return string
-     *
-     * @since 2.0.1
      */
     protected function mayRename($heading)
     {
@@ -62,18 +31,8 @@ class Model
     }
 
     /**
-     * Returns a cleaned heading.
-     *
-     * Trims, strips off all tags and decodes HTML entities in the heading.
-     * For PHP 4 a simplified fallback is used which does not properly decode
-     * the HTML entities, but rather replaces them with the Unicode substitution
-     * character.
-     *
-     * @param string $heading A page heading.
-     *
+     * @param string $heading
      * @return string
-     *
-     * @since 2.0.1
      */
     protected function cleanedHeading($heading)
     {
@@ -83,14 +42,6 @@ class Model
         return $heading;
     }
 
-    /**
-     * Initializes <var>$headings</var> and <var>$mayRename</var>.
-     *
-     * @return void
-     *
-     * @global array The headings of the pages.
-     * @global array The localization of the core.
-     */
     public function getHeadings()
     {
         global $h, $tx;
@@ -109,12 +60,7 @@ class Model
     }
 
     /**
-     * Returns whether the page structure is irregular.
-     *
      * @return bool
-     *
-     * @global array The menu levels of the pages.
-     * @global int   The number of pages.
      */
     public function isIrregular()
     {
@@ -130,11 +76,7 @@ class Model
     }
 
     /**
-     * Returns the available themes.
-     *
      * @return array
-     *
-     * @global array The paths of system files and folders.
      */
     public function themes()
     {
@@ -155,15 +97,8 @@ class Model
     }
 
     /**
-     * Saves the content. Returns whether that succeeded.
-     *
-     * @param string $json A JSON string.
-     *
+     * @param string $json
      * @return bool
-     *
-     * @global array  The contents of the pages.
-     * @global array  The configuration of the plugins.
-     * @global object The page data router.
      */
     public function save($json)
     {
@@ -178,5 +113,3 @@ class Model
         return $pd_router->refresh($parser->getPageData());
     }
 }
-
-?>

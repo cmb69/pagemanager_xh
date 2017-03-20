@@ -1,45 +1,22 @@
 <?php
 
 /**
- * Testing the JSON processor class.
- *
- * PHP version 5
- *
- * @category  Testing
- * @package   Pagemanager
- * @author    Christoph M. Becker <cmbecker69@gmx.de>
  * @copyright 2011-2017 Christoph M. Becker <http://3-magi.net>
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
-use Pagemanager\JSONProcessor;
+namespace Pagemanager;
 
-/**
- * Testing the JSON processor class.
- *
- * @category Testing
- * @package  Pagemanager
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
- */
+use PHPUnit_Framework_TestCase;
+use PHPUnit_Extensions_MockFunction;
+
 class JSONProcessorTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * The test subject.
-     *
      * @var JSONProcessor
      */
-    var $parser;
+    private $parser;
 
-    /**
-     * Sets up the page data router stub.
-     *
-     * @return void
-     *
-     * @global XH\PageDataRouter The page data router.
-     */
     protected function setUpPDRouterStub()
     {
         global $pd_router;
@@ -60,13 +37,6 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValueMap($map));
     }
 
-    /**
-     * Sets up the test fixture.
-     *
-     * @return void
-     *
-     * @global array The configuration of the core.
-     */
     protected function setUp()
     {
         global $cf;
@@ -85,8 +55,6 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns data for testProcess().
-     *
      * @return array
      */
     public function dataForProcess()
@@ -348,15 +316,10 @@ JSON
     }
 
     /**
-     * Tests parsing.
-     *
-     * @param string $json             A JSON string.
-     * @param array  $expectedContent  An array of expected content.
-     * @param array  $expectedPageData An array of expected page data.
-     *
      * @dataProvider dataForProcess
-     *
-     * @return void
+     * @param string $json
+     * @param array $expectedContent
+     * @param array $expectedPageData
      */
     public function testProcess($json, $expectedContent, $expectedPageData)
     {
@@ -364,7 +327,4 @@ JSON
         $this->assertEquals($expectedContent, $this->subject->getContents());
         $this->assertEquals($expectedPageData, $this->subject->getPageData());
     }
-
 }
-
-?>

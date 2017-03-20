@@ -1,99 +1,62 @@
 <?php
 
 /**
- * The JSON processors.
- *
- * PHP version 5
- *
- * @category  CMSimple_XH
- * @package   Pagemanager
- * @author    Christoph M. Becker <cmbecker69@gmx.de>
  * @copyright 2011-2017 Christoph M. Becker <http://3-magi.net/>
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
 namespace Pagemanager;
 
-/**
- * The JSON processors.
- *
- * @category CMSimple_XH
- * @package  Pagemanager
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
- */
 class JSONProcessor
 {
     /**
-     * The original contents array.
-     *
      * @var array
      */
     protected $contents;
 
     /**
-     * The new contents array.
-     *
      * @var array
      */
     protected $newContents;
 
     /**
-     * The new page data array.
-     *
      * @var array
      */
     protected $pageData;
 
     /**
-     * The current nesting level.
-     *
      * @var int
      */
     protected $level;
 
     /**
-     * The current page id (number?).
-     *
      * @var int
      */
     protected $id;
 
     /**
-     * The current page heading.
-     *
      * @var string
      */
     protected $title;
 
     /**
-     * The name of the page data attribute.
-     *
      * @var string
      */
     protected $pdattrName;
 
     /**
-     * The current page data attribute.
-     *
      * @var bool
      */
     protected $pdattr;
 
     /**
-     * Whether the current page may be renamed.
-     *
      * @var bool
      */
     protected $mayRename;
 
     /**
-     * Initializes a newly created object.
-     *
-     * @param array  $contents   Page contents.
-     * @param string $pdattrName Name of a page data attribute.
+     * @param array $contents
+     * @param string $pdattrName
      */
     public function __construct($contents, $pdattrName)
     {
@@ -102,11 +65,7 @@ class JSONProcessor
     }
 
     /**
-     * Processes the given JSON.
-     *
-     * @param string $json JSON.
-     *
-     * @return void
+     * @param string $json
      */
     public function process($json)
     {
@@ -117,11 +76,7 @@ class JSONProcessor
     }
 
     /**
-     * Processes an array of pages.
-     *
-     * @param array $pages An array of pages.
-     *
-     * @return void
+     * @param array $pages
      */
     protected function processPages($pages)
     {
@@ -133,11 +88,7 @@ class JSONProcessor
     }
 
     /**
-     * Processes a page.
-     *
-     * @param array $page An array of page related data.
-     *
-     * @return void
+     * @param array $page
      */
     protected function processPage($page)
     {
@@ -145,9 +96,7 @@ class JSONProcessor
         $this->id = empty($page['attr']['id'])
             ? null
             : (int) preg_replace($pattern, '$2', $page['attr']['id']);
-        $this->title = htmlspecialchars(
-            $page['attr']['title'], ENT_NOQUOTES, 'UTF-8'
-        );
+        $this->title = htmlspecialchars($page['attr']['title'], ENT_NOQUOTES, 'UTF-8');
         $this->pdattr = isset($page['attr']['data-pdattr'])
             ? $page['attr']['data-pdattr'] : null;
         $this->mayRename = $page['attr']['class'] == '';
@@ -162,11 +111,6 @@ class JSONProcessor
         $this->processPages($page['children']);
     }
 
-    /**
-     * Appends an existing page to the content.
-     *
-     * @return void
-     */
     protected function appendExistingPageContent()
     {
         $content = $this->contents[$this->id];
@@ -177,37 +121,22 @@ class JSONProcessor
     }
 
     /**
-     * Replaces the heading of a page content.
-     *
-     * @param string $content A page content.
-     *
-     * @return string HTML
+     * @param string $content
+     * @return string
      */
     protected function replaceHeading($content)
     {
         $pattern = "/<!--XH_ml[0-9]:.*?-->/";
-        $replacement = "<!--XH_ml{$this->level}:" 
+        $replacement = "<!--XH_ml{$this->level}:"
             . addcslashes($this->title, '$\\') . '-->';
         return preg_replace($pattern, $replacement, $content, 1);
     }
 
-    /**
-     * Appends a new page to the content.
-     *
-     * @return void
-     */
     protected function appendNewPageContent()
     {
         $this->newContents[] = "<!--XH_ml{$this->level}:{$this->title}-->";
     }
 
-    /**
-     * Appends a page's page data.
-     *
-     * @return void
-     *
-     * @global XH\PageDataRouter The page data router.
-     */
     protected function appendPageData()
     {
         global $pd_router;
@@ -228,8 +157,6 @@ class JSONProcessor
     }
 
     /**
-     * Returns the new contents array.
-     *
      * @return array
      */
     public function getContents()
@@ -238,8 +165,6 @@ class JSONProcessor
     }
 
     /**
-     * Returns the new page data array.
-     *
      * @return array
      */
     public function getPageData()
@@ -247,5 +172,3 @@ class JSONProcessor
         return $this->pageData;
     }
 }
-
-?>

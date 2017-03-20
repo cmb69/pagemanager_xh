@@ -1,58 +1,30 @@
 <?php
 
 /**
- * The controller class of Pagemanager_XH.
- *
- * PHP version 5
- *
- * @category  CMSimple_XH
- * @package   Pagemanager
- * @author    Christoph M. Becker <cmbecker69@gmx.de>
  * @copyright 2011-2017 Christoph M. Becker <http://3-magi.net>
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
 namespace Pagemanager;
 
 use XH\Pages;
 
-/**
- * The controller class of Pagemanager_XH.
- *
- * @category CMSimple_XH
- * @package  Pagemanager
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Pagemanager_XH
- */
 class Controller
 {
     /**
-     * The pagemanager model.
-     *
      * @var object
-     *
      * @todo Make protected.
      */
     public $model;
 
-    /**
-     * Initializes a newly create object.
-     */
     public function __construct()
     {
         $this->model = new Model();
     }
 
     /**
-     * Returns a rendered template.
-     *
-     * @param string $template A template name.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array The paths of system files and folders.
+     * @param string $template
+     * @return string
      */
     protected function render($template)
     {
@@ -65,12 +37,7 @@ class Controller
     }
 
     /**
-     * Returns the system checks.
-     *
      * @return array
-     *
-     * @global array The paths of system files and folders.
-     * @global array The localization of the plugins.
      */
     protected function systemChecks()
     {
@@ -106,11 +73,7 @@ class Controller
     }
 
     /**
-     * Returns the path of the plugin icon file.
-     *
      * @return string
-     *
-     * @global array The paths of system files and folders.
      */
     protected function pluginIconPath()
     {
@@ -120,13 +83,8 @@ class Controller
     }
 
     /**
-     * Returns the path of a state icon file.
-     *
-     * @param string $state "ok", "warn" or "fail".
-     *
+     * @param string $state
      * @return string
-     *
-     * @global array The paths of system files and folders.
      */
     protected function stateIconPath($state)
     {
@@ -136,11 +94,7 @@ class Controller
     }
 
     /**
-     * Returns the path of the ajax loader GIF file.
-     *
      * @return string
-     *
-     * @global array The paths of system files and folders.
      */
     protected function ajaxLoaderPath()
     {
@@ -150,13 +104,8 @@ class Controller
     }
 
     /**
-     * Returns a language string.
-     *
-     * @param string $key A key.
-     *
+     * @param string $key
      * @return string
-     *
-     * @global array The localization of the plugins.
      */
     protected function lang($key)
     {
@@ -166,15 +115,8 @@ class Controller
     }
 
     /**
-     * Returns the view of a single tool.
-     *
-     * @param string $tool A tool name.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array The paths of system files and folders.
-     * @global array The configuration of the plugins.
-     * @global array The localization of the plugins.
+     * @param string $tool
+     * @return string
      */
     protected function tool($tool)
     {
@@ -204,15 +146,7 @@ class Controller
     }
 
     /**
-     * Returns the widget configuration.
-     *
-     * @return string JSON.
-     *
-     * @global array  The paths of system files and folders.
-     * @global string The script name.
-     * @global array  The localization of the core.
-     * @global array  The configuration of the plugins.
-     * @global array  The localization of the plugins.
+     * @return string
      */
     protected function jsConfig()
     {
@@ -257,11 +191,7 @@ class Controller
     }
 
     /**
-     * Returns the class name of the toolbar.
-     *
      * @return string
-     *
-     * @global array The configuration of the plugins.
      */
     protected function toolbarClass()
     {
@@ -272,11 +202,7 @@ class Controller
     }
 
     /**
-     * Returns whether the toolbar shall be shown.
-     *
      * @return bool
-     *
-     * @global array The configuration of the plugins.
      */
     protected function hasToolbar()
     {
@@ -286,8 +212,6 @@ class Controller
     }
 
     /**
-     * Returns the available tools.
-     *
      * @return array
      */
     protected function tools()
@@ -299,11 +223,7 @@ class Controller
     }
 
     /**
-     * Returns the URL for saving.
-     *
      * @return string
-     *
-     * @global string The script name.
      */
     protected function submissionURL()
     {
@@ -314,11 +234,7 @@ class Controller
     }
 
     /**
-     * Returns the path of the JS script file.
-     *
      * @return string
-     *
-     * @global array The paths of system files and folders.
      */
     protected function jsScriptPath()
     {
@@ -328,11 +244,7 @@ class Controller
     }
 
     /**
-     * Returns the page administration view.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array  The paths of system files and folders.
+     * @return string
      */
     protected function editView()
     {
@@ -349,15 +261,6 @@ class Controller
         return $this->render('widget');
     }
 
-    /**
-     * Saves the submitted site structure.
-     *
-     * @return (X)HTML.
-     *
-     * @global array  The paths of system files and folders.
-     * @global array  The localization of the plugins.
-     * @global object The CSRF protection object.
-     */
     protected function save()
     {
         global $pth, $plugin_tx, $_XH_csrfProtection;
@@ -367,23 +270,14 @@ class Controller
         if ($this->model->save(stsl($_POST['json']))) {
             echo XH_message('success', $ptx['message_save_success']);
         } else {
-            $message = sprintf(
-                $ptx['message_save_failure'], $pth['file']['content']
-            );
+            $message = sprintf($ptx['message_save_failure'], $pth['file']['content']);
             echo XH_message('fail', $message);
         }
         exit;
     }
 
     /**
-     * Dispatches according to the current request.
-     *
-     * @return string The (X)HTML.
-     *
-     * @global string The admin parameter.
-     * @global string The action parameter.
-     * @global string The requested function.
-     * @global array  The configuration of the core.
+     * @return string
      */
     public function dispatch()
     {
@@ -400,35 +294,31 @@ class Controller
         } elseif ($this->isAdministrationRequested()) {
             $o .= print_plugin_admin('on');
             switch ($admin) {
-            case '':
-                $o .= $this->renderInfoView();
-                break;
-            case 'plugin_main':
-                switch ($action) {
-                case 'plugin_data':
-                    $temp = new JSONGenerator($this->model, new Pages());
-                    $temp->execute();
-                    exit;
-                case 'plugin_save':
-                    $o .= $this->save();
+                case '':
+                    $o .= $this->renderInfoView();
+                    break;
+                case 'plugin_main':
+                    switch ($action) {
+                        case 'plugin_data':
+                            $temp = new JSONGenerator($this->model, new Pages());
+                            $temp->execute();
+                            exit;
+                        case 'plugin_save':
+                            $o .= $this->save();
+                            break;
+                        default:
+                            $o .= $this->editView();
+                    }
                     break;
                 default:
-                    $o .= $this->editView();
-                }
-                break;
-            default:
-                $o .= plugin_admin_common($action, $admin, $plugin);
+                    $o .= plugin_admin_common($action, $admin, $plugin);
             }
         }
         return $o;
     }
 
     /**
-     * Returns whether the plugin administration is requested.
-     *
      * @return bool
-     *
-     * @global string Whether the plugin administration is requested.
      */
     protected function isAdministrationRequested()
     {
@@ -440,12 +330,7 @@ class Controller
     }
 
     /**
-     * Renders the info view.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array  The localization of the plugins.
-     * @global string The title of the current page.
+     * @return string
      */
     protected function renderInfoView()
     {
@@ -455,5 +340,3 @@ class Controller
         return $this->render('info');
     }
 }
-
-?>
