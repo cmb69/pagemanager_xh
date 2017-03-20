@@ -84,8 +84,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             mkdir("$path/$theme");
         }
         file_put_contents("$path/foobar", '');
-        $actual = $this->model->themes();
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, Model::getThemes());
     }
 
     public function testIsIrregular()

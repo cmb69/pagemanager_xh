@@ -116,7 +116,7 @@ class Model
     /**
      * @return string[]
      */
-    public function themes()
+    public static function getThemes()
     {
         global $pth;
 

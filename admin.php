@@ -24,6 +24,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
     exit;
 }
 
+use Pagemanager\Model;
 use Pagemanager\Controller;
 
 define('PAGEMANAGER_VERSION', '@PAGEMANAGER_VERSION@');
@@ -33,10 +34,9 @@ define('PAGEMANAGER_VERSION', '@PAGEMANAGER_VERSION@');
  */
 function Pagemanager_themes()
 {
-    global $_Pagemanager;
-
-    return $_Pagemanager->model->themes();
+    return Model::getThemes();
 }
 
-$_Pagemanager = new Controller();
-$o .= $_Pagemanager->dispatch();
+$temp = new Controller();
+$o .= $temp->dispatch();
+$temp = null;
