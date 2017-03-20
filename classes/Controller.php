@@ -253,7 +253,7 @@ class Controller
             && in_array($cf['pagemanager']['external'], array('', 'pagemanager'))
         ) {
             $o .= $this->editView();
-        } elseif ($this->isAdministrationRequested()) {
+        } elseif (XH_wantsPluginAdministration('pagemanager')) {
             $o .= print_plugin_admin('on');
             switch ($admin) {
                 case '':
@@ -277,18 +277,6 @@ class Controller
             }
         }
         return $o;
-    }
-
-    /**
-     * @return bool
-     */
-    private function isAdministrationRequested()
-    {
-        global $pagemanager;
-
-        return function_exists('XH_wantsPluginAdministration')
-            && XH_wantsPluginAdministration('pagemanager')
-            || isset($pagemanager) && $pagemanager === 'true';
     }
 
     /**
