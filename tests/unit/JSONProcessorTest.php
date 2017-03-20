@@ -13,16 +13,6 @@
  * @link      http://3-magi.net/?CMSimple_XH/Pagemanager_XH
  */
 
-require_once './vendor/autoload.php';
-
-/**
- * The class under test.
- */
-require_once './classes/JSONProcessor.php';
-
-require_once '../../cmsimple/classes/PageDataRouter.php';
-require_once '../../cmsimple/functions.php';
-
 use Pagemanager\JSONProcessor;
 
 /**

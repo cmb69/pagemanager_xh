@@ -14,11 +14,6 @@
  */
 
 /**
- * The file under test.
- */
-require_once './classes/Controller.php';
-
-/**
  * A test case to for the controller class.
  *
  * @category Testing
