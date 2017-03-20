@@ -36,13 +36,27 @@ class JSONGenerator
     private $pages;
 
     /**
+     * @var string
+     */
+    private $pdAttr;
+
+    /**
+     * @var PageDataRouter
+     */
+    private $pdRouter;
+
+    /**
      * @param Model $model
      * @param Pages $pages
      */
     public function __construct(Model $model, Pages $pages)
     {
+        global $plugin_cf, $pd_router;
+
         $this->model = $model;
         $this->pages = $pages;
+        $this->pdAttr = $plugin_cf['pagemanager']['pagedata_attribute'];
+        $this->pdRouter = $pd_router;
     }
 
     public function execute()
@@ -74,10 +88,7 @@ class JSONGenerator
      */
     private function getPageData($index)
     {
-        global $plugin_cf, $pd_router;
-
-        $pdattr = $plugin_cf['pagemanager']['pagedata_attribute'];
-        $pageData = $pd_router->find_page($index);
+        $pageData = $this->pdRouter->find_page($index);
 
         $res = array(
             'data' => $this->model->getHeading($index),
@@ -87,11 +98,11 @@ class JSONGenerator
             ),
             'children' => $this->getPagesData($index)
         );
-        if ($pdattr !== '') {
-            if ($pageData[$pdattr] === '') {
+        if ($this->pdAttr !== '') {
+            if ($pageData[$this->pdAttr] === '') {
                 $res['attr']['data-pdattr'] = '1';
             } else {
-                $res['attr']['data-pdattr'] = $pageData[$pdattr];
+                $res['attr']['data-pdattr'] = $pageData[$this->pdAttr];
             }
         }
         if (!$this->model->getMayRename[$index]) {

@@ -69,13 +69,21 @@ class JSONProcessor
     private $mayRename;
 
     /**
+     * @var PageDataRouter
+     */
+    private $pdRouter;
+
+    /**
      * @param string[] $contents
      * @param string $pdattrName
      */
     public function __construct(array $contents, $pdattrName)
     {
+        global $pd_router;
+
         $this->contents = $contents;
         $this->pdattrName = $pdattrName;
+        $this->pdRouter = $pd_router;
     }
 
     /**
@@ -150,12 +158,10 @@ class JSONProcessor
 
     private function appendPageData()
     {
-        global $pd_router;
-
         if (isset($this->id)) {
-            $pageData = $pd_router->find_page($this->id);
+            $pageData = $this->pdRouter->find_page($this->id);
         } else {
-            $pageData = $pd_router->new_page();
+            $pageData = $this->pdRouter->new_page();
             $pageData['last_edit'] = time();
         }
         if ($this->mayRename) {

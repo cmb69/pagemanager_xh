@@ -30,9 +30,35 @@ class Controller
      */
     private $model;
 
+    /**
+     * @var string
+     */
+    private $pluginFolder;
+
+    /**
+     * @var config
+     */
+    private $config;
+
+    /**
+     * @var array
+     */
+    private $lang;
+
+    /**
+     * @var CSRFProtection
+     */
+    private $csrfProtector;
+
     public function __construct()
     {
+        global $pth, $plugin_cf, $plugin_tx, $_XH_csrfProtection;
+
         $this->model = new Model();
+        $this->pluginFolder = "{$pth['folder']['plugins']}pagemanager/";
+        $this->config = $plugin_cf['pagemanager'];
+        $this->lang = $plugin_tx['pagemanager'];
+        $this->csrfProtector = $_XH_csrfProtection;
     }
 
     /**
@@ -40,32 +66,31 @@ class Controller
      */
     private function systemChecks()
     {
-        global $pth, $plugin_tx;
+        global $pth;
 
-        $ptx = $plugin_tx['pagemanager'];
         $phpVersion = '5.3.0';
         $checks = array();
-        $key = sprintf($ptx['syscheck_phpversion'], $phpVersion);
+        $key = sprintf($this->lang['syscheck_phpversion'], $phpVersion);
         $ok = version_compare(PHP_VERSION, $phpVersion) >= 0;
         $checks[$key] = $ok ? 'ok' : 'fail';
         foreach (array('json') as $ext) {
-            $key = sprintf($ptx['syscheck_extension'], $ext);
+            $key = sprintf($this->lang['syscheck_extension'], $ext);
             $checks[$key] = extension_loaded($ext) ? 'ok' : 'fail';
         }
         $xhVersion = 'CMSimple_XH 1.7dev';
         $ok = strpos(CMSIMPLE_XH_VERSION, 'CMSimple_XH') === 0
             && version_compare(CMSIMPLE_XH_VERSION, $xhVersion) >= 0;
         $xhVersion = substr($xhVersion, 12);
-        $key = sprintf($ptx['syscheck_xhversion'], $xhVersion);
+        $key = sprintf($this->lang['syscheck_xhversion'], $xhVersion);
         $checks[$key] = $ok ? 'ok' : 'fail';
         $ok = file_exists($pth['folder']['plugins'].'jquery/jquery.inc.php');
-        $checks[$ptx['syscheck_jquery']] = $ok ? 'ok' : 'fail';
+        $checks[$this->lang['syscheck_jquery']] = $ok ? 'ok' : 'fail';
         $folders = array();
         foreach (array('config/', 'css/', 'languages/') as $folder) {
-            $folders[] = $pth['folder']['plugins'] . 'pagemanager/' . $folder;
+            $folders[] = "{$this->pluginFolder}{$folder}";
         }
         foreach ($folders as $folder) {
-            $key = sprintf($ptx['syscheck_writable'], $folder);
+            $key = sprintf($this->lang['syscheck_writable'], $folder);
             $checks[$key] = is_writable($folder) ? 'ok' : 'warn';
         }
         return $checks;
@@ -77,16 +102,16 @@ class Controller
      */
     private function tool($tool)
     {
-        global $pth, $plugin_cf, $plugin_tx;
+        global $pth;
 
-        $horizontal = !$plugin_cf['pagemanager']['toolbar_vertical'];
+        $horizontal = !$this->config['toolbar_vertical'];
         $id = "pagemanager-$tool";
         $o = '';
         $style = $tool === 'save' ? ' style="display: none"' : '';
         if ($tool === 'save') {
-            $tooltip = XH_hsc($plugin_tx['pagemanager']['button_save']);
+            $tooltip = XH_hsc($this->lang['button_save']);
         } else {
-            $tooltip = XH_hsc($plugin_tx['pagemanager']['op_'.$tool]);
+            $tooltip = XH_hsc($this->lang['op_'.$tool]);
         }
         if ($tool !== 'help') {
             $o .= '<button type="button" id="' . $id . '" ' . $style
@@ -107,40 +132,38 @@ class Controller
      */
     private function jsConfig()
     {
-        global $pth, $sn, $tx, $plugin_cf, $plugin_tx;
+        global $sn, $tx;
 
-        $pcf = $plugin_cf['pagemanager'];
-        $ptx = $plugin_tx['pagemanager'];
         $config = array(
-            'okButton' => $ptx['button_ok'],
-            'cancelButton' => $ptx['button_cancel'],
-            'deleteButton' => $ptx['button_delete'],
+            'okButton' => $this->lang['button_ok'],
+            'cancelButton' => $this->lang['button_cancel'],
+            'deleteButton' => $this->lang['button_delete'],
             'menuLevels' => 9,
-            'verbose' => (bool) $pcf['verbose'],
-            'menuLevelMessage' => $ptx['message_menu_level'],
-            'cantRenameError' => $ptx['error_cant_rename'],
-            'deleteLastMessage' => $ptx['message_delete_last'],
-            'confirmDeletionMessage' => $ptx['message_confirm_deletion'],
-            'leaveWarning' => $ptx['message_warning_leave'],
-            'leaveConfirmation' => $ptx['message_confirm_leave'],
-            'animation' => (int) $pcf['treeview_animation'],
-            'loading' => $ptx['treeview_loading'],
-            'newNode' => $ptx['treeview_new'],
-            'imageDir' => $pth['folder']['plugins'].'pagemanager/images/',
-            'menuLevelMessage' => $ptx['message_menu_level'],
-            'theme' => $pcf['treeview_theme'],
-            'createOp' => $ptx['op_create'],
-            'createAfterOp' => $ptx['op_create_after'],
-            'renameOp' => $ptx['op_rename'],
-            'deleteOp' => $ptx['op_delete'],
-            'cutOp' => $ptx['op_cut'],
-            'copyOp' => $ptx['op_copy'],
-            'pasteOp' => $ptx['op_paste'],
-            'pasteAfterOp' => $ptx['op_paste_after'],
-            'noSelectionMessage' => $ptx['message_no_selection'],
+            'verbose' => (bool) $this->config['verbose'],
+            'menuLevelMessage' => $this->lang['message_menu_level'],
+            'cantRenameError' => $this->lang['error_cant_rename'],
+            'deleteLastMessage' => $this->lang['message_delete_last'],
+            'confirmDeletionMessage' => $this->lang['message_confirm_deletion'],
+            'leaveWarning' => $this->lang['message_warning_leave'],
+            'leaveConfirmation' => $this->lang['message_confirm_leave'],
+            'animation' => (int) $this->config['treeview_animation'],
+            'loading' => $this->lang['treeview_loading'],
+            'newNode' => $this->lang['treeview_new'],
+            'imageDir' => "{$this->pluginFolder}images/",
+            'menuLevelMessage' => $this->lang['message_menu_level'],
+            'theme' => $this->config['treeview_theme'],
+            'createOp' => $this->lang['op_create'],
+            'createAfterOp' => $this->lang['op_create_after'],
+            'renameOp' => $this->lang['op_rename'],
+            'deleteOp' => $this->lang['op_delete'],
+            'cutOp' => $this->lang['op_cut'],
+            'copyOp' => $this->lang['op_copy'],
+            'pasteOp' => $this->lang['op_paste'],
+            'pasteAfterOp' => $this->lang['op_paste_after'],
+            'noSelectionMessage' => $this->lang['message_no_selection'],
             'duplicateHeading' => $tx['toc']['dupl'],
-            'offendingExtensionError' => $ptx['error_offending_extension'],
-            'hasCheckboxes' => $pcf['pagedata_attribute'] !== '',
+            'offendingExtensionError' => $this->lang['error_offending_extension'],
+            'hasCheckboxes' => $this->config['pagedata_attribute'] !== '',
             'dataURL' => $sn . '?&pagemanager&admin=plugin_main'
                 . '&action=plugin_data&edit'
         );
@@ -174,43 +197,42 @@ class Controller
      */
     private function editView()
     {
-        global $pth, $title, $plugin_cf, $plugin_tx, $_XH_csrfProtection;
+        global $pth, $title;
 
-        $title = 'Pagemanager &ndash; ' . $plugin_tx['pagemanager']['menu_main'];
+        $title = "Pagemanager – {$this->lang['menu_main']}";
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jQuery();
         include_jQueryUI();
         include_jQueryPlugin(
             'jsTree',
-            $pth['folder']['plugins'] . 'pagemanager/jstree/jquery.jstree.js'
+            "{$this->pluginFolder}jstree/jquery.jstree.js"
         );
         $view = new View('widget');
         $view->submissionUrl = $this->submissionURL();
         $view->isIrregular = $this->model->isIrregular();
-        $view->ajaxLoaderPath = "{$pth['folder']['plugins']}pagemanager/images/ajax-loader-bar.gif";
-        $view->hasToolbar = (bool) $plugin_cf['pagemanager']['toolbar_show'];
-        $view->toolbarClass = $plugin_cf['pagemanager']['toolbar_vertical'] ? 'pagemanager-vertical' : 'pagemanager-horizontal';
+        $view->ajaxLoaderPath = "{$this->pluginFolder}images/ajax-loader-bar.gif";
+        $view->hasToolbar = (bool) $this->config['toolbar_show'];
+        $view->toolbarClass = $this->config['toolbar_vertical'] ? 'pagemanager-vertical' : 'pagemanager-horizontal';
         $tools = array();
         foreach ($this->tools() as $tool) {
             $tools[] = new HtmlString($this->tool($tool));
         }
         $view->tools = $tools;
-        $view->csrfTokenInput = new HtmlString($_XH_csrfProtection->tokenInput());
+        $view->csrfTokenInput = new HtmlString($this->csrfProtector->tokenInput());
         $view->jsConfig = new HtmlString($this->jsConfig());
-        $view->jsScriptPath = "{$pth['folder']['plugins']}pagemanager/pagemanager.js";
+        $view->jsScriptPath = "{$this->pluginFolder}pagemanager.js";
         return (string) $view;
     }
 
     private function save()
     {
-        global $pth, $plugin_tx, $_XH_csrfProtection;
+        global $pth;
 
-        $_XH_csrfProtection->check();
-        $ptx = $plugin_tx['pagemanager'];
+        $this->csrfProtector->check();
         if ($this->model->save(stsl($_POST['json']))) {
-            echo XH_message('success', $ptx['message_save_success']);
+            echo XH_message('success', $this->lang['message_save_success']);
         } else {
-            $message = sprintf($ptx['message_save_failure'], $pth['file']['content']);
+            $message = sprintf($this->lang['message_save_failure'], $pth['file']['content']);
             echo XH_message('fail', $message);
         }
         exit;
@@ -274,18 +296,18 @@ class Controller
      */
     private function renderInfoView()
     {
-        global $pth, $title, $plugin_tx;
+        global $title;
 
-        $title = 'Pagemanager – ' . $plugin_tx['pagemanager']['menu_info'];
+        $title = "Pagemanager – {$this->lang['menu_info']}";
         $view = new View('info');
-        $view->logoPath = "{$pth['folder']['plugins']}pagemanager/pagemanager.png";
+        $view->logoPath = "{$this->pluginFolder}pagemanager.png";
         $view->version = PAGEMANAGER_VERSION;
         $checks = array();
         foreach ($this->systemChecks() as $check => $state) {
             $checks[] = (object) array(
                 'check' => $check,
                 'state' => $state,
-                'icon' => "{$pth['folder']['plugins']}pagemanager/images/$state.png"
+                'icon' => "{$this->pluginFolder}images/$state.png"
             );
         }
         $view->checks = $checks;
