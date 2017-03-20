@@ -32,7 +32,7 @@ class Model
     /**
      * @var bool[]
      */
-    private $mayRename;
+    public $mayRename;
 
     /**
      * @param string $heading
