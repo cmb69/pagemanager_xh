@@ -144,7 +144,7 @@ class Controller
             'dataURL' => $sn . '?&pagemanager&admin=plugin_main'
                 . '&action=plugin_data&edit'
         );
-        return XH_encodeJson($config);
+        return json_encode($config);
     }
 
     /**
