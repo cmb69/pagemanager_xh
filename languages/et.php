@@ -34,10 +34,10 @@ $plugin_tx['pagemanager']['error_nesting']="Lehe struktuuri liiga sügav pesasta
 $plugin_tx['pagemanager']['error_cant_rename']="Seda lehte ei saa ümber nimetada, kuna selle päis on osaliselt vormindatud.";
 $plugin_tx['pagemanager']['error_offending_extension']="Leiti laiendus, mis kasutab oma enda jQuery teeki (vaata, jaotus \"Limitations\").";
 $plugin_tx['pagemanager']['syscheck_title']="Süsteemi kontroll";
-$plugin_tx['pagemanager']['syscheck_phpversion']="PHP versioon &ge; %s";
+$plugin_tx['pagemanager']['syscheck_phpversion']="PHP versioon ≥ %s";
 $plugin_tx['pagemanager']['syscheck_extension']="Laiend \"%s\" laaditi";
-$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH versioon &ge; %s";
-$plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\">jQuery4CMSimple moodul</a> on paigaldatud";
+$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH versioon ≥ %s";
+$plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple moodul on paigaldatud";
 $plugin_tx['pagemanager']['syscheck_writable']="Kaust \"%s\" on kirjutatav";
 $plugin_tx['pagemanager']['cf_verbose']="<p>Näita informatsiooni ja kinnituse dialooge? <b>true</b> või <b>false</b></p><p><strong><b>true</b> on tungivalt soovituslik</strong>, juhul kui oled pädevkasutaja <strong>ja</strong> oled Pagemanager_XHs kodus.</p>";
 $plugin_tx['pagemanager']['cf_toolbar_show']="<p>Kas tööriistariba on nähtav? <b>true</b> or <b>false</b></p>";

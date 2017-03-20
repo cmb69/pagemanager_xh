@@ -36,20 +36,6 @@ class Controller
     }
 
     /**
-     * @param string $template
-     * @return string
-     */
-    private function render($template)
-    {
-        global $pth;
-
-        $template = "{$pth['folder']['plugins']}pagemanager/views/$template.php";
-        ob_start();
-        include $template;
-        return ob_get_clean();
-    }
-
-    /**
      * @return array
      */
     private function systemChecks()
@@ -83,48 +69,6 @@ class Controller
             $checks[$key] = is_writable($folder) ? 'ok' : 'warn';
         }
         return $checks;
-    }
-
-    /**
-     * @return string
-     */
-    private function pluginIconPath()
-    {
-        global $pth;
-
-        return $pth['folder']['plugins'] . 'pagemanager/pagemanager.png';
-    }
-
-    /**
-     * @param string $state
-     * @return string
-     */
-    private function stateIconPath($state)
-    {
-        global $pth;
-
-        return "{$pth['folder']['plugins']}pagemanager/images/$state.png";
-    }
-
-    /**
-     * @return string
-     */
-    private function ajaxLoaderPath()
-    {
-        global $pth;
-
-        return "{$pth['folder']['plugins']}pagemanager/images/ajax-loader-bar.gif";
-    }
-
-    /**
-     * @param string $key
-     * @return string
-     */
-    private function lang($key)
-    {
-        global $plugin_tx;
-
-        return $plugin_tx['pagemanager'][$key];
     }
 
     /**
@@ -204,27 +148,6 @@ class Controller
     }
 
     /**
-     * @return string
-     */
-    private function toolbarClass()
-    {
-        global $plugin_cf;
-
-        return $plugin_cf['pagemanager']['toolbar_vertical']
-            ? 'pagemanager-vertical' : 'pagemanager-horizontal';
-    }
-
-    /**
-     * @return bool
-     */
-    private function hasToolbar()
-    {
-        global $plugin_cf;
-
-        return (bool) $plugin_cf['pagemanager']['toolbar_show'];
-    }
-
-    /**
      * @return string[]
      */
     private function tools()
@@ -249,19 +172,9 @@ class Controller
     /**
      * @return string
      */
-    private function jsScriptPath()
-    {
-        global $pth;
-
-        return "{$pth['folder']['plugins']}pagemanager/pagemanager.js";
-    }
-
-    /**
-     * @return string
-     */
     private function editView()
     {
-        global $pth, $title, $plugin_tx;
+        global $pth, $title, $plugin_cf, $plugin_tx, $_XH_csrfProtection;
 
         $title = 'Pagemanager &ndash; ' . $plugin_tx['pagemanager']['menu_main'];
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
@@ -271,7 +184,21 @@ class Controller
             'jsTree',
             $pth['folder']['plugins'] . 'pagemanager/jstree/jquery.jstree.js'
         );
-        return $this->render('widget');
+        $view = new View('widget');
+        $view->submissionUrl = $this->submissionURL();
+        $view->isIrregular = $this->model->isIrregular();
+        $view->ajaxLoaderPath = "{$pth['folder']['plugins']}pagemanager/images/ajax-loader-bar.gif";
+        $view->hasToolbar = (bool) $plugin_cf['pagemanager']['toolbar_show'];
+        $view->toolbarClass = $plugin_cf['pagemanager']['toolbar_vertical'] ? 'pagemanager-vertical' : 'pagemanager-horizontal';
+        $tools = array();
+        foreach ($this->tools() as $tool) {
+            $tools[] = new HtmlString($this->tool($tool));
+        }
+        $view->tools = $tools;
+        $view->csrfTokenInput = new HtmlString($_XH_csrfProtection->tokenInput());
+        $view->jsConfig = new HtmlString($this->jsConfig());
+        $view->jsScriptPath = "{$pth['folder']['plugins']}pagemanager/pagemanager.js";
+        return (string) $view;
     }
 
     private function save()
@@ -347,9 +274,21 @@ class Controller
      */
     private function renderInfoView()
     {
-        global $title, $plugin_tx;
+        global $pth, $title, $plugin_tx;
 
-        $title = 'Pagemanager &ndash; ' . $plugin_tx['pagemanager']['menu_info'];
-        return $this->render('info');
+        $title = 'Pagemanager – ' . $plugin_tx['pagemanager']['menu_info'];
+        $view = new View('info');
+        $view->logoPath = "{$pth['folder']['plugins']}pagemanager/pagemanager.png";
+        $view->version = PAGEMANAGER_VERSION;
+        $checks = array();
+        foreach ($this->systemChecks() as $check => $state) {
+            $checks[] = (object) array(
+                'check' => $check,
+                'state' => $state,
+                'icon' => "{$pth['folder']['plugins']}pagemanager/images/$state.png"
+            );
+        }
+        $view->checks = $checks;
+        return (string) $view;
     }
 }

@@ -38,11 +38,11 @@ $plugin_tx['pagemanager']['op_paste']="Vložiť (ako podstránku)";
 $plugin_tx['pagemanager']['op_paste_after']="Vložiť (na rovnakej úrovni - za poslednou podstránkou)";
 $plugin_tx['pagemanager']['op_rename']="Premenovať stránku";
 $plugin_tx['pagemanager']['syscheck_extension']="Rozšírenie '%s' načítané";
-$plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\" title=\"Stiahnuť a nainštalovať\">jQuery4CMSimple Plugin</a> nainštalovaný.";
+$plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple Plugin nainštalovaný.";
 $plugin_tx['pagemanager']['syscheck_phpversion']="PHP-verzia ≥ %s";
 $plugin_tx['pagemanager']['syscheck_title']="Systémová kontrola";
 $plugin_tx['pagemanager']['syscheck_writable']="'%s' umožňuje zápis";
-$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH-Verzia &ge; %s";
+$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH-Verzia ≥ %s";
 $plugin_tx['pagemanager']['treeview_loading']="Načítavam...";
 $plugin_tx['pagemanager']['treeview_new']="Nová stránka";
 

@@ -34,10 +34,10 @@ $plugin_tx['pagemanager']['error_nesting']="Eccessivo numero di nidificazioni ne
 $plugin_tx['pagemanager']['error_cant_rename']="Questa pagina non può essere rinominata, perchè l'intestazione è parzialmente formattata.";
 $plugin_tx['pagemanager']['error_offending_extension']="Conflitto con un'estensione che utilizza una propria libreria jQuery (vedi il manuale, alla sezione \"Limitazioni\").";
 $plugin_tx['pagemanager']['syscheck_title']="Verifica Sistema";
-$plugin_tx['pagemanager']['syscheck_phpversion']="Versione PHP &ge; %s";
+$plugin_tx['pagemanager']['syscheck_phpversion']="Versione PHP ≥ %s";
 $plugin_tx['pagemanager']['syscheck_extension']="Estensione \"%s\" caricata";
-$plugin_tx['pagemanager']['syscheck_xhversion']="Versione CMSimple_XH &ge; %s";
-$plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\">jQuery4CMSimple plugin</a> installato";
+$plugin_tx['pagemanager']['syscheck_xhversion']="Versione CMSimple_XH ≥ %s";
+$plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple plugin installato";
 $plugin_tx['pagemanager']['syscheck_writable']="La Cartella \"%s\" è abilitata in scrittura";
 $plugin_tx['pagemanager']['cf_verbose']="Se mostrare la finestra di dialogo per le informazioni e le conferme.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Se mostrare la barra degli strumenti.";

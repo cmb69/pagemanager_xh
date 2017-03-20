@@ -35,10 +35,10 @@ $plugin_tx['pagemanager']['error_nesting']="Zu tiefe Verschachtelung der Seitens
 $plugin_tx['pagemanager']['error_cant_rename']="Diese Seite kann nicht umbenannt werden, da ihre Überschrift teilweise formatiert ist.";
 $plugin_tx['pagemanager']['error_offending_extension']="Kollision mit einer Erweiterung, die ihre eigene jQuery Bibliothek einbindet, festgestellt (siehe Handbuch, Abschnitt \"Beschränkungen\").";
 $plugin_tx['pagemanager']['syscheck_title']="System-Prüfung";
-$plugin_tx['pagemanager']['syscheck_phpversion']="PHP-Version &ge; %s";
+$plugin_tx['pagemanager']['syscheck_phpversion']="PHP-Version ≥ %s";
 $plugin_tx['pagemanager']['syscheck_extension']="Erweiterung \"%s\" geladen";
-$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH-Version &ge; %s";
-$plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\">jQuery4CMSimple Plugin</a> installiert";
+$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH-Version ≥ %s";
+$plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple Plugin installiert";
 $plugin_tx['pagemanager']['syscheck_writable']="Ordner \"%s\" beschreibbar";
 $plugin_tx['pagemanager']['cf_verbose']="Ob Bestätigungs- und Informationsdialoge angezeigt werden sollen.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Ob die Werkzeugleiste angezeigt werden soll.";

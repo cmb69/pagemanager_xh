@@ -44,11 +44,11 @@ $plugin_tx['pagemanager']['op_paste']="Vložit (jako podstranu)";
 $plugin_tx['pagemanager']['op_paste_after']="Vložit (na stejnou úroveň)";
 $plugin_tx['pagemanager']['op_rename']="Přejmenovat stránku";
 $plugin_tx['pagemanager']['syscheck_extension']="Rozšíření \"%s\" načteno";
-$plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\">jQuery4CMSimple plugin</a> instalován";
-$plugin_tx['pagemanager']['syscheck_phpversion']="PHP verze &ge; %s";
+$plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple plugin instalován";
+$plugin_tx['pagemanager']['syscheck_phpversion']="PHP verze ≥ %s";
 $plugin_tx['pagemanager']['syscheck_title']="Kontrola systému";
 $plugin_tx['pagemanager']['syscheck_writable']="Adresář \"%s\" je zapisovatelný";
-$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH verze &ge; %s";
+$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH verze ≥ %s";
 $plugin_tx['pagemanager']['treeview_loading']="Načítám....";
 $plugin_tx['pagemanager']['treeview_new']="Nová strana";
 

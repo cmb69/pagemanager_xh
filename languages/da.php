@@ -40,10 +40,10 @@ $plugin_tx['pagemanager']['error_nesting']="Too deep nesting of page structure!"
 $plugin_tx['pagemanager']['error_cant_rename']="Denne side kan ikke omdøbes, da dens overskrift delvist formateret.";
 $plugin_tx['pagemanager']['error_offending_extension']="Offending extension using its own jQuery library detected (see manual, section \"Limitations\").";
 $plugin_tx['pagemanager']['syscheck_title']="System check";
-$plugin_tx['pagemanager']['syscheck_phpversion']="PHP version &ge; %s";
+$plugin_tx['pagemanager']['syscheck_phpversion']="PHP version ≥ %s";
 $plugin_tx['pagemanager']['syscheck_extension']="Extension \"%s\" loaded";
-$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH version &ge; %s";
-$plugin_tx['pagemanager']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.org/wiki/doku.php/extend:jquery4cmsimple\">jQuery4CMSimple plugin</a> installed";
+$plugin_tx['pagemanager']['syscheck_xhversion']="CMSimple_XH version ≥ %s";
+$plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple plugin installed";
 $plugin_tx['pagemanager']['syscheck_writable']="Folder \"%s\" writable";
 $plugin_tx['pagemanager']['cf_verbose']="\r\nUanset at vise information og bekræftelsesdialoger.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Om værktøjslinjen skal vises.";
