@@ -104,11 +104,7 @@ class MainAdminController extends Controller
     {
         global $sn;
 
-        $url = new Url($sn, array('pagemanager' => '', 'edit' => ''));
-        if (isset($_GET['xhpages'])) {
-            $url = $url->with('pagemanager_xhpages', '');
-        }
-        return (string) $url;
+        return (string) new Url($sn, array('pagemanager' => '', 'edit' => ''));
     }
 
     /**
