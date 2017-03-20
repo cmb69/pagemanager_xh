@@ -25,7 +25,6 @@ class Model
 {
     /**
      * @var string[]
-     * @todo Make private.
      */
     private $headings;
 
