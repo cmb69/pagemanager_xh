@@ -104,8 +104,11 @@ class MainAdminController extends Controller
     {
         global $sn;
 
-        $xhpages = isset($_GET['xhpages']) ? '&pagemanager-xhpages' : '';
-        return "$sn?&pagemanager&$xhpages&edit";
+        $url = new Url($sn, array('pagemanager' => '', 'edit' => ''));
+        if (isset($_GET['xhpages'])) {
+            $url = $url->with('pagemanager-xhpages', '');
+        }
+        return (string) $url;
     }
 
     /**
@@ -157,6 +160,7 @@ class MainAdminController extends Controller
     {
         global $sn, $tx;
 
+        $url = new Url($sn, array());
         $config = array(
             'okButton' => $this->lang['button_ok'],
             'cancelButton' => $this->lang['button_cancel'],
@@ -187,8 +191,8 @@ class MainAdminController extends Controller
             'duplicateHeading' => $tx['toc']['dupl'],
             'offendingExtensionError' => $this->lang['error_offending_extension'],
             'hasCheckboxes' => $this->config['pagedata_attribute'] !== '',
-            'dataURL' => $sn . '?&pagemanager&admin=plugin_main'
-                . '&action=plugin_data&edit'
+            'dataURL' => (string) $url->with('pagemanager', '')->with('admin', 'plugin_main')
+                ->with('action', 'plugin_data')
         );
         return json_encode($config);
     }
