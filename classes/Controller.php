@@ -63,7 +63,7 @@ class Controller
         $key = sprintf($ptx['syscheck_phpversion'], $phpVersion);
         $ok = version_compare(PHP_VERSION, $phpVersion) >= 0;
         $checks[$key] = $ok ? 'ok' : 'fail';
-        foreach (array('pcre', 'xml') as $ext) {
+        foreach (array('json') as $ext) {
             $key = sprintf($ptx['syscheck_extension'], $ext);
             $checks[$key] = extension_loaded($ext) ? 'ok' : 'fail';
         }
