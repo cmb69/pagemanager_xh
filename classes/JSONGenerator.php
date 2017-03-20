@@ -47,7 +47,7 @@ class JSONGenerator
 
     public function execute()
     {
-        $this->model->getHeadings();
+        $this->model->calculateHeadings();
         header('Content-Type: application/json; charset=UTF-8');
         echo json_encode($this->getPagesData());
     }

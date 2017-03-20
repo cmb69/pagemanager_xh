@@ -55,7 +55,7 @@ class Model
         return $heading;
     }
 
-    public function getHeadings()
+    public function calculateHeadings()
     {
         global $h, $tx;
 
