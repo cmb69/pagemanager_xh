@@ -23,7 +23,6 @@ $plugin_tx['pagemanager']['message_confirm_deletion']="La pagina e le pagine dip
 $plugin_tx['pagemanager']['message_warning_leave']="Le modifiche non saranno registrate!";
 $plugin_tx['pagemanager']['message_confirm_leave']="*** MODIFICHE NON REGISTRATE! ***\r\n\r\nConferma il salvataggio o le modifiche saranno perdute!\r\n";
 $plugin_tx['pagemanager']['message_information']="Informazione";
-$plugin_tx['pagemanager']['message_menu_level']="Sarà superato il numero massimo consentito di <em>livelli del menu</em>!";
 $plugin_tx['pagemanager']['message_no_selection']="È necessario selezionare una pagina prima di utilizzare questo strumento!";
 $plugin_tx['pagemanager']['message_delete_last']="Non puoi eliminare l'ultima pagina del primo livello!";
 $plugin_tx['pagemanager']['message_save_success']="La struttura della pagina è stata registrata correttamente.";

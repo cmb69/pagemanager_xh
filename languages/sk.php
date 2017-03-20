@@ -21,7 +21,6 @@ $plugin_tx['pagemanager']['message_confirm_deletion']="Stránka bude vymazaná s
 $plugin_tx['pagemanager']['message_confirm_leave']="*** ÚPRAVY NEBOLI ULOŽENÉ! ***\r\n\r\nPotvrďte ich uloženie, inak sa vykonané zmeny stratia!\r\n";
 $plugin_tx['pagemanager']['message_delete_last']="Nemôžete vymazať poslednú stránku 1. úrovne!";
 $plugin_tx['pagemanager']['message_information']="Informácia";
-$plugin_tx['pagemanager']['message_menu_level']="Toto presahuje úrovne menu - Ignorovať konfiguráciu!";
 $plugin_tx['pagemanager']['message_no_selection']="Prv, než použijete tento nástroj, musíte zvoliť stránku!";
 $plugin_tx['pagemanager']['message_save_failure']="Štruktúru stránky sa nepodarilo uložiť do \"%s\".";
 $plugin_tx['pagemanager']['message_save_success']="Štruktúra stránky bola úspešne uložená.";

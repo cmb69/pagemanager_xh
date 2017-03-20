@@ -23,7 +23,6 @@ $plugin_tx['pagemanager']['message_confirm_deletion']="Leht koos kõigi alamleht
 $plugin_tx['pagemanager']['message_warning_leave']="Teie muudatused kaovad.";
 $plugin_tx['pagemanager']['message_confirm_leave']="*** SALVESTAMATA MUUTUSED! ***\r\n\r\nKinnita nende salvestamine, vastasel korral muutused kaovad!\r\n";
 $plugin_tx['pagemanager']['message_information']="Informatsioon";
-$plugin_tx['pagemanager']['message_menu_level']="See ületab teie <em>menüütasemete</em> konfiguratsiooni!";
 $plugin_tx['pagemanager']['message_no_selection']="Te peate eelnevalt valima lehe, enne kui kasutate seda töövahendit!";
 $plugin_tx['pagemanager']['message_delete_last']="Te ei tohi kustutada viimast ülemlehte!";
 $plugin_tx['pagemanager']['message_save_success']="Lehe struktuur salvestati edukalt. ";

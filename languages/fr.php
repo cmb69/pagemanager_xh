@@ -29,7 +29,6 @@ $plugin_tx['pagemanager']['message_confirm_deletion']="La page et ses sous-pages
 $plugin_tx['pagemanager']['message_warning_leave']="Vos modifications seront perdues !";
 $plugin_tx['pagemanager']['message_confirm_leave']="*** MODIFICATIONS NON SAUVEGARDEES ! ***\r\n\r\nConfirmez pour les enregistrer sinon elle seront perdues !\r\n";
 $plugin_tx['pagemanager']['message_information']="Information";
-$plugin_tx['pagemanager']['message_menu_level']="Ceci excède votre paramètre de <em>niveaux de menu</em> défini !";
 $plugin_tx['pagemanager']['message_no_selection']="Vous devez sélectionner une page avant d'utiliser cet outil !";
 $plugin_tx['pagemanager']['message_delete_last']="Vous ne devez pas supprimer la dernière page du plus haut niveau !";
 $plugin_tx['pagemanager']['message_save_success']="La structure des pages a été corrctement enregistrée.";

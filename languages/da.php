@@ -29,7 +29,6 @@ $plugin_tx['pagemanager']['message_confirm_deletion']="The page with all it's su
 $plugin_tx['pagemanager']['message_warning_leave']="Your modifications will be lost!";
 $plugin_tx['pagemanager']['message_confirm_leave']="*** UNSAVED MODIFICATIONS! ***\r\n\r\nConfirm to save them, otherwise they will be lost!\r\n";
 $plugin_tx['pagemanager']['message_information']="Information";
-$plugin_tx['pagemanager']['message_menu_level']="This would exceed your <em>menu levels</em> configuration!";
 $plugin_tx['pagemanager']['message_no_selection']="You must select a page, before using this tool!";
 $plugin_tx['pagemanager']['message_delete_last']="You must not delete the last toplevel page!";
 $plugin_tx['pagemanager']['message_save_success']="The page structure has been successfully saved.";

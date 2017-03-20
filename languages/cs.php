@@ -27,7 +27,6 @@ $plugin_tx['pagemanager']['message_confirm_deletion']="Strana bude smazána vče
 $plugin_tx['pagemanager']['message_confirm_leave']="*** ÚPRAVY NEBYLY ULOŽENY! ***\r\n\r\nPotvrďte uložení, jinak nebudou změny uloženy!\r\n";
 $plugin_tx['pagemanager']['message_delete_last']="Nemůžeš smazat poslední stranu 1. úrovně!";
 $plugin_tx['pagemanager']['message_information']="Informace";
-$plugin_tx['pagemanager']['message_menu_level']="Toto přesahuje <em>úrovně menu</em> konfigurace!";
 $plugin_tx['pagemanager']['message_no_selection']="Musíte vybrat stránku před použitím tohoto nástroje!";
 $plugin_tx['pagemanager']['message_save_failure']="Struktura stránky nelze uložit do \"%s\"!";
 $plugin_tx['pagemanager']['message_save_success']="Struktura stránky byla úspěšně uložena.";

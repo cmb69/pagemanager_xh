@@ -177,7 +177,6 @@ class MainAdminController extends Controller
             'loading' => $this->lang['treeview_loading'],
             'newNode' => $this->lang['treeview_new'],
             'imageDir' => "{$this->pluginFolder}images/",
-            'menuLevelMessage' => $this->lang['message_menu_level'],
             'theme' => $this->config['treeview_theme'],
             'createOp' => $this->lang['op_create'],
             'createAfterOp' => $this->lang['op_create_after'],

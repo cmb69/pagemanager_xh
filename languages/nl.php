@@ -23,7 +23,6 @@ $plugin_tx['pagemanager']['message_confirm_deletion']="De pagina met alle bijbeh
 $plugin_tx['pagemanager']['message_warning_leave']="Uw aanpassingen gaan verloren!";
 $plugin_tx['pagemanager']['message_confirm_leave']="*** Niet opgeslagen aanpassingen! ***\n\nDoe eerst opslaan anders zullen aanpassingen verloren gaan!\n";
 $plugin_tx['pagemanager']['message_information']="Informatie";
-$plugin_tx['pagemanager']['message_menu_level']="Een subpagina is niet mogelijk. Meer menuniveaus zijn niet toegestaan!";
 $plugin_tx['pagemanager']['message_no_selection']="U dient eerst een pagina te selecteren alvorens deze functie te gebruiken!";
 $plugin_tx['pagemanager']['message_delete_last']="U kunt de laatste pagina niet verwijderen in dit systeem!";
 $plugin_tx['pagemanager']['message_save_success']="De pagina structuur is succesvol opgeslagen.";
