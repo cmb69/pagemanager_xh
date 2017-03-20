@@ -1,7 +1,7 @@
-<h1>Pagemanager – <?php echo $this->text('menu_info')?></h1>
-<img src="<?php echo $this->logoPath()?>" style="float: left; margin-right: 10px" alt="Plugin Icon">
+<h1>Pagemanager – <?=$this->text('menu_info')?></h1>
+<img src="<?=$this->logoPath()?>" style="float: left; margin-right: 10px" alt="Plugin Icon">
 <p>
-    Version: <?php echo $this->version()?>
+    Version: <?=$this->version()?>
 </p>
 <p>
     Copyright &copy; 2011-2017 <a href="http://3-magi.net">Christoph M. Becker</a>
@@ -29,13 +29,13 @@
     href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
 </p>
 <div style="clear: both"></div>
-<h4><?php echo $this->text('syscheck_title')?></h4>
+<h4><?=$this->text('syscheck_title')?></h4>
 <ul style="list-style: none">
 <?php foreach ($this->checks as $check):?>
     <li>
-        <img src="<?php echo $this->escape($check->icon)?>" alt="<?php echo $this->escape($check->state)?>"
+        <img src="<?=$this->escape($check->icon)?>" alt="<?=$this->escape($check->state)?>"
             style="margin: 0; height: 1em; padding-right: 1em">
-        <span><?php echo $this->escape($check->check)?></span>
+        <span><?=$this->escape($check->check)?></span>
     </li>
 <?php endforeach?>
 </ul>
