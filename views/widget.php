@@ -34,5 +34,3 @@
     </p>
 </form>
 <div id="pagemanager_footer"></div>
-<div id="pagemanager_confirmation" title="<?=$this->text('message_confirm')?>"></div>
-<div id="pagemanager_alert" title="<?=$this->text('message_information')?>"></div>

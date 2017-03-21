@@ -77,7 +77,6 @@ class MainAdminController extends Controller
             . "{$this->pluginFolder}jstree/themes/{$this->config['treeview_theme']}/style.min.css" . '">';
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jQuery();
-        include_jQueryUI();
         include_jQueryPlugin('jsTree', "{$this->pluginFolder}jstree/jstree.min.js");
         $bjs .= '<script type="text/javascript">var PAGEMANAGER = ' . $this->jsConfig() . ';</script>'
             . '<script type="text/javascript" src="' . XH_hsc("{$this->pluginFolder}pagemanager.js") . '"></script>';

@@ -175,17 +175,6 @@
         $("#pagemanager_save, #pagemanager_submit").show();
     }
 
-    /**
-     * Displays an alert dialog.
-     *
-     * @param {String} message
-     *
-     * @returns {undefined}
-     */
-    function alert(message) {
-        $("#pagemanager_alert").html(message).dialog("open");
-    }
-
     function doCreate(node) {
         var id = widget.create_node(node, PAGEMANAGER.newNode);
         widget.edit(id);
@@ -206,7 +195,9 @@
     }
 
     function doDelete(node) {
-        widget.delete_node(node);
+        if (!PAGEMANAGER.verbose || confirm(PAGEMANAGER.confirmDeletionMessage)) {
+            widget.delete_node(node);
+        }
     }
 
     function doCut(node) {
@@ -369,25 +360,6 @@
             return false;
         }
 
-        // confirmation
-        if (what !== "confirmed") {
-            if (PAGEMANAGER.verbose) {
-                buttons = {};
-                buttons[PAGEMANAGER.deleteButton] = function () {
-                    widget.remove(node, "confirmed");
-                    $(this).dialog("close");
-                };
-                buttons[PAGEMANAGER.cancelButton] = function () {
-                    $(this).dialog("close");
-                };
-                $("#pagemanager_confirmation")
-                    .html(PAGEMANAGER.confirmDeletionMessage)
-                    .dialog("option", "buttons", buttons)
-                    .dialog("open");
-                event.stopImmediatePropagation();
-                return false;
-            }
-        }
         return undefined;
     }
 
@@ -517,36 +489,13 @@ console.log(child)
     }
 
     /**
-     * Initializes the confirmation and the alert dialogs.
-     *
-     * @returns {undefined}
-     */
-    function initDialogs() {
-        var buttons = {};
-
-        $("#pagemanager_confirmation").dialog({
-            "autoOpen": false,
-            "modal": true
-        });
-
-        buttons[PAGEMANAGER.okButton] = function () {
-            $(this).dialog("close");
-        };
-        $("#pagemanager_alert").dialog({
-            "autoOpen": false,
-            "modal": true,
-            "buttons": buttons
-        });
-    }
-
-    /**
      * Alert an Ajax error.
      *
      * @returns {undefined}
      */
     /*jslint unparam:true*/
     function alertAjaxError(jqXHR, textStatus, errorThrown) {
-        window.alert(errorThrown);
+        alert(errorThrown);
     }
     /*jslint unparam:false*/
 
@@ -559,12 +508,10 @@ console.log(child)
         var config, events, ids;
 
         if (typeof $.jstree === "undefined") {
-            window.alert(PAGEMANAGER.offendingExtensionError);
+            alert(PAGEMANAGER.offendingExtensionError);
             return;
         }
         element = $("#pagemanager");
-
-        initDialogs();
 
         element.on("loaded.jstree", function () {
             var events;
@@ -637,7 +584,7 @@ console.log(child)
         } else {
             $(window).unload(function () {
                 if (modified && $("#pagemanager_json").val() === "") {
-                    if (window.confirm(PAGEMANAGER.leaveConfirmation)) {
+                    if (confirm(PAGEMANAGER.leaveConfirmation)) {
                         submit();
                     }
                 }
