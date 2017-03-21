@@ -70,16 +70,15 @@ class MainAdminController extends Controller
 
     public function indexAction()
     {
-        global $pth, $title, $bjs;
+        global $pth, $title, $hjs, $bjs;
 
         $title = "Pagemanager – {$this->lang['menu_main']}";
+        $hjs .= '<link rel="stylesheet" type="text/css" href="'
+            . "{$this->pluginFolder}jstree/themes/{$this->config['treeview_theme']}/style.min.css" . '">';
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jQuery();
         include_jQueryUI();
-        include_jQueryPlugin(
-            'jsTree',
-            "{$this->pluginFolder}jstree/jquery.jstree.js"
-        );
+        include_jQueryPlugin('jsTree', "{$this->pluginFolder}jstree/jstree.min.js");
         $bjs .= '<script type="text/javascript">var PAGEMANAGER = ' . $this->jsConfig() . ';</script>'
             . '<script type="text/javascript" src="' . XH_hsc("{$this->pluginFolder}pagemanager.js") . '"></script>';
         $view = new View('widget');
@@ -221,11 +220,13 @@ class MainAdminController extends Controller
      */
     private function getPageData($index)
     {
+        global $h;
+
         $pageData = $this->pdRouter->find_page($index);
 
         $res = array(
-            'data' => $this->model->getHeading($index),
-            'attr' => array(
+            'text' => $h[$index],
+            'li_attr' => array(
                 'id' => "pagemanager_{$index}",
                 'title' => $this->model->getHeading($index)
             ),
@@ -233,13 +234,13 @@ class MainAdminController extends Controller
         );
         if ($this->pdAttr !== '') {
             if ($pageData[$this->pdAttr] === '') {
-                $res['attr']['data-pdattr'] = '1';
+                $res['li_attr']['data-pdattr'] = '1';
             } else {
-                $res['attr']['data-pdattr'] = $pageData[$this->pdAttr];
+                $res['li_attr']['data-pdattr'] = $pageData[$this->pdAttr];
             }
         }
         if (!$this->model->getMayRename($index)) {
-            $res['attr']['class'] = 'pagemanager_no_rename';
+            $res['li_attr']['class'] = 'pagemanager_no_rename';
         }
         return $res;
     }

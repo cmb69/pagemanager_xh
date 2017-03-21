@@ -122,7 +122,7 @@ class Model
         global $pth;
 
         $themes = array();
-        $path = "{$pth['folder']['plugins']}pagemanager/jstree/themes/";
+        $path = "{$pth['folder']['plugins']}pagemanager/jstree3/themes/";
         $dir = opendir($path);
         if ($dir !== false) {
             while (($entry = readdir($dir)) !== false) {

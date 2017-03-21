@@ -72,9 +72,9 @@
     function checkPages(parent) {
         var nodes, i, node;
 
-        nodes = widget._get_children(parent);
+        nodes = widget.get_children_dom(parent);
         for (i = 0; i < nodes.length; i += 1) {
-            node = widget._get_node(nodes[i]);
+            node = widget.get_node(nodes[i], true);
             if (node.attr("data-pdattr") === "1") {
                 widget.check_node(node);
             }
@@ -90,14 +90,10 @@
      * @returns {undefined}
      */
     function markNewPages(node) {
-        var children, i, child;
-
-        children = widget._get_children(node);
-        for (i = 0; i < children.length; i += 1) {
-            child = children[i];
-            widget.set_type("new", child);
-            markNewPages(child);
-        }
+        $.each(node.children, function (index, value) {
+            widget.set_type(value, "new");
+            markNewPages(widget.get_node(value));
+        });
     }
 
     /**
@@ -108,17 +104,10 @@
      *
      * @returns {undefined}
      */
-    /*jslint unparam: true*/
     function markCopiedPages(event, data) {
-        var result;
-
-        result = data.rslt;
-        if (result.cy) {
-            widget.set_type("new", result.oc);
-            markNewPages(result.oc);
-        }
+        widget.set_type(data.node, "new");
+        markNewPages(data.node);
     }
-    /*jslint unparam: false*/
 
     /**
      * Prepares the form submission.
@@ -197,6 +186,48 @@
         $("#pagemanager_alert").html(message).dialog("open");
     }
 
+    function doCreate(node) {
+        var id = widget.create_node(node, PAGEMANAGER.newNode);
+        widget.edit(id);
+    }
+
+    function doCreateAfter(node) {
+        var node = widget.get_node(node);
+        var parent = widget.get_node(node.parent);
+        var pos = $.inArray(node.id, parent.children);
+        var id = widget.create_node(parent, PAGEMANAGER.newNode, pos + 1);
+        widget.edit(id);
+    }
+
+    function doRename(node) {
+        var li = $("#" + widget.get_node(node).li_attr.id);
+        widget.set_text(node, li.attr("title"));
+        widget.edit(node);
+    }
+
+    function doDelete(node) {
+        widget.delete_node(node);
+    }
+
+    function doCut(node) {
+        widget.cut(node);
+    }
+
+    function doCopy(node) {
+        widget.copy(node);
+    }
+
+    function doPaste(node) {
+        widget.paste(node, "last");
+    }
+
+    function doPasteAfter(node) {
+        var node = widget.get_node(node);
+        var parent = widget.get_node(node.parent);
+        var pos = $.inArray(node.id, parent.children);
+        widget.paste(parent, pos + 1);
+    }
+
     /**
      * Do an operation on the currently selected node.
      *
@@ -210,17 +241,30 @@
         selection = widget.get_selected();
         if (selection.length > 0) {
             switch (operation) {
-            case "create_after":
-                widget.create(selection, "after");
-                break;
-            case "delete":
-                widget.remove(selection);
-                break;
-            case "paste_after":
-                widget.pasteAfter(selection);
-                break;
-            default:
-                widget[operation](selection);
+                case "create":
+                    doCreate(selection);
+                    break;
+                case "create_after":
+                    doCreateAfter(selection);
+                    break;
+                case "rename":
+                    doRename(selection);
+                    break;                    
+                case "delete":
+                    doDelete(selection);
+                    break;
+                case "cut":
+                    doCut(selection);
+                    break;
+                case "copy":
+                    doCopy(selection);
+                    break;
+                case "paste":
+                    doPaste(selection);
+                    break;
+                case "paste_after":
+                    doPasteAfter(selection);
+                    break;
             }
         } else {
             if (PAGEMANAGER.verbose) {
@@ -377,50 +421,50 @@
             "create": {
                 "label": PAGEMANAGER.createOp,
                 "action": function (obj) {
-                    this.create(obj);
+                    doCreate(obj.reference);
                 }
             },
             "create-after": {
                 "label": PAGEMANAGER.createAfterOp,
                 "action": function (obj) {
-                    this.create(obj, "after");
+                    doCreateAfter(obj.reference);
                 }
             },
             "rename": {
                 "label": PAGEMANAGER.renameOp,
                 "action": function (obj) {
-                    this.rename(obj);
+                    doRename(obj.reference);
                 }
             },
-            "remove" : {
+            "remove": {
                 "label": PAGEMANAGER.deleteOp,
                 "action": function (obj) {
-                    this.remove(obj);
+                    doDelete(obj.reference);
                 }
             },
             "cut": {
                 "label": PAGEMANAGER.cutOp,
                 "separator_before": true,
                 "action": function (obj) {
-                    this.cut(obj);
+                    doCut(obj.reference);
                 }
             },
             "copy": {
                 "label": PAGEMANAGER.copyOp,
                 "action": function (obj) {
-                    this.copy(obj);
+                    doCopy(obj.reference);
                 }
             },
             "paste": {
                 "label": PAGEMANAGER.pasteOp,
                 "action": function (obj) {
-                    this.paste(obj);
+                    doPaste(obj.reference);
                 }
             },
             "paste-after": {
                 "label": PAGEMANAGER.pasteAfterOp,
                 "action": function (obj) {
-                    this.pasteAfter(obj);
+                    doPasteAfter(obj.reference);
                 }
             }
         };
@@ -437,7 +481,7 @@
     function markDuplicates(node, duplicates) {
         var children, i, j, iText, jText, heading;
 
-        children = widget._get_children(node);
+        children = widget.get_children_dom(node);
         for (i = 0; i < children.length; i += 1) {
             duplicates = markDuplicates(children[i], duplicates);
             iText = widget.get_text(children[i]);
@@ -446,7 +490,8 @@
                 if (iText === jText) {
                     duplicates += 1;
                     heading = PAGEMANAGER.duplicateHeading + " " + duplicates;
-                    widget.set_text(children[j], heading);
+                    widget.rename_node(children[j], heading);
+                    console.log(iText, jText);
                 }
             }
         }
@@ -462,13 +507,13 @@
      */
     function restorePageHeadings(node) {
         var children, i, child;
-
-        children = widget._get_children(node);
-        for (i = 0; i < children.length; i += 1) {
-            child = children[i];
-            widget.set_text(child, widget._get_node(child).attr("title"));
+return;
+        children = widget.get_children_dom(node);
+        children.each(function (index, child) {
+console.log(child)
+            widget.set_text(child, child.title);
             restorePageHeadings(child);
-        }
+        });
     }
 
     /**
@@ -518,94 +563,69 @@
             return;
         }
         element = $("#pagemanager");
-        $.jstree.plugin("crrm", {
-            _fn: {
-                pasteAfter: function (obj) {
-                    obj = this._get_node(obj);
-                    if (!obj || !obj.length) {
-                        return false;
-                    }
-                    var nodes = this.data.crrm.ct_nodes ||
-                        this.data.crrm.cp_nodes;
-                    if (!this.data.crrm.ct_nodes && !this.data.crrm.cp_nodes) {
-                        return false;
-                    }
-                    if (this.data.crrm.ct_nodes) {
-                        this.move_node(this.data.crrm.ct_nodes, obj, "after");
-                        this.data.crrm.ct_nodes = false;
-                    }
-                    if (this.data.crrm.cp_nodes) {
-                        this.move_node(this.data.crrm.cp_nodes, obj,
-                                       "after", true);
-                    }
-                    this.__callback({"obj": obj, "nodes": nodes });
-                    return undefined;
-                }
-            }
-        });
 
         initDialogs();
 
-        element.bind("loaded.jstree", function () {
+        element.on("loaded.jstree", function () {
             var events;
 
             if ($("#pagemanager_structure_warning").length === 0) {
                 $("#pagemanager_save, #pagemanager_submit").show();
             }
-            markDuplicates(-1, 0);
+            //markDuplicates(-1, 0);
             if (PAGEMANAGER.hasCheckboxes) {
-                checkPages(-1);
+                checkPages("#");
             }
             events = "move_node.jstree create_node.jstree rename_node.jstree" +
-                " remove.jstree change_state.jstree";
-            element.bind(events, function () {
+                " delete_node.jstree check_node.jstree uncheck_node.jstree";
+            element.on(events, function () {
                 modified = true;
             });
-            element.bind("before.jstree", function (e, data) {
-                switch (data.func) {
-                case "create_node":
-                    return beforeCreateNode(e, data);
-                case "rename":
-                    return beforeRename(e, data);
-                case "remove":
-                    return beforeRemove(e, data);
-                default:
-                    return undefined;
-                }
-            });
+        //    element.bind("before.jstree", function (e, data) {
+        //        switch (data.func) {
+        //        case "create_node":
+        //            return beforeCreateNode(e, data);
+        //        case "rename":
+        //            return beforeRename(e, data);
+        //        case "remove":
+        //            return beforeRemove(e, data);
+        //        default:
+        //            return undefined;
+        //        }
+        //    });
         });
 
         if (PAGEMANAGER.hasCheckboxes) {
-            /*jslint unparam: true*/
-            element.bind("change_state.jstree", function (e, data) {
-                data.rslt.attr("data-pdattr", data.args[1] ? "0" : "1");
+            element.on("check_node.jstree", function (e, data) {
+                widget.get_node(data.node.li_attr, true).attr("data-pdattr", "1");
             });
-            /*jslint unparam: false*/
+            element.on("uncheck_node.jstree", function (e, data) {
+                widget.get_node(data.node.li_attr, true).attr("data-pdattr", "0");
+            });
         }
 
-        /*jslint unparam: true*/
-        element.bind("create_node.jstree", function (e, data) {
-            widget.set_type("new", data.rslt.obj);
-            widget.check_node(data.rslt.obj);
+        element.on("create_node.jstree", function (e, data) {
+            widget.set_type(data.node, "new");
+            widget.check_node(data.node);
         });
-        /*jslint unparam: false*/
 
-        /*jslint unparam: true*/
-        element.bind("rename_node.jstree", function (e, data) {
-            widget._get_node(data.rslt.obj).attr(
-                "title",
-                widget.get_text(data.rslt.obj)
-            );
+        var onRenameNode = (function (e, data) {
+            widget.get_node(data.node.li_attr, true).prop("title", data.text);
         });
-        /*jslint unparam: false*/
+        element.on("rename_node.jstree", onRenameNode);
 
-        element.bind("move_node.jstree", markCopiedPages);
+        element.on("copy_node.jstree", markCopiedPages);
 
-        events = "rename_node.jstree remove.jstree move_node.jstree";
-        element.bind(events, function () {
-            restorePageHeadings(-1);
-            markDuplicates(-1, 0);
-        });
+        //events = "rename_node.jstree delete_node.jstree move_node.jstree";
+        //var remarkDuplicates = (function () {
+        //    element.off("rename_node.jstree", onRenameNode);
+        //    element.off(events, remarkDuplicates);
+        //    restorePageHeadings("#");
+        //    markDuplicates("#", 0);
+        //    element.on(events, remarkDuplicates);
+        //    element.on("rename_node.jstree", onRenameNode);
+        //});
+        //element.on(events, remarkDuplicates);
 
         if (!window.opera) {
             window.onbeforeunload = function () {
@@ -629,58 +649,53 @@
          */
         config = {
             "plugins": [
-                "contextmenu", "crrm", "dnd", "themes", "types", "json_data",
-                "ui"
+                "crrm",
             ],
+            "crrm": {
+                "move": {
+                    "check_move": isLegalMove
+                }
+            },
+        };
+        config = {
+            "plugins": ["contextmenu", "dnd", "types"],
             "core": {
                 "animation": PAGEMANAGER.animation,
+                "check_callback": true,
+                "data": {
+                    "url": PAGEMANAGER.dataURL,
+                    "error": alertAjaxError
+                },
+                "multiple": false,
                 "strings": {
-                    loading: PAGEMANAGER.loading,
-                    new_node: PAGEMANAGER.newNode
+                    "Loading ...": PAGEMANAGER.loading
+                },
+                "themes": {
+                    "name": PAGEMANAGER.theme
                 }
             },
             "checkbox": {
-                "checked_parent_open": false,
-                "two_state": true
+                "three_state": false,
+                "tie_selection": false,
+                "whole_node": false
             },
             "contextmenu": {
                 "show_at_node": false,
                 "select_node": true,
                 "items": contextMenuItems
             },
-            "crrm": {
-                "move": {
-                    "check_move": isLegalMove
-                }
-            },
-            "themes": {
-                "theme": PAGEMANAGER.theme
-            },
             "types": {
-                "types": {
-                    "new": {
-                        "icon": {
-                            "image": PAGEMANAGER.imageDir + "new.png"
-                        }
-                    },
-                    "default": {}
-                }
-            },
-            "ui": {
-                "select_limit": 1
-            },
-            "json_data": {
-                "ajax": {
-                    "url": PAGEMANAGER.dataURL,
-                    "error": alertAjaxError
-                }
+                "new": {
+                    "icon": PAGEMANAGER.imageDir + "new.png"
+                },
+                "default": {}
             }
         };
         if (PAGEMANAGER.hasCheckboxes) {
             config.plugins.push("checkbox");
         }
         element.jstree(config);
-        widget = $.jstree._reference("#pagemanager");
+        widget = $.jstree.reference("#pagemanager");
 
         ids = "#pagemanager_save, #pagemanager_expand, #pagemanager_collapse," +
             "#pagemanager_create, #pagemanager_create_after," +
@@ -690,16 +705,11 @@
             tool(this.id.substr(12));
         });
 
-        $("#pagemanager_form").off("submit").submit(function (event) {
-            event.preventDefault();
-            submit();
-        });
-        $("#pagemanager_structure_warning button").click(
-            confirmStructureWarning
-        );
-        element.off("dblclick").dblclick(function () {
-            element.jstree("toggle_node");
-        });
+        //$("#pagemanager_form").off("submit").submit(function (event) {
+        //    event.preventDefault();
+        //    submit();
+        //});
+        $("#pagemanager_structure_warning button").click(confirmStructureWarning);
     };
 
     $(init);
