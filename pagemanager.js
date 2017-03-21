@@ -106,9 +106,11 @@
                 // TODO: optimization: fix structure instead of reloading
                 widget.destroy();
                 init();
+                widget.restore_state();
             }
         }
 
+        widget.save_state();
         beforeSubmit();
         form = $("#pagemanager_form");
         url = form.attr("action");
@@ -365,6 +367,9 @@
      */
     function markDuplicates(node) {
         var children = widget.get_children_dom(node);
+        if (!children) {
+            return;
+        }
         children.each(function (index, value) {
             var text1 = widget.get_text(value);
             for (var i = index + 1; i < children.length; i++) {
@@ -377,7 +382,6 @@
                 }
             }
         });
-        return;
     }
 
     /**
@@ -464,7 +468,7 @@
          * Initialize jsTree.
          */
         config = {
-            "plugins": ["contextmenu", "dnd", "types"],
+            "plugins": ["contextmenu", "dnd", "state", "types"],
             "core": {
                 "animation": PAGEMANAGER.animation,
                 "check_callback": checkCallback,
@@ -489,6 +493,14 @@
                 "show_at_node": false,
                 "select_node": true,
                 "items": contextMenuItems
+            },
+            "state": {
+                "key": PAGEMANAGER.stateKey,
+                "events": "",
+                "filter": (function (state) {
+                    delete state.checkbox;
+                    return state;
+                })
             },
             "types": {
                 "new": {

@@ -156,6 +156,7 @@ class MainAdminController extends Controller
 
         $url = new Url($sn, array());
         $config = array(
+            'stateKey' => 'pagemanager_' . bin2hex(CMSIMPLE_ROOT),
             'okButton' => $this->lang['button_ok'],
             'cancelButton' => $this->lang['button_cancel'],
             'deleteButton' => $this->lang['button_delete'],
