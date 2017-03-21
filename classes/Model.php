@@ -82,18 +82,19 @@ class Model
 
     public function calculateHeadings()
     {
-        global $h, $tx;
+        global $c, $tx;
 
         $empty = 0;
-        foreach (array_keys($h) as $i) {
-            $heading = $this->cleanedHeading($h[$i]);
+        foreach ($c as $i => $page) {
+            preg_match('/<!--XH_ml[0-9]:(.*?)-->/su', $page, $matches);
+            $heading = $this->cleanedHeading($matches[1]);
             if ($heading === '') {
                 $empty += 1;
                 $this->headings[$i] = $tx['toc']['empty'] . ' ' . $empty;
             } else {
                 $this->headings[$i] = $heading;
             }
-            $this->mayRename[$i] = $this->mayRename($h[$i]);
+            $this->mayRename[$i] = $this->mayRename($matches[1]);
         }
     }
 

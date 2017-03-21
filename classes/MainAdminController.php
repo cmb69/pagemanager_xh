@@ -238,7 +238,7 @@ class MainAdminController extends Controller
                 $res['attr']['data-pdattr'] = $pageData[$this->pdAttr];
             }
         }
-        if (!$this->model->getMayRename[$index]) {
+        if (!$this->model->getMayRename($index)) {
             $res['attr']['class'] = 'pagemanager_no_rename';
         }
         return $res;
