@@ -77,25 +77,22 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
             array( // unmodified
                 <<<JSON
 [{
-    "data": "Welcome",
-    "attr": {
-        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1",
-        "class": ""
-    },
+    "text": "Welcome",
+    "id": "pagemanager_0",
+    "type": "default",
+    "li_attr": {"data-pdattr": "1"},
     "children": [{
-        "data": "About",
-        "attr": {
-            "id": "pagemanager_1", "title": "About", "data-pdattr": "1",
-            "class": ""
-        },
+        "text": "About",
+        "id": "pagemanager_1",
+        "type": "default",
+        "li_attr": {"data-pdattr": "1"},
         "children": []
     }]
 }, {
-    "data": "News",
-    "attr": {
-        "id": "pagemanager_2", "title": "News", "data-pdattr": "0",
-        "class": ""
-    },
+    "text": "News",
+    "id": "pagemanager_2",
+    "type": "default",
+    "li_attr": {"data-pdattr": "0"},
     "children": []
 }]
 JSON
@@ -113,30 +110,28 @@ JSON
             array( // insert page
                 <<<JSON
 [{
-    "data": "Welcome",
-    "attr": {
-        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1",
-        "class": ""
-    },
+    "text": "Welcome",
+    "id": "pagemanager_0",
+    "type": "default",
+    "li_attr": {"data-pdattr": "1"},
     "children": [{
-        "data": "About",
-        "attr": {
-            "id": "pagemanager_1", "title": "About", "data-pdattr": "1",
-            "class": ""
-        },
+        "text": "About",
+        "id": "pagemanager_1",
+        "type": "default",
+        "li_attr": {"data-pdattr": "1"},
         "children": []
     }, {
-        "data": "New Page",
-        "attr": {
-            "id": "", "title": "New Page", "data-pdattr": "1", "class": ""
-        },
+        "text": "New Page",
+        "id": "",
+        "type": "default",
+        "li_attr": {"data-pdattr": "1"},
         "children": []
     }]
 }, {
-    "data": "News",
-    "attr": {
-        "id": "pagemanager_2", "title": "News", "data-pdattr": "0", "class": ""
-    },
+    "text": "News",
+    "id": "pagemanager_2",
+    "type": "default",
+    "li_attr": {"data-pdattr": "0"},
     "children": []
 }]
 JSON
@@ -159,17 +154,16 @@ JSON
             array( // delete page
                 <<<JSON
 [{
-    "data": "Welcome",
-    "attr": {
-        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1",
-        "class": ""
-    },
+    "text": "Welcome",
+    "id": "pagemanager_0",
+    "type": "default",
+    "li_attr": {"data-pdattr": "1"},
     "children": []
 }, {
-    "data": "News",
-    "attr": {
-        "id": "pagemanager_2", "title": "News", "data-pdattr": "0", "class": ""
-    },
+    "text": "News",
+    "id": "pagemanager_2",
+    "type": "default",
+    "li_attr": {"data-pdattr": "0"},
     "children": []
 }]
 JSON
@@ -185,21 +179,20 @@ JSON
             array( // move page
                 <<<JSON
 [{
-    "data": "Welcome",
-    "attr": {
-        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1", "class": ""
-    },
+    "text": "Welcome",
+    "id": "pagemanager_0",
+    "type": "default",
+    "li_attr": {"data-pdattr": "1"},
     "children": [{
-        "data": "About",
-        "attr": {
-            "id": "pagemanager_1", "title": "About", "data-pdattr": "1", "class": ""
-        },
+        "text": "About",
+        "id": "pagemanager_1",
+        "type": "default",
+        "li_attr": {"data-pdattr": "1"},
         "children": [{
-            "data": "News",
-            "attr": {
-                "id": "pagemanager_2", "title": "News", "data-pdattr": "0",
-                "class": ""
-            },
+            "text": "News",
+            "id": "pagemanager_2",
+            "type": "default",
+            "li_attr": {"data-pdattr": "0"},
             "children": []
         }]
     }]
@@ -219,29 +212,28 @@ JSON
             array( // copy page
                 <<<JSON
 [{
-    "data": "Welcome",
-    "attr": {
-        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1", "class": ""
-    },
+    "text": "Welcome",
+    "id": "pagemanager_0",
+    "type": "default",
+    "li_attr": {"data-pdattr": "1"},
     "children": [{
-        "data": "About",
-        "attr": {
-            "id": "pagemanager_1", "title": "About", "data-pdattr": "1", "class": ""
-        },
+        "text": "About",
+        "id": "pagemanager_1",
+        "type": "default",
+        "li_attr": {"data-pdattr": "1"},
         "children": []
     }, {
-        "data": "About",
-        "attr": {
-            "id": "copy_pagemanager_1", "title": "About", "data-pdattr": "1",
-            "class": ""
-            },
+        "text": "About",
+        "id": "copy_pagemanager_1",
+        "type": "default",
+        "li_attr": {"data-pdattr": "1"},
         "children": []
     }]
 }, {
-    "data": "News",
-    "attr": {
-        "id": "pagemanager_2", "title": "News", "data-pdattr": "0", "class": ""
-    },
+    "text": "News",
+    "id": "pagemanager_2",
+    "type": "default",
+    "li_attr": {"data-pdattr": "0"},
     "children": []
 }]
 JSON
@@ -261,23 +253,22 @@ JSON
             array( // flip page data attribute
                 <<<JSON
 [{
-    "data": "Welcome",
-    "attr": {
-        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "0", "class": ""
-    },
+    "text": "Welcome",
+    "id": "pagemanager_0",
+    "type": "default",
+    "li_attr": {"data-pdattr": "0"},
     "children": [{
-        "data": "About",
-        "attr": {
-            "id": "pagemanager_1", "title": "About", "data-pdattr": "0",
-            "class": ""
-        },
+        "text": "About",
+        "id": "pagemanager_1",
+        "type": "default",
+        "li_attr": {"data-pdattr": "0"},
         "children": []
     }]
 }, {
-    "data": "News",
-    "attr": {
-        "id": "pagemanager_2", "title": "News", "data-pdattr": "1", "class": ""
-    },
+    "text": "News",
+    "id": "pagemanager_2",
+    "type": "default",
+    "li_attr": {"data-pdattr": "1"},
     "children": []
 }]
 JSON
@@ -295,23 +286,22 @@ JSON
             array( // no rename
                 <<<JSON
 [{
-    "data": "Welcome",
-    "attr": {
-        "id": "pagemanager_0", "title": "Welcome", "data-pdattr": "1",
-        "class": "pagemanager_no_rename"
-    },
+    "text": "Welcome",
+    "id": "pagemanager_0",
+    "type": "unrenameable",
+    "li_attr": {"data-pdattr": "1"},
     "children": [{
-        "data": "About",
-        "attr": {
-            "id": "pagemanager_1", "title": "About", "data-pdattr": "1", "class": ""
-        },
+        "text": "About",
+        "id": "pagemanager_1",
+        "type": "default",
+        "li_attr": {"data-pdattr": "1"},
         "children": []
     }]
 }, {
-    "data": "News",
-    "attr": {
-        "id": "pagemanager_2", "title": "News", "data-pdattr": "0", "class": ""
-    },
+    "text": "News",
+    "id": "pagemanager_2",
+    "type": "default",
+    "li_attr": {"data-pdattr": "0"},
     "children": []
 }]
 JSON

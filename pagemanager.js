@@ -17,9 +17,6 @@
  * along with Pagemanager_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*jslint browser: true, maxlen: 80, nomen: true*/
-/*global jQuery, PAGEMANAGER*/
-
 (function ($) {
     "use strict";
 
@@ -27,40 +24,6 @@
         widget = null,
         modified = false,
         init;
-
-    /**
-     * Returns the level of the page.
-     *
-     * @param {Elements} obj
-     *
-     * @returns {Number}
-     */
-    function level(obj) {
-        var res = 0;
-
-        while (obj.attr("id") !== "pagemanager") {
-            obj = obj.parent().parent();
-            res += 1;
-        }
-        return res;
-    }
-
-    /**
-     * Returns the nesting level of the children.
-     *
-     * @param {Elements} obj
-     *
-     * @returns {Number}
-     */
-    function childLevels(obj) {
-        var res = -1;
-
-        while (obj.length > 0) {
-            obj = obj.find("li");
-            res += 1;
-        }
-        return res;
-    }
 
     /**
      * Checks resp. unchecks all child pages of a page.
@@ -115,10 +78,9 @@
      * @returns {undefined}
      */
     function beforeSubmit() {
-        var attribs, json;
-
-        attribs = ["id", "title", "data-pdattr", "class"];
-        json = JSON.stringify(widget.get_json(-1, attribs));
+        var json = JSON.stringify(widget.get_json("#", {
+            no_state: true, no_data: true, no_a_attr: true
+        }));
         $("#pagemanager_json").val(json);
     }
 
@@ -175,9 +137,61 @@
         $("#pagemanager_save, #pagemanager_submit").show();
     }
 
+    function checkCallback(operation, node, parent, position, more) {
+        switch (operation) {
+            case "delete_node":
+                if ((widget.get_children_dom("#").length) > 1) {
+                    if (!PAGEMANAGER.verbose || confirm(PAGEMANAGER.confirmDeletionMessage)) {
+                        return true;
+                    }
+                } else {
+                    if (PAGEMANAGER.verbose) {
+                        alert(PAGEMANAGER.deleteLastMessage);
+                    }
+                }
+                return false;
+            case "move_node":
+            case "copy_node":
+                return getLevel(parent) + getChildLevels(node) + (!more.pos || more.pos === "i" ? 1 : 0) <= PAGEMANAGER.menuLevels;
+            default:
+                return true;
+        }
+    }
+
+    function getLevel(node) {
+        var parent = node;
+        var level = 0;
+        while (parent && parent !== "#") {
+            parent = widget.get_parent(parent);
+            level++;
+        }
+        return level;
+    }
+
+    function getChildLevels(node) {
+        var childLevels = (function (model, acc) {
+            if (!model.children.length) {
+                return acc;
+            } else {
+                return Math.max.apply(null, $.map(model.children, function (value) {
+                    var levels = childLevels(value, acc + 1);
+                    return levels;
+                }));
+            }
+        });
+        var model = widget.get_json(node, {"no_state": true, "no_id": true, "no_data": true, "no_li_attr": true, "no_a_attr": true});
+        return childLevels(model, 0);
+    }
+
     function doCreate(node) {
-        var id = widget.create_node(node, PAGEMANAGER.newNode);
-        widget.edit(id);
+        if (getLevel(node) < PAGEMANAGER.menuLevels) {
+            var id = widget.create_node(node, PAGEMANAGER.newNode);
+            widget.edit(id);
+        } else {
+            if (PAGEMANAGER.verbose) {
+                alert(PAGEMANAGER.menuLevelMessage);
+            }
+        }
     }
 
     function doCreateAfter(node) {
@@ -190,14 +204,15 @@
 
     function doRename(node) {
         var li = $("#" + widget.get_node(node).li_attr.id);
-        widget.set_text(node, li.attr("title"));
-        widget.edit(node);
+        if (!(/unrenameable$/).test(widget.get_type(node))) {
+            widget.edit(node);
+        } else {
+            alert(PAGEMANAGER.cantRenameError);
+        }
     }
 
     function doDelete(node) {
-        if (!PAGEMANAGER.verbose || confirm(PAGEMANAGER.confirmDeletionMessage)) {
-            widget.delete_node(node);
-        }
+        widget.delete_node(node);
     }
 
     function doCut(node) {
@@ -287,107 +302,6 @@
         }
     }
 
-    /**
-     * Prevents creating a page if not allowed.
-     *
-     * @param {Event}  event
-     * @param {Object} data
-     *
-     * @returns {mixed}
-     */
-    function beforeCreateNode(event, data) {
-        var node, where, targetLevel, result;
-
-        node = data.args[0];
-        where = data.args[1];
-        targetLevel = level(node) - (where === "after" ? 1 : 0);
-        if (targetLevel < PAGEMANAGER.menuLevels) {
-            result = undefined;
-        } else {
-            if (PAGEMANAGER.verbose) {
-                alert(PAGEMANAGER.menuLevelMessage);
-            }
-            event.stopImmediatePropagation();
-            result = false;
-        }
-        return result;
-    }
-
-    /**
-     * Prepares renaming a node.
-     *
-     * @param {Event}  event
-     * @param {Object} data
-     *
-     * @returns {mixed}
-     */
-    function beforeRename(event, data) {
-        var node = data.args[0], title, result;
-
-        if (!node.hasClass("pagemanager_no_rename")) {
-            title = node.attr("title");
-            widget.set_text(node, title);
-            result = undefined;
-        } else {
-            alert(PAGEMANAGER.cantRenameError);
-            event.stopImmediatePropagation();
-            result = false;
-        }
-    }
-
-    /**
-     * Prepares deleting a page.
-     *
-     * @param {Event}  event
-     * @param {Object} data
-     *
-     * @returns {mixed}
-     */
-    function beforeRemove(event, data) {
-        var node, what, toplevelNodes, buttons;
-
-        node = data.args[0];
-        what = data.args[1];
-        toplevelNodes = widget.get_container_ul().children();
-
-        // prevent deletion of last toplevel node
-        if (toplevelNodes.length === 1 &&
-                node.get(0) === toplevelNodes.get(0)) {
-            if (PAGEMANAGER.verbose) {
-                alert(PAGEMANAGER.deleteLastMessage);
-            }
-            event.stopImmediatePropagation();
-            return false;
-        }
-
-        return undefined;
-    }
-
-    /**
-     * Returns whether a move is allowed.
-     *
-     * @param {Object} move
-     *
-     * @returns {Boolean}
-     */
-    function isLegalMove(move) {
-        var sourceLevels, targetLevels, extraLevels, totalLevels, allowed;
-
-        if (typeof move.r !== "object") {
-            return false;
-        }
-        sourceLevels = childLevels(move.o);
-        targetLevels = level(move.r);
-        // paste vs. dnd:
-        extraLevels = move.p === "last" || move.p === "inside" ? 1 : 0;
-        totalLevels = sourceLevels + targetLevels + extraLevels;
-        allowed =  totalLevels <= PAGEMANAGER.menuLevels;
-        if (!allowed && !move.ot.data.dnd.active && PAGEMANAGER.verbose) {
-            alert(PAGEMANAGER.menuLevelMessage);
-        }
-        return allowed;
-    }
-
     function contextMenuItems() {
         return {
             "create": {
@@ -446,46 +360,24 @@
      * Marks duplicate page headings as such.
      *
      * @param {} node
-     * @param {Number} duration
      *
      * @returns {Number} The number of duplicate pages.
      */
-    function markDuplicates(node, duplicates) {
-        var children, i, j, iText, jText, heading;
-
-        children = widget.get_children_dom(node);
-        for (i = 0; i < children.length; i += 1) {
-            duplicates = markDuplicates(children[i], duplicates);
-            iText = widget.get_text(children[i]);
-            for (j = i + 1; j < children.length; j += 1) {
-                jText = widget.get_text(children[j]);
-                if (iText === jText) {
-                    duplicates += 1;
-                    heading = PAGEMANAGER.duplicateHeading + " " + duplicates;
-                    widget.rename_node(children[j], heading);
-                    console.log(iText, jText);
+    function markDuplicates(node) {
+        var children = widget.get_children_dom(node);
+        children.each(function (index, value) {
+            var text1 = widget.get_text(value);
+            for (var i = index + 1; i < children.length; i++) {
+                var text2 = widget.get_text(children[i]);
+                var type = widget.get_type(children[i]).replace(/^duplicate-/, '');                    
+                if (text2 === text1) {
+                    widget.set_type(children[i], "duplicate-" + type);
+                } else {
+                    widget.set_type(children[i], type);
                 }
             }
-        }
-        return duplicates;
-    }
-
-    /**
-     * Restores the page headings.
-     *
-     * @param {Element} node
-     *
-     * @returns {undefined}
-     */
-    function restorePageHeadings(node) {
-        var children, i, child;
-return;
-        children = widget.get_children_dom(node);
-        children.each(function (index, child) {
-console.log(child)
-            widget.set_text(child, child.title);
-            restorePageHeadings(child);
         });
+        return;
     }
 
     /**
@@ -493,11 +385,9 @@ console.log(child)
      *
      * @returns {undefined}
      */
-    /*jslint unparam:true*/
     function alertAjaxError(jqXHR, textStatus, errorThrown) {
         alert(errorThrown);
     }
-    /*jslint unparam:false*/
 
     /**
      * Initialiazes the plugin.
@@ -513,13 +403,12 @@ console.log(child)
         }
         element = $("#pagemanager");
 
-        element.on("loaded.jstree", function () {
+        element.on("ready.jstree", function () {
             var events;
 
             if ($("#pagemanager_structure_warning").length === 0) {
                 $("#pagemanager_save, #pagemanager_submit").show();
             }
-            //markDuplicates(-1, 0);
             if (PAGEMANAGER.hasCheckboxes) {
                 checkPages("#");
             }
@@ -528,18 +417,6 @@ console.log(child)
             element.on(events, function () {
                 modified = true;
             });
-        //    element.bind("before.jstree", function (e, data) {
-        //        switch (data.func) {
-        //        case "create_node":
-        //            return beforeCreateNode(e, data);
-        //        case "rename":
-        //            return beforeRename(e, data);
-        //        case "remove":
-        //            return beforeRemove(e, data);
-        //        default:
-        //            return undefined;
-        //        }
-        //    });
         });
 
         if (PAGEMANAGER.hasCheckboxes) {
@@ -551,28 +428,20 @@ console.log(child)
             });
         }
 
+        element.on("open_node.jstree", function (e, data) {
+            markDuplicates(data.node);
+        });
+
         element.on("create_node.jstree", function (e, data) {
             widget.set_type(data.node, "new");
             widget.check_node(data.node);
         });
 
-        var onRenameNode = (function (e, data) {
-            widget.get_node(data.node.li_attr, true).prop("title", data.text);
-        });
-        element.on("rename_node.jstree", onRenameNode);
-
         element.on("copy_node.jstree", markCopiedPages);
 
-        //events = "rename_node.jstree delete_node.jstree move_node.jstree";
-        //var remarkDuplicates = (function () {
-        //    element.off("rename_node.jstree", onRenameNode);
-        //    element.off(events, remarkDuplicates);
-        //    restorePageHeadings("#");
-        //    markDuplicates("#", 0);
-        //    element.on(events, remarkDuplicates);
-        //    element.on("rename_node.jstree", onRenameNode);
-        //});
-        //element.on(events, remarkDuplicates);
+        element.on("rename_node.jstree delete_node.jstree move_node.jstree", function (e, data) {
+            markDuplicates(data.node.parent);
+        });
 
         if (!window.opera) {
             window.onbeforeunload = function () {
@@ -595,20 +464,10 @@ console.log(child)
          * Initialize jsTree.
          */
         config = {
-            "plugins": [
-                "crrm",
-            ],
-            "crrm": {
-                "move": {
-                    "check_move": isLegalMove
-                }
-            },
-        };
-        config = {
             "plugins": ["contextmenu", "dnd", "types"],
             "core": {
                 "animation": PAGEMANAGER.animation,
-                "check_callback": true,
+                "check_callback": checkCallback,
                 "data": {
                     "url": PAGEMANAGER.dataURL,
                     "error": alertAjaxError
@@ -635,6 +494,18 @@ console.log(child)
                 "new": {
                     "icon": PAGEMANAGER.imageDir + "new.png"
                 },
+                "unrenameable": {
+                    "icon": PAGEMANAGER.imageDir + "fail.png"
+                },
+                "duplicate-default": {
+                    "icon": PAGEMANAGER.imageDir + "warn.png"
+                },
+                "duplicate-new": {
+                    "icon": PAGEMANAGER.imageDir + "warn.png"
+                },
+                "duplicate-unrenameable": {
+                    "icon": PAGEMANAGER.imageDir + "warn.png"
+                },
                 "default": {}
             }
         };
@@ -643,7 +514,7 @@ console.log(child)
         }
         element.jstree(config);
         widget = $.jstree.reference("#pagemanager");
-
+        markDuplicates("#");
         ids = "#pagemanager_save, #pagemanager_expand, #pagemanager_collapse," +
             "#pagemanager_create, #pagemanager_create_after," +
             "#pagemanager_rename, #pagemanager_delete, #pagemanager_cut," +
@@ -652,10 +523,10 @@ console.log(child)
             tool(this.id.substr(12));
         });
 
-        //$("#pagemanager_form").off("submit").submit(function (event) {
-        //    event.preventDefault();
-        //    submit();
-        //});
+        $("#pagemanager_form").off("submit").submit(function (event) {
+            event.preventDefault();
+            submit();
+        });
         $("#pagemanager_structure_warning button").click(confirmStructureWarning);
     };
 

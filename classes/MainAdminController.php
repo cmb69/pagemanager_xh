@@ -219,15 +219,12 @@ class MainAdminController extends Controller
      */
     private function getPageData($index)
     {
-        global $h;
-
         $pageData = $this->pdRouter->find_page($index);
 
         $res = array(
-            'text' => $h[$index],
+            'text' => $this->model->getHeading($index),
             'li_attr' => array(
-                'id' => "pagemanager_{$index}",
-                'title' => $this->model->getHeading($index)
+                'id' => "pagemanager_{$index}"
             ),
             'children' => $this->getPagesData($index)
         );
@@ -239,7 +236,7 @@ class MainAdminController extends Controller
             }
         }
         if (!$this->model->getMayRename($index)) {
-            $res['li_attr']['class'] = 'pagemanager_no_rename';
+            $res['type'] = 'unrenameable';
         }
         return $res;
     }

@@ -35,18 +35,18 @@ class ModelTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        global $h, $cl, $l, $tx;
+        global $c, $cl, $l, $tx;
 
-        $h = array(
-            'Welcome',
-            'Subpage',
-            'Subpage',
-            '',
-            'Foo',
-            'Foo &amp; bar',
-            'Foo &nbsp; bar'
+        $c = array(
+            '<!--XH_ml1:Welcome-->',
+            '<!--XH_ml2:Subpage-->',
+            '<!--XH_ml2:Subpage-->',
+            '<!--XH_ml2:-->',
+            '<!--XH_ml1:Foo-->',
+            '<!--XH_ml2:Foo &amp; bar-->',
+            '<!--XH_ml2:Foo &nbsp; bar-->'
         );
-        $cl = count($h);
+        $cl = count($c);
         $l = array(1, 2, 2, 2, 1, 2, 2);
 
         $tx['toc']['empty'] = 'EMPTY HEADING';
@@ -89,9 +89,10 @@ class ModelTest extends PHPUnit_Framework_TestCase
 
     public function testIsIrregular()
     {
-        global $l;
+        global $l, $cl;
 
         $this->assertFalse($this->model->isIrregular());
+        $cl = 2;
         $l = array(1, 3);
         $this->assertTrue($this->model->isIrregular());
     }
