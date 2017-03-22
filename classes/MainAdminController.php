@@ -111,7 +111,7 @@ class MainAdminController extends Controller
     private function tools()
     {
         return array(
-            'save', 'expand', 'collapse', 'add', 'rename',
+            'save', 'toggle', 'add', 'rename',
             'delete', 'cut', 'copy', 'paste', 'help'
         );
     }

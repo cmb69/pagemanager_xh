@@ -290,11 +290,18 @@
      */
     function tool(operation) {
         switch (operation) {
-        case "expand":
-            widget.open_all();
-            break;
-        case "collapse":
-            widget.close_all();
+        case "toggle":
+            var collapsed = true;
+            widget.get_children_dom("#").each(function (element) {
+                if (widget.is_open(this)) {
+                    collapsed = false;
+                }
+            });
+            if (collapsed) {
+                widget.open_all();
+            } else {
+                widget.close_all();
+            }
             break;
         case "save":
             submit();
@@ -521,7 +528,7 @@
         element.jstree(config);
         widget = $.jstree.reference("#pagemanager");
         markDuplicates("#");
-        ids = "#pagemanager_save, #pagemanager_expand, #pagemanager_collapse, #pagemanager_add," +
+        ids = "#pagemanager_save, #pagemanager_toggle, #pagemanager_add," +
             "#pagemanager_rename, #pagemanager_delete, #pagemanager_cut, #pagemanager_copy, #pagemanager_paste";
         $(ids).off("click").click(function () {
             tool(this.id.substr(12));

@@ -40,8 +40,7 @@
     cursor: pointer;
 }
 #pagemanager_save {background-image: url("../images/save.png")}
-#pagemanager_expand {background-image: url("../images/expand.png")}
-#pagemanager_collapse {background-image: url("../images/collapse.png")}
+#pagemanager_toggle {background-image: url("../images/toggle.png")}
 #pagemanager_add {background-image: url("../images/add.png")}
 #pagemanager_rename {background-image: url("../images/rename.png")}
 #pagemanager_delete {background-image: url("../images/delete.png")}
