@@ -185,108 +185,44 @@
         return childLevels(model, 0);
     }
 
-    function doCreate(node) {
-        if (getLevel(node) < PAGEMANAGER.menuLevels) {
-            var id = widget.create_node(node, PAGEMANAGER.newNode);
+    var commands = {
+        add: function (node) {
+            var node = widget.get_node(node);
+            var parent = widget.get_node(node.parent);
+            var pos = $.inArray(node.id, parent.children);
+            var id = widget.create_node(parent, PAGEMANAGER.newNode, pos + 1);
             widget.edit(id);
-        } else {
-            if (PAGEMANAGER.verbose) {
-                alert(PAGEMANAGER.menuLevelMessage);
+        },
+        rename: function (node) {
+            var li = $("#" + widget.get_node(node).li_attr.id);
+            if (!(/unrenameable$/).test(widget.get_type(node))) {
+                widget.edit(node);
+            } else {
+                alert(PAGEMANAGER.cantRenameError);
             }
-        }
-    }
-
-    function doAdd(node) {
-        var node = widget.get_node(node);
-        var parent = widget.get_node(node.parent);
-        var pos = $.inArray(node.id, parent.children);
-        var id = widget.create_node(parent, PAGEMANAGER.newNode, pos + 1);
-        widget.edit(id);
-    }
-
-    function doRename(node) {
-        var li = $("#" + widget.get_node(node).li_attr.id);
-        if (!(/unrenameable$/).test(widget.get_type(node))) {
-            widget.edit(node);
-        } else {
-            alert(PAGEMANAGER.cantRenameError);
-        }
-    }
-
-    function doDelete(node) {
-        widget.delete_node(node);
-    }
-
-    function doCut(node) {
-        widget.cut(node);
-    }
-
-    function doCopy(node) {
-        widget.copy(node);
-    }
-
-    function doPaste(node) {
-        var node = widget.get_node(node);
-        var parent = widget.get_node(node.parent);
-        var pos = $.inArray(node.id, parent.children);
-        widget.paste(parent, pos + 1);
-    }
-
-    function doEdit(node) {
-        widget.save_state();
-        location.href = widget.get_node(node, true).attr("data-url") + "&edit";
-    }
-
-    function doPreview(node) {
-        widget.save_state();
-        location.href = widget.get_node(node, true).attr("data-url") + "&normal";
-    }
-
-    /**
-     * Do an operation on the currently selected node.
-     *
-     * @param {String} operation
-     *
-     * @returns {undefined}
-     */
-    function doWithSelection(operation) {
-        var selection;
-
-        selection = widget.get_selected();
-        if (selection.length > 0) {
-            switch (operation) {
-                case "create":
-                    doCreate(selection);
-                    break;
-                case "add":
-                    doAdd(selection);
-                    break;
-                case "rename":
-                    doRename(selection);
-                    break;                    
-                case "delete":
-                    doDelete(selection);
-                    break;
-                case "cut":
-                    doCut(selection);
-                    break;
-                case "copy":
-                    doCopy(selection);
-                    break;
-                case "paste":
-                    doPaste(selection);
-                    break;
-                case "edit":
-                    doEdit(selection);
-                    break;
-                case "preview":
-                    doPreview(selection);
-                    break;
-            }
-        } else {
-            if (PAGEMANAGER.verbose) {
-                alert(PAGEMANAGER.noSelectionMessage);
-            }
+        },
+        remove: function (node) {
+            widget.delete_node(node);
+        },
+        cut: function (node) {
+            widget.cut(node);
+        },
+        copy: function (node) {
+            widget.copy(node);
+        },
+        paste: function (node) {
+            var node = widget.get_node(node);
+            var parent = widget.get_node(node.parent);
+            var pos = $.inArray(node.id, parent.children);
+            widget.paste(parent, pos + 1);
+        },
+        edit: function (node) {
+            widget.save_state();
+            location.href = widget.get_node(node, true).attr("data-url") + "&edit";
+        },
+        preview: function (node) {
+            widget.save_state();
+            location.href = widget.get_node(node, true).attr("data-url") + "&normal";
         }
     }
 
@@ -316,71 +252,28 @@
             submit();
             break;
         default:
-            doWithSelection(operation);
+            var selection = widget.get_selected();
+            if (selection.length > 0) {
+                commands[operation](selection);
+            } else if (PAGEMANAGER.verbose) {
+                alert(PAGEMANAGER.noSelectionMessage);
+            }
         }
     }
 
     function contextMenuItems() {
-        return {
-            "add": {
-                "label": PAGEMANAGER.addOp,
+        var result = {};
+        var tools = ["add", "rename", "remove", "cut", "copy", "paste", "edit", "preview"];
+        $.each(tools, function (index, value) {
+            result[value] = {
+                "label": PAGEMANAGER[value + "Op"],
                 "action": function (obj) {
-                    doAdd(obj.reference);
+                    commands[value](obj.reference);
                 },
-                "icon": PAGEMANAGER.imageDir + "add.png"
-            },
-            "rename": {
-                "label": PAGEMANAGER.renameOp,
-                "action": function (obj) {
-                    doRename(obj.reference);
-                },
-                "icon": PAGEMANAGER.imageDir + "rename.png"
-            },
-            "remove": {
-                "label": PAGEMANAGER.deleteOp,
-                "action": function (obj) {
-                    doDelete(obj.reference);
-                },
-                "icon": PAGEMANAGER.imageDir + "delete.png"
-            },
-            "cut": {
-                "label": PAGEMANAGER.cutOp,
-                "separator_before": true,
-                "action": function (obj) {
-                    doCut(obj.reference);
-                },
-                "icon": PAGEMANAGER.imageDir + "cut.png"
-            },
-            "copy": {
-                "label": PAGEMANAGER.copyOp,
-                "action": function (obj) {
-                    doCopy(obj.reference);
-                },
-                "icon": PAGEMANAGER.imageDir + "copy.png"
-            },
-            "paste": {
-                "label": PAGEMANAGER.pasteOp,
-                "action": function (obj) {
-                    doPaste(obj.reference);
-                },
-                "icon": PAGEMANAGER.imageDir + "paste.png"
-            },
-            "edit": {
-                "label": PAGEMANAGER.editOp,
-                "separator_before": true,
-                "action": function (obj) {
-                    doEdit(obj.reference);
-                },
-                "icon": PAGEMANAGER.imageDir + "edit.png"
-            },
-            "preview": {
-                "label": PAGEMANAGER.previewOp,
-                "action": function (obj) {
-                    doPreview(obj.reference);
-                },
-                "icon": PAGEMANAGER.imageDir + "preview.png"
-            }
-        };
+                "icon": PAGEMANAGER.imageDir + value + ".png"
+            };
+        });
+        return result;
     }
 
     /**
@@ -442,7 +335,7 @@
                 checkPages("#");
             }
             events = "move_node.jstree create_node.jstree rename_node.jstree" +
-                " delete_node.jstree check_node.jstree uncheck_node.jstree";
+                " remove_node.jstree check_node.jstree uncheck_node.jstree";
             element.on(events, function () {
                 modified = true;
             });
@@ -468,7 +361,7 @@
 
         element.on("copy_node.jstree", markCopiedPages);
 
-        element.on("rename_node.jstree delete_node.jstree move_node.jstree", function (e, data) {
+        element.on("rename_node.jstree remove_node.jstree move_node.jstree", function (e, data) {
             markDuplicates(data.node.parent);
         });
 
@@ -552,7 +445,7 @@
         element.jstree(config);
         widget = $.jstree.reference("#pagemanager");
         markDuplicates("#");
-        ids = "#pagemanager_save, #pagemanager_toggle, #pagemanager_add, #pagemanager_rename, #pagemanager_delete," +
+        ids = "#pagemanager_save, #pagemanager_toggle, #pagemanager_add, #pagemanager_rename, #pagemanager_remove," +
             "#pagemanager_cut, #pagemanager_copy, #pagemanager_edit, #pagemanager_preview, #pagemanager_paste";
         $(ids).off("click").click(function () {
             tool(this.id.substr(12));

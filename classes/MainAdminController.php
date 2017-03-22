@@ -112,7 +112,7 @@ class MainAdminController extends Controller
     {
         return array(
             'save', 'toggle', 'add', 'rename',
-            'delete', 'cut', 'copy', 'paste', 'edit', 'preview', 'help'
+            'remove', 'cut', 'copy', 'paste', 'edit', 'preview', 'help'
         );
     }
 
@@ -175,7 +175,7 @@ class MainAdminController extends Controller
             'theme' => $this->config['treeview_theme'],
             'addOp' => $this->lang['op_add'],
             'renameOp' => $this->lang['op_rename'],
-            'deleteOp' => $this->lang['op_delete'],
+            'removeOp' => $this->lang['op_remove'],
             'cutOp' => $this->lang['op_cut'],
             'copyOp' => $this->lang['op_copy'],
             'pasteOp' => $this->lang['op_paste'],
