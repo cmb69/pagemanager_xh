@@ -369,22 +369,12 @@
             nodeTools.prop("disabled", true);
         });
 
-        if (!window.opera) {
-            window.onbeforeunload = function () {
-                if (modified && $("#pagemanager_json").val() === "") {
-                    return PAGEMANAGER.leaveWarning;
-                }
-                return undefined;
-            };
-        } else {
-            $(window).unload(function () {
-                if (modified && $("#pagemanager_json").val() === "") {
-                    if (confirm(PAGEMANAGER.leaveConfirmation)) {
-                        submit();
-                    }
-                }
-            });
-        }
+        $(window).on("beforeunload", function () {
+            if (modified && $("#pagemanager_json").val() === "") {
+                return PAGEMANAGER.leaveWarning;
+            }
+            return undefined;
+        });
 
         /*
          * Initialize jsTree.
