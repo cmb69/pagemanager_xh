@@ -194,7 +194,6 @@
             widget.edit(id);
         },
         rename: function (node) {
-            var li = $("#" + widget.get_node(node).li_attr.id);
             if (!(/unrenameable$/).test(widget.get_type(node))) {
                 widget.edit(node);
             } else {
