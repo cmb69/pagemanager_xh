@@ -11,7 +11,6 @@ $plugin_tx['pagemanager']['op_remove']="Supprimer";
 $plugin_tx['pagemanager']['op_cut']="Couper";
 $plugin_tx['pagemanager']['op_copy']="Copier";
 $plugin_tx['pagemanager']['op_paste']="Coller";
-$plugin_tx['pagemanager']['op_help']="Vous pouvez réorganiser les pages par drag&amp;drop. Le clic droit sur une page ouvre le menu contextuel. Des instructions détaillées sont disponibles dans l'aide du plugin.";
 $plugin_tx['pagemanager']['treeview_loading']="Chargement...";
 $plugin_tx['pagemanager']['treeview_new']="Nouvelle page";
 $plugin_tx['pagemanager']['button_delete']="Supprimer";

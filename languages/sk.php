@@ -25,7 +25,6 @@ $plugin_tx['pagemanager']['message_warning_leave']="Vaše zmeny sa neuložia!";
 $plugin_tx['pagemanager']['op_copy']="Kopírovať";
 $plugin_tx['pagemanager']['op_cut']="Vystrihnúť";
 $plugin_tx['pagemanager']['op_remove']="Vymazať";
-$plugin_tx['pagemanager']['op_help']="Stránky môžete premiestňovať pomocou drag&amp;drop. Kliknutím pravou na stránku otvoríte kontextové menu. Podrobnejšie pokyny nájdete v help.htm.";
 $plugin_tx['pagemanager']['op_paste']="Vložiť";
 $plugin_tx['pagemanager']['op_rename']="Premenovať";
 $plugin_tx['pagemanager']['syscheck_extension']="Rozšírenie '%s' načítané";

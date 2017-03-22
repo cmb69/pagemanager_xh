@@ -12,7 +12,6 @@ $plugin_tx['pagemanager']['op_remove']="Kustuta leht";
 $plugin_tx['pagemanager']['op_cut']="Lõika";
 $plugin_tx['pagemanager']['op_copy']="Kopeeri";
 $plugin_tx['pagemanager']['op_paste']="Kleebi";
-$plugin_tx['pagemanager']['op_help']="<p>Lehti saab ümber tõsta <em>lohista&kukuta</em> kasutades. <em>Parem klikk lehel</em> avab hüpikmenüü. Üksikasjalikum juhend on saadaval lisa abifailis.</p>";
 $plugin_tx['pagemanager']['message_confirm_deletion']="Leht koos kõigi alamlehtedega kustutatakse!";
 $plugin_tx['pagemanager']['message_warning_leave']="Teie muudatused kaovad.";
 $plugin_tx['pagemanager']['message_confirm_leave']="*** SALVESTAMATA MUUTUSED! ***\r\n\r\nKinnita nende salvestamine, vastasel korral muutused kaovad!\r\n";

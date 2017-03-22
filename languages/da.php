@@ -19,7 +19,6 @@ $plugin_tx['pagemanager']['op_remove']="Remove";
 $plugin_tx['pagemanager']['op_cut']="Cut";
 $plugin_tx['pagemanager']['op_copy']="Copy";
 $plugin_tx['pagemanager']['op_paste']="Paste";
-$plugin_tx['pagemanager']['op_help']="You can rearrange pages by drag&drop. Right clicking on a page opens the context menu. More detailed instruction are available in the plugin help, which is available by clicking this help icon.";
 $plugin_tx['pagemanager']['message_confirm_deletion']="The page with all it's sub-pages will be deleted!";
 $plugin_tx['pagemanager']['message_warning_leave']="Your modifications will be lost!";
 $plugin_tx['pagemanager']['message_confirm_leave']="*** UNSAVED MODIFICATIONS! ***\r\n\r\nConfirm to save them, otherwise they will be lost!\r\n";

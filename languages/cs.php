@@ -31,7 +31,6 @@ $plugin_tx['pagemanager']['message_warning_leave']="Vaše nastavení bude ztrace
 $plugin_tx['pagemanager']['op_copy']="Kopírovat";
 $plugin_tx['pagemanager']['op_cut']="Vystřihnout";
 $plugin_tx['pagemanager']['op_remove']="Vymazat";
-$plugin_tx['pagemanager']['op_help']="Stránky můžete přetahovat pomocí drag&drop. Kliknutím pravým tlačítkem na stránku otevřete kontextové menu. Podrobnější pokyny najdete po kliknutí na ikonu helpu v help.htm.";
 $plugin_tx['pagemanager']['op_paste']="Vložit";
 $plugin_tx['pagemanager']['op_rename']="Přejmenovat";
 $plugin_tx['pagemanager']['syscheck_extension']="Rozšíření \"%s\" načteno";

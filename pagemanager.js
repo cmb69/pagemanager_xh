@@ -264,18 +264,24 @@
     }
 
     function contextMenuItems() {
-        var result = {};
-        var tools = ["add", "rename", "remove", "cut", "copy", "paste", "edit", "preview"];
-        $.each(tools, function (index, value) {
-            result[value] = {
-                "label": PAGEMANAGER[value + "Op"],
-                "action": function (obj) {
-                    commands[value](obj.reference);
-                },
-                "icon": PAGEMANAGER.imageDir + value + ".png"
-            };
+        var tools = ({
+            "add": {},
+            "rename": {},
+            "remove": {},
+            "cut": {"separator_before": true},
+            "copy": {},
+            "paste": {},
+            "edit": {"separator_before": true},
+            "preview": {}
         });
-        return result;
+        $.each(tools, function (name, value) {
+            value.label = PAGEMANAGER[name + "Op"];
+            value.action = (function (obj) {
+                commands[name](obj.reference);
+            });
+            value.icon = PAGEMANAGER.imageDir + name + ".png";
+        });
+        return tools;
     }
 
     /**

@@ -12,7 +12,6 @@ $plugin_tx['pagemanager']['op_remove']="Verwijder";
 $plugin_tx['pagemanager']['op_cut']="Knip pagina";
 $plugin_tx['pagemanager']['op_copy']="Kopieer pagina";
 $plugin_tx['pagemanager']['op_paste']="Plak pagina";
-$plugin_tx['pagemanager']['op_help']="U kunt pagina volgorde aanpassen door te slepen. Klik met rechtermuis knop voor bewerkmenu. Engelstalige helppagina is beschikbaar door te klikken op dit icoon.";
 $plugin_tx['pagemanager']['message_confirm_deletion']="De pagina met alle bijbehorende sub-pagina's worden verwijderd!";
 $plugin_tx['pagemanager']['message_warning_leave']="Uw aanpassingen gaan verloren!";
 $plugin_tx['pagemanager']['message_confirm_leave']="*** Niet opgeslagen aanpassingen! ***\n\nDoe eerst opslaan anders zullen aanpassingen verloren gaan!\n";

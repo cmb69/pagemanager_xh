@@ -21,37 +21,31 @@
  */
 
 #pagemanager_toolbar {
-    margin: 1px 0;
-    border: 1px solid #999;
-    background-color: #eee;
-    padding: 0 8px;
-    font-size: 14px;
-    overflow: hidden;
+    text-align: center;
 }
-
 #pagemanager_toolbar button {
-    border: 0;
-    padding: 0;
-    width: 16px;
-    height: 16px;
-    background-color: #eee;
-    cursor: pointer;
-    margin: 6px 5px;
+    min-width: 5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
-#pagemanager_toolbar img {
-    margin: 8px 0;
+#pagemanager_toolbar button span {
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0.3em 0 0.5em 0;
 }
-#pagemanager_save {background-image: url("../images/save.png")}
-#pagemanager_toggle {background-image: url("../images/toggle.png")}
-#pagemanager_add {background-image: url("../images/add.png")}
-#pagemanager_rename {background-image: url("../images/rename.png")}
-#pagemanager_remove {background-image: url("../images/remove.png")}
-#pagemanager_cut {background-image: url("../images/cut.png")}
-#pagemanager_copy {background-image: url("../images/copy.png")}
-#pagemanager_paste {background-image: url("../images/paste.png")}
-#pagemanager_edit {background-image: url("../images/edit.png")}
-#pagemanager_preview {background-image: url("../images/preview.png")}
-#pagemanager_help {background-image: url("../images/help.png")}
+#pagemanager_add, #pagemanager_toggle, #pagemanager_cut, #pagemanager_edit, #pagemanager_help {margin-left: 1em}
+#pagemanager_save span {background-image: url("../images/save.png")}
+#pagemanager_toggle span {background-image: url("../images/toggle.png")}
+#pagemanager_add span {background-image: url("../images/add.png")}
+#pagemanager_rename span {background-image: url("../images/rename.png")}
+#pagemanager_remove span {background-image: url("../images/remove.png")}
+#pagemanager_cut span {background-image: url("../images/cut.png")}
+#pagemanager_copy span {background-image: url("../images/copy.png")}
+#pagemanager_paste span {background-image: url("../images/paste.png")}
+#pagemanager_edit span {background-image: url("../images/edit.png")}
+#pagemanager_preview span {background-image: url("../images/preview.png")}
+#pagemanager_help span {background-image: url("../images/help.png")}
 
 /*
  * Context menu
