@@ -36,20 +36,19 @@
     padding: 0;
     width: 16px;
     height: 16px;
-    background-image: url("../images/tools.png");
     background-color: #eee;
     cursor: pointer;
 }
-
-#pagemanager_expand {background-position: -16px 0}
-#pagemanager_collapse {background-position: -32px 0}
-#pagemanager_add {background-position: -48px 0}
-#pagemanager_rename {background-position: -16px -16px}
-#pagemanager_delete {background-position: -32px -16px}
-#pagemanager_cut {background-position: -48px -16px}
-#pagemanager_copy {background-position: 0 -32px}
-#pagemanager_paste {background-position: -16px -32px}
-#pagemanager_help {background-position: -48px -32px}
+#pagemanager_save {background-image: url("../images/save.png")}
+#pagemanager_expand {background-image: url("../images/expand.png")}
+#pagemanager_collapse {background-image: url("../images/collapse.png")}
+#pagemanager_add {background-image: url("../images/add.png")}
+#pagemanager_rename {background-image: url("../images/rename.png")}
+#pagemanager_delete {background-image: url("../images/delete.png")}
+#pagemanager_cut {background-image: url("../images/cut.png")}
+#pagemanager_copy {background-image: url("../images/copy.png")}
+#pagemanager_paste {background-image: url("../images/paste.png")}
+#pagemanager_help {background-image: url("../images/help.png")}
 
 /*
  * horizontal toolbar

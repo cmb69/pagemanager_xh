@@ -310,38 +310,44 @@
                 "label": PAGEMANAGER.addOp,
                 "action": function (obj) {
                     doAdd(obj.reference);
-                }
+                },
+                "icon": PAGEMANAGER.imageDir + "add.png"
             },
             "rename": {
                 "label": PAGEMANAGER.renameOp,
                 "action": function (obj) {
                     doRename(obj.reference);
-                }
+                },
+                "icon": PAGEMANAGER.imageDir + "rename.png"
             },
             "remove": {
                 "label": PAGEMANAGER.deleteOp,
                 "action": function (obj) {
                     doDelete(obj.reference);
-                }
+                },
+                "icon": PAGEMANAGER.imageDir + "delete.png"
             },
             "cut": {
                 "label": PAGEMANAGER.cutOp,
                 "separator_before": true,
                 "action": function (obj) {
                     doCut(obj.reference);
-                }
+                },
+                "icon": PAGEMANAGER.imageDir + "cut.png"
             },
             "copy": {
                 "label": PAGEMANAGER.copyOp,
                 "action": function (obj) {
                     doCopy(obj.reference);
-                }
+                },
+                "icon": PAGEMANAGER.imageDir + "copy.png"
             },
             "paste": {
-                "label": PAGEMANAGER.pasteAfterOp,
+                "label": PAGEMANAGER.pasteOp,
                 "action": function (obj) {
                     doPasteAfter(obj.reference);
-                }
+                },
+                "icon": PAGEMANAGER.imageDir + "paste.png"
             }
         };
     }
