@@ -29,9 +29,7 @@
     overflow: hidden;
 }
 
-#pagemanager_toolbar button,
-#pagemanager_toolbar a {
-    float: left;
+#pagemanager_toolbar button {
     border: 0;
     padding: 0;
     width: 16px;

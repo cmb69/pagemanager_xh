@@ -85,11 +85,8 @@ class MainAdminController extends Controller
         $view->isIrregular = $this->model->isIrregular();
         $view->ajaxLoaderPath = "{$this->pluginFolder}images/ajax-loader-bar.gif";
         $view->hasToolbar = (bool) $this->config['toolbar_show'];
-        $tools = array();
-        foreach ($this->tools() as $tool) {
-            $tools[] = new HtmlString($this->tool($tool));
-        }
-        $view->tools = $tools;
+        $view->tools = array('save', 'toggle', 'add', 'rename', 'remove',
+                             'cut', 'copy', 'paste', 'edit', 'preview', 'help');
         $view->csrfTokenInput = new HtmlString($this->csrfProtector->tokenInput());
         $view->render();
     }
@@ -105,49 +102,11 @@ class MainAdminController extends Controller
     }
 
     /**
-     * @return string[]
-     */
-    private function tools()
-    {
-        return array(
-            'save', 'toggle', 'add', 'rename',
-            'remove', 'cut', 'copy', 'paste', 'edit', 'preview', 'help'
-        );
-    }
-
-    /**
-     * @param string $tool
-     * @return string
-     */
-    private function tool($tool)
-    {
-        global $pth;
-
-        $id = "pagemanager_{$tool}";
-        $o = '';
-        $style = $tool === 'save' ? ' style="display: none"' : '';
-        if ($tool === 'save') {
-            $tooltip = XH_hsc($this->lang['button_save']);
-        } else {
-            $tooltip = XH_hsc($this->lang['op_'.$tool]);
-        }
-        if ($tool !== 'help') {
-            $o .= '<button type="button" id="' . $id . '" ' . $style
-                . ' title="' . $tooltip . '"' . '></button>';
-        } else {
-            $o .= '<a href="' . $pth['file']['plugin_help']
-                . '" target="_blank" id="' . $id . '" title="' . $tooltip . '"></a>';
-        }
-        $o .= "\n";
-        return $o;
-    }
-
-    /**
      * @return string
      */
     private function jsConfig()
     {
-        global $sn, $tx;
+        global $sn, $tx, $pth;
 
         $url = new Url($sn, array());
         $config = array(
@@ -176,6 +135,7 @@ class MainAdminController extends Controller
             'pasteOp' => $this->lang['op_paste'],
             'editOp' => $this->lang['op_edit'],
             'previewOp' => $this->lang['op_preview'],
+            'userManual' => $pth['file']['plugin_help'],
             'noSelectionMessage' => $this->lang['message_no_selection'],
             'duplicateHeading' => $tx['toc']['dupl'],
             'offendingExtensionError' => $this->lang['error_offending_extension'],

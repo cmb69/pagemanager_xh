@@ -9,7 +9,7 @@
 $plugin_tx['pagemanager']['button_cancel']="Zrušit";
 $plugin_tx['pagemanager']['button_delete']="Vymazat";
 $plugin_tx['pagemanager']['button_ok']="OK";
-$plugin_tx['pagemanager']['button_save']="Uložit";
+$plugin_tx['pagemanager']['op_save']="Uložit";
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="Atributy PageData mohou být upraveny pomocí zaškrtávacích políček: \"linked_to_menu\" (viditelná v menu) nebo \"published\" (zveřejněno). Pro skrytí políček nechte prázdné.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Zda bude zobrazen panel nástrojů.";
 $plugin_tx['pagemanager']['cf_treeview_animation']="Doba otevření/zavření animace v ms. 0 znamená bez animace.";

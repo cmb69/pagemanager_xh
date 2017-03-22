@@ -234,30 +234,33 @@
      */
     function tool(operation) {
         switch (operation) {
-        case "toggle":
-            var collapsed = true;
-            widget.get_children_dom("#").each(function (element) {
-                if (widget.is_open(this)) {
-                    collapsed = false;
+            case "toggle":
+                var collapsed = true;
+                widget.get_children_dom("#").each(function (element) {
+                    if (widget.is_open(this)) {
+                        collapsed = false;
+                    }
+                });
+                if (collapsed) {
+                    widget.open_all();
+                } else {
+                    widget.close_all();
                 }
-            });
-            if (collapsed) {
-                widget.open_all();
-            } else {
-                widget.close_all();
+                return;
+            case "save":
+                submit();
+                return;
+            case "help":
+                open(PAGEMANAGER.userManual, "_blank");
+                return;
+            default:
+                var selection = widget.get_selected();
+                if (selection.length > 0) {
+                    commands[operation](selection);
+                } else if (PAGEMANAGER.verbose) {
+                    alert(PAGEMANAGER.noSelectionMessage);
+                }
             }
-            break;
-        case "save":
-            submit();
-            break;
-        default:
-            var selection = widget.get_selected();
-            if (selection.length > 0) {
-                commands[operation](selection);
-            } else if (PAGEMANAGER.verbose) {
-                alert(PAGEMANAGER.noSelectionMessage);
-            }
-        }
     }
 
     function contextMenuItems() {
@@ -322,6 +325,7 @@
             alert(PAGEMANAGER.offendingExtensionError);
             return;
         }
+        $("#pagemanager_save, #pagemanager_submit").hide();
         element = $("#pagemanager");
 
         element.on("ready.jstree", function () {
@@ -445,7 +449,7 @@
         widget = $.jstree.reference("#pagemanager");
         markDuplicates("#");
         ids = "#pagemanager_save, #pagemanager_toggle, #pagemanager_add, #pagemanager_rename, #pagemanager_remove," +
-            "#pagemanager_cut, #pagemanager_copy, #pagemanager_edit, #pagemanager_preview, #pagemanager_paste";
+            "#pagemanager_cut, #pagemanager_copy, #pagemanager_edit, #pagemanager_preview, #pagemanager_paste, #pagemanager_help";
         $(ids).off("click").click(function () {
             tool(this.id.substr(12));
         });

@@ -17,17 +17,15 @@
 <?php if ($this->hasToolbar):?>
     <div id="pagemanager_toolbar">
 <?php   foreach ($this->tools as $tool):?>
-        <?=$this->escape($tool)?>
+        <button type="button" id="pagemanager_<?=$this->escape($tool)?>" title="<?=$this->text("op_{$tool}")?>"></button>
 <?php   endforeach?>
-        <div style="clear: both"></div>
     </div>
 <?php endif?>
     <div id="pagemanager"></div>
     <input type="hidden" name="admin" value="plugin_main">
     <input type="hidden" name="action" value="plugin_save">
     <input type="hidden" name="json" id="pagemanager_json" value="">
-    <input id="pagemanager_submit" type="submit" class="submit"
-           value="<?=$this->text('button_save')?>" style="display: none">
+    <button id="pagemanager_submit"><?=$this->text('op_save')?></button>
     <?=$this->csrfTokenInput()?>
     <p class="pagemanager_status" style="display:none">
         <img src="<?=$this->ajaxLoaderPath()?>" alt="Loading">
