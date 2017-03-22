@@ -85,7 +85,6 @@ class MainAdminController extends Controller
         $view->isIrregular = $this->model->isIrregular();
         $view->ajaxLoaderPath = "{$this->pluginFolder}images/ajax-loader-bar.gif";
         $view->hasToolbar = (bool) $this->config['toolbar_show'];
-        $view->toolbarClass = $this->config['toolbar_vertical'] ? 'pagemanager_vertical' : 'pagemanager_horizontal';
         $tools = array();
         foreach ($this->tools() as $tool) {
             $tools[] = new HtmlString($this->tool($tool));
@@ -124,7 +123,6 @@ class MainAdminController extends Controller
     {
         global $pth;
 
-        $horizontal = !$this->config['toolbar_vertical'];
         $id = "pagemanager_{$tool}";
         $o = '';
         $style = $tool === 'save' ? ' style="display: none"' : '';
@@ -139,9 +137,6 @@ class MainAdminController extends Controller
         } else {
             $o .= '<a href="' . $pth['file']['plugin_help']
                 . '" target="_blank" id="' . $id . '" title="' . $tooltip . '"></a>';
-        }
-        if (!$horizontal) {
-            $o .= '<br>';
         }
         $o .= "\n";
         return $o;

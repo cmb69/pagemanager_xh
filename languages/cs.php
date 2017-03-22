@@ -12,7 +12,6 @@ $plugin_tx['pagemanager']['button_ok']="OK";
 $plugin_tx['pagemanager']['button_save']="Uložit";
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="Atributy PageData mohou být upraveny pomocí zaškrtávacích políček: \"linked_to_menu\" (viditelná v menu) nebo \"published\" (zveřejněno). Pro skrytí políček nechte prázdné.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Zda bude zobrazen panel nástrojů.";
-$plugin_tx['pagemanager']['cf_toolbar_vertical']="Zda se panel nástrojů zobrazí svisle. Tato možnost je určena pro náročné uživatele, kteří si upravují rozložení v Plugin stylů.";
 $plugin_tx['pagemanager']['cf_treeview_animation']="Doba otevření/zavření animace v ms. 0 znamená bez animace.";
 $plugin_tx['pagemanager']['cf_treeview_theme']="Téma of tree view widget.";
 $plugin_tx['pagemanager']['cf_verbose']="Zda chcete zobrazit informace a potvrzovací dialogy.";

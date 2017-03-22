@@ -39,7 +39,6 @@ $plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple plugin installed";
 $plugin_tx['pagemanager']['syscheck_writable']="Folder \"%s\" writable";
 $plugin_tx['pagemanager']['cf_verbose']="Whether to show information and confirmation dialogs.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Whether the toolbar shall be shown.";
-$plugin_tx['pagemanager']['cf_toolbar_vertical']="Whether the toolbar shall be displayed vertically. This option is for power users, who can adjust the layout in Plugin Stylesheet.";
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="The pagedata attribute to be edited with the checkboxes: \"linked_to_menu\" (visible in menu) or \"published\" (published). Leave empty to hide the checkboxes.";
 $plugin_tx['pagemanager']['cf_treeview_theme']="Theme of tree view widget.";
 $plugin_tx['pagemanager']['cf_treeview_animation']="Duration of open/close animations in ms. 0 means no animation.";

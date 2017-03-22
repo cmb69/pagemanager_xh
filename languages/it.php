@@ -33,7 +33,6 @@ $plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple plugin installato"
 $plugin_tx['pagemanager']['syscheck_writable']="La Cartella \"%s\" è abilitata in scrittura";
 $plugin_tx['pagemanager']['cf_verbose']="Se mostrare la finestra di dialogo per le informazioni e le conferme.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Se mostrare la barra degli strumenti.";
-$plugin_tx['pagemanager']['cf_toolbar_vertical']="Se visualizzare la barra degli strumenti in modalità verticale. Opzione riservata ad utenti esperti; il pannello deve essere impostato nel Foglio Stile dell'estensione.";
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="I parametri di 'pagedata' da impostare con le caselle di spunta: \"linked_to_menu\" (Visible nel menu) o \"published\" (Pubblicare). Lasciare vuoto per nascondere le caselle di spunta.";
 $plugin_tx['pagemanager']['cf_treeview_theme']="Stile per la vista 'ad albero'.";
 $plugin_tx['pagemanager']['cf_treeview_animation']="Durata dell'animazione di apertura/chiusura  in millisecondi. '0' seignifica che non c'è animazione.";

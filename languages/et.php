@@ -33,7 +33,6 @@ $plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple moodul on paigalda
 $plugin_tx['pagemanager']['syscheck_writable']="Kaust \"%s\" on kirjutatav";
 $plugin_tx['pagemanager']['cf_verbose']="<p>Näita informatsiooni ja kinnituse dialooge? <b>true</b> või <b>false</b></p><p><strong><b>true</b> on tungivalt soovituslik</strong>, juhul kui oled pädevkasutaja <strong>ja</strong> oled Pagemanager_XHs kodus.</p>";
 $plugin_tx['pagemanager']['cf_toolbar_show']="<p>Kas tööriistariba on nähtav? <b>true</b> or <b>false</b></p>";
-$plugin_tx['pagemanager']['cf_toolbar_vertical']="<p>Kas tööriistariba kuvatakse vertikaalselt? <b>true</b> või <b>false</b></p><p>See valik on lõppkasutajale, kes saab kohandada paigutust Plugin Stylesheet all.</p>";
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="<p>Jah/ei (vaikimisi jah) leheandmete valikukastide seaded, näit <b>published</b> või <b>linked_to_menu</b>.</p><p><strong>Hoiatus:</strong> Kui valite sobimatu väärtuse, keerate oma pagedata.php segamini!</p>";
 $plugin_tx['pagemanager']['cf_treeview_theme']="<p>Kataloogipuu vaate vidina mall: <b>cmsimple</b></p><p>Teised maiild on saadaval from http://3-magi.net/?CMSimple_XH/Pagemanager_XH.</p>";
 $plugin_tx['pagemanager']['cf_treeview_animation']="<p>Animatsioonide avamise/sulgemise kestus (ms). 0 tähendab animatsioonide puudumist.</p>";

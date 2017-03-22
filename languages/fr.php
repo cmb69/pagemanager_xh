@@ -2,7 +2,6 @@
 
 $plugin_tx['pagemanager']['cf_verbose']="Montrer ou non les dialogues d'information et de confirmation (conseillé).";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Montrer ou non la barre d'outils.";
-$plugin_tx['pagemanager']['cf_toolbar_vertical']="Afficher la barre d'outils verticalement. Option réservée aux experts, le cadre doit être adapté dans la feuille de style du plugin.";
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="Les attributs yes/no (yes par défaut) de pagedata pour les cases à cocher, par ex. <b>published</b> or <b>linked_to_menu</b>.<strong>Attention :</strong> si vous choisissez un attribut inapproprié vous pouvez corompre votre fichier pagedata.php !";
 $plugin_tx['pagemanager']['cf_treeview_theme']="Thème du widget TreeView : <b>cmsimple</b>D'autres thèmes sont disponibles sur http://3-magi.net/?CMSimple_XH/Pagemanager_XH.";
 $plugin_tx['pagemanager']['cf_treeview_animation']="Durée des animations ouvrir/fermer en ms. 0 signifie sans animation.";

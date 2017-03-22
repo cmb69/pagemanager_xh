@@ -38,6 +38,10 @@
     height: 16px;
     background-color: #eee;
     cursor: pointer;
+    margin: 6px 5px;
+}
+#pagemanager_toolbar img {
+    margin: 8px 0;
 }
 #pagemanager_save {background-image: url("../images/save.png")}
 #pagemanager_toggle {background-image: url("../images/toggle.png")}
@@ -50,72 +54,6 @@
 #pagemanager_edit {background-image: url("../images/edit.png")}
 #pagemanager_preview {background-image: url("../images/preview.png")}
 #pagemanager_help {background-image: url("../images/help.png")}
-
-/*
- * horizontal toolbar
- */
-
-/* for floating horizontal toolbar: uncomment the following */
-/*
-#pagemanager_toolbar.pagemanager_horizontal {
-    position: fixed;
-    top: 150px;
-    z-index: 1000;
-}
-*/
-
-#pagemanager_toolbar.pagemanager_horizontal img {
-    margin: 8px 0;
-}
-
-#pagemanager_toolbar.pagemanager_horizontal button,
-#pagemanager_toolbar.pagemanager_horizontal a {
-    margin: 6px 5px;
-}
-
-/*
- * vertical toolbar
- *
- * The style should be adjusted to your needs.
- * Change top and left accordingly.
- */
-
-#pagemanager_toolbar.pagemanager_vertical {
-    text-align: center;
-    position: fixed;
-    margin: 0 auto;
-    padding: 0 2px;
-    z-index: 1000;
-}
-
-/* You might adjust the left or right margin of the treeview */
-/*
-#pagemanager {
-    margin-left: 32px;
-}
-*/
-/* and for a lefthand toolbar the margin of the submit button */
-/*
-#pagemanager_submit {
-    margin-left: 32px !important;
-}
-*/
-/* and for a righthand toolbar the position of the tooltips */
-/*
-#pagemanager_toolbar.pagemanager_vertical a.pl_tooltip:hover span {
-    left: -320px;
-}
-*/
-
-#pagemanager_toolbar.pagemanager_vertical img {
-    margin: 0 8px;
-}
-
-#pagemanager_toolbar.pagemanager_vertical button,
-#pagemanager_toolbar.pagemanager_vertical a {
-    margin: 6px 2px;
-}
-
 
 /*
  * Context menu

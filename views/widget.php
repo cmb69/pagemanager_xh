@@ -15,14 +15,14 @@
         <img src="<?=$this->ajaxLoaderPath()?>" alt="Loading">
     </p>
 <?php if ($this->hasToolbar):?>
-    <div id="pagemanager_toolbar" class="<?=$this->toolbarClass()?>">
+    <div id="pagemanager_toolbar">
 <?php   foreach ($this->tools as $tool):?>
         <?=$this->escape($tool)?>
 <?php   endforeach?>
         <div style="clear: both"></div>
     </div>
 <?php endif?>
-    <div id="pagemanager" class="<?=$this->toolbarClass()?>"></div>
+    <div id="pagemanager"></div>
     <input type="hidden" name="admin" value="plugin_main">
     <input type="hidden" name="action" value="plugin_save">
     <input type="hidden" name="json" id="pagemanager_json" value="">

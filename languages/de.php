@@ -39,7 +39,6 @@ $plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple Plugin installiert
 $plugin_tx['pagemanager']['syscheck_writable']="Ordner \"%s\" beschreibbar";
 $plugin_tx['pagemanager']['cf_verbose']="Ob Bestätigungs- und Informationsdialoge angezeigt werden sollen.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Ob die Werkzeugleiste angezeigt werden soll.";
-$plugin_tx['pagemanager']['cf_toolbar_vertical']="Ob die Werkzeugleiste vertikal angezeigt werden soll. Dies ist eine Option für Power User, die das Layout in Plugin-Stylesheet anpassen können.";
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="Das Pagedata Attribut, das mit den Checkboxen bearbeitet werden kann: \"linked_to_menu\" (sichtbar im Menü) oder \"published\" (veröffentlicht). Leer lassen, um keine Checkboxen anzuzeigen.";
 $plugin_tx['pagemanager']['cf_treeview_theme']="Stil der Baumansicht.";
 $plugin_tx['pagemanager']['cf_treeview_animation']="Dauer der Öffnen/Schließen-Animation in ms. 0 bedeutet keine Animation.";

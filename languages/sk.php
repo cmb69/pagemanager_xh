@@ -6,7 +6,6 @@ $plugin_tx['pagemanager']['button_ok']="OK";
 $plugin_tx['pagemanager']['button_save']="Uložiť";
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="Voľba yes/no (predvolené yes) pre vlastnosti pagedata pre checkboxy, napr.: published alebo linked_to_menu.Upozornenie:Ak zvolíte nesprávnu vlastnosť, poškodíte pagedata.php!";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Ukázať nástrojovú lištu? YES alebo NO";
-$plugin_tx['pagemanager']['cf_toolbar_vertical']="Ukázať nástrojovú lištu vertikálne? YES alebo NO</bstrongTáto voľba je pre skúsených, ktorí si vedia upraviť štýl pluginu.";
 $plugin_tx['pagemanager']['cf_treeview_animation']="Trvanie open/close animácie v ms. 0znamená bez animácie.";
 $plugin_tx['pagemanager']['cf_treeview_theme']="Téma stromového modulu: cmsimpleĎalšie témy sú na stiahnutie na: http://3-magi.net/?CMSimple_XH/Pagemanager_XH.";
 $plugin_tx['pagemanager']['cf_verbose']="Ukázať informačné a potvrdzovacie dialógy? YES alebo NOYES veľmi doporučené, ak nie ste dostatočne skúsený aa dobre poznáte Pagemanager_XH.";

@@ -40,7 +40,6 @@ $plugin_tx['pagemanager']['syscheck_jquery']="jQuery4CMSimple plugin installed";
 $plugin_tx['pagemanager']['syscheck_writable']="Folder \"%s\" writable";
 $plugin_tx['pagemanager']['cf_verbose']="\r\nUanset at vise information og bekræftelsesdialoger.";
 $plugin_tx['pagemanager']['cf_toolbar_show']="Om værktøjslinjen skal vises.";
-$plugin_tx['pagemanager']['cf_toolbar_vertical']="Om værktøjslinjen skal vises lodret. Denne indstilling er for superbrugere, der kan justere layoutet i Plugin typografiark.";
 $plugin_tx['pagemanager']['cf_pagedata_attribute']="Den pagedata attribut, der skal redigeres med afkrydsningsfelterne: \"linked_to_menu\" (synlig i menuen) eller \"udgivet\" (offentliggjort). Efterlad tom for at skjule afkrydsningsfelterne.";
 $plugin_tx['pagemanager']['cf_treeview_theme']="Tema af trævisning widget.";
 $plugin_tx['pagemanager']['cf_treeview_animation']="Varighed af åbne / lukke animationer i ms. 0 betyder ingen animation.";
