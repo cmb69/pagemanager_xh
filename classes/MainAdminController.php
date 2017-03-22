@@ -111,8 +111,8 @@ class MainAdminController extends Controller
     private function tools()
     {
         return array(
-            'save', 'expand', 'collapse', 'create', 'create_after', 'rename',
-            'delete', 'cut', 'copy', 'paste', 'paste_after', 'help'
+            'save', 'expand', 'collapse', 'add', 'rename',
+            'delete', 'cut', 'copy', 'paste', 'help'
         );
     }
 
@@ -173,14 +173,12 @@ class MainAdminController extends Controller
             'newNode' => $this->lang['treeview_new'],
             'imageDir' => "{$this->pluginFolder}images/",
             'theme' => $this->config['treeview_theme'],
-            'createOp' => $this->lang['op_create'],
-            'createAfterOp' => $this->lang['op_create_after'],
+            'addOp' => $this->lang['op_add'],
             'renameOp' => $this->lang['op_rename'],
             'deleteOp' => $this->lang['op_delete'],
             'cutOp' => $this->lang['op_cut'],
             'copyOp' => $this->lang['op_copy'],
             'pasteOp' => $this->lang['op_paste'],
-            'pasteAfterOp' => $this->lang['op_paste_after'],
             'noSelectionMessage' => $this->lang['message_no_selection'],
             'duplicateHeading' => $tx['toc']['dupl'],
             'offendingExtensionError' => $this->lang['error_offending_extension'],

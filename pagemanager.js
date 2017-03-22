@@ -196,7 +196,7 @@
         }
     }
 
-    function doCreateAfter(node) {
+    function doAdd(node) {
         var node = widget.get_node(node);
         var parent = widget.get_node(node.parent);
         var pos = $.inArray(node.id, parent.children);
@@ -252,8 +252,8 @@
                 case "create":
                     doCreate(selection);
                     break;
-                case "create_after":
-                    doCreateAfter(selection);
+                case "add":
+                    doAdd(selection);
                     break;
                 case "rename":
                     doRename(selection);
@@ -270,7 +270,7 @@
                 case "paste":
                     doPaste(selection);
                     break;
-                case "paste_after":
+                case "paste":
                     doPasteAfter(selection);
                     break;
             }
@@ -306,16 +306,10 @@
 
     function contextMenuItems() {
         return {
-            "create": {
-                "label": PAGEMANAGER.createOp,
+            "add": {
+                "label": PAGEMANAGER.addOp,
                 "action": function (obj) {
-                    doCreate(obj.reference);
-                }
-            },
-            "create-after": {
-                "label": PAGEMANAGER.createAfterOp,
-                "action": function (obj) {
-                    doCreateAfter(obj.reference);
+                    doAdd(obj.reference);
                 }
             },
             "rename": {
@@ -344,12 +338,6 @@
                 }
             },
             "paste": {
-                "label": PAGEMANAGER.pasteOp,
-                "action": function (obj) {
-                    doPaste(obj.reference);
-                }
-            },
-            "paste-after": {
                 "label": PAGEMANAGER.pasteAfterOp,
                 "action": function (obj) {
                     doPasteAfter(obj.reference);
@@ -527,10 +515,8 @@
         element.jstree(config);
         widget = $.jstree.reference("#pagemanager");
         markDuplicates("#");
-        ids = "#pagemanager_save, #pagemanager_expand, #pagemanager_collapse," +
-            "#pagemanager_create, #pagemanager_create_after," +
-            "#pagemanager_rename, #pagemanager_delete, #pagemanager_cut," +
-            "#pagemanager_copy, #pagemanager_paste, #pagemanager_paste_after";
+        ids = "#pagemanager_save, #pagemanager_expand, #pagemanager_collapse, #pagemanager_add," +
+            "#pagemanager_rename, #pagemanager_delete, #pagemanager_cut, #pagemanager_copy, #pagemanager_paste";
         $(ids).off("click").click(function () {
             tool(this.id.substr(12));
         });

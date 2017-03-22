@@ -43,14 +43,12 @@
 
 #pagemanager_expand {background-position: -16px 0}
 #pagemanager_collapse {background-position: -32px 0}
-#pagemanager_create {background-position: -48px 0}
-#pagemanager_create_after {background-position: 0 -16px}
+#pagemanager_add {background-position: -48px 0}
 #pagemanager_rename {background-position: -16px -16px}
 #pagemanager_delete {background-position: -32px -16px}
 #pagemanager_cut {background-position: -48px -16px}
 #pagemanager_copy {background-position: 0 -32px}
 #pagemanager_paste {background-position: -16px -32px}
-#pagemanager_paste_after {background-position: -32px -32px}
 #pagemanager_help {background-position: -48px -32px}
 
 /*
