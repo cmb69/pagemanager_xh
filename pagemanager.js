@@ -253,8 +253,8 @@
             "cut": {"separator_before": true},
             "copy": {},
             "paste": {},
-            "edit": {"separator_before": true},
-            "preview": {}
+            "edit": {"separator_before": true, "_disabled": !widget.get_node(node, true).attr("data-url")},
+            "preview": {"_disabled": !widget.get_node(node, true).attr("data-url")}
         });
         $.each(tools, function (name, value) {
             value.label = PAGEMANAGER[name + "Op"];
@@ -364,6 +364,7 @@
             nodeTools.prop("disabled", false);
             $("#pagemanager_rename").prop("disabled", /unrenameable$/.test(widget.get_type(data.node)));
             $("#pagemanager_remove").prop("disabled", widget.get_children_dom("#").length < 2);
+            $("#pagemanager_edit, #pagemanager_preview").prop("disabled", !widget.get_node(data.node, true).attr("data-url"));
         });
         element.on("deselect_node.jstree delete_node.jstree", function (e, data) {
             nodeTools.prop("disabled", true);
