@@ -226,10 +226,6 @@
     }
 
     function doPaste(node) {
-        widget.paste(node, "last");
-    }
-
-    function doPasteAfter(node) {
         var node = widget.get_node(node);
         var parent = widget.get_node(node.parent);
         var pos = $.inArray(node.id, parent.children);
@@ -365,7 +361,7 @@
             "paste": {
                 "label": PAGEMANAGER.pasteOp,
                 "action": function (obj) {
-                    doPasteAfter(obj.reference);
+                    doPaste(obj.reference);
                 },
                 "icon": PAGEMANAGER.imageDir + "paste.png"
             },
