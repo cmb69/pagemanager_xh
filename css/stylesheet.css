@@ -47,6 +47,8 @@
 #pagemanager_cut {background-image: url("../images/cut.png")}
 #pagemanager_copy {background-image: url("../images/copy.png")}
 #pagemanager_paste {background-image: url("../images/paste.png")}
+#pagemanager_edit {background-image: url("../images/edit.png")}
+#pagemanager_preview {background-image: url("../images/preview.png")}
 #pagemanager_help {background-image: url("../images/help.png")}
 
 /*

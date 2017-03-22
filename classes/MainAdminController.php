@@ -112,7 +112,7 @@ class MainAdminController extends Controller
     {
         return array(
             'save', 'toggle', 'add', 'rename',
-            'delete', 'cut', 'copy', 'paste', 'help'
+            'delete', 'cut', 'copy', 'paste', 'edit', 'preview', 'help'
         );
     }
 
@@ -179,6 +179,8 @@ class MainAdminController extends Controller
             'cutOp' => $this->lang['op_cut'],
             'copyOp' => $this->lang['op_copy'],
             'pasteOp' => $this->lang['op_paste'],
+            'editOp' => $this->lang['op_edit'],
+            'previewOp' => $this->lang['op_preview'],
             'noSelectionMessage' => $this->lang['message_no_selection'],
             'duplicateHeading' => $tx['toc']['dupl'],
             'offendingExtensionError' => $this->lang['error_offending_extension'],
@@ -218,12 +220,14 @@ class MainAdminController extends Controller
      */
     private function getPageData($index)
     {
-        $pageData = $this->pdRouter->find_page($index);
+        global $sn, $u;
 
+        $pageData = $this->pdRouter->find_page($index);
         $res = array(
             'text' => $this->model->getHeading($index),
             'li_attr' => array(
-                'id' => "pagemanager_{$index}"
+                'id' => "pagemanager_{$index}",
+                'data-url' => (string) new Url($sn, array($u[$index] => ''))
             ),
             'children' => $this->getPagesData($index)
         );

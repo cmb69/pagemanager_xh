@@ -236,6 +236,16 @@
         widget.paste(parent, pos + 1);
     }
 
+    function doEdit(node) {
+        widget.save_state();
+        location.href = widget.get_node(node, true).attr("data-url") + "&edit";
+    }
+
+    function doPreview(node) {
+        widget.save_state();
+        location.href = widget.get_node(node, true).attr("data-url") + "&normal";
+    }
+
     /**
      * Do an operation on the currently selected node.
      *
@@ -270,8 +280,11 @@
                 case "paste":
                     doPaste(selection);
                     break;
-                case "paste":
-                    doPasteAfter(selection);
+                case "edit":
+                    doEdit(selection);
+                    break;
+                case "preview":
+                    doPreview(selection);
                     break;
             }
         } else {
@@ -355,6 +368,21 @@
                     doPasteAfter(obj.reference);
                 },
                 "icon": PAGEMANAGER.imageDir + "paste.png"
+            },
+            "edit": {
+                "label": PAGEMANAGER.editOp,
+                "separator_before": true,
+                "action": function (obj) {
+                    doEdit(obj.reference);
+                },
+                "icon": PAGEMANAGER.imageDir + "edit.png"
+            },
+            "preview": {
+                "label": PAGEMANAGER.previewOp,
+                "action": function (obj) {
+                    doPreview(obj.reference);
+                },
+                "icon": PAGEMANAGER.imageDir + "preview.png"
             }
         };
     }
@@ -528,8 +556,8 @@
         element.jstree(config);
         widget = $.jstree.reference("#pagemanager");
         markDuplicates("#");
-        ids = "#pagemanager_save, #pagemanager_toggle, #pagemanager_add," +
-            "#pagemanager_rename, #pagemanager_delete, #pagemanager_cut, #pagemanager_copy, #pagemanager_paste";
+        ids = "#pagemanager_save, #pagemanager_toggle, #pagemanager_add, #pagemanager_rename, #pagemanager_delete," +
+            "#pagemanager_cut, #pagemanager_copy, #pagemanager_edit, #pagemanager_preview, #pagemanager_paste";
         $(ids).off("click").click(function () {
             tool(this.id.substr(12));
         });
