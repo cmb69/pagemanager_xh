@@ -424,16 +424,16 @@
                     "icon": PAGEMANAGER.imageDir + "new.png"
                 },
                 "unrenameable": {
-                    "icon": PAGEMANAGER.imageDir + "fail.png"
+                    "icon": PAGEMANAGER.imageDir + "unrenameable.png"
                 },
                 "duplicate-default": {
-                    "icon": PAGEMANAGER.imageDir + "warn.png"
+                    "icon": PAGEMANAGER.imageDir + "duplicate.png"
                 },
                 "duplicate-new": {
-                    "icon": PAGEMANAGER.imageDir + "warn.png"
+                    "icon": PAGEMANAGER.imageDir + "duplicate.png"
                 },
                 "duplicate-unrenameable": {
-                    "icon": PAGEMANAGER.imageDir + "warn.png"
+                    "icon": PAGEMANAGER.imageDir + "duplicate.png"
                 },
                 "default": {}
             }
