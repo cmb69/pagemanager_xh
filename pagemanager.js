@@ -142,16 +142,7 @@
     function checkCallback(operation, node, parent, position, more) {
         switch (operation) {
             case "delete_node":
-                if ((widget.get_children_dom("#").length) > 1) {
-                    if (!PAGEMANAGER.verbose || confirm(PAGEMANAGER.confirmDeletionMessage)) {
-                        return true;
-                    }
-                } else {
-                    if (PAGEMANAGER.verbose) {
-                        alert(PAGEMANAGER.deleteLastMessage);
-                    }
-                }
-                return false;
+                return !PAGEMANAGER.verbose || confirm(PAGEMANAGER.confirmDeletionMessage);
             case "move_node":
             case "copy_node":
                 return getLevel(parent) + getChildLevels(node) + (!more.pos || more.pos === "i" ? 1 : 0) <= PAGEMANAGER.menuLevels;
@@ -194,11 +185,7 @@
             widget.edit(id);
         },
         rename: function (node) {
-            if (!(/unrenameable$/).test(widget.get_type(node))) {
-                widget.edit(node);
-            } else {
-                alert(PAGEMANAGER.cantRenameError);
-            }
+            widget.edit(node);
         },
         remove: function (node) {
             widget.delete_node(node);
@@ -254,20 +241,15 @@
                 open(PAGEMANAGER.userManual, "_blank");
                 return;
             default:
-                var selection = widget.get_selected();
-                if (selection.length > 0) {
-                    commands[operation](selection);
-                } else if (PAGEMANAGER.verbose) {
-                    alert(PAGEMANAGER.noSelectionMessage);
-                }
+                commands[operation](widget.get_selected());
             }
     }
 
-    function contextMenuItems() {
+    function contextMenuItems(node) {
         var tools = ({
             "add": {},
-            "rename": {},
-            "remove": {},
+            "rename": {"_disabled": /unrenameable$/.test(widget.get_type(node))},
+            "remove": {"_disabled": widget.get_children_dom("#").length < 2},
             "cut": {"separator_before": true},
             "copy": {},
             "paste": {},
@@ -372,6 +354,19 @@
 
         element.on("rename_node.jstree remove_node.jstree move_node.jstree", function (e, data) {
             markDuplicates(data.node.parent);
+        });
+
+        var nodeTools = $("#pagemanager_add, #pagemanager_rename, #pagemanager_remove," +
+                          "#pagemanager_cut, #pagemanager_copy, #pagemanager_paste," +
+                          "#pagemanager_edit, #pagemanager_preview");
+        nodeTools.prop("disabled", true);
+        element.on("select_node.jstree", function (e, data) {
+            nodeTools.prop("disabled", false);
+            $("#pagemanager_rename").prop("disabled", /unrenameable$/.test(widget.get_type(data.node)));
+            $("#pagemanager_remove").prop("disabled", widget.get_children_dom("#").length < 2);
+        });
+        element.on("deselect_node.jstree delete_node.jstree", function (e, data) {
+            nodeTools.prop("disabled", true);
         });
 
         if (!window.opera) {
