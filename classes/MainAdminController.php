@@ -185,9 +185,9 @@ class MainAdminController extends Controller
         );
         if ($this->pdAttr !== '') {
             if ($pageData[$this->pdAttr] === '') {
-                $res['li_attr']['data-pdattr'] = '1';
+                $res['state']['checked'] = true;
             } else {
-                $res['li_attr']['data-pdattr'] = $pageData[$this->pdAttr];
+                $res['state']['checked'] = (bool) $pageData[$this->pdAttr];
             }
         }
         if (!$this->model->getMayRename($index)) {

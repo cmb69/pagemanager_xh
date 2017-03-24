@@ -80,19 +80,19 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
     "text": "Welcome",
     "id": "pagemanager_0",
     "type": "default",
-    "li_attr": {"data-pdattr": "1"},
+    "state": {"checked": true},
     "children": [{
         "text": "About",
         "id": "pagemanager_1",
         "type": "default",
-        "li_attr": {"data-pdattr": "1"},
+        "state": {"checked": true},
         "children": []
     }]
 }, {
     "text": "News",
     "id": "pagemanager_2",
     "type": "default",
-    "li_attr": {"data-pdattr": "0"},
+    "state": {"checked": false},
     "children": []
 }]
 JSON
@@ -113,25 +113,25 @@ JSON
     "text": "Welcome",
     "id": "pagemanager_0",
     "type": "default",
-    "li_attr": {"data-pdattr": "1"},
+    "state": {"checked": true},
     "children": [{
         "text": "About",
         "id": "pagemanager_1",
         "type": "default",
-        "li_attr": {"data-pdattr": "1"},
+        "state": {"checked": true},
         "children": []
     }, {
         "text": "New Page",
         "id": "",
         "type": "default",
-        "li_attr": {"data-pdattr": "1"},
+        "state": {"checked": true},
         "children": []
     }]
 }, {
     "text": "News",
     "id": "pagemanager_2",
     "type": "default",
-    "li_attr": {"data-pdattr": "0"},
+    "state": {"checked": false},
     "children": []
 }]
 JSON
@@ -157,13 +157,13 @@ JSON
     "text": "Welcome",
     "id": "pagemanager_0",
     "type": "default",
-    "li_attr": {"data-pdattr": "1"},
+    "state": {"checked": true},
     "children": []
 }, {
     "text": "News",
     "id": "pagemanager_2",
     "type": "default",
-    "li_attr": {"data-pdattr": "0"},
+    "state": {"checked": false},
     "children": []
 }]
 JSON
@@ -182,17 +182,17 @@ JSON
     "text": "Welcome",
     "id": "pagemanager_0",
     "type": "default",
-    "li_attr": {"data-pdattr": "1"},
+    "state": {"checked": true},
     "children": [{
         "text": "About",
         "id": "pagemanager_1",
         "type": "default",
-        "li_attr": {"data-pdattr": "1"},
+        "state": {"checked": true},
         "children": [{
             "text": "News",
             "id": "pagemanager_2",
             "type": "default",
-            "li_attr": {"data-pdattr": "0"},
+            "state": {"checked": false},
             "children": []
         }]
     }]
@@ -215,25 +215,25 @@ JSON
     "text": "Welcome",
     "id": "pagemanager_0",
     "type": "default",
-    "li_attr": {"data-pdattr": "1"},
+    "state": {"checked": true},
     "children": [{
         "text": "About",
         "id": "pagemanager_1",
         "type": "default",
-        "li_attr": {"data-pdattr": "1"},
+        "state": {"checked": true},
         "children": []
     }, {
         "text": "About",
         "id": "copy_pagemanager_1",
         "type": "default",
-        "li_attr": {"data-pdattr": "1"},
+        "state": {"checked": true},
         "children": []
     }]
 }, {
     "text": "News",
     "id": "pagemanager_2",
     "type": "default",
-    "li_attr": {"data-pdattr": "0"},
+    "state": {"checked": false},
     "children": []
 }]
 JSON
@@ -256,19 +256,19 @@ JSON
     "text": "Welcome",
     "id": "pagemanager_0",
     "type": "default",
-    "li_attr": {"data-pdattr": "0"},
+    "state": {"checked": false},
     "children": [{
         "text": "About",
         "id": "pagemanager_1",
         "type": "default",
-        "li_attr": {"data-pdattr": "0"},
+        "state": {"checked": false},
         "children": []
     }]
 }, {
     "text": "News",
     "id": "pagemanager_2",
     "type": "default",
-    "li_attr": {"data-pdattr": "1"},
+    "state": {"checked": true},
     "children": []
 }]
 JSON
@@ -289,19 +289,19 @@ JSON
     "text": "Welcome",
     "id": "pagemanager_0",
     "type": "unrenameable",
-    "li_attr": {"data-pdattr": "1"},
+    "state": {"checked": true},
     "children": [{
         "text": "About",
         "id": "pagemanager_1",
         "type": "default",
-        "li_attr": {"data-pdattr": "1"},
+        "state": {"checked": true},
         "children": []
     }]
 }, {
     "text": "News",
     "id": "pagemanager_2",
     "type": "default",
-    "li_attr": {"data-pdattr": "0"},
+    "state": {"checked": false},
     "children": []
 }]
 JSON

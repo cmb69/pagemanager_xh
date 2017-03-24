@@ -26,26 +26,6 @@
         init;
 
     /**
-     * Checks resp. unchecks all child pages of a page.
-     *
-     * @param {Element} parent
-     *
-     * @return {undefined}
-     */
-    function checkPages(parent) {
-        var nodes, i, node;
-
-        nodes = widget.get_children_dom(parent);
-        for (i = 0; i < nodes.length; i += 1) {
-            node = widget.get_node(nodes[i], true);
-            if (node.attr("data-pdattr") === "1") {
-                widget.check_node(node);
-            }
-            checkPages(node);
-        }
-    }
-
-    /**
      * Marks new pages as such.
      *
      * @param {Element} node
@@ -79,7 +59,7 @@
      */
     function beforeSubmit() {
         var json = JSON.stringify(widget.get_json("#", {
-            no_state: true, no_data: true, no_a_attr: true
+            no_data: true, no_a_attr: true, no_li_attr: true
         }));
         $("#pagemanager_json").val(json);
     }
@@ -322,24 +302,12 @@
             if ($("#pagemanager_structure_warning").length === 0) {
                 $("#pagemanager_save, #pagemanager_submit").show();
             }
-            if (PAGEMANAGER.hasCheckboxes) {
-                checkPages("#");
-            }
             events = "move_node.jstree create_node.jstree rename_node.jstree" +
                 " remove_node.jstree check_node.jstree uncheck_node.jstree";
             element.on(events, function () {
                 modified = true;
             });
         });
-
-        if (PAGEMANAGER.hasCheckboxes) {
-            element.on("check_node.jstree", function (e, data) {
-                widget.get_node(data.node.li_attr, true).attr("data-pdattr", "1");
-            });
-            element.on("uncheck_node.jstree", function (e, data) {
-                widget.get_node(data.node.li_attr, true).attr("data-pdattr", "0");
-            });
-        }
 
         element.on("open_node.jstree", function (e, data) {
             markDuplicates(data.node);
