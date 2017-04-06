@@ -307,6 +307,7 @@
             element.on(events, function () {
                 modified = true;
             });
+            markDuplicates("#");
         });
 
         element.on("open_node.jstree", function (e, data) {
@@ -318,9 +319,19 @@
             widget.check_node(data.node);
         });
 
-        element.on("copy_node.jstree", markCopiedPages);
+        element.on("copy_node.jstree", function (e, data) {
+            var id = data.original.id + "_copy_" + (new Date).getTime();
+            widget.set_id(data.node, id);
+            widget.get_node(data.node, true).attr("aria-labelledby", id);
+            if (widget.is_checked(data.original)) {
+                widget.check_node(data.node);
+            } else {
+                widget.uncheck_node(data.node);
+            }
+            markCopiedPages(event, data);
+        });
 
-        element.on("rename_node.jstree remove_node.jstree move_node.jstree", function (e, data) {
+        element.on("rename_node.jstree remove_node.jstree copy_node.jstree move_node.jstree", function (e, data) {
             markDuplicates(data.node.parent);
         });
 
@@ -407,7 +418,6 @@
         }
         element.jstree(config);
         widget = $.jstree.reference("#pagemanager");
-        markDuplicates("#");
         ids = "#pagemanager_save, #pagemanager_toggle, #pagemanager_add, #pagemanager_rename, #pagemanager_remove," +
             "#pagemanager_cut, #pagemanager_copy, #pagemanager_edit, #pagemanager_preview, #pagemanager_paste, #pagemanager_help";
         $(ids).off("click").click(function () {
