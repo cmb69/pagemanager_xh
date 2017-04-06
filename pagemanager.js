@@ -373,7 +373,8 @@
                     "Loading ...": PAGEMANAGER.loading
                 },
                 "themes": {
-                    "name": PAGEMANAGER.theme
+                    "name": PAGEMANAGER.theme,
+                    "responsive": true
                 }
             },
             "checkbox": {
