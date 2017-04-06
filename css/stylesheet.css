@@ -24,15 +24,16 @@
     text-align: center;
 }
 #pagemanager_toolbar button {
-    min-width: 5em;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 }
 #pagemanager_toolbar button span {
-    display: block;
+    display: inline-block;
     background-position: center;
     background-repeat: no-repeat;
-    margin: 0.3em 0 0.5em 0;
+    margin: 0.1em 0.1em 0.1em 0;
+    width: 16px;
+    height: 16px;
 }
 #pagemanager_add, #pagemanager_toggle, #pagemanager_cut, #pagemanager_edit, #pagemanager_help {margin-left: 1em}
 #pagemanager_save span {background-image: url("../images/save.png")}
