@@ -20,9 +20,10 @@
 (function ($) {
     "use strict";
 
-    var element = null,
-        widget = null,
+    var treeview = null,
+        jstree = null,
         modified = false,
+        commands,
         init;
 
     /**
@@ -34,8 +35,8 @@
      */
     function markNewPages(node) {
         $.each(node.children, function (index, value) {
-            widget.set_type(value, "new");
-            markNewPages(widget.get_node(value));
+            jstree.set_type(value, "new");
+            markNewPages(jstree.get_node(value));
         });
     }
 
@@ -48,7 +49,7 @@
      * @returns {undefined}
      */
     function markCopiedPages(event, data) {
-        widget.set_type(data.node, "new");
+        jstree.set_type(data.node, "new");
         markNewPages(data.node);
     }
 
@@ -58,7 +59,7 @@
      * @returns {undefined}
      */
     function beforeSubmit() {
-        var json = JSON.stringify(widget.get_json("#", {
+        var json = JSON.stringify(jstree.get_json("#", {
             no_data: true, no_a_attr: true, no_li_attr: true
         }));
         $("#pagemanager_json").val(json);
@@ -70,43 +71,39 @@
      * @returns {undefined}
      */
     function submit() {
-        var url, form, data, message, status, request;
+        var url, form, status, request;
 
         function onReadyStateChange() {
             if (request.readyState === 4) {
                 status.css("display", "none");
                 if (request.status === 200) {
-                    message = request.responseText;
+                    var message = request.responseText;
                 } else {
-                    message = "<p class=\"xh_fail\"><strong>" + request.status +
+                    var message = "<p class=\"xh_fail\"><strong>" + request.status +
                             " " + request.statusText + "</strong><br>" +
                             request.responseText + "</p>";
                 }
                 status.after(message);
                 // TODO: optimization: fix structure instead of reloading
-                widget.destroy();
+                jstree.destroy();
                 init();
-                widget.restore_state();
+                jstree.restore_state();
             }
         }
 
-        widget.save_state();
+        jstree.save_state();
         beforeSubmit();
         form = $("#pagemanager_form");
         url = form.attr("action");
-        message = form.children(
-            ".xh_success, .xh_fail, .cmsimplecore_success, .cmsimplecore_fail"
-        );
-        message.remove();
+        form.find(".xh_success, .xh_fail").remove();
         status = $(".pagemanager_status");
         status.css("display", "block");
-        data = form.serialize();
         request = new XMLHttpRequest();
         request.open("POST", url);
         request.setRequestHeader("Content-Type",
                 "application/x-www-form-urlencoded");
         request.onreadystatechange = onReadyStateChange;
-        request.send(data);
+        request.send(form.serialize());
     }
 
     /**
@@ -135,7 +132,7 @@
         var parent = node;
         var level = 0;
         while (parent && parent !== "#") {
-            parent = widget.get_parent(parent);
+            parent = jstree.get_parent(parent);
             level++;
         }
         return level;
@@ -152,44 +149,38 @@
                 }));
             }
         });
-        var model = widget.get_json(node, {"no_state": true, "no_id": true, "no_data": true, "no_li_attr": true, "no_a_attr": true});
+        var model = jstree.get_json(node, {"no_state": true, "no_id": true, "no_data": true, "no_li_attr": true, "no_a_attr": true});
         return childLevels(model, 0);
     }
 
-    var commands = {
-        add: function (node) {
-            var node = widget.get_node(node);
-            var parent = widget.get_node(node.parent);
-            var pos = $.inArray(node.id, parent.children);
-            var id = widget.create_node(parent, PAGEMANAGER.newNode, pos + 1);
-            widget.edit(id);
-        },
-        rename: function (node) {
-            widget.edit(node);
-        },
-        remove: function (node) {
-            widget.delete_node(node);
-        },
-        cut: function (node) {
-            widget.cut(node);
-        },
-        copy: function (node) {
-            widget.copy(node);
-        },
-        paste: function (node) {
-            var node = widget.get_node(node);
-            var parent = widget.get_node(node.parent);
-            var pos = $.inArray(node.id, parent.children);
-            widget.paste(parent, pos + 1);
-        },
-        edit: function (node) {
-            widget.save_state();
-            location.href = widget.get_node(node, true).attr("data-url") + "&edit";
-        },
-        preview: function (node) {
-            widget.save_state();
-            location.href = widget.get_node(node, true).attr("data-url") + "&normal";
-        }
+    function initCommands() {
+        commands = ({
+            add: (function (node) {
+                var node = jstree.get_node(node);
+                var parent = jstree.get_node(node.parent);
+                var pos = $.inArray(node.id, parent.children);
+                var id = jstree.create_node(parent, PAGEMANAGER.newNode, pos + 1);
+                jstree.edit(id);
+            }),
+            rename: $.proxy(jstree.edit, jstree),
+            remove: $.proxy(jstree.delete_node, jstree),
+            cut: $.proxy(jstree.cut, jstree),
+            copy: $.proxy(jstree.copy, jstree),
+            paste: (function (node) {
+                var node = jstree.get_node(node);
+                var parent = jstree.get_node(node.parent);
+                var pos = $.inArray(node.id, parent.children);
+                jstree.paste(parent, pos + 1);
+            }),
+            edit: (function (node) {
+                jstree.save_state();
+                location.href = jstree.get_node(node, true).attr("data-url") + "&edit";
+            }),
+            preview: (function (node) {
+                jstree.save_state();
+                location.href = jstree.get_node(node, true).attr("data-url") + "&normal";
+            })
+        });
     }
 
     /**
@@ -203,15 +194,15 @@
         switch (operation) {
             case "toggle":
                 var collapsed = true;
-                widget.get_children_dom("#").each(function (element) {
-                    if (widget.is_open(this)) {
+                jstree.get_children_dom("#").each(function (element) {
+                    if (jstree.is_open(this)) {
                         collapsed = false;
                     }
                 });
                 if (collapsed) {
-                    widget.open_all();
+                    jstree.open_all();
                 } else {
-                    widget.close_all();
+                    jstree.close_all();
                 }
                 return;
             case "save":
@@ -221,20 +212,20 @@
                 open(PAGEMANAGER.userManual, "_blank");
                 return;
             default:
-                commands[operation](widget.get_selected());
+                commands[operation](jstree.get_selected());
             }
     }
 
     function contextMenuItems(node) {
         var tools = ({
-            "add": {},
-            "rename": {"_disabled": /unrenameable$/.test(widget.get_type(node))},
-            "remove": {"_disabled": widget.get_children_dom("#").length < 2},
-            "cut": {"separator_before": true},
-            "copy": {},
-            "paste": {},
-            "edit": {"separator_before": true, "_disabled": !widget.get_node(node, true).attr("data-url")},
-            "preview": {"_disabled": !widget.get_node(node, true).attr("data-url")}
+            add: {},
+            rename: ({_disabled: /unrenameable$/.test(jstree.get_type(node))}),
+            remove: ({_disabled: jstree.get_children_dom("#").length < 2}),
+            cut: ({separator_before: true}),
+            copy: {},
+            paste: {},
+            edit: ({separator_before: true, _disabled: !jstree.get_node(node, true).attr("data-url")}),
+            preview: ({_disabled: !jstree.get_node(node, true).attr("data-url")})
         });
         $.each(tools, function (name, value) {
             value.label = PAGEMANAGER[name + "Op"];
@@ -254,19 +245,19 @@
      * @returns {Number} The number of duplicate pages.
      */
     function markDuplicates(node) {
-        var children = widget.get_children_dom(node);
+        var children = jstree.get_children_dom(node);
         if (!children) {
             return;
         }
         children.each(function (index, value) {
-            var text1 = widget.get_text(value);
+            var text1 = jstree.get_text(value);
             for (var i = index + 1; i < children.length; i++) {
-                var text2 = widget.get_text(children[i]);
-                var type = widget.get_type(children[i]).replace(/^duplicate-/, '');                    
+                var text2 = jstree.get_text(children[i]);
+                var type = jstree.get_type(children[i]).replace(/^duplicate-/, '');                    
                 if (text2 === text1) {
-                    widget.set_type(children[i], "duplicate-" + type);
+                    jstree.set_type(children[i], "duplicate-" + type);
                 } else {
-                    widget.set_type(children[i], type);
+                    jstree.set_type(children[i], type);
                 }
             }
         });
@@ -281,127 +272,50 @@
         alert(errorThrown);
     }
 
-    /**
-     * Initialiazes the plugin.
-     *
-     * @returns {undefined}
-     */
-    init = function () {
-        var config, events, ids;
-
-        if (typeof $.jstree === "undefined") {
-            alert(PAGEMANAGER.offendingExtensionError);
-            return;
-        }
-        $("#pagemanager_save, #pagemanager_submit").hide();
-        element = $("#pagemanager");
-
-        element.on("ready.jstree", function () {
-            var events;
-
-            if ($("#pagemanager_structure_warning").length === 0) {
-                $("#pagemanager_save, #pagemanager_submit").show();
-            }
-            events = "move_node.jstree create_node.jstree rename_node.jstree" +
-                " remove_node.jstree check_node.jstree uncheck_node.jstree";
-            element.on(events, function () {
-                modified = true;
-            });
-            markDuplicates("#");
-        });
-
-        element.on("open_node.jstree", function (e, data) {
-            markDuplicates(data.node);
-        });
-
-        element.on("create_node.jstree", function (e, data) {
-            widget.set_type(data.node, "new");
-            widget.check_node(data.node);
-        });
-
-        element.on("copy_node.jstree", function (e, data) {
-            var id = data.original.id + "_copy_" + (new Date).getTime();
-            widget.set_id(data.node, id);
-            widget.get_node(data.node, true).attr("aria-labelledby", id);
-            if (widget.is_checked(data.original)) {
-                widget.check_node(data.node);
-            } else {
-                widget.uncheck_node(data.node);
-            }
-            markCopiedPages(event, data);
-        });
-
-        element.on("rename_node.jstree remove_node.jstree copy_node.jstree move_node.jstree", function (e, data) {
-            markDuplicates(data.node.parent);
-        });
-
-        var nodeTools = $("#pagemanager_add, #pagemanager_rename, #pagemanager_remove," +
-                          "#pagemanager_cut, #pagemanager_copy, #pagemanager_paste," +
-                          "#pagemanager_edit, #pagemanager_preview");
-        nodeTools.prop("disabled", true);
-        element.on("select_node.jstree", function (e, data) {
-            nodeTools.prop("disabled", false);
-            $("#pagemanager_rename").prop("disabled", /unrenameable$/.test(widget.get_type(data.node)));
-            $("#pagemanager_remove").prop("disabled", widget.get_children_dom("#").length < 2);
-            $("#pagemanager_edit, #pagemanager_preview").prop("disabled", !widget.get_node(data.node, true).attr("data-url"));
-        });
-        element.on("deselect_node.jstree delete_node.jstree", function (e, data) {
-            nodeTools.prop("disabled", true);
-        });
-
-        $(window).on("beforeunload", function () {
-            if (modified && $("#pagemanager_json").val() === "") {
-                return PAGEMANAGER.leaveWarning;
-            }
-            return undefined;
-        });
-
-        /*
-         * Initialize jsTree.
-         */
-        config = {
-            "plugins": ["contextmenu", "dnd", "state", "types"],
-            "core": {
-                "animation": PAGEMANAGER.animation,
-                "check_callback": checkCallback,
-                "data": {
-                    "url": PAGEMANAGER.dataURL,
-                    "error": alertAjaxError
-                },
-                "multiple": false,
-                "strings": {
+    function getConfig() {
+        var config = ({
+            plugins: ["contextmenu", "dnd", "state", "types"],
+            core: ({
+                animation: PAGEMANAGER.animation,
+                check_callback: checkCallback,
+                data: ({
+                    url: PAGEMANAGER.dataURL,
+                    error: alertAjaxError
+                }),
+                multiple: false,
+                strings: ({
                     "Loading ...": PAGEMANAGER.loading
-                },
-                "themes": {
-                    "name": PAGEMANAGER.theme,
-                    "responsive": true
-                }
-            },
-            "checkbox": {
-                "three_state": false,
-                "tie_selection": false,
-                "whole_node": false
-            },
-            "contextmenu": {
-                "show_at_node": false,
-                "select_node": true,
-                "items": contextMenuItems
-            },
-            "state": {
-                "key": PAGEMANAGER.stateKey,
-                "events": "",
-                "filter": (function (state) {
+                }),
+                themes: ({
+                    name: PAGEMANAGER.theme,
+                    responsive: true
+                })
+            }),
+            checkbox: ({
+                three_state: false,
+                tie_selection: false,
+                whole_node: false
+            }),
+            contextmenu: ({
+                show_at_node: false,
+                select_node: true,
+                items: contextMenuItems
+            }),
+            state: ({
+                key: PAGEMANAGER.stateKey,
+                events: "",
+                filter: (function (state) {
                     delete state.checkbox;
                     return state;
                 })
-            },
-            "types": {
+            }),
+            types: ({
                 "new": {
-                    "icon": PAGEMANAGER.imageDir + "new.png"
+                    icon: PAGEMANAGER.imageDir + "new.png"
                 },
-                "unrenameable": {
-                    "icon": PAGEMANAGER.imageDir + "unrenameable.png"
-                },
+                unrenameable: ({
+                    icon: PAGEMANAGER.imageDir + "unrenameable.png"
+                }),
                 "duplicate-default": {
                     "icon": PAGEMANAGER.imageDir + "duplicate.png"
                 },
@@ -412,16 +326,95 @@
                     "icon": PAGEMANAGER.imageDir + "duplicate.png"
                 },
                 "default": {}
-            }
-        };
+            })
+        });
         if (PAGEMANAGER.hasCheckboxes) {
             config.plugins.push("checkbox");
         }
-        element.jstree(config);
-        widget = $.jstree.reference("#pagemanager");
-        ids = "#pagemanager_save, #pagemanager_toggle, #pagemanager_add, #pagemanager_rename, #pagemanager_remove," +
-            "#pagemanager_cut, #pagemanager_copy, #pagemanager_edit, #pagemanager_preview, #pagemanager_paste, #pagemanager_help";
-        $(ids).off("click").click(function () {
+        return config;
+    };
+
+    /**
+     * Initialiazes the plugin.
+     *
+     * @returns {undefined}
+     */
+    init = function () {
+        var events;
+
+        if (typeof $.jstree === "undefined") {
+            alert(PAGEMANAGER.offendingExtensionError);
+            return;
+        }
+        $("#pagemanager_save, #pagemanager_submit").hide();
+
+        treeview = $("#pagemanager");
+        treeview.jstree(getConfig());
+        jstree = $.jstree.reference(treeview);
+
+        initCommands();
+
+        treeview.on("ready.jstree", function () {
+            var events;
+
+            if ($("#pagemanager_structure_warning").length === 0) {
+                $("#pagemanager_save, #pagemanager_submit").show();
+            }
+            events = "move_node.jstree create_node.jstree rename_node.jstree" +
+                " remove_node.jstree check_node.jstree uncheck_node.jstree";
+            treeview.on(events, function () {
+                modified = true;
+            });
+            markDuplicates("#");
+        });
+
+        treeview.on("open_node.jstree", function (e, data) {
+            markDuplicates(data.node);
+        });
+
+        treeview.on("create_node.jstree", function (e, data) {
+            jstree.set_type(data.node, "new");
+            jstree.check_node(data.node);
+        });
+
+        treeview.on("copy_node.jstree", function (e, data) {
+            var id = data.original.id + "_copy_" + (new Date).getTime();
+            jstree.set_id(data.node, id);
+            jstree.get_node(data.node, true).attr("aria-labelledby", id);
+            if (jstree.is_checked(data.original)) {
+                jstree.check_node(data.node);
+            } else {
+                jstree.uncheck_node(data.node);
+            }
+            markCopiedPages(event, data);
+        });
+
+        treeview.on("rename_node.jstree remove_node.jstree copy_node.jstree move_node.jstree", function (e, data) {
+            markDuplicates(data.node.parent);
+        });
+
+        var nodeTools = $("#pagemanager_add, #pagemanager_rename, #pagemanager_remove," +
+                          "#pagemanager_cut, #pagemanager_copy, #pagemanager_paste," +
+                          "#pagemanager_edit, #pagemanager_preview");
+        nodeTools.prop("disabled", true);
+        treeview.on("select_node.jstree", function (e, data) {
+            nodeTools.prop("disabled", false);
+            $("#pagemanager_rename").prop("disabled", /unrenameable$/.test(jstree.get_type(data.node)));
+            $("#pagemanager_remove").prop("disabled", jstree.get_children_dom("#").length < 2);
+            $("#pagemanager_edit, #pagemanager_preview").prop("disabled", !jstree.get_node(data.node, true).attr("data-url"));
+        });
+        treeview.on("deselect_node.jstree delete_node.jstree", function (e, data) {
+            nodeTools.prop("disabled", true);
+        });
+
+        $(window).on("beforeunload", function () {
+            if (modified && $("#pagemanager_json").val() === "") {
+                return PAGEMANAGER.leaveWarning;
+            }
+            return undefined;
+        });
+
+        $("#pagemanager_toolbar button").off("click").click(function () {
             tool(this.id.substr(12));
         });
 
