@@ -17,9 +17,8 @@
 <?php if ($this->hasToolbar):?>
     <div id="pagemanager_toolbar">
 <?php   foreach ($this->tools as $tool):?>
-        <button type="button" id="pagemanager_<?=$this->escape($tool)?>" title="<?=$this->text("op_{$tool}")?>">
-            <span>&nbsp;</span>
-            <?=$this->text("op_{$tool}")?>
+        <button type="button" id="pagemanager_<?=$this->escape($tool)?>" title="<?=$this->text("op_{$tool}")?>" aria-label="<?=$this->text("op_{$tool}")?>">
+            <span aria-hidden="true">&nbsp;</span>
         </button>
 <?php   endforeach?>
     </div>
