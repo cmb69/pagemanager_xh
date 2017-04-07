@@ -89,7 +89,7 @@
      */
     function confirmStructureWarning() {
         $("#pagemanager_structure_warning").hide(500);
-        $("#pagemanager_save, #pagemanager_submit").show();
+        $("#pagemanager_save").show();
     }
 
     function checkCallback(operation, node, parent, position, more) {
@@ -322,7 +322,7 @@
             alert(PAGEMANAGER.offendingExtensionError);
             return;
         }
-        $("#pagemanager_save, #pagemanager_submit").hide();
+        $("#pagemanager_save").hide();
 
         treeview = $("#pagemanager");
         treeview.jstree(getConfig());
@@ -334,7 +334,7 @@
             var events;
 
             if ($("#pagemanager_structure_warning").length === 0) {
-                $("#pagemanager_save, #pagemanager_submit").show();
+                $("#pagemanager_save").show();
             }
             events = "move_node.jstree create_node.jstree rename_node.jstree" +
                 " remove_node.jstree check_node.jstree uncheck_node.jstree";

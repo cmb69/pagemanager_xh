@@ -28,7 +28,6 @@
     <input type="hidden" name="admin" value="plugin_main">
     <input type="hidden" name="action" value="plugin_save">
     <input type="hidden" name="json" id="pagemanager_json" value="">
-    <button id="pagemanager_submit"><?=$this->text('op_save')?></button>
     <?=$this->csrfTokenInput()?>
     <p class="pagemanager_status" style="display:none">
         <img src="<?=$this->ajaxLoaderPath()?>" alt="Loading">
