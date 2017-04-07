@@ -186,7 +186,7 @@
             remove: ({_disabled: jstree.get_children_dom("#").length < 2}),
             cut: ({separator_before: true}),
             copy: {},
-            paste: {},
+            paste: ({_disabled: !jstree.can_paste()}),
             edit: ({separator_before: true, _disabled: !jstree.get_node(node, true).attr("data-url")}),
             preview: ({_disabled: !jstree.get_node(node, true).attr("data-url")})
         });
@@ -372,10 +372,17 @@
                 nodeTools.prop("disabled", false);
                 $("#pagemanager_rename").prop("disabled", /unrenameable$/.test(jstree.get_type(data.node)));
                 $("#pagemanager_remove").prop("disabled", jstree.get_children_dom("#").length < 2);
+                $("#pagemanager_paste").prop("disabled", !jstree.can_paste());
                 $("#pagemanager_edit, #pagemanager_preview").prop("disabled", !jstree.get_node(data.node, true).attr("data-url"));
             })
             .on("deselect_node.jstree delete_node.jstree", function (e, data) {
                 nodeTools.prop("disabled", true);
+            })
+            .on("cut.jstree copy.jstree", function (e, data) {
+                $("#pagemanager_paste").prop("disabled", !jstree.can_paste());
+            })
+            .on("paste.jstree", function () {
+                $("#pagemanager_paste").prop("disabled", true);
             });
 
         $(window).on("beforeunload", function () {
