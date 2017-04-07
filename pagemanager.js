@@ -74,10 +74,7 @@
             })
             .done(function (data) {
                 status.after(data);
-                // TODO: optimization: fix structure instead of reloading
-                jstree.destroy();
-                init();
-                jstree.restore_state();
+                jstree.refresh(false, true);
             })
             .fail(alertAjaxError);
     }
@@ -300,12 +297,7 @@
         return config;
     };
 
-    /**
-     * Initialiazes the plugin.
-     *
-     * @returns {undefined}
-     */
-    init = function () {
+    $(function () {
         if (typeof $.jstree === "undefined") {
             alert(PAGEMANAGER.offendingExtensionError);
             return;
@@ -337,9 +329,12 @@
         nodeTools.prop("disabled", true);
 
         treeview
-            .on("ready.jstree", function () {
+            .on("ready.jstree refresh.jstree", function () {
                 modified = false;
                 markDuplicates("#");
+            })
+            .on("refresh.jstree", function () {
+                jstree.restore_state();
             })
             .on(modificationEvents, function () {
                 modified = true;
@@ -376,22 +371,20 @@
             });
 
         $(window).on("beforeunload", function () {
-            if (modified && $("#pagemanager_json").val() === "") {
+            if (modified) {
                 return PAGEMANAGER.leaveWarning;
             }
             return undefined;
         });
 
-        $("#pagemanager_toolbar button").off("click").click(function () {
+        $("#pagemanager_toolbar button").click(function () {
             tool(this.id.substr(12));
         });
 
-        $("#pagemanager_form").off("submit").submit(function (event) {
+        $("#pagemanager_form").submit(function (event) {
             event.preventDefault();
             submit();
         });
-    };
-
-    $(init);
+    });
 
 }(jQuery));
