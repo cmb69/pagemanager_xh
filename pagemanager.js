@@ -22,7 +22,7 @@
 
     var treeview = null,
         jstree = null,
-        modified = false,
+        modified,
         commands,
         init;
 
@@ -306,13 +306,21 @@
      * @returns {undefined}
      */
     init = function () {
-        var events;
-
         if (typeof $.jstree === "undefined") {
             alert(PAGEMANAGER.offendingExtensionError);
             return;
         }
-        $("#pagemanager_save").hide();
+
+        (function () {
+            var structureWarning = $("#pagemanager_structure_warning");
+            if (structureWarning.length) {
+                $("#pagemanager_save").hide();
+                structureWarning.find("button").click(function () {
+                    structureWarning.hide();
+                    $("#pagemanager_save").show();
+                });
+            }
+        }());
 
         treeview = $("#pagemanager");
         treeview.jstree(getConfig());
@@ -320,58 +328,52 @@
 
         initCommands();
 
-        treeview.on("ready.jstree", function () {
-            var events;
-
-            if ($("#pagemanager_structure_warning").length === 0) {
-                $("#pagemanager_save").show();
-            }
-            events = "move_node.jstree create_node.jstree rename_node.jstree" +
-                " remove_node.jstree check_node.jstree uncheck_node.jstree";
-            treeview.on(events, function () {
-                modified = true;
-            });
-            markDuplicates("#");
-        });
-
-        treeview.on("open_node.jstree", function (e, data) {
-            markDuplicates(data.node);
-        });
-
-        treeview.on("create_node.jstree", function (e, data) {
-            jstree.set_type(data.node, "new");
-            jstree.check_node(data.node);
-        });
-
-        treeview.on("copy_node.jstree", function (e, data) {
-            var id = data.original.id + "_copy_" + (new Date).getTime();
-            jstree.set_id(data.node, id);
-            jstree.get_node(data.node, true).attr("aria-labelledby", id);
-            if (jstree.is_checked(data.original)) {
-                jstree.check_node(data.node);
-            } else {
-                jstree.uncheck_node(data.node);
-            }
-            markCopiedPages(event, data);
-        });
-
-        treeview.on("rename_node.jstree remove_node.jstree copy_node.jstree move_node.jstree", function (e, data) {
-            markDuplicates(data.node.parent);
-        });
-
         var nodeTools = $("#pagemanager_add, #pagemanager_rename, #pagemanager_remove," +
                           "#pagemanager_cut, #pagemanager_copy, #pagemanager_paste," +
                           "#pagemanager_edit, #pagemanager_preview");
+        var modificationEvents = "move_node.jstree create_node.jstree rename_node.jstree" +
+            " remove_node.jstree check_node.jstree uncheck_node.jstree";
+
         nodeTools.prop("disabled", true);
-        treeview.on("select_node.jstree", function (e, data) {
-            nodeTools.prop("disabled", false);
-            $("#pagemanager_rename").prop("disabled", /unrenameable$/.test(jstree.get_type(data.node)));
-            $("#pagemanager_remove").prop("disabled", jstree.get_children_dom("#").length < 2);
-            $("#pagemanager_edit, #pagemanager_preview").prop("disabled", !jstree.get_node(data.node, true).attr("data-url"));
-        });
-        treeview.on("deselect_node.jstree delete_node.jstree", function (e, data) {
-            nodeTools.prop("disabled", true);
-        });
+
+        treeview
+            .on("ready.jstree", function () {
+                modified = false;
+                markDuplicates("#");
+            })
+            .on(modificationEvents, function () {
+                modified = true;
+            })
+            .on("open_node.jstree", function (e, data) {
+                markDuplicates(data.node);
+            })
+            .on("create_node.jstree", function (e, data) {
+                jstree.set_type(data.node, "new");
+                jstree.check_node(data.node);
+            })
+            .on("copy_node.jstree", function (e, data) {
+                var id = data.original.id + "_copy_" + (new Date).getTime();
+                jstree.set_id(data.node, id);
+                jstree.get_node(data.node, true).attr("aria-labelledby", id);
+                if (jstree.is_checked(data.original)) {
+                    jstree.check_node(data.node);
+                } else {
+                    jstree.uncheck_node(data.node);
+                }
+                markCopiedPages(event, data);
+            })   
+            .on("rename_node.jstree remove_node.jstree copy_node.jstree move_node.jstree", function (e, data) {
+                markDuplicates(data.node.parent);
+            })
+            .on("select_node.jstree", function (e, data) {
+                nodeTools.prop("disabled", false);
+                $("#pagemanager_rename").prop("disabled", /unrenameable$/.test(jstree.get_type(data.node)));
+                $("#pagemanager_remove").prop("disabled", jstree.get_children_dom("#").length < 2);
+                $("#pagemanager_edit, #pagemanager_preview").prop("disabled", !jstree.get_node(data.node, true).attr("data-url"));
+            })
+            .on("deselect_node.jstree delete_node.jstree", function (e, data) {
+                nodeTools.prop("disabled", true);
+            });
 
         $(window).on("beforeunload", function () {
             if (modified && $("#pagemanager_json").val() === "") {
@@ -387,10 +389,6 @@
         $("#pagemanager_form").off("submit").submit(function (event) {
             event.preventDefault();
             submit();
-        });
-        $("#pagemanager_structure_warning button").click(function () {
-            $("#pagemanager_structure_warning").hide();
-            $("#pagemanager_save").show();
         });
     };
 
