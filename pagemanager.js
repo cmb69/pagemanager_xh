@@ -214,6 +214,10 @@
         }
         children.each(function (index, value) {
             var text1 = jstree.get_text(value);
+            if (index === 0) {
+                var type = jstree.get_type(value).replace(/^duplicate-/, '');
+                jstree.set_type(value, type);
+            }
             for (var i = index + 1; i < children.length; i++) {
                 var text2 = jstree.get_text(children[i]);
                 var type = jstree.get_type(children[i]).replace(/^duplicate-/, '');                    
