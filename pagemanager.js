@@ -54,56 +54,32 @@
     }
 
     /**
-     * Prepares the form submission.
-     *
-     * @returns {undefined}
-     */
-    function beforeSubmit() {
-        var json = JSON.stringify(jstree.get_json("#", {
-            no_data: true, no_a_attr: true, no_li_attr: true
-        }));
-        $("#pagemanager_json").val(json);
-    }
-
-    /**
      * Submits the page structure.
      *
      * @returns {undefined}
      */
     function submit() {
-        var url, form, status, request;
-
-        function onReadyStateChange() {
-            if (request.readyState === 4) {
-                status.css("display", "none");
-                if (request.status === 200) {
-                    var message = request.responseText;
-                } else {
-                    var message = "<p class=\"xh_fail\"><strong>" + request.status +
-                            " " + request.statusText + "</strong><br>" +
-                            request.responseText + "</p>";
-                }
-                status.after(message);
+        jstree.save_state();
+        var json = JSON.stringify(jstree.get_json("#", {
+            no_data: true, no_a_attr: true, no_li_attr: true
+        }));
+        $("#pagemanager_json").val(json);
+        var form = $("#pagemanager_form");
+        form.find(".xh_success, .xh_fail").remove();
+        var status = $(".pagemanager_status");
+        status.show();
+        $.post(form.attr("action"), form.serialize())
+            .always(function () {
+                status.hide();
+            })
+            .done(function (data) {
+                status.after(data);
                 // TODO: optimization: fix structure instead of reloading
                 jstree.destroy();
                 init();
                 jstree.restore_state();
-            }
-        }
-
-        jstree.save_state();
-        beforeSubmit();
-        form = $("#pagemanager_form");
-        url = form.attr("action");
-        form.find(".xh_success, .xh_fail").remove();
-        status = $(".pagemanager_status");
-        status.css("display", "block");
-        request = new XMLHttpRequest();
-        request.open("POST", url);
-        request.setRequestHeader("Content-Type",
-                "application/x-www-form-urlencoded");
-        request.onreadystatechange = onReadyStateChange;
-        request.send(form.serialize());
+            })
+            .fail(alertAjaxError);
     }
 
     /**
