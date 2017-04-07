@@ -82,16 +82,6 @@
             .fail(alertAjaxError);
     }
 
-    /**
-     * Hides the irregular page structure warning and shows the save buttons.
-     *
-     * @returns {undefined}
-     */
-    function confirmStructureWarning() {
-        $("#pagemanager_structure_warning").hide(500);
-        $("#pagemanager_save").show();
-    }
-
     function checkCallback(operation, node, parent, position, more) {
         switch (operation) {
             case "delete_node":
@@ -398,7 +388,10 @@
             event.preventDefault();
             submit();
         });
-        $("#pagemanager_structure_warning button").click(confirmStructureWarning);
+        $("#pagemanager_structure_warning button").click(function () {
+            $("#pagemanager_structure_warning").hide();
+            $("#pagemanager_save").show();
+        });
     };
 
     $(init);
