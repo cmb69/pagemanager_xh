@@ -204,13 +204,14 @@
      * Marks duplicate page headings as such.
      *
      * @param {} node
+     * @param {} deleted
      *
      * @returns {Number} The number of duplicate pages.
      */
-    function markDuplicates(node) {
+    function markDuplicates(node, deleted) {
         var children = jstree.get_children_dom(node);
-        if (!children) {
-            return;
+        if (deleted) {
+            children = children.not("#" + deleted.id);
         }
         children.each(function (index, value) {
             var text1 = jstree.get_text(value);
@@ -328,7 +329,7 @@
                           "#pagemanager_cut, #pagemanager_copy, #pagemanager_paste," +
                           "#pagemanager_edit, #pagemanager_preview");
         var modificationEvents = "move_node.jstree create_node.jstree rename_node.jstree" +
-            " remove_node.jstree check_node.jstree uncheck_node.jstree";
+            " delete_node.jstree check_node.jstree uncheck_node.jstree";
 
         nodeTools.prop("disabled", true);
 
@@ -361,8 +362,11 @@
                 }
                 markCopiedPages(event, data);
             })   
-            .on("rename_node.jstree remove_node.jstree copy_node.jstree move_node.jstree", function (e, data) {
+            .on("rename_node.jstree copy_node.jstree move_node.jstree", function (e, data) {
                 markDuplicates(data.node.parent);
+            })
+            .on("delete_node.jstree", function (e, data) {
+                markDuplicates(data.node.parent, data.node);
             })
             .on("select_node.jstree", function (e, data) {
                 nodeTools.prop("disabled", false);
