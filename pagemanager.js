@@ -85,7 +85,7 @@
                 return !PAGEMANAGER.verbose || confirm(PAGEMANAGER.confirmDeletionMessage);
             case "move_node":
             case "copy_node":
-                return getLevel(parent) + getChildLevels(node) + (!more.pos || more.pos === "i" ? 1 : 0) <= PAGEMANAGER.menuLevels;
+                return getLevel(parent) + getChildLevels(node) + (more.pos === "i" ? 1 : 0) <= PAGEMANAGER.menuLevels;
             default:
                 return true;
         }
