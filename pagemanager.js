@@ -210,6 +210,9 @@
      */
     function markDuplicates(node, deleted) {
         var children = jstree.get_children_dom(node);
+        if (!children) {
+            return;
+        }
         if (deleted) {
             children = children.not("#" + deleted.id);
         }
