@@ -253,6 +253,7 @@
                     url: PAGEMANAGER.dataURL,
                     error: alertAjaxError
                 }),
+                force_text: true,
                 multiple: false,
                 strings: ({
                     "Loading ...": PAGEMANAGER.loading
