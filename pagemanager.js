@@ -81,6 +81,9 @@
 
     function checkCallback(operation, node, parent, position, more) {
         switch (operation) {
+            case "rename_node":
+            case "edit":
+                return !(/unrenameable/.test(jstree.get_type(node)));
             case "delete_node":
                 return !PAGEMANAGER.verbose || confirm(PAGEMANAGER.confirmDeletionMessage);
             case "move_node":
