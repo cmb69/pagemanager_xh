@@ -282,19 +282,17 @@
         if (deleted) {
             children = children.not("#" + deleted.id);
         }
-        children.each(function (index, value) {
-            var text1 = jstree.get_text(value);
-            if (index === 0) {
-                var type = jstree.get_type(value).replace(/^duplicate-/, '');
-                jstree.set_type(value, type);
-            }
+        children.each(function (index) {
+            var type = jstree.get_type(this).replace(/^duplicate-/, '');
+            jstree.set_type(this, type);
+        });
+        children.each(function (index) {
+            var text1 = jstree.get_text(this);
             for (var i = index + 1; i < children.length; i++) {
                 var text2 = jstree.get_text(children[i]);
-                var type = jstree.get_type(children[i]).replace(/^duplicate-/, '');                    
+                var type = jstree.get_type(children[i]);
                 if (text2 === text1) {
                     jstree.set_type(children[i], "duplicate-" + type);
-                } else {
-                    jstree.set_type(children[i], type);
                 }
             }
         });
