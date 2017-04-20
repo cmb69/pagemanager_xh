@@ -224,7 +224,7 @@ JSON
         "children": []
     }, {
         "text": "About",
-        "id": "copy_pagemanager_1",
+        "id": "pagemanager_1_copy_1234567890",
         "type": "default",
         "state": {"checked": true},
         "children": []

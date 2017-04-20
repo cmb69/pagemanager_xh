@@ -62,7 +62,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             'Subpage', // not "DUPLICATE HEADING 1"
             'EMPTY HEADING 1',
             'Foo',
-            'Foo &amp; bar',
+            'Foo & bar',
             "Foo \xC2\xA0 bar"
         );
         $this->model->calculateHeadings();
