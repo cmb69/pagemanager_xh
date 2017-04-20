@@ -119,6 +119,15 @@
         return childLevels(model, 0);
     }
 
+    function getPasteLevel(node) {
+        var level = getLevel(node);
+        var buffer = jstree.get_buffer();
+        if (buffer && buffer.node.length) {
+            level += getChildLevels(buffer.node[0]);
+        }
+        return level;
+    }
+
     function initCommands() {
         commands = ({
             addBefore: (function (node) {
@@ -209,32 +218,35 @@
             }
     }
 
-    function contextSubmenuItems(op) {
+    function contextSubmenuItems(node, op) {
         return [{
             label: PAGEMANAGER.before,
             action: (function (obj) {
                 commands[op + "Before"](obj.reference);
             }),
-            icon: PAGEMANAGER.imageDir + "before.png"
+            icon: PAGEMANAGER.imageDir + "before.png",
+            _disabled: op === "paste" && getPasteLevel(node) > 9
         }, {
             label: PAGEMANAGER.inside,
             action: (function (obj) {
                 commands[op + "Inside"](obj.reference);
             }),
-            icon: PAGEMANAGER.imageDir + "inside.png"
+            icon: PAGEMANAGER.imageDir + "inside.png",
+            _disabled: op === "add" ? getLevel(node) >= 9 : getPasteLevel(node) >= 9
         }, {
             label: PAGEMANAGER.after,
             action: (function (obj) {
                 commands[op + "After"](obj.reference);
             }),
-            icon: PAGEMANAGER.imageDir + "after.png"
+            icon: PAGEMANAGER.imageDir + "after.png",
+            _disabled: op === "paste" && getPasteLevel(node) > 9
         }];
     }
 
     function contextMenuItems(node) {
         var canPaste = jstree.can_paste();
         var tools = ({
-            add: ({submenu: contextSubmenuItems("add")}),
+            add: ({submenu: contextSubmenuItems(node, "add")}),
             rename: ({_disabled: /unrenameable$/.test(jstree.get_type(node))}),
             remove: ({_disabled: jstree.get_children_dom("#").length < 2}),
             cut: ({separator_before: true}),
@@ -244,7 +256,7 @@
             preview: ({_disabled: !jstree.get_node(node, true).attr("data-url")})
         });
         if (canPaste) {
-            tools.paste.submenu = contextSubmenuItems("paste");
+            tools.paste.submenu = contextSubmenuItems(node, "paste");
         }
         $.each(tools, function (name, value) {
             value.label = PAGEMANAGER[name + "Op"];
@@ -431,9 +443,12 @@
             })
             .on("select_node.jstree", function (e, data) {
                 nodeTools.prop("disabled", false);
+                $("#pagemanager_addInside").prop("disabled", getLevel(data.node) >= 9);
                 $("#pagemanager_rename").prop("disabled", /unrenameable$/.test(jstree.get_type(data.node)));
                 $("#pagemanager_remove").prop("disabled", jstree.get_children_dom("#").length < 2);
                 $("#pagemanager_paste").prop("disabled", !jstree.can_paste());
+                $("#pagemanager_pasteBefore, #pagemanager_pasteAfter").prop("disabled", getPasteLevel(data.node) > 9);
+                $("#pagemanager_pasteInside").prop("disabled", getPasteLevel(data.node) >= 9);
                 $("#pagemanager_edit, #pagemanager_preview").prop("disabled", !jstree.get_node(data.node, true).attr("data-url"));
             })
             .on("deselect_node.jstree delete_node.jstree", function (e, data) {
@@ -441,6 +456,8 @@
             })
             .on("cut.jstree copy.jstree", function (e, data) {
                 $("#pagemanager_paste").prop("disabled", !jstree.can_paste());
+                $("#pagemanager_pasteBefore, #pagemanager_pasteAfter").prop("disabled", getPasteLevel(data.node) > 9);
+                $("#pagemanager_pasteInside").prop("disabled", getPasteLevel(data.node) >= 9);
             })
             .on("paste.jstree", function () {
                 $("#pagemanager_paste").prop("disabled", true);
