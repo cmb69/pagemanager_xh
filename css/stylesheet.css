@@ -46,6 +46,18 @@
 #pagemanager_edit span {background-image: url("../images/edit.png")}
 #pagemanager_preview span {background-image: url("../images/preview.png")}
 #pagemanager_help span {background-image: url("../images/help.png")}
+.pagemanager_tool_wrapper {
+    position: relative;
+    display: inline-block;
+}
+.pagemanager_tool_inner {
+    position: absolute;
+    display: none;
+}
+#pagemanager_toolbar .pagemanager_tool_inner button {
+    margin: 0;
+    width: 100%;
+}
 
 /*
  * Context menu

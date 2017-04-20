@@ -121,7 +121,18 @@
 
     function initCommands() {
         commands = ({
-            add: (function (node) {
+            addBefore: (function (node) {
+                var node = jstree.get_node(node);
+                var parent = jstree.get_node(node.parent);
+                var pos = $.inArray(node.id, parent.children);
+                var id = jstree.create_node(parent, PAGEMANAGER.newNode, pos);
+                jstree.edit(id);
+            }),
+            addInside: (function (node) {
+                var id = jstree.create_node(node, PAGEMANAGER.newNode);
+                jstree.edit(id);
+            }),
+            addAfter: (function (node) {
                 var node = jstree.get_node(node);
                 var parent = jstree.get_node(node.parent);
                 var pos = $.inArray(node.id, parent.children);
@@ -132,7 +143,16 @@
             remove: $.proxy(jstree.delete_node, jstree),
             cut: $.proxy(jstree.cut, jstree),
             copy: $.proxy(jstree.copy, jstree),
-            paste: (function (node) {
+            pasteBefore: (function (node) {
+                var node = jstree.get_node(node);
+                var parent = jstree.get_node(node.parent);
+                var pos = $.inArray(node.id, parent.children);
+                jstree.paste(parent, pos);
+            }),
+            pasteInside: (function (node) {
+                jstree.paste(node, "last");
+            }),
+            pasteAfter: (function (node) {
                 var node = jstree.get_node(node);
                 var parent = jstree.get_node(node.parent);
                 var pos = $.inArray(node.id, parent.children);
@@ -156,7 +176,7 @@
      *
      * @returns {undefined}
      */
-    function tool(operation) {
+    function tool(operation, event) {
         switch (operation) {
             case "toggle":
                 var collapsed = true;
@@ -171,6 +191,13 @@
                     jstree.close_all();
                 }
                 return;
+            case "add":
+            case "paste":
+                var element = $("#pagemanager_" + operation).next();
+                element.toggle();
+                event.stopPropagation();
+                $(document).one("click", $.proxy(element.hide, element, 0));
+                return;
             case "save":
                 submit();
                 return;
@@ -182,17 +209,43 @@
             }
     }
 
+    function contextSubmenuItems(op) {
+        return [{
+            label: PAGEMANAGER.before,
+            action: (function (obj) {
+                commands[op + "Before"](obj.reference);
+            }),
+            icon: PAGEMANAGER.imageDir + "before.png"
+        }, {
+            label: PAGEMANAGER.inside,
+            action: (function (obj) {
+                commands[op + "Inside"](obj.reference);
+            }),
+            icon: PAGEMANAGER.imageDir + "inside.png"
+        }, {
+            label: PAGEMANAGER.after,
+            action: (function (obj) {
+                commands[op + "After"](obj.reference);
+            }),
+            icon: PAGEMANAGER.imageDir + "after.png"
+        }];
+    }
+
     function contextMenuItems(node) {
+        var canPaste = jstree.can_paste();
         var tools = ({
-            add: {},
+            add: ({submenu: contextSubmenuItems("add")}),
             rename: ({_disabled: /unrenameable$/.test(jstree.get_type(node))}),
             remove: ({_disabled: jstree.get_children_dom("#").length < 2}),
             cut: ({separator_before: true}),
             copy: {},
-            paste: ({_disabled: !jstree.can_paste()}),
+            paste: ({_disabled: !canPaste}),
             edit: ({separator_before: true, _disabled: !jstree.get_node(node, true).attr("data-url")}),
             preview: ({_disabled: !jstree.get_node(node, true).attr("data-url")})
         });
+        if (canPaste) {
+            tools.paste.submenu = contextSubmenuItems("paste");
+        }
         $.each(tools, function (name, value) {
             value.label = PAGEMANAGER[name + "Op"];
             value.action = (function (obj) {
@@ -200,6 +253,7 @@
             });
             value.icon = PAGEMANAGER.imageDir + name + ".png";
         });
+        delete tools.add.action;
         return tools;
     }
 
@@ -399,8 +453,17 @@
             return undefined;
         });
 
-        $("#pagemanager_toolbar button").click(function () {
-            tool(this.id.substr(12));
+        var template = '<div class="pagemanager_tool_inner">' +
+            '<button id="pagemanager_%sBefore" type="button">' + PAGEMANAGER.before + '</button>' +
+            '<button id="pagemanager_%sInside" type="button">' + PAGEMANAGER.inside + '</button>' +
+            '<button id="pagemanager_%sAfter" type="button">' + PAGEMANAGER.after + '</button>' +
+            '</div>';
+        $("#pagemanager_add, #pagemanager_paste")
+            .wrap('<div class="pagemanager_tool_wrapper">');
+        $("#pagemanager_add").after(template.replace(/%s/g, "add"));
+        $("#pagemanager_paste").after(template.replace(/%s/g, "paste"));
+        $("#pagemanager_toolbar button").click(function (event) {
+            tool(this.id.substr(12), event);
         });
 
         $("#pagemanager_form").submit(function (event) {
