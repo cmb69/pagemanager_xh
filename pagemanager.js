@@ -130,6 +130,18 @@
         return buffer && buffer.node.length && buffer.node[0] === node;
     }
 
+    function doPaste(obj, pos) {
+        var node;
+        var buffer = jstree.get_buffer();
+        if (buffer && buffer.node.length) {
+            node = buffer.node[0];
+        }
+        jstree.paste(obj, pos);
+        if (node) {
+            jstree.copy(node);
+        }
+    }
+
     function initCommands() {
         commands = ({
             addBefore: (function (node) {
@@ -158,16 +170,16 @@
                 var node = jstree.get_node(node);
                 var parent = jstree.get_node(node.parent);
                 var pos = $.inArray(node.id, parent.children);
-                jstree.paste(parent, pos);
+                doPaste(parent, pos);
             }),
             pasteInside: (function (node) {
-                jstree.paste(node, "last");
+                doPaste(node, "last");
             }),
             pasteAfter: (function (node) {
                 var node = jstree.get_node(node);
                 var parent = jstree.get_node(node.parent);
                 var pos = $.inArray(node.id, parent.children);
-                jstree.paste(parent, pos + 1);
+                doPaste(parent, pos + 1);
             }),
             edit: (function (node) {
                 jstree.save_state();
