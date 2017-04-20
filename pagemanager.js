@@ -280,6 +280,7 @@
             value.icon = PAGEMANAGER.imageDir + name + ".png";
         });
         delete tools.add.action;
+        delete tools.paste.action;
         return tools;
     }
 
