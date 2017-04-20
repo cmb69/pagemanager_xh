@@ -86,9 +86,6 @@
                 return !(/unrenameable/.test(jstree.get_type(node)));
             case "delete_node":
                 return !PAGEMANAGER.verbose || confirm(PAGEMANAGER.confirmDeletionMessage);
-            case "move_node":
-            case "copy_node":
-                return getLevel(parent) + getChildLevels(node) + (more.pos === "i" ? 1 : 0) <= PAGEMANAGER.menuLevels;
             default:
                 return true;
         }
@@ -352,21 +349,28 @@
             }),
             types: ({
                 "new": {
-                    icon: PAGEMANAGER.imageDir + "new.png"
+                    icon: PAGEMANAGER.imageDir + "new.png",
+                    max_depth: 8
                 },
                 unrenameable: ({
-                    icon: PAGEMANAGER.imageDir + "unrenameable.png"
+                    icon: PAGEMANAGER.imageDir + "unrenameable.png",
+                    max_depth: 8
                 }),
                 "duplicate-default": {
-                    "icon": PAGEMANAGER.imageDir + "duplicate.png"
+                    "icon": PAGEMANAGER.imageDir + "duplicate.png",
+                    max_depth: 8
                 },
                 "duplicate-new": {
-                    "icon": PAGEMANAGER.imageDir + "duplicate.png"
+                    "icon": PAGEMANAGER.imageDir + "duplicate.png",
+                    max_depth: 8
                 },
                 "duplicate-unrenameable": {
-                    "icon": PAGEMANAGER.imageDir + "duplicate.png"
+                    "icon": PAGEMANAGER.imageDir + "duplicate.png",
+                    max_depth: 8
                 },
-                "default": {}
+                "default": {
+                    max_depth: 8
+                }
             })
         });
         if (PAGEMANAGER.hasCheckboxes) {
