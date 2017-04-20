@@ -53,6 +53,7 @@
 .pagemanager_tool_inner {
     position: absolute;
     display: none;
+    min-width: 7em;
 }
 #pagemanager_toolbar .pagemanager_tool_inner button {
     margin: 0;
