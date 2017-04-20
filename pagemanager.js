@@ -432,7 +432,7 @@
                 jstree.check_node(data.node);
             })
             .on("copy_node.jstree", function (e, data) {
-                var id = data.original.id + "_copy_" + (new Date).getTime();
+                var id = data.original.id.replace(/_copy_\d+$/, "") + "_copy_" + (new Date).getTime();
                 jstree.set_id(data.node, id);
                 jstree.get_node(data.node, true).attr("aria-labelledby", id);
                 var checkNode = (function (node, orig) {
