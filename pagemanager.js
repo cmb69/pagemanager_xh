@@ -432,11 +432,17 @@
                 var id = data.original.id + "_copy_" + (new Date).getTime();
                 jstree.set_id(data.node, id);
                 jstree.get_node(data.node, true).attr("aria-labelledby", id);
-                if (jstree.is_checked(data.original)) {
-                    jstree.check_node(data.node);
-                } else {
-                    jstree.uncheck_node(data.node);
+                var checkNode = function (node, orig) {
+                    if (jstree.is_checked(orig)) {
+                        jstree.check_node(node);
+                    }
                 }
+                checkNode(data.node, data.original);
+                $.each(data.node.children_d, function (index) {
+                    if (jstree.is_checked(data.original.children_d[index])) {
+                        jstree.check_node(this);
+                    }
+                });
                 markCopiedPages(event, data);
             })   
             .on("rename_node.jstree copy_node.jstree move_node.jstree", function (e, data) {
