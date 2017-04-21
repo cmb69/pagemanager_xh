@@ -314,6 +314,9 @@
                 }
             }
         });
+        children.each(function () {
+            markDuplicates(this, deleted);
+        });
     }
 
     /**
