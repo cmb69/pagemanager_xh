@@ -52,3 +52,15 @@
 #pagemanager_footer {
     height: 150px;
 }
+
+/*
+ * Plugin info
+ */
+
+.pagemanager_logo {
+    float: left;
+    margin: 0 1em 0.5em 0;
+}
+.pagemanager_license {
+    text-align: justify;
+}

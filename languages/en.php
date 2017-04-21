@@ -31,6 +31,7 @@ $plugin_tx['pagemanager']['error_structure_confirmation']="Proceed!";
 $plugin_tx['pagemanager']['error_structure_warning']="Irregular page structure found. For details see the plugin help and consult your webmaster! If you proceed this will be fixed by Pagemanager_XH, what may not be what you want.";
 $plugin_tx['pagemanager']['error_nesting']="Too deep nesting of page structure!";
 $plugin_tx['pagemanager']['error_offending_extension']="Offending extension using its own jQuery library detected (see manual, section \"Limitations\").";
+$plugin_tx['pagemanager']['alt_logo']="Treeview";
 $plugin_tx['pagemanager']['syscheck_extension']="the PHP extension '%s' is loaded";
 $plugin_tx['pagemanager']['syscheck_fail']="failure";
 $plugin_tx['pagemanager']['syscheck_message']="Checking that %1\$s … %2\$s";

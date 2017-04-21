@@ -31,6 +31,7 @@ $plugin_tx['pagemanager']['error_structure_confirmation']="Fortfahren!";
 $plugin_tx['pagemanager']['error_structure_warning']="Unregelmäßige Seitenstruktur gefunden. Lesen Sie die Plugin-Hilfe und fragen Sie Ihren Webmaster! Wenn Sie fortfahren wird dies vom Pagemanager_XH korrigiert, was u.U. nicht in ihrem Interesse liegt.";
 $plugin_tx['pagemanager']['error_nesting']="Zu tiefe Verschachtelung der Seitenstruktur!";
 $plugin_tx['pagemanager']['error_offending_extension']="Kollision mit einer Erweiterung, die ihre eigene jQuery Bibliothek einbindet, festgestellt (siehe Handbuch, Abschnitt \"Beschränkungen\").";
+$plugin_tx['pagemanager']['alt_logo']="Baumansicht";
 $plugin_tx['pagemanager']['syscheck_extension']="die PHP-Erweiterung '%s' geladen ist";
 $plugin_tx['pagemanager']['syscheck_fail']="Fehler";
 $plugin_tx['pagemanager']['syscheck_message']="Prüfe, dass %1\$s … %2\$s";
