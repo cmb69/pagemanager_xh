@@ -28,14 +28,9 @@
     this program. If not, see <a
     href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
 </p>
-<div style="clear: both"></div>
-<h4><?=$this->text('syscheck_title')?></h4>
-<ul style="list-style: none">
+<div class="pagemanager_syscheck">
+    <h2><?=$this->text('syscheck_title')?></h2>
 <?php foreach ($this->checks as $check):?>
-    <li>
-        <img src="<?=$this->escape($check->icon)?>" alt="<?=$this->escape($check->state)?>"
-            style="margin: 0; height: 1em; padding-right: 1em">
-        <span><?=$this->escape($check->check)?></span>
-    </li>
+    <p class="xh_<?=$this->escape($check->state)?>"><?=$this->text('syscheck_message', $check->label, $check->stateLabel)?></p>
 <?php endforeach?>
-</ul>
+</div>

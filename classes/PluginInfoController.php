@@ -39,7 +39,8 @@ class PluginInfoController extends Controller
                 'icon' => "{$this->pluginFolder}images/$state.png"
             );
         }
-        $view->checks = $checks;
+        $systemCheckService = new SystemCheckService;
+        $view->checks = $systemCheckService->getChecks();
         $view->render();
     }
 
