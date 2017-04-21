@@ -238,21 +238,21 @@
             action: (function (obj) {
                 commands[op + "Before"](obj.reference);
             }),
-            icon: PAGEMANAGER.imageDir + "before.png",
+            icon: "fa fa-arrow-up",
             _disabled: op === "paste" && getPasteLevel(node) > 9
         }, {
             label: PAGEMANAGER.inside,
             action: (function (obj) {
                 commands[op + "Inside"](obj.reference);
             }),
-            icon: PAGEMANAGER.imageDir + "inside.png",
+            icon: "fa fa-arrow-right",
             _disabled: op === "add" ? getLevel(node) >= 9 : getPasteLevel(node) >= 9 || isNodeInBuffer(node)
         }, {
             label: PAGEMANAGER.after,
             action: (function (obj) {
                 commands[op + "After"](obj.reference);
             }),
-            icon: PAGEMANAGER.imageDir + "after.png",
+            icon: "fa fa-arrow-down",
             _disabled: op === "paste" && getPasteLevel(node) > 9
         }];
     }
@@ -277,7 +277,7 @@
             value.action = (function (obj) {
                 commands[name](obj.reference);
             });
-            value.icon = PAGEMANAGER.imageDir + name + ".png";
+            value.icon = "fa " + PAGEMANAGER.classes[name];
         });
         delete tools.add.action;
         delete tools.paste.action;
@@ -368,26 +368,27 @@
             }),
             types: ({
                 "new": {
-                    icon: PAGEMANAGER.imageDir + "new.png",
+                    icon: "fa fa-folder-open",
                     max_depth: 8
                 },
                 unrenameable: ({
-                    icon: PAGEMANAGER.imageDir + "unrenameable.png",
+                    icon: "fa fa-tag",
                     max_depth: 8
                 }),
                 "duplicate-default": {
-                    "icon": PAGEMANAGER.imageDir + "duplicate.png",
+                    "icon": "fa fa-exclamation-triangle",
                     max_depth: 8
                 },
                 "duplicate-new": {
-                    "icon": PAGEMANAGER.imageDir + "duplicate.png",
+                    "icon": "fa fa-exclamation-triangle",
                     max_depth: 8
                 },
                 "duplicate-unrenameable": {
-                    "icon": PAGEMANAGER.imageDir + "duplicate.png",
+                    "icon": "fa fa-exclamation-triangle",
                     max_depth: 8
                 },
-                "default": {
+                "default": {                    
+                    icon: "fa fa-folder-open-o",
                     max_depth: 8
                 }
             })
@@ -500,9 +501,9 @@
         });
 
         var template = '<div class="pagemanager_tool_inner">' +
-            '<button id="pagemanager_%sBefore" type="button">' + PAGEMANAGER.before + '</button>' +
-            '<button id="pagemanager_%sInside" type="button">' + PAGEMANAGER.inside + '</button>' +
-            '<button id="pagemanager_%sAfter" type="button">' + PAGEMANAGER.after + '</button>' +
+            '<button id="pagemanager_%sBefore" type="button" title="' + PAGEMANAGER.before + '"><span class="fa fa-arrow-up fa-lg" aria-hidden="true"></span></button>' +
+            '<button id="pagemanager_%sInside" type="button" title="' + PAGEMANAGER.inside + '"><span class="fa fa-arrow-right fa-lg" aria-hidden="true"></span></button>' +
+            '<button id="pagemanager_%sAfter" type="button" title="' + PAGEMANAGER.after + '"><span class="fa fa-arrow-down fa-lg" aria-hidden="true"></span></button>' +
             '</div>';
         $("#pagemanager_add, #pagemanager_paste")
             .wrap('<div class="pagemanager_tool_wrapper">');
