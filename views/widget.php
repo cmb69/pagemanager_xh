@@ -1,4 +1,4 @@
-<h1>Pagemanager – <?=$this->text('menu_main')?></h1>
+<h1><?=$this->title()?></h1>
 <form id="pagemanager_form" action="<?=$this->submissionUrl()?>"
       method="post" accept-charset="UTF-8">
 <?php if ($this->isIrregular):?>

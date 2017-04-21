@@ -73,7 +73,11 @@ class MainAdminController extends Controller
     {
         global $pth, $title, $hjs, $bjs;
 
-        $title = "Pagemanager – {$this->lang['menu_main']}";
+        if (XH_wantsPluginAdministration('pagemanager')) {
+            $title = "Pagemanager – {$this->lang['menu_main']}";
+        } else {
+            $title = $this->lang['menu_main'];
+        }
         $hjs .= '<link rel="stylesheet" type="text/css" href="'
             . "{$this->pluginFolder}jstree/themes/{$this->config['treeview_theme']}/style.min.css" . '">';
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
@@ -84,6 +88,7 @@ class MainAdminController extends Controller
         $bjs .= '<script type="text/javascript">var PAGEMANAGER = ' . $this->jsConfig() . ';</script>'
             . '<script type="text/javascript" src="' . XH_hsc("{$this->pluginFolder}pagemanager.js") . '"></script>';
         $view = new View('widget');
+        $view->title = $title;
         $view->submissionUrl = $this->submissionURL();
         $view->isIrregular = $this->model->isIrregular();
         $view->ajaxLoaderPath = "{$this->pluginFolder}images/ajax-loader-bar.gif";
