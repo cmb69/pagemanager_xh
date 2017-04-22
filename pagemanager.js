@@ -127,7 +127,7 @@
 
     function isNodeInBuffer(node) {
         var buffer = jstree.get_buffer();
-        return buffer && buffer.node.length && buffer.node[0] === node;
+        return buffer && buffer.node.length && jstree.get_node(buffer.node[0]) === jstree.get_node(node);
     }
 
     function doPaste(obj, pos) {
@@ -486,8 +486,8 @@
             })
             .on("cut.jstree copy.jstree", function (e, data) {
                 $("#pagemanager_paste").prop("disabled", !jstree.can_paste());
-                $("#pagemanager_pasteBefore, #pagemanager_pasteAfter").prop("disabled", getPasteLevel(data.node) > 9);
-                $("#pagemanager_pasteInside").prop("disabled", getPasteLevel(data.node) >= 9 || isNodeInBuffer(data.node));
+                $("#pagemanager_pasteBefore, #pagemanager_pasteAfter").prop("disabled", getPasteLevel(data.node[0]) > 9);
+                $("#pagemanager_pasteInside").prop("disabled", getPasteLevel(data.node[0]) >= 9 || isNodeInBuffer(data.node[0]));
             })
             .on("paste.jstree", function () {
                 $("#pagemanager_paste").prop("disabled", true);
