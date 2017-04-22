@@ -219,7 +219,7 @@
                 var element = $("#pagemanager_" + operation).next();
                 element.toggle();
                 event.stopPropagation();
-                $(document).one("click", $.proxy(element.hide, element, 0));
+                $(document).one("click", $.proxy(element.hide, element, undefined));
                 return;
             case "save":
                 submit();
