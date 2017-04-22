@@ -103,7 +103,7 @@
 
     function getChildLevels(node) {
         var childLevels = (function (model, acc) {
-            if (!model.children.length) {
+            if (!model.children || !model.children.length) {
                 return acc;
             } else {
                 return Math.max.apply(null, $.map(model.children, function (value) {
