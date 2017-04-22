@@ -463,7 +463,7 @@
                         jstree.check_node(this);
                     }
                 });
-                markCopiedPages(event, data);
+                markCopiedPages(e, data);
             })   
             .on("rename_node.jstree copy_node.jstree move_node.jstree", function (e, data) {
                 markDuplicates(data.node.parent);
