@@ -449,9 +449,15 @@
                 jstree.check_node(data.node);
             })
             .on("copy_node.jstree", function (e, data) {
-                var id = data.original.id.replace(/_copy_\d+$/, "") + "_copy_" + (new Date).getTime();
-                jstree.set_id(data.node, id);
-                jstree.get_node(data.node, true).attr("aria-labelledby", id);
+                var fixId = (function (node, origId) {
+                    var id = origId.replace(/_copy_\d+$/, "") + "_copy_" + (new Date).getTime();
+                    jstree.set_id(node, id);
+                });
+                fixId(data.node, data.original.id);
+                $.each(data.node.children_d, function (index) {
+                    fixId(this, data.original.children_d[index]);
+                });
+
                 var checkNode = (function (node, orig) {
                     if (jstree.is_checked(orig)) {
                         jstree.check_node(node);
