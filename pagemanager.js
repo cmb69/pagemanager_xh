@@ -144,6 +144,10 @@
 
     function initCommands() {
         commands = ({
+            open: (function (node) {
+                var node = jstree.get_node(node);
+                jstree.open_all(node);
+            }),
             addBefore: (function (node) {
                 var node = jstree.get_node(node);
                 var parent = jstree.get_node(node.parent);
@@ -260,7 +264,8 @@
     function contextMenuItems(node) {
         var canPaste = jstree.can_paste();
         var tools = ({
-            add: ({submenu: contextSubmenuItems(node, "add")}),
+            open: {},
+            add: ({separator_before: true, submenu: contextSubmenuItems(node, "add")}),
             rename: ({_disabled: /unrenameable$/.test(jstree.get_type(node))}),
             remove: ({_disabled: jstree.get_children_dom("#").length < 2}),
             cut: ({separator_before: true}),
@@ -422,7 +427,7 @@
 
         initCommands();
 
-        var nodeTools = $("#pagemanager_add, #pagemanager_rename, #pagemanager_remove," +
+        var nodeTools = $("#pagemanager_open, #pagemanager_add, #pagemanager_rename, #pagemanager_remove," +
                           "#pagemanager_cut, #pagemanager_copy, #pagemanager_paste," +
                           "#pagemanager_edit, #pagemanager_preview");
         var modificationEvents = "move_node.jstree create_node.jstree rename_node.jstree" +
