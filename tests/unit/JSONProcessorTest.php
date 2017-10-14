@@ -64,8 +64,15 @@ class JSONProcessorTest extends PHPUnit_Framework_TestCase
         $pdattrName = 'show';
         $this->setUpPDRouterStub();
         $this->subject = new JSONProcessor($contents, $pdattrName);
-        $timeMock = new PHPUnit_Extensions_MockFunction('time', $this->subject);
-        $timeMock->expects($this->any())->will($this->returnValue(1420903422));
+        uopz_set_return('time', 1420903422);
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown()
+    {
+        uopz_unset_return('time');
     }
 
     /**

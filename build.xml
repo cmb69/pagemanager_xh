@@ -62,7 +62,7 @@
             description="runs all tests"/>
 
     <target name="coverage" description="generates coverage report">
-        <exec command="phpunit --configuration coverage.xml" logoutput="true"/>
+        <exec command="phpdbg -qrr vendor/phpunit/phpunit/phpunit --configuration coverage.xml" logoutput="true"/>
     </target>
 
     <target name="build" description="builds distributable ZIP archive">
