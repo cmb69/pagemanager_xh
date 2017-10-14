@@ -1,8 +1,7 @@
 Pagemanager_XH – a CMSimple_XH plugin
 =====================================
 
-[![stable: 2.0.6](https://img.shields.io/badge/stable-2.0.6-green.svg)](https://github.com/cmb69/pagemanager_xh/releases/tag/2.0.6)
-[![rc: 3.0](https://img.shields.io/badge/stable-3.0-green.svg)](https://github.com/cmb69/pagemanager_xh/releases/tag/3.0)
+[![stable: 3.1](https://img.shields.io/badge/stable-3.1-green.svg)](https://github.com/cmb69/pagemanager_xh/releases/tag/3.1)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 Copyright (c) 2011-2017 Christoph M. Becker  
