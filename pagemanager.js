@@ -290,6 +290,16 @@
     }
 
     /**
+     * Replaces a single match according to urichar_org/new.
+     *
+     * @param {string} match 
+     * @returns {string}
+     */
+    function replaceUriChar(match) {
+        return PAGEMANAGER.uriCharNew[PAGEMANAGER.uriCharOrg.indexOf(match)];
+    }
+
+    /**
      * Marks duplicate page headings as such.
      *
      * @param {} node
@@ -310,9 +320,10 @@
             jstree.set_type(this, type);
         });
         children.each(function (index) {
-            var text1 = jstree.get_text(this);
+            var regExp = new RegExp(PAGEMANAGER.uriCharOrg.join("|"), "g");
+            var text1 = jstree.get_text(this).replace(regExp, replaceUriChar);
             for (var i = index + 1; i < children.length; i++) {
-                var text2 = jstree.get_text(children[i]);
+                var text2 = jstree.get_text(children[i]).replace(regExp, replaceUriChar);
                 var type = jstree.get_type(children[i]);
                 if (text2 === text1) {
                     jstree.set_type(children[i], "duplicate-" + type);
