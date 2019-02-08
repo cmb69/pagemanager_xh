@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<!DOCTYPE teplad [
+	<!ELEMENT teplad (xml_url,name,date_update,version,date_version,coder,tags,url,compatibility,php_ver,license,descriptions,screenshots,logo) >
+		<!ELEMENT url (download_url,coder_url,demo_url) >
+		<!ELEMENT descriptions (description+) >
+		<!ELEMENT screenshots (screenshot*) >
+		
+		<!ELEMENT xml_url			(#PCDATA) >
+		<!ELEMENT name				(#PCDATA) >
+		<!ELEMENT date_update		(#PCDATA) >
+		<!ELEMENT version			(#PCDATA) >
+		<!ELEMENT date_version		(#PCDATA) >
+		<!ELEMENT coder				(#PCDATA) >
+		<!ELEMENT tags				(#PCDATA) >
+		<!ELEMENT compatibility		(#PCDATA) >
+		<!ELEMENT php_ver			(#PCDATA) >
+		<!ELEMENT license			(#PCDATA) >
+		<!ELEMENT logo				(#PCDATA) >
+		
+		<!ELEMENT download_url		(#PCDATA) >
+		<!ELEMENT coder_url			(#PCDATA) >
+		<!ELEMENT demo_url			(#PCDATA) >
+		<!ELEMENT description		(#PCDATA|br|ol|ul|li|i|b)* >
+		<!ELEMENT br					EMPTY >
+		<!ELEMENT ol					(li+) >
+		<!ELEMENT ul					(li+) >
+		<!ELEMENT li				(#PCDATA) >
+		<!ELEMENT i					(#PCDATA) >
+		<!ELEMENT b					(#PCDATA) >
+		<!ELEMENT screenshot		(#PCDATA) >
+		
+		<!ATTLIST teplad version CDATA	#REQUIRED >
+		<!ATTLIST name type	(plugin|template|addon) #REQUIRED >
+		<!ATTLIST description lang NMTOKEN	#REQUIRED >
+		<!ATTLIST screenshot view CDATA		#REQUIRED >
+]>
+
+<!-- !!! Do note change the DTD !!! -->
+<!--
+	To avoid the error, the special characters must be written as an entity reference !!!
+	Um den Fehler zu vermeiden müssen die Sonderzeichen als Entitätsreferenz geschrieben werden !!!
+		&lt; 		-> 		< 
+		&gt; 		-> 		> 
+		&amp; 		-> 		& 
+		&apos; 		-> 		' 
+		&quot; 		-> 		" 
+-->
+
+<!-- You can test this xml on https://www.xmlvalidation.com/documentation.html -->
+
+<!-- Do note change the Element teplad! -->
+<teplad version="1.1">
+	<!-- the URL form this xml-file -->
+	<!-- full URL with http(s) -->
+	<xml_url>https://raw.githubusercontent.com/cmb69/pagemanager_xh/master/teplad.xml</xml_url>
+	<!-- Attribute type for Data type: plugin, template or addon -->
+	<!-- the name of the Plugin -->
+	<name type="plugin">Pagemanager_XH</name>
+	<!-- Date this xml-file was updated, yyyy.mm.dd -->
+	<date_update>2019.02.08</date_update>
+	<!-- version of Plugin -->
+	<version>3.2</version>
+	<!-- date of publication, yyyy.mm.dd -->
+	<date_version>2017.12.21</date_version>
+	<!-- the name of the programmer -->
+	<coder>Christoph M. Becker</coder>
+	<!-- Categories must be written in lower case. More than one possible, separated by comma without spaces. -->
+	<!-- Plugin Categories, i.e. audio,video,datenschutz,socialmedia,system,admin,backup,calendar,form,seo. -->
+	<!-- Template Categories, i.e. cssonly,onepage. -->
+	<!-- You can currently define your own tags. These are displayed, but not filtered. -->
+	<!-- All available categories can be found on the website. -->
+	<tags>admin</tags>
+	<!-- full URLs with http(s) -->
+	<url>
+		<!-- URL where you can download the plugin -->
+		<!-- If there no Download-URL, enter this follows! - <download_url></download_url> -->
+		<download_url>https://github.com/cmb69/pagemanager_xh/releases/latest</download_url>
+		<!-- URL of the programmer's website -->
+		<!-- If there no Website, enter this follows! - <coder_url></coder_url> -->
+		<coder_url>http://3-magi.net</coder_url>
+		<!-- URL where find a demo -->
+		<!-- If there no Demo-Website, enter this follows! - <demo_url></demo_url> -->
+		<demo_url></demo_url>
+	</url>
+	<!-- compatibility with versions of XH, i.e. 1.6, 1.6.7 - 1.7.2, ≥ 1.7, ... -->
+	<compatibility>≥ 1.7</compatibility>
+	<!-- minimum version of PHP that is required, i.e. 5.3, 5.6, 7, ≥ 5.6, ... -->
+	<!-- If there no specification, e.g. for templates, enter this follows! - <php_ver></php_ver> -->
+	<php_ver>≥ 5.3</php_ver>
+	<!-- the License for the Plugin, GPLv3, AGPL, LGPL, GPLv2 ... -->
+	<license>GPLv3</license>
+	<!-- Description in English is mandatory -->
+	<descriptions>
+		<!-- description of the plugin, ca. 200 characters, you can use <br/>, <ol></ol>, <ul></ul>, <li></li>, <b></b>, <i></i>. -->
+		<description lang="en">Pagemanager_XH simplifies the administration of pages of a CMSimple_XH installation. This plugin is comparable to the Menumanager plugin with regard to functionality, but by using a treeview it allows for better handling of websites with many pages. With Pagemanager_XH it is also possible to rearrange whole submenus.</description>
+		<!-- Beschreibung des Plugins, ca. 200 Zeichen, es können <br/>, <ol></ol>, <ul></ul>, <li></li>, <b></b>, <i></i> genutzt werden. -->
+		<description lang="de">Pagemanager_XH vereinfacht die Verwaltung von Seiten in einer CMSimple_XH-Installation. Dieses Plugin ist vom Funktionsumfang vergleichbar mit dem Menumanager-Plugin, ist aber durch die Baumdarstellung auch bei umfangreichen Homepages übersichtlicher. Darüber hinaus können beim Pagemanager_XH ganze Menüstrukturen auf einmal verschoben werden.</description>
+		<!-- additional languages are possible, i.e. da, fr, pl, ... -->
+		<!-- The use of this language is limited by the website where the repository is hosted. -->
+	</descriptions>
+	<!-- If there no screenshots, enter this follows! - <screenshots></screenshots> -->
+	<screenshots/>
+	<!-- full URL with http(s) -->
+	<!-- , use only .gif, .jpg, .jpeg, .png or .svg! -->
+	<!-- The use of this different image formats is dependent on the configuration of the repository. -->
+	<!-- If there no logo, enter this follows! - <logo></logo> -->
+	<logo>https://raw.githubusercontent.com/cmb69/pagemanager_xh/master/pagemanager.png</logo>
+</teplad>
+<!-- Ich versichere, dass ich für alle angegebenen Texte und / oder Bilder die Urheberrechte besitze, oder eine entsprechende Nutzungsgenehmigung vorweisen kann. -->
+<!-- I guarantee, that I have the copyright for all texts and / or pictures, or can show a corresponding permission for their use. -->
