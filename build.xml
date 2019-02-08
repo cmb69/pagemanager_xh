@@ -75,17 +75,6 @@
         <exec command="git archive -o export.zip HEAD" checkreturn="true"/>
         <unzip file="export.zip" todir="export"/>
         <delete file="export.zip"/>
-        <move todir="dist">
-            <fileset dir="export">
-                <include name="classes/Plugin.php"/>
-                <include name="version.nfo"/>
-            </fileset>
-            <filterchain>
-                <replacetokens>
-                    <token key="PAGEMANAGER_VERSION" value="${version}"/>
-                </replacetokens>
-            </filterchain>
-        </move>
         <jsMin targetDir="dist" suffix="" failOnError="false">
             <fileset dir="export">
                 <include name="*.js"/>
