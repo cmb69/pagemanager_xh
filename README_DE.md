@@ -1,4 +1,4 @@
-# Pagemanager\_XH – Handbuch
+# Pagemanager\_XH
 
 Pagemanager\_XH vereinfacht die Verwaltung von Seiten in einer
 CMSimple\_XH-Installation. Dieses Plugin ist vom Funktionsumfang

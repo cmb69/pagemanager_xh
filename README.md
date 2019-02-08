@@ -1,4 +1,4 @@
-# Pagemanager\_XH – User manual
+# Pagemanager\_XH
 
 Pagemanager\_XH simplifies the administration of pages of a CMSimple\_XH
 installation. This plugin is comparable to the Menumanager plugin with
