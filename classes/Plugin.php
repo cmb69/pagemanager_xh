@@ -25,7 +25,7 @@ use XH\Pages;
 
 class Plugin
 {
-    const VERSION = '3.2';
+    const VERSION = '3.3';
 
     public function run()
     {

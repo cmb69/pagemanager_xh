@@ -60,9 +60,9 @@
 	<!-- Date this xml-file was updated, yyyy.mm.dd -->
 	<date_update>2019.02.08</date_update>
 	<!-- version of Plugin -->
-	<version>3.2</version>
+	<version>3.3</version>
 	<!-- date of publication, yyyy.mm.dd -->
-	<date_version>2017.12.21</date_version>
+	<date_version>2019.02.08</date_version>
 	<!-- the name of the programmer -->
 	<coder>Christoph M. Becker</coder>
 	<!-- Categories must be written in lower case. More than one possible, separated by comma without spaces. -->
