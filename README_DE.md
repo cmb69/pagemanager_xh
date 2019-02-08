@@ -10,10 +10,12 @@ einmal verschoben werden.
 ## Inhaltsverzeichnis
 
   - [Voraussetzungen](#voraussetzungen)
+  - [Download](#download)
   - [Installation](#installation)
   - [Einstellungen](#einstellungen)
   - [Verwendung](#verwendung)
   - [Beschränkungen](#beschränkungen)
+  - [Fehlerbehebung](#fehlerbehebung)
   - [Lizenz](#lizenz)
   - [Danksagung](#danksagung)
 
@@ -24,11 +26,15 @@ benötigt es noch das jQuery4CMSimple und das Fa\_XH Plugin, die in
 allen Standarddownloads von CMSimple\_XH bereits enthalten sind. Es
 benötigt ebenfalls PHP ≥ 5.3.0 mit der JSON Extension.
 
+## Download
+
+Das [aktuelle Release](https://github.com/cmb69/pagemanager_xh/releases/latest) kann von Github herunter geladen werden.
+
 ## Installation
 
 Die Installation erfolgt wie bei vielen anderen CMSimple\_XH-Plugins
 auch. Im [CMSimple\_XH
-Wiki](http://www.cmsimple-xh.org/wiki/doku.php/de:installation) finden
+Wiki](https://wiki.cmsimple-xh.org/doku.php/de:installation) finden
 sie ausführliche Hinweise.
 
 1.  Sichern Sie die Daten auf Ihrem Server.
@@ -173,10 +179,26 @@ entweder die "Zwischenablage"-Funktionalität, aktualisieren Sie auf Edge
 (oder einen anderen Browser) oder verwenden Sie ein alternatives
 Admin-Menü.
 
+## Fehlerbehebung
+
+Melden Sie Programmfehler und stellen Sie Supportanfragen entweder auf [Github](https://github.com/cmb69/pagemanager_xh/issues)
+oder im [CMSimple_XH Forum](https://cmsimpleforum.com/).
+
 ## Lizenz
 
-Pagemanager\_XH kann unter Einhaltung der
-[GPLv3](http://www.gnu.org/licenses/gpl.html) verwendet werden.
+Pagemanager\_XH ist freie Software. Sie können es unter den Bedingungen
+der GNU General Public License, wie von der Free Software Foundation
+veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß
+Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren Version.
+
+Die Veröffentlichung von Pagemanager\_XH erfolgt in der Hoffnung, daß es
+Ihnen von Nutzen sein wird, aber *ohne irgendeine Garantie*, sogar ohne
+die implizite Garantie der *Marktreife* oder der *Verwendbarkeit für einen
+bestimmten Zweck*. Details finden Sie in der GNU General Public License.
+
+Sie sollten ein Exemplar der GNU General Public License zusammen mit
+Pagemanager\_XH erhalten haben. Falls nicht, siehe
+<http://www.gnu.org/licenses/>.
 
 © 2011-2019 Christoph M. Becker
 

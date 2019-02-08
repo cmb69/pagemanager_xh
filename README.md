@@ -9,10 +9,12 @@ possible to rearrange whole submenus.
 ## Table of Contents
 
   - [Requirements](#requirements)
+  - [Download](#download)
   - [Installation](#installation)
   - [Settings](#settings)
   - [Usage](#usage)
   - [Limitations](#limitations)
+  - [Troubleshooting](#troubleshooting)
   - [License](#license)
   - [Credits](#credits)
 
@@ -22,6 +24,10 @@ Pagemanager\_XH is a plugin for CMSimple\_XH ≥ 1.7.0. Additionally it
 requires the jQuery4CMSimple and Fa\_XH plugins, which are already
 contained in the standard download of CMSimple\_XH. It also requires PHP
 ≥ 5.3.0 with the JSON extension.
+
+## Download
+
+The [lastest release](https://github.com/cmb69/pagemanager_xh/releases/latest) is available for download on Github.
 
 ## Installation
 
@@ -151,10 +157,24 @@ jQuery](https://github.com/jquery/jquery/issues/3676). Either use the
 "clipboard" functionality, upgrade to Edge (or another browser), or use
 an alternative admin menu.
 
+## Troubleshooting
+Report bugs and ask for support either on [Github](https://github.com/cmb69/pagemanager_xh/issues)
+or in the [CMSimple_XH Forum](https://cmsimpleforum.com/).
+
 ## License
 
-Pagemanager\_XH is licensed under
-[GPLv3](http://www.gnu.org/licenses/gpl.html).
+Pagemanager\_XH is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Pagemanager\_XH is distributed in the hope that it will be useful,
+but *without any warranty*; without even the implied warranty of
+*merchantibility* or *fitness for a particular purpose*. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Pagemanager\_XH.  If not, see <http://www.gnu.org/licenses/>.
 
 © 2011-2019 Christoph M. Becker
 
