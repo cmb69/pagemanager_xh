@@ -267,7 +267,7 @@
             open: {},
             add: ({separator_before: true, submenu: contextSubmenuItems(node, "add")}),
             rename: ({_disabled: /unrenameable$/.test(jstree.get_type(node))}),
-            remove: ({_disabled: jstree.get_children_dom("#").length < 2}),
+            remove: ({_disabled: jstree.get_children_dom("#").length < 2 && getLevel(node) < 2}),
             cut: ({separator_before: true}),
             copy: {},
             paste: ({_disabled: !canPaste}),
@@ -497,7 +497,7 @@
                 nodeTools.prop("disabled", false);
                 $("#pagemanager_addInside").prop("disabled", getLevel(data.node) >= 9);
                 $("#pagemanager_rename").prop("disabled", /unrenameable$/.test(jstree.get_type(data.node)));
-                $("#pagemanager_remove").prop("disabled", jstree.get_children_dom("#").length < 2);
+                $("#pagemanager_remove").prop("disabled", jstree.get_children_dom("#").length < 2 && getLevel(data.node) < 2);
                 $("#pagemanager_paste").prop("disabled", !jstree.can_paste());
                 $("#pagemanager_pasteBefore, #pagemanager_pasteAfter").prop("disabled", getPasteLevel(data.node) > 9);
                 $("#pagemanager_pasteInside").prop("disabled", getPasteLevel(data.node) >= 9 || isNodeInBuffer(data.node));
