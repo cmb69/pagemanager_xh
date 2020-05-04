@@ -173,7 +173,9 @@ class MainAdminController extends Controller
             'hasCheckboxes' => $this->config['pagedata_attribute'] !== '',
             'dataURL' => (string) $url->with('pagemanager', '')->with('admin', 'plugin_main')
                 ->with('action', 'plugin_data')->with('edit', ''),
-            'uriCharOrg' => explode(XH_URICHAR_SEPARATOR, $tx['urichar']['org']),
+            'uriCharOrg' => explode(XH_URICHAR_SEPARATOR, str_replace(array('?', '*', '+', '(', ')'),
+                                                                      array('\?', '\*', '\+', '\(', '\)'),
+                                                                      $tx['urichar']['org'])),
             'uriCharNew' => explode(XH_URICHAR_SEPARATOR, $tx['urichar']['new'])
         );
         return json_encode($config);
