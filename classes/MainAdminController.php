@@ -129,6 +129,12 @@ class MainAdminController extends Controller
         global $sn, $tx, $pth;
 
         $url = new Url($sn, array());
+        $uricharOrg = array_map(
+            function ($char) {
+                return preg_quote($char, '/');
+            },
+            explode(XH_URICHAR_SEPARATOR, $tx['urichar']['org'])
+        );
         $config = array(
             'stateKey' => 'pagemanager_' . bin2hex(CMSIMPLE_ROOT),
             'okButton' => $this->lang['button_ok'],
@@ -173,7 +179,7 @@ class MainAdminController extends Controller
             'hasCheckboxes' => $this->config['pagedata_attribute'] !== '',
             'dataURL' => (string) $url->with('pagemanager', '')->with('admin', 'plugin_main')
                 ->with('action', 'plugin_data')->with('edit', ''),
-            'uriCharOrg' => explode(XH_URICHAR_SEPARATOR, $tx['urichar']['org']),
+            'uriCharOrg' => $uricharOrg,
             'uriCharNew' => explode(XH_URICHAR_SEPARATOR, $tx['urichar']['new'])
         );
         return json_encode($config);
