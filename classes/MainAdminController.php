@@ -221,7 +221,7 @@ class MainAdminController extends Controller
             'text' => $this->model->getHeading($index),
             'li_attr' => array(
                 'id' => "pagemanager_{$index}",
-                'data-url' => (string) new Url($sn, array($u[$index] => ''))
+                'data-url' => "$sn?$u[$index]"
             ),
             'children' => $this->getPagesData($index)
         );
