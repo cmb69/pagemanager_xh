@@ -7,25 +7,20 @@
         <include name="classes/*.php"/>
     </fileset>
 
-    <fileset id="unit-tests" dir="tests/unit">
-        <include name="*Test.php"/>
-    </fileset>
-
-    <fileset id="attack-tests" dir="tests/attack">
-        <include name="*Test.php"/>
-    </fileset>
-
     <target name="help" description="lists available targets">
         <exec command="phing -l" outputProperty="help"/>
         <echo>${help}</echo>
     </target>
 
     <target name="sniff" description="checks adherence to coding standards">
-        <phpcodesniffer standard="PSR2" format="full">
-            <fileset refid="php-sources"/>
-            <fileset refid="unit-tests"/>
-            <fileset refid="attack-tests"/>
-        </phpcodesniffer>
+        <exec executable="phpcs" passthru="true" checkreturn="true">
+            <arg value="--standard=PSR2"/>
+            <arg line="--runtime-set ignore_warnings_on_exit true"/>
+            <arg file="admin.php"/>
+            <arg file="classes"/>
+            <arg file="tests/unit"/>
+            <arg file="tests/attack"/>
+        </exec>
     </target>
 
     <target name="mess" description="detects code flaws">
