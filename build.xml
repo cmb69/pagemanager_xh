@@ -8,8 +8,9 @@
     </fileset>
 
     <target name="help" description="lists available targets">
-        <exec command="phing -l" outputProperty="help"/>
-        <echo>${help}</echo>
+        <exec executable="phing" passthru="true">
+            <arg value="-l"/>
+        </exec>
     </target>
 
     <target name="sniff" description="checks adherence to coding standards">
@@ -31,7 +32,10 @@
 
     <target name="compat"
             description="checks compatibility with PHP_CompatInfo">
-        <exec command="phpcompatinfo analyser:run --alias current" logoutput="true"/>
+        <exec executable="phpcompatinfo" passthru="true" checkreturn="true">
+            <arg value="analyser:run"/>
+            <arg line="--alias current"/>
+        </exec>
     </target>
 
     <target name="unit-tests" description="runs all unit tests">
@@ -53,17 +57,46 @@
             description="runs all tests"/>
 
     <target name="coverage" description="generates coverage report">
-        <exec command="phpdbg -qrr vendor/phpunit/phpunit/phpunit --configuration coverage.xml" logoutput="true"/>
+        <exec executable="phpdbg" passthru="true" checkreturn="true">
+            <arg value="-qrr"/>
+            <arg file="vendor/phpunit/phpunit/phpunit"/>
+            <arg line="--configuration coverage.xml"/>
+        </exec>
     </target>
 
     <target name="gen-help" description="builds help.htm from README.md">
-        <exec command="pandoc -s --eol=lf --template=help/template.htm -Vlang=en -Vpagetitle=&quot;User Manual&quot; -o help/help.htm README.md -t html" logoutput="true"/>
-        <exec command="pandoc -s --eol=lf --template=help/template.htm -Vlang=de -Vpagetitle=&quot;Benutzerhandbuch&quot; -o help/help_de.htm README_DE.md -t html" logoutput="true"/>
+        <exec executable="pandoc" passthru="true" checkreturn="true">
+            <arg value="-s"/>
+            <arg value="--eol=lf"/>
+            <arg value="--template=help/template.htm"/>
+            <arg value="-Vlang=en"/>
+            <arg line="-Vpagetitle=&quot;User Manual&quot;"/>
+            <arg value="-o"/>
+            <arg file="help/help.htm"/>
+            <arg file="README.md"/>
+            <arg line="-t html"/>
+        </exec>
+        <exec executable="pandoc" passthru="true" checkreturn="true">
+            <arg value="-s"/>
+            <arg value="--eol=lf"/>
+            <arg value="--template=help/template.htm"/>
+            <arg value="-Vlang=de"/>
+            <arg line="-Vpagetitle=&quot;Benutzerhandbuch&quot;"/>
+            <arg value="-o"/>
+            <arg file="help/help_de.htm"/>
+            <arg file="README_DE.md"/>
+            <arg line="-t html"/>
+        </exec>
     </target>
 
     <target name="build" description="builds distributable ZIP archive">
         <fail unless="version" message="version is not defined!"/>
-        <exec command="git archive -o export.zip HEAD" checkreturn="true"/>
+        <exec executable="git" passthru="true" checkreturn="true">
+            <arg value="archive"/>
+            <arg value="-o"/>
+            <arg file="export.zip"/>
+            <arg value="HEAD"/>
+        </exec>
         <unzip file="export.zip" todir="export"/>
         <delete file="export.zip"/>
         <jsMin targetDir="dist" suffix="" failOnError="false">
