@@ -32,4 +32,3 @@
         <img src="<?=$this->ajaxLoaderPath()?>" alt="Loading">
     </p>
 </form>
-<div id="pagemanager_footer"></div>
