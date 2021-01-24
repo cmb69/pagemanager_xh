@@ -176,7 +176,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Pagemanager\_XH.  If not, see <http://www.gnu.org/licenses/>.
 
-© 2011-2019 Christoph M. Becker
+© 2011-2021 Christoph M. Becker
 
 Czech translation © 2011-2014 Josef Němec  
 Danish translation © 2011-2014 Jens Maegaard  

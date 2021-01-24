@@ -200,7 +200,7 @@ Sie sollten ein Exemplar der GNU General Public License zusammen mit
 Pagemanager\_XH erhalten haben. Falls nicht, siehe
 <http://www.gnu.org/licenses/>.
 
-© 2011-2019 Christoph M. Becker
+© 2011-2021 Christoph M. Becker
 
 Danish Übersetzung © 2011-2014 Jens Maegaard  
 Estnische Übersetzung © 2014 Alo Tanavots  
