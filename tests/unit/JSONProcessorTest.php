@@ -22,7 +22,6 @@
 namespace Pagemanager;
 
 use PHPUnit_Framework_TestCase;
-use PHPUnit_Extensions_MockFunction;
 
 class JSONProcessorTest extends PHPUnit_Framework_TestCase
 {
