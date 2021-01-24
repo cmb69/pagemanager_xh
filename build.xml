@@ -57,9 +57,7 @@
             description="runs all tests"/>
 
     <target name="coverage" description="generates coverage report">
-        <exec executable="phpdbg" passthru="true" checkreturn="true">
-            <arg value="-qrr"/>
-            <arg file="vendor/phpunit/phpunit/phpunit"/>
+        <exec executable="phpunit" passthru="true" checkreturn="true">
             <arg line="--configuration coverage.xml"/>
         </exec>
     </target>
