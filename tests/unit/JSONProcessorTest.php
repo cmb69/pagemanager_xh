@@ -62,16 +62,7 @@ class JSONProcessorTest extends TestCase
         );
         $pdattrName = 'show';
         $this->setUpPDRouterStub();
-        $this->subject = new JSONProcessor($contents, $pdattrName);
-        uopz_set_return('time', 1420903422);
-    }
-
-    /**
-     * @return void
-     */
-    protected function tearDown()
-    {
-        uopz_unset_return('time');
+        $this->subject = new JSONProcessor($contents, $pdattrName, 1420903422);
     }
 
     /**

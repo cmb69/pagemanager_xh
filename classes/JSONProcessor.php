@@ -59,6 +59,11 @@ class JSONProcessor
     private $pdattrName;
 
     /**
+     * @var int
+     */
+    private $now;
+
+    /**
      * @var bool
      */
     private $pdattr;
@@ -77,12 +82,13 @@ class JSONProcessor
      * @param string[] $contents
      * @param string $pdattrName
      */
-    public function __construct(array $contents, $pdattrName)
+    public function __construct(array $contents, $pdattrName, $now)
     {
         global $pd_router;
 
         $this->contents = $contents;
         $this->pdattrName = $pdattrName;
+        $this->now = $now;
         $this->pdRouter = $pd_router;
     }
 
@@ -161,7 +167,7 @@ class JSONProcessor
             $pageData = $this->pdRouter->find_page($this->id);
         } else {
             $pageData = $this->pdRouter->new_page();
-            $pageData['last_edit'] = time();
+            $pageData['last_edit'] = $this->now;
         }
         if ($this->mayRename) {
             $pageData['url'] = uenc($this->title);

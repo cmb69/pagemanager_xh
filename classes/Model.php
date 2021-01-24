@@ -144,7 +144,8 @@ class Model
 
         $parser = new JSONProcessor(
             $c,
-            $plugin_cf['pagemanager']['pagedata_attribute']
+            $plugin_cf['pagemanager']['pagedata_attribute'],
+            time()
         );
         $parser->process($json);
         $c = $parser->getContents();
