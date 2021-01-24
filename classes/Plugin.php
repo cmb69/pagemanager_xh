@@ -31,9 +31,7 @@ class Plugin
     {
         global $f, $cf, $o;
 
-        if (function_exists('XH_registerStandardPluginMenuItems')) {
-            XH_registerStandardPluginMenuItems(false);
-        }
+        XH_registerStandardPluginMenuItems(false);
         if ($f === 'xhpages' && in_array($cf['pagemanager']['external'], array('', 'pagemanager'))) {
             $o .= $this->handleMainAdministration('plugin_text');
         } elseif (XH_wantsPluginAdministration('pagemanager')) {
