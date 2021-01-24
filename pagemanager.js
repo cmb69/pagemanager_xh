@@ -341,7 +341,7 @@
      * @returns {undefined}
      */
     function alertAjaxError(jqXHR, textStatus, errorThrown) {
-        alert(errorThrown);
+        alert(errorThrown + ": " + jqXHR.responseText);
     }
 
     function getConfig() {

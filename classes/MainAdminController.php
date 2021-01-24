@@ -188,8 +188,19 @@ class MainAdminController extends Controller
     public function dataAction()
     {
         $this->model->calculateHeadings();
-        header('Content-Type: application/json; charset=UTF-8');
-        echo json_encode($this->getPagesData());
+        $json = json_encode($this->getPagesData());
+        if ($json !== false) {
+            header('Content-Type: application/json; charset=UTF-8');
+            echo $json;
+        } else {
+            header("HTTP/1.0 500 Internal Server Error");
+            header('Content-Type: test/plain; charset=UTF-8');
+            if (function_exists('json_last_error_msg')) {
+                echo json_last_error_msg();
+            } else {
+                echo "json encode error " . json_last_error();
+            }
+        }
     }
 
     /**
