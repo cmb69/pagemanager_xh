@@ -21,9 +21,9 @@
 
 namespace Pagemanager;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class JSONProcessorTest extends PHPUnit_Framework_TestCase
+class JSONProcessorTest extends TestCase
 {
     /**
      * @var JSONProcessor
