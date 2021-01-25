@@ -33,7 +33,7 @@ class ModelTest extends TestCase
      */
     private $model;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         global $c, $cl, $l, $tx;
 

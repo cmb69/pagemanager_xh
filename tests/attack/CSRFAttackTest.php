@@ -45,7 +45,7 @@ class CSRFAttackTest extends TestCase
      */
     private $cookieFile;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->url = 'http://localhost' . getenv('CMSIMPLEDIR');
         $this->cookieFile = tempnam(sys_get_temp_dir(), 'CC');

@@ -50,7 +50,7 @@ class JSONProcessorTest extends TestCase
             ->will($this->returnValueMap($map));
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         global $cf;
 
