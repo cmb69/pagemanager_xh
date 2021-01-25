@@ -120,6 +120,7 @@
                 <exclude name="coverage.xml"/>
                 <exclude name="help/template.htm"/>
                 <exclude name="pax_global_header"/>
+                <exclude name="phive.xml"/>
                 <exclude name="phpcompatinfo.*"/>
                 <exclude name="README*.md"/>
                 <exclude name="teplad.xml"/>
