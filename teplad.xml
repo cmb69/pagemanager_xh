@@ -47,7 +47,7 @@
   <!-- Date this xml-file was updated, yyyy.mm.dd -->
   <date_update>2021.01.23</date_update>
   <!-- version of Plugin -->
-  <version>3.4</version>
+  <version>3.5</version>
   <!-- date of publication, yyyy.mm.dd -->
   <date_version>2020.07.15</date_version>
   <!-- the name of the programmer -->
@@ -62,7 +62,7 @@
   <url>
     <!-- URL where you can download the plugin -->
     <!-- If there no Download-URL, enter this follows! - <download_url></download_url> -->
-    <download_url>https://github.com/cmb69/pagemanager_xh/releases/3.4</download_url>
+    <download_url>https://github.com/cmb69/pagemanager_xh/releases/3.5</download_url>
     <!-- URL of the programmer's website -->
     <!-- If there no Website, enter this follows! - <coder_url></coder_url> -->
     <coder_url>https://3-magi.net</coder_url>
