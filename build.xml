@@ -88,7 +88,6 @@
     </target>
 
     <target name="build" description="builds distributable ZIP archive">
-        <fail unless="version" message="version is not defined!"/>
         <exec executable="git" passthru="true" checkreturn="true">
             <arg value="archive"/>
             <arg value="-o"/>
@@ -130,14 +129,13 @@
         <delete dir="export"/>
         <copy file="dist/config/config.php" tofile="dist/config/defaultconfig.php"/>
         <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
-        <zip destfile="Pagemanager_XH-${version}.zip" basedir="dist" prefix="pagemanager/"/>
+        <zip destfile="Pagemanager_XH-3.4.zip" basedir="dist" prefix="pagemanager/"/>
         <delete dir="dist"/>
     </target>
 
     <target name="build-patch" description="builds a distributable update package">
         <fail unless="patchee" message="patchee is not defined!"/>
-        <fail unless="version" message="version is not defined!"/>
-        <unzip file="Pagemanager_XH-${version}.zip" todir="current"/>
+        <unzip file="Pagemanager_XH-3.4.zip" todir="current"/>
         <unzip file="${patchee}" todir="patchee"/>
         <copy todir="dist">
             <fileset dir="current">
@@ -151,7 +149,7 @@
                 <include name="css/stylesheet.css"/>
             </fileset>
         </delete>
-        <zip destfile="Pagemanager_XH-${version}-PATCH.zip" basedir="dist"
+        <zip destfile="Pagemanager_XH-3.4-PATCH.zip" basedir="dist"
              includeemptydirs="false"/>
         <delete dir="patchee" quiet="true"/>
         <delete dir="current" quiet="true"/>
