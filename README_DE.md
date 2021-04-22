@@ -112,8 +112,8 @@ Seite im Clipboard in sich selbst eingefügt werden soll.
 Die Checkboxen links von den Seiten erlauben es, deren
 **Veröffentlichungsstatus** anzusehen und zu ändern. Es kann
 eingestellt werden, ob sie sich auf 'Veröffentlicht?' oder 'In der
-Navigation anzeigen' beziehen. Wenn diese Einstellung leer ist
-(Voreinstellung), dann werden keine Checkboxen angezeigt.
+Navigation anzeigen'(Voreinstellung) beziehen.
+Wenn diese Einstellung leer ist, dann werden keine Checkboxen angezeigt.
 
 **Doppelte Überschriften** werden mit einem Warn-Icon markiert, und
 sollten am besten gleich umbenannt werden. **Neu erstellte Seiten**

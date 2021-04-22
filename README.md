@@ -99,8 +99,8 @@ in the clipboard should be pasted into itself.
 
 The checkboxes to the left of the pages allow you to view and change
 their **publishing state**. You can configure if they refer to
-'Published?' or 'Show in menu?'. If this setting is empty (what is the
-default), no checkboxes are shown.
+'Published?' or 'Show in menu?' (what is the default).
+If this setting is empty, no checkboxes are shown.
 
 **Duplicate headings** are marked by a warning icon. It's best to fix
 these right away. **Newly created pages** will be shown with a filled
