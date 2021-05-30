@@ -18,7 +18,7 @@ jobs:
         with:
           path: 'cmsimplexh/plugins/pagemanager'
       - name: phive install
-        run: cd cmsimplexh/plugins/pagemanager && phive --no-progress install --trust-gpg-keys 0x0F9684B8B16B7AB0,0x2420BAE0A3BE25C6,0x31C7E470E2138192,0x4AA394086372C20A
+        run: cd cmsimplexh/plugins/pagemanager && phive --no-progress install --trust-gpg-keys 0x0F9684B8B16B7AB0,0x2420BAE0A3BE25C6,0x31C7E470E2138192,0x4AA394086372C20A,0xCF1A108D0E7AE720
       - name: composer install
         run: cd cmsimplexh/plugins/pagemanager && composer install
       - name: phing sniff
