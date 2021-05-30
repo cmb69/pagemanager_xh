@@ -122,7 +122,7 @@
         </move>
         <move todir="dist">
             <fileset dir="export">
-                <exclude name=".github"/>
+                <exclude name=".github/**"/>
                 <exclude name="build.xml"/>
                 <exclude name="composer.*"/>
                 <exclude name="coverage.xml"/>
