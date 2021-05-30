@@ -112,6 +112,7 @@ class MainAdminController extends Controller
             'preview' => 'fa fa-eye',
             'help' => 'fa fa-book'
         );
+        $view->pdattr = $this->config['pagedata_attribute'];
         $view->csrfTokenInput = new HtmlString($this->csrfProtector->tokenInput());
         $view->render();
     }
@@ -265,6 +266,10 @@ class MainAdminController extends Controller
         global $pth;
 
         $this->csrfProtector->check();
+        if ($_POST['pagemanager_pdattr'] !== $this->config['pagedata_attribute']) {
+            echo XH_message('fail', $this->lang['message_pdattr']);
+            return;
+        }
         if ($this->model->save(stsl($_POST['json']))) {
             echo XH_message('success', $this->lang['message_save_success']);
         } else {

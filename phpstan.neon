@@ -1,5 +1,3 @@
-includes:
-  - phpstan-baseline.neon
 parameters:
   level: 8
   paths:
@@ -15,3 +13,5 @@ parameters:
     - ../../cmsimple/functions.php
     - ../fa/classes/RequireCommand.php
     - ../jquery/jquery.inc.php
+  ignoreErrors:
+    - "#^Access to an undefined property Pagemanager\\\\View\\:\\:\\$[_A-Za-z0-9]+\\.$#"
