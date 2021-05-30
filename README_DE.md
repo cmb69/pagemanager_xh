@@ -124,6 +124,10 @@ werden können. **Seiten, die nicht umbenannt werden können**, weil ihre
 *Marke*-Icon markiert; solche Seiten sind erlaubt, aber wenn das
 zusätzliche Markup entfernt werden soll, muss dies im Editor erfolgen.
 
+**Bedingte Trennstriche** (`&shy;`) in den Seitentiteln werden als `|-|` dargestellt;
+zusätzliche bedingte Trennstriche können durch Eingabe dieser Zeichenfolge eingefügt werden.
+Beim Speichern werden diese wieder in echte bedingte Trennstriche umgewandelt.
+
 Die Möglichkeit ganze Unterstrukturen zu kopieren mag auf den ersten
 Blick nicht einleuchtend sein, aber sie könnte nützlich werden, wenn
 z.B. eine Galerie auf diesen Seiten anzeigt wird, denn der gesamte

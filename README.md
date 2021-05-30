@@ -110,6 +110,10 @@ additional markup are marked with a *tag* icon; it is okay to have such
 pages, but if you want to remove the additional markup you have to do
 this in the editor.
 
+**Soft-hyphens** (`&shy;`) in the page headings are displayed as `|-|`;
+additinal soft-hyphens can be inserted by entering this character sequence.
+On saving these are converted to proper soft-hyphens again.
+
 The possiblitly to copy whole substructures might not seem resonable at
 first sight, but it could be useful, e.g. if you've got a gallery on
 those pages, because all content *and* meta data of these pages will be

@@ -134,7 +134,8 @@ class JSONProcessor
             assert(!is_array($id));
             $this->id = (int) $id;
         }
-        $this->title = htmlspecialchars($page['text'], ENT_NOQUOTES, 'UTF-8');
+        $title = str_replace("|-|", "\xC2\xAD", $page['text']);
+        $this->title = htmlspecialchars($title, ENT_NOQUOTES, 'UTF-8');
         $this->pdattr = $page['state']['checked'] ? '1' : '0';
         $this->mayRename = !preg_match('/unrenameable$/', $page['type']);
 

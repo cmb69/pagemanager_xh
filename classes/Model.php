@@ -75,6 +75,7 @@ class Model
     private function cleanedHeading($heading)
     {
         $heading = trim(strip_tags($heading));
+        $heading = str_replace("\xC2\xAD", "|-|", $heading);
         $heading = html_entity_decode($heading, ENT_COMPAT, 'UTF-8');
         return $heading;
     }

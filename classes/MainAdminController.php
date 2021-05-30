@@ -141,6 +141,9 @@ class MainAdminController extends Controller
             },
             explode(XH_URICHAR_SEPARATOR, $tx['urichar']['org'])
         );
+        array_unshift($uricharOrg, "\xC2\xAD");
+        $uricharNew = explode(XH_URICHAR_SEPARATOR, $tx['urichar']['new']);
+        array_unshift($uricharNew, "");
         $config = array(
             'stateKey' => 'pagemanager_' . bin2hex(CMSIMPLE_ROOT),
             'okButton' => $this->lang['button_ok'],
@@ -186,7 +189,7 @@ class MainAdminController extends Controller
             'dataURL' => (string) $url->with('pagemanager', '')->with('admin', 'plugin_main')
                 ->with('action', 'plugin_data')->with('edit', ''),
             'uriCharOrg' => $uricharOrg,
-            'uriCharNew' => explode(XH_URICHAR_SEPARATOR, $tx['urichar']['new'])
+            'uriCharNew' => $uricharNew,
         );
         return (string) json_encode($config);
     }
