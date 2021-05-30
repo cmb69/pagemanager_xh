@@ -27,6 +27,9 @@ class Plugin
 {
     const VERSION = '3.6-dev';
 
+    /**
+     * @return void
+     */
     public function run()
     {
         global $f, $cf, $o;
@@ -58,7 +61,7 @@ class Plugin
                 $o .= $this->handleMainAdministration($action);
                 break;
             default:
-                $o .= plugin_admin_common($action, $admin, $plugin);
+                $o .= plugin_admin_common();
         }
         return $o;
     }
@@ -80,7 +83,7 @@ class Plugin
             default:
                 ob_start();
                 $controller->indexAction();
-                return ob_get_clean();
+                return (string) ob_get_clean();
         }
     }
 }

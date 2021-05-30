@@ -24,6 +24,13 @@
         </exec>
     </target>
 
+    <target name="stan" description="run static analysis">
+        <exec executable="phpstan" passthru="true" checkreturn="true">
+            <arg value="--ansi"/>
+            <arg value="analyze"/>
+        </exec>
+    </target>
+
     <target name="mess" description="detects code flaws">
         <exec executable="phpmd" passthru="true" checkreturn="true">
             <arg line="admin.php,classes ansi codesize,unusedcode"/>
@@ -122,6 +129,7 @@
                 <exclude name="pax_global_header"/>
                 <exclude name="phive.xml"/>
                 <exclude name="phpcompatinfo.*"/>
+                <exclude name="phpstan*.*"/>
                 <exclude name="README*.md"/>
                 <exclude name="teplad.xml"/>
                 <exclude name="tests/**"/>

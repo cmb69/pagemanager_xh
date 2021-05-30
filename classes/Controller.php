@@ -29,7 +29,7 @@ abstract class Controller
     protected $pluginFolder;
 
     /**
-     * @var array
+     * @var array<string,string>
      */
     protected $lang;
 

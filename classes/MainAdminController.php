@@ -22,7 +22,9 @@
 namespace Pagemanager;
 
 use Fa;
+use XH\CSRFProtection;
 use XH\Pages;
+use XH\PageDataRouter;
 
 class MainAdminController extends Controller
 {
@@ -37,7 +39,7 @@ class MainAdminController extends Controller
     private $pages;
 
     /**
-     * @var array
+     * @var array<string,string>
      */
     private $config;
 
@@ -69,6 +71,9 @@ class MainAdminController extends Controller
         $this->csrfProtector = $_XH_csrfProtection;
     }
 
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         global $pth, $title, $hjs, $bjs;
@@ -182,9 +187,12 @@ class MainAdminController extends Controller
             'uriCharOrg' => $uricharOrg,
             'uriCharNew' => explode(XH_URICHAR_SEPARATOR, $tx['urichar']['new'])
         );
-        return json_encode($config);
+        return (string) json_encode($config);
     }
 
+    /**
+     * @return void
+     */
     public function dataAction()
     {
         $this->model->calculateHeadings();
@@ -221,7 +229,7 @@ class MainAdminController extends Controller
 
     /**
      * @param int $index
-     * @return array
+     * @return array<string,mixed>
      */
     private function getPageData($index)
     {
@@ -249,6 +257,9 @@ class MainAdminController extends Controller
         return $res;
     }
 
+    /**
+     * @return void
+     */
     public function saveAction()
     {
         global $pth;

@@ -23,6 +23,9 @@ namespace Pagemanager;
 
 class PluginInfoController extends Controller
 {
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         global $title;

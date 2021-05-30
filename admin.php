@@ -28,7 +28,7 @@ use Pagemanager\Model;
 use Pagemanager\Plugin;
 
 /**
- * @return array
+ * @return array<int,string>
  */
 function Pagemanager_themes()
 {

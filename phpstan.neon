@@ -1,0 +1,17 @@
+includes:
+  - phpstan-baseline.neon
+parameters:
+  level: 8
+  paths:
+    - classes/
+    - admin.php
+  bootstrapFiles:
+    - phpstan.php
+  scanFiles:
+    - ../../cmsimple/classes/CSRFProtection.php
+    - ../../cmsimple/classes/PageDataRouter.php
+    - ../../cmsimple/classes/Pages.php
+    - ../../cmsimple/adminfuncs.php
+    - ../../cmsimple/functions.php
+    - ../fa/classes/RequireCommand.php
+    - ../jquery/jquery.inc.php

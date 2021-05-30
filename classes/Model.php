@@ -61,7 +61,7 @@ class Model
 
     /**
      * @param string $heading
-     * @return string
+     * @return bool
      */
     private function mayRename($heading)
     {
@@ -79,6 +79,9 @@ class Model
         return $heading;
     }
 
+    /**
+     * @return void
+     */
     public function calculateHeadings()
     {
         global $c, $tx;
