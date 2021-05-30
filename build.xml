@@ -103,12 +103,13 @@
         </exec>
         <unzip file="export.zip" todir="export"/>
         <delete file="export.zip"/>
-        <jsMin targetDir="dist" suffix="" failOnError="false">
-            <fileset dir="export">
-                <include name="*.js"/>
-                <include name="jstree/*.js"/>
-            </fileset>
-        </jsMin>
+        <exec executable="uglifyjs" checkreturn="true">
+            <arg file="export/pagemanager.js"/>
+            <arg value="--compress"/>
+            <arg value="--mangle"/>
+            <arg value="--output"/>
+            <arg file="export/pagemanager.js"/>
+        </exec>
         <move todir="dist">
             <fileset dir="export">
                 <include name="views/*.php"/>
