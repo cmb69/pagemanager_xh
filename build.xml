@@ -146,7 +146,7 @@
         <fail unless="patchee" message="patchee is not defined!"/>
         <unzip file="Pagemanager_XH-3.6-dev.zip" todir="current"/>
         <unzip file="${patchee}" todir="patchee"/>
-        <copy todir="dist">
+        <copy todir="dist" includeemptydirs="false">
             <fileset dir="current">
                 <different targetdir="patchee" ignoreFileTimes="true"/>
             </fileset>
@@ -158,7 +158,7 @@
                 <include name="css/stylesheet.css"/>
             </fileset>
         </delete>
-        <zip destfile="Pagemanager_XH-3.6-dev-PATCH.zip" basedir="dist"
+        <zip destfile="Pagemanager_XH-3.6-dev-update-from-.zip" basedir="dist"
              includeemptydirs="false"/>
         <delete dir="patchee" quiet="true"/>
         <delete dir="current" quiet="true"/>
