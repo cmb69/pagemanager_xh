@@ -41,7 +41,7 @@
             description="checks compatibility with PHP_CompatInfo">
         <exec executable="phpcompatinfo" passthru="true" checkreturn="true">
             <arg value="analyser:run"/>
-            <arg line="--alias current"/>
+            <arg value="classes"/>
         </exec>
     </target>
 
