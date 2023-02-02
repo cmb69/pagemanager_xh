@@ -218,11 +218,7 @@ class MainAdminController
         } else {
             header("HTTP/1.0 500 Internal Server Error");
             header('Content-Type: test/plain; charset=UTF-8');
-            if (function_exists('json_last_error_msg')) {
-                echo json_last_error_msg();
-            } else {
-                echo "json encode error " . json_last_error();
-            }
+            echo json_last_error_msg();
         }
     }
 
