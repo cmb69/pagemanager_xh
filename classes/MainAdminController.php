@@ -26,8 +26,13 @@ use XH\CSRFProtection;
 use XH\Pages;
 use XH\PageDataRouter;
 
-class MainAdminController extends Controller
+class MainAdminController
 {
+    /**
+     * @var string
+     */
+    private $pluginFolder;
+
     /**
      * @var Model
      */
@@ -42,6 +47,11 @@ class MainAdminController extends Controller
      * @var array<string,string>
      */
     private $config;
+
+    /**
+     * @var array<string,string>
+     */
+    private $lang;
 
     /**
      * @var string
@@ -60,12 +70,13 @@ class MainAdminController extends Controller
 
     public function __construct()
     {
-        global $plugin_cf, $pd_router, $_XH_csrfProtection;
+        global $pth, $plugin_cf, $plugin_tx, $pd_router, $_XH_csrfProtection;
 
-        parent::__construct();
+        $this->pluginFolder = "{$pth['folder']['plugins']}pagemanager/";
         $this->model = new Model;
         $this->pages = new Pages;
         $this->config = $plugin_cf['pagemanager'];
+        $this->lang = $plugin_tx['pagemanager'];
         $this->pdAttr = $this->config['pagedata_attribute'];
         $this->pdRouter = $pd_router;
         $this->csrfProtector = $_XH_csrfProtection;
