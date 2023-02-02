@@ -224,7 +224,7 @@ class MainAdminController
 
     /**
      * @param ?int $parent
-     * @return array[]
+     * @return list<array<string,mixed>>
      */
     private function getPagesData($parent = null)
     {
