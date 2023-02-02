@@ -24,7 +24,7 @@ einmal verschoben werden.
 Pagemanager\_XH ist ein Plugin für CMSimple\_XH ≥ 1.7. Zusätzlich
 benötigt es noch das jQuery4CMSimple und das Fa\_XH Plugin, die in
 allen Standarddownloads von CMSimple\_XH bereits enthalten sind. Es
-benötigt ebenfalls PHP ≥ 5.3.0 mit der JSON Extension.
+benötigt ebenfalls PHP ≥ 5.5.0 mit der JSON Extension.
 
 ## Download
 
