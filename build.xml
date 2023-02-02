@@ -127,7 +127,6 @@
                 <exclude name="composer.*"/>
                 <exclude name="coverage.xml"/>
                 <exclude name="help/template.htm"/>
-                <exclude name="phive.xml"/>
                 <exclude name="phpcompatinfo.*"/>
                 <exclude name="phpstan*.*"/>
                 <exclude name="README*.md"/>
