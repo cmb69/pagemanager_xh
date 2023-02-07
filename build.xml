@@ -127,13 +127,13 @@
         <delete dir="export"/>
         <copy file="dist/config/config.php" tofile="dist/config/defaultconfig.php"/>
         <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
-        <zip destfile="Pagemanager_XH-3.7-dev.zip" basedir="dist" prefix="pagemanager/"/>
+        <zip destfile="Pagemanager_XH-3.7.zip" basedir="dist" prefix="pagemanager/"/>
         <delete dir="dist"/>
     </target>
 
     <target name="build-patch" description="builds a distributable update package">
         <fail unless="patchee" message="patchee is not defined!"/>
-        <unzip file="Pagemanager_XH-3.7-dev.zip" todir="current"/>
+        <unzip file="Pagemanager_XH-3.7.zip" todir="current"/>
         <unzip file="${patchee}" todir="patchee"/>
         <copy todir="dist" includeemptydirs="false">
             <fileset dir="current">
@@ -147,7 +147,7 @@
                 <include name="css/stylesheet.css"/>
             </fileset>
         </delete>
-        <zip destfile="Pagemanager_XH-3.7-dev-update-from-.zip" basedir="dist"
+        <zip destfile="Pagemanager_XH-3.7-update-from-.zip" basedir="dist"
              includeemptydirs="false"/>
         <delete dir="patchee" quiet="true"/>
         <delete dir="current" quiet="true"/>
